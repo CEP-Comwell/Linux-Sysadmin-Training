@@ -1,53 +1,121 @@
 # Module 11: ZFS Fundamentals
 
+## Table of Contents
+- [Overview](#overview)
+- [Learning Objectives](#learning-objectives)
+- [Topics](#topics)
+  - [11.1 ZFS Architecture and Copy-on-Write Fundamentals](#111-zfs-architecture-and-copy-on-write-fundamentals)
+  - [11.2 Pool Management and Storage Hierarchies](#112-pool-management-and-storage-hierarchies)
+  - [11.3 Datasets, Zvols, and Hierarchical Management](#113-datasets-zvols-and-hierarchical-management)
+  - [11.4 Advanced Features: Compression, Deduplication, and Optimization](#114-advanced-features-compression-deduplication-and-optimization)
+  - [11.5 Snapshot and Clone Management](#115-snapshot-and-clone-management)
+  - [11.6 Replication and Backup Strategies](#116-replication-and-backup-strategies)
+  - [11.7 Performance Tuning and Caching](#117-performance-tuning-and-caching)
+  - [11.8 Monitoring and Troubleshooting](#118-monitoring-and-troubleshooting)
+- [Essential Command Reference](#essential-command-reference)
+- [Practical Examples](#practical-examples)
+  - [Pool Creation and Management](#pool-creation-and-management)
+  - [Dataset Operations](#dataset-operations)
+  - [Snapshot Management](#snapshot-management)
+  - [Replication Setup](#replication-setup)
+  - [Performance Optimization](#performance-optimization)
+  - [Monitoring and Diagnostics](#monitoring-and-diagnostics)
+- [Lab Exercises](#lab-exercises)
+  - [Lab 1: ZFS Pool Architecture and Management](#lab-1-zfs-pool-architecture-and-management)
+  - [Lab 2: Advanced Dataset and Snapshot Operations](#lab-2-advanced-dataset-and-snapshot-operations)
+  - [Lab 3: Replication and Backup Implementation](#lab-3-replication-and-backup-implementation)
+  - [Lab 4: Performance Optimization and Tuning](#lab-4-performance-optimization-and-tuning)
+  - [Lab 5: Enterprise ZFS Infrastructure](#lab-5-enterprise-zfs-infrastructure)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+- [Assessment Criteria](#assessment-criteria)
+- [Next Steps](#next-steps)
+
 ## Overview
-Introduces ZFS's pooled storage model, end-to-end checksums, snapshots, and self-healing data integrity. This module covers ZFS (Zettabyte File System), a next-generation filesystem that combines traditional filesystem and volume manager functionality with revolutionary features like copy-on-write architecture, automatic data integrity verification, and advanced storage management capabilities.
+This module provides comprehensive coverage of ZFS (Zettabyte File System), a revolutionary storage platform that combines traditional filesystem and volume manager functionality with advanced features including copy-on-write architecture, automatic data integrity verification, and enterprise-grade storage management capabilities. Students will master ZFS implementation from basic pool creation to advanced replication and performance optimization strategies.
+
+**Key Learning Outcomes:**
+- Design and implement ZFS storage pools with appropriate redundancy and performance characteristics
+- Master snapshot and clone management for backup, development, and testing workflows
+- Configure automated replication and disaster recovery solutions using zfs send/receive
+- Optimize ZFS performance through compression, caching, and workload-specific tuning
+- Implement enterprise-grade monitoring, troubleshooting, and maintenance procedures
+- Deploy multi-tenant ZFS environments with delegation and quota management
 
 ## Learning Objectives
 By the end of this module, you will be able to:
-1. **Create, expand, and destroy ZFS pools and associated datasets/zvols** - Master ZFS pool architecture, understand vdev types, and manage storage pools with different redundancy levels and performance characteristics
-2. **Automate snapshot lifecycles with scripts or cron jobs; perform rollbacks** - Implement comprehensive snapshot strategies, automate retention policies, and execute point-in-time recovery procedures
-3. **Use `zfs send/receive` to replicate datasets and implement offsite backups** - Configure efficient incremental replication, implement disaster recovery solutions, and manage cross-platform data migration
-4. **Configure quotas, reservations, and dataset delegation for multi-tenant use** - Implement hierarchical storage management, configure space allocation policies, and delegate administrative privileges for enterprise environments
-5. **Tune ZFS parameters (recordsize, cache settings, log devices) for workload optimization** - Optimize performance through ARC/L2ARC configuration, recordsize tuning, and ZIL device placement for specific workload requirements
+
+1. **Master ZFS Architecture**: Understand copy-on-write fundamentals, pooled storage concepts, and end-to-end data integrity mechanisms
+2. **Design Storage Pools**: Create and manage ZFS pools with appropriate vdev configurations, redundancy levels, and performance characteristics
+3. **Manage Datasets and Zvols**: Implement hierarchical dataset structures with quotas, reservations, and delegation for multi-tenant environments
+4. **Implement Snapshot Strategies**: Design automated snapshot lifecycles with retention policies and efficient rollback procedures
+5. **Configure Replication**: Set up zfs send/receive replication for disaster recovery and cross-site data synchronization
+6. **Optimize Performance**: Tune ZFS parameters including compression, caching, and recordsize for specific workload requirements
 
 ## Topics
 
 ### 11.1 ZFS Architecture and Copy-on-Write Fundamentals
-- **Copy-on-Write (COW) architecture**: Transaction-based filesystem design and atomic operations
-- **End-to-end data integrity**: Automatic checksumming, silent corruption detection, and self-healing
-- **Pooled storage model**: Virtual devices (vdevs), storage pools (zpools), and dynamic allocation
-- **ZFS vs traditional filesystems**: Integrated volume management and advanced feature comparison
-- **Feature flags and compatibility**: OpenZFS evolution and cross-platform considerations
-
-**🔗 Practical Examples**: [ZFS Architecture Deep Dive](#zfs-architecture-deep-dive) | [Data Integrity Verification](#data-integrity-verification)
+- Copy-on-Write (COW) transaction model and atomic operations
+- End-to-end data integrity with automatic checksumming and self-healing
+- Pooled storage architecture with virtual devices (vdevs) and dynamic allocation
+- ZFS vs traditional filesystems: integrated volume management advantages
+- Feature flags, compatibility matrices, and OpenZFS ecosystem
+- Memory requirements and system architecture considerations
 
 ### 11.2 Pool Management and Storage Hierarchies
-- **Pool creation and expansion**: Vdev types, redundancy levels, and growth strategies
-- **RAID-Z implementation**: RAIDZ, RAIDZ2, RAIDZ3 configurations and performance characteristics
-- **Mirror and stripe configurations**: Performance vs redundancy trade-offs
-- **Hot spares and fault tolerance**: Automatic replacement and resilver operations
-- **Pool properties and tuning**: Feature flags, compression, and performance optimization
-
-**🔗 Practical Examples**: [Pool Creation and Management](#pool-creation-and-management) | [Advanced Pool Configurations](#advanced-pool-configurations)
+- Pool creation strategies and vdev type selection (stripe, mirror, raidz)
+- RAID-Z implementation: RAIDZ1, RAIDZ2, RAIDZ3 trade-offs and recommendations
+- Pool expansion techniques: adding vdevs and replacing devices
+- Hot spare configuration and automatic resilver operations
+- Pool properties: feature flags, compression algorithms, and performance settings
+- Pool import/export procedures and cross-platform compatibility
 
 ### 11.3 Datasets, Zvols, and Hierarchical Management
-- **Dataset types**: Filesystems, volumes (zvols), and their use cases
-- **Hierarchical quotas and reservations**: Space management and allocation policies
-- **Dataset delegation and permissions**: Multi-tenant administration and security
-- **Property inheritance**: Configuration management and policy enforcement
-- **Mountpoint management**: Automatic mounting and sharing configurations
-
-**🔗 Practical Examples**: [Dataset Hierarchy Management](#dataset-hierarchy-management) | [Multi-tenant Configuration](#multi-tenant-configuration)
+- Dataset types: filesystems, volumes (zvols), and snapshots
+- Hierarchical namespace management and property inheritance
+- Quota and reservation implementation for space management
+- Dataset delegation and administrative privilege distribution
+- Mountpoint management: automatic mounting and sharing protocols
+- Property management: local vs inherited settings and policy enforcement
 
 ### 11.4 Advanced Features: Compression, Deduplication, and Optimization
-- **Compression algorithms**: LZ4, GZIP, ZSTD comparison and workload optimization
-- **Deduplication strategies**: Block-level dedup, memory requirements, and performance impact
-- **Recordsize tuning**: Workload-specific optimization for databases, VMs, and file servers
-- **Transparent compression**: Real-time compression and space efficiency
-- **Feature interaction**: Compression + deduplication synergies and trade-offs
+- Compression algorithm selection: LZ4, GZIP, ZSTD performance and efficiency analysis
+- Deduplication implementation: block-level dedup, memory overhead, and performance impact
+- Recordsize optimization for different workloads: databases, VMs, and file servers
+- Transparent encryption with native ZFS encryption features
+- Feature interaction optimization: compression + deduplication synergies
 
-**🔗 Practical Examples**: [Compression and Deduplication](#compression-and-deduplication) | [Recordsize Optimization](#recordsize-optimization)
+### 11.5 Snapshot and Clone Management
+- Snapshot creation, management, and automated retention policies
+- Clone creation and management for development and testing environments
+- Incremental snapshot strategies and space-efficient storage
+- Snapshot-based backup workflows and point-in-time recovery
+- Scripted snapshot management with lifecycle automation
+- Performance considerations for high-frequency snapshot environments
+
+### 11.6 Replication and Backup Strategies
+- ZFS send/receive fundamentals: full and incremental streams
+- Cross-platform replication and disaster recovery implementation
+- Automated replication scripting with error handling and monitoring
+- Bandwidth optimization and compression for remote replication
+- Multi-site replication topologies and failover procedures
+- Integration with backup software and enterprise backup workflows
+
+### 11.7 Performance Tuning and Caching
+- ARC (Adaptive Replacement Cache) tuning and memory allocation
+- L2ARC (Level 2 ARC) implementation with SSD cache devices
+- ZIL (ZFS Intent Log) optimization with dedicated log devices
+- Recordsize tuning for workload-specific performance optimization
+- Compression algorithm selection for performance vs efficiency balance
+- System-level tuning: kernel parameters and hardware optimization
+
+### 11.8 Monitoring and Troubleshooting
+- ZFS health monitoring and error detection systems
+- Performance monitoring tools and metrics analysis
+- Troubleshooting common ZFS issues and error conditions
+- Pool scrubbing strategies and integrity verification
+- Disaster recovery procedures and data reconstruction techniques
+- Capacity planning and growth prediction methodologies
 
 ### 11.5 Snapshot and Clone Workflows
 - **Snapshot lifecycle management**: Automated creation, retention policies, and cleanup strategies
@@ -67,39 +135,684 @@ By the end of this module, you will be able to:
 
 **🔗 Practical Examples**: [Send/Receive Replication](#send-receive-replication) | [Performance Optimization](#performance-optimization)
 
+## Essential Command Reference
+
+### Pool Management
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `zpool create` | Create new ZFS pool | `zpool create tank raidz /dev/sdb /dev/sdc /dev/sdd` |
+| `zpool status` | Show pool status and health | `zpool status tank` |
+| `zpool list` | List all pools with space usage | `zpool list` |
+| `zpool add` | Add vdev to existing pool | `zpool add tank cache /dev/sde` |
+| `zpool remove` | Remove vdev from pool | `zpool remove tank /dev/sde` |
+| `zpool replace` | Replace failed device | `zpool replace tank /dev/sdb /dev/sdf` |
+| `zpool scrub` | Start pool scrub operation | `zpool scrub tank` |
+| `zpool export` | Export pool for migration | `zpool export tank` |
+| `zpool import` | Import existing pool | `zpool import tank` |
+
+### Dataset and Filesystem Operations
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `zfs create` | Create dataset or zvol | `zfs create tank/data` |
+| `zfs destroy` | Destroy dataset | `zfs destroy tank/data` |
+| `zfs list` | List datasets with properties | `zfs list -o name,used,avail` |
+| `zfs mount` | Mount dataset | `zfs mount tank/data` |
+| `zfs umount` | Unmount dataset | `zfs umount tank/data` |
+| `zfs set` | Set dataset property | `zfs set compression=lz4 tank/data` |
+| `zfs get` | Get dataset properties | `zfs get all tank/data` |
+| `zfs inherit` | Inherit property from parent | `zfs inherit compression tank/data` |
+
+### Snapshot and Clone Management
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `zfs snapshot` | Create snapshot | `zfs snapshot tank/data@backup-2025-08-02` |
+| `zfs destroy` | Destroy snapshot | `zfs destroy tank/data@backup-2025-08-02` |
+| `zfs rollback` | Rollback to snapshot | `zfs rollback tank/data@backup-2025-08-02` |
+| `zfs clone` | Create clone from snapshot | `zfs clone tank/data@snap tank/clone` |
+| `zfs promote` | Promote clone to dataset | `zfs promote tank/clone` |
+| `zfs diff` | Show differences between snapshots | `zfs diff tank/data@snap1 tank/data@snap2` |
+
+### Replication and Backup
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `zfs send` | Send snapshot stream | `zfs send tank/data@snap1 > backup.zfs` |
+| `zfs receive` | Receive snapshot stream | `zfs receive tank/restore < backup.zfs` |
+| `zfs send -i` | Incremental send | `zfs send -i @snap1 tank/data@snap2` |
+| `zfs send -R` | Recursive send with all snapshots | `zfs send -R tank/data@snap` |
+| `zfs bookmark` | Create bookmark for incremental sends | `zfs bookmark tank/data@snap tank/data#mark1` |
+
+### Quota and Reservation Management
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `zfs set quota` | Set space quota | `zfs set quota=10G tank/data` |
+| `zfs set reservation` | Set space reservation | `zfs set reservation=5G tank/data` |
+| `zfs set refquota` | Set quota excluding snapshots | `zfs set refquota=8G tank/data` |
+| `zfs set refreservation` | Set reservation excluding snapshots | `zfs set refreservation=3G tank/data` |
+| `zfs userspace` | Show user space usage | `zfs userspace tank/data` |
+| `zfs groupspace` | Show group space usage | `zfs groupspace tank/data` |
+
+### Delegation and Security
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `zfs allow` | Delegate ZFS permissions | `zfs allow user1 snapshot,mount tank/data` |
+| `zfs unallow` | Remove delegated permissions | `zfs unallow user1 tank/data` |
+| `zfs set sharenfs` | Enable NFS sharing | `zfs set sharenfs=on tank/data` |
+| `zfs set sharesmb` | Enable SMB sharing | `zfs set sharesmb=on tank/data` |
+
+### Performance and Monitoring
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `zpool iostat` | Show pool I/O statistics | `zpool iostat tank 1` |
+| `zfs get compressratio` | Show compression ratio | `zfs get compressratio tank/data` |
+| `zpool history` | Show pool command history | `zpool history tank` |
+| `zpool events` | Show pool events | `zpool events tank` |
+| `arc_summary` | Show ARC statistics | `arc_summary` |
+
 ## Practical Examples
 
-### ZFS Architecture Deep Dive
+### Pool Creation and Management
 
-#### Understanding Copy-on-Write and Data Integrity
+#### Enterprise Pool Architecture Design
 ```bash
-# Demonstrate ZFS copy-on-write behavior
-sudo zfs create tank/demo
-echo "Original data" | sudo tee /tank/demo/file1.txt
+#!/bin/bash
+# enterprise-zfs-setup.sh - Enterprise ZFS pool configuration
 
-# Create snapshot to preserve original state
-sudo zfs snapshot tank/demo@original
+ZFS_LOG="/var/log/zfs-operations.log"
 
-# Modify file (triggers COW)
-echo "Modified data" | sudo tee -a /tank/demo/file1.txt
+log_zfs_operation() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$ZFS_LOG"
+}
 
-# Show space usage - original blocks preserved in snapshot
-zfs list -o space tank/demo
-zfs list -t snapshot tank/demo@original
+# Create enterprise storage pools with different performance characteristics
+create_enterprise_pools() {
+    log_zfs_operation "Starting enterprise ZFS pool creation"
+    
+    # High-performance pool for databases (RAID-10 equivalent)
+    log_zfs_operation "Creating high-performance database pool"
+    sudo zpool create db-pool \
+        mirror /dev/sdb /dev/sdc \
+        mirror /dev/sdd /dev/sde \
+        -o ashift=12 \
+        -o autoexpand=on \
+        -O compression=lz4 \
+        -O recordsize=8K \
+        -O primarycache=metadata \
+        -O logbias=throughput \
+        -O sync=disabled
+    
+    # Add dedicated ZIL device for synchronous writes
+    sudo zpool add db-pool log /dev/nvme0n1p1
+    
+    # Add L2ARC cache device
+    sudo zpool add db-pool cache /dev/nvme0n1p2
+    
+    # Balanced pool for general storage (RAID-Z2)
+    log_zfs_operation "Creating balanced general storage pool"
+    sudo zpool create storage-pool \
+        raidz2 /dev/sdf /dev/sdg /dev/sdh /dev/sdi /dev/sdj /dev/sdk \
+        -o ashift=12 \
+        -o autoexpand=on \
+        -O compression=zstd \
+        -O recordsize=128K \
+        -O atime=off \
+        -O xattr=sa \
+        -O dnodesize=auto
+    
+    # Backup pool for long-term retention (RAID-Z3)
+    log_zfs_operation "Creating backup retention pool"
+    sudo zpool create backup-pool \
+        raidz3 /dev/sdl /dev/sdm /dev/sdn /dev/sdo /dev/sdp /dev/sdq /dev/sdr /dev/sds \
+        -o ashift=12 \
+        -o autoexpand=on \
+        -O compression=zstd-19 \
+        -O recordsize=1M \
+        -O atime=off \
+        -O dedup=on
+    
+    # Configure hot spares
+    sudo zpool add db-pool spare /dev/sdt
+    sudo zpool add storage-pool spare /dev/sdu /dev/sdv
+    sudo zpool add backup-pool spare /dev/sdw /dev/sdx
+    
+    # Display pool configurations
+    log_zfs_operation "Pool creation completed successfully"
+    zpool status
+    zpool list -v
+}
 
-# Verify data integrity with checksums
-sudo zpool scrub tank
-zpool status -v tank  # Shows checksum errors if any
+# Advanced pool management and monitoring
+manage_pool_health() {
+    local pool_name="$1"
+    
+    log_zfs_operation "Starting health management for pool: $pool_name"
+    
+    # Check pool health
+    local pool_health=$(zpool list -H -o health "$pool_name")
+    log_zfs_operation "Pool $pool_name health status: $pool_health"
+    
+    case "$pool_health" in
+        "ONLINE")
+            log_zfs_operation "Pool $pool_name is healthy"
+            ;;
+        "DEGRADED")
+            log_zfs_operation "WARNING: Pool $pool_name is degraded"
+            send_alert "ZFS Pool Degraded" "Pool $pool_name is in degraded state"
+            ;;
+        "FAULTED"|"UNAVAIL")
+            log_zfs_operation "CRITICAL: Pool $pool_name is faulted"
+            send_alert "ZFS Pool Critical" "Pool $pool_name is faulted or unavailable"
+            ;;
+    esac
+    
+    # Check for resilver operations
+    if zpool status "$pool_name" | grep -q "resilver"; then
+        local resilver_progress=$(zpool status "$pool_name" | grep "resilver" | awk '{print $5}')
+        log_zfs_operation "Resilver in progress for $pool_name: $resilver_progress"
+    fi
+    
+    # Check for scrub operations
+    if zpool status "$pool_name" | grep -q "scrub in progress"; then
+        local scrub_progress=$(zpool status "$pool_name" | grep "scanned" | awk '{print $8}')
+        log_zfs_operation "Scrub in progress for $pool_name: $scrub_progress"
+    fi
+    
+    # Monitor pool capacity
+    local pool_capacity=$(zpool list -H -o capacity "$pool_name" | tr -d '%')
+    if [[ "$pool_capacity" -gt 80 ]]; then
+        log_zfs_operation "WARNING: Pool $pool_name is $pool_capacity% full"
+        send_alert "ZFS Pool Capacity Warning" "Pool $pool_name is $pool_capacity% full"
+    fi
+}
 
-# Force checksum verification
-sudo dd if=/dev/zero of=/tank/demo/largefile bs=1M count=100
-sudo zfs set checksum=sha256 tank/demo  # Enhanced checksumming
-sync && sudo zpool scrub tank
+# Automated pool expansion
+expand_pool_capacity() {
+    local pool_name="$1"
+    local new_devices=("${@:2}")
+    
+    log_zfs_operation "Expanding pool $pool_name with devices: ${new_devices[*]}"
+    
+    # Get current pool configuration
+    local pool_config=$(zpool status "$pool_name" | grep -E "(mirror|raidz)")
+    
+    if echo "$pool_config" | grep -q "mirror"; then
+        # Add mirror vdev
+        sudo zpool add "$pool_name" mirror "${new_devices[@]}"
+        log_zfs_operation "Added mirror vdev to pool $pool_name"
+    elif echo "$pool_config" | grep -q "raidz"; then
+        # Add raidz vdev (matching existing configuration)
+        local raidz_type=$(echo "$pool_config" | grep -o "raidz[0-9]*" | head -1)
+        sudo zpool add "$pool_name" "$raidz_type" "${new_devices[@]}"
+        log_zfs_operation "Added $raidz_type vdev to pool $pool_name"
+    else
+        # Add stripe vdev
+        sudo zpool add "$pool_name" "${new_devices[@]}"
+        log_zfs_operation "Added stripe vdev to pool $pool_name"
+    fi
+    
+    # Verify expansion
+    zpool list -v "$pool_name"
+    log_zfs_operation "Pool expansion completed for $pool_name"
+}
+
+# Performance optimization based on workload
+optimize_pool_performance() {
+    local pool_name="$1"
+    local workload_type="$2"  # database, fileserver, backup, vm
+    
+    log_zfs_operation "Optimizing pool $pool_name for $workload_type workload"
+    
+    case "$workload_type" in
+        "database")
+            # Database optimizations: small recordsize, metadata caching
+            sudo zfs set recordsize=8K "$pool_name"
+            sudo zfs set primarycache=metadata "$pool_name"
+            sudo zfs set logbias=throughput "$pool_name"
+            sudo zfs set sync=disabled "$pool_name"  # Only for non-critical data
+            log_zfs_operation "Applied database optimizations to $pool_name"
+            ;;
+        "fileserver")
+            # File server optimizations: balanced settings
+            sudo zfs set recordsize=128K "$pool_name"
+            sudo zfs set compression=lz4 "$pool_name"
+            sudo zfs set atime=off "$pool_name"
+            sudo zfs set xattr=sa "$pool_name"
+            log_zfs_operation "Applied file server optimizations to $pool_name"
+            ;;
+        "backup")
+            # Backup optimizations: maximum compression
+            sudo zfs set recordsize=1M "$pool_name"
+            sudo zfs set compression=zstd-19 "$pool_name"
+            sudo zfs set dedup=on "$pool_name"
+            sudo zfs set atime=off "$pool_name"
+            log_zfs_operation "Applied backup optimizations to $pool_name"
+            ;;
+        "vm")
+            # Virtual machine optimizations: zvol settings
+            sudo zfs set recordsize=64K "$pool_name"
+            sudo zfs set compression=lz4 "$pool_name"
+            sudo zfs set sync=always "$pool_name"
+            sudo zfs set volblocksize=16K "$pool_name"  # For new zvols
+            log_zfs_operation "Applied VM optimizations to $pool_name"
+            ;;
+    esac
+    
+    # Display current settings
+    zfs get recordsize,compression,primarycache,logbias,sync "$pool_name"
+}
+
+# Execute enterprise setup
+create_enterprise_pools
+
+# Monitor all pools
+for pool in $(zpool list -H -o name); do
+    manage_pool_health "$pool"
+done
+
+# Optimize pools based on intended use
+optimize_pool_performance "db-pool" "database"
+optimize_pool_performance "storage-pool" "fileserver"
+optimize_pool_performance "backup-pool" "backup"
+
+log_zfs_operation "Enterprise ZFS setup completed successfully"
 ```
 
-#### Data Integrity Verification
+#### Pool Import/Export and Migration
 ```bash
-# Monitor checksum verification in real-time
+#!/bin/bash
+# zfs-migration.sh - ZFS pool migration and disaster recovery
+
+# Safe pool export for migration
+export_pool_safely() {
+    local pool_name="$1"
+    local export_reason="$2"
+    
+    echo "Preparing to export pool: $pool_name"
+    echo "Reason: $export_reason"
+    
+    # Verify pool health before export
+    if ! zpool status "$pool_name" | grep -q "state: ONLINE"; then
+        echo "ERROR: Pool $pool_name is not in ONLINE state"
+        zpool status "$pool_name"
+        return 1
+    fi
+    
+    # Ensure all datasets are unmounted
+    echo "Unmounting all datasets in pool $pool_name..."
+    zfs list -H -o name -r "$pool_name" | while read dataset; do
+        if zfs get -H mounted "$dataset" | grep -q "yes"; then
+            echo "Unmounting: $dataset"
+            sudo zfs unmount "$dataset" || echo "Warning: Failed to unmount $dataset"
+        fi
+    done
+    
+    # Create export backup information
+    echo "Creating export documentation..."
+    zpool status "$pool_name" > "/tmp/${pool_name}_export_status.txt"
+    zpool history "$pool_name" > "/tmp/${pool_name}_export_history.txt"
+    zfs list -r "$pool_name" > "/tmp/${pool_name}_export_datasets.txt"
+    
+    # Export the pool
+    echo "Exporting pool $pool_name..."
+    sudo zpool export "$pool_name"
+    
+    if [[ $? -eq 0 ]]; then
+        echo "Pool $pool_name exported successfully"
+        echo "Export documentation saved to /tmp/${pool_name}_export_*"
+    else
+        echo "ERROR: Failed to export pool $pool_name"
+        return 1
+    fi
+}
+
+# Import pool with verification
+import_pool_safely() {
+    local pool_name="$1"
+    local import_directory="$2"
+    local new_pool_name="$3"
+    
+    echo "Importing ZFS pool: $pool_name"
+    
+    # Scan for importable pools
+    echo "Scanning for importable pools..."
+    if [[ -n "$import_directory" ]]; then
+        sudo zpool import -d "$import_directory"
+    else
+        sudo zpool import
+    fi
+    
+    # Import the pool
+    if [[ -n "$new_pool_name" ]]; then
+        echo "Importing $pool_name as $new_pool_name..."
+        sudo zpool import "$pool_name" "$new_pool_name"
+    else
+        echo "Importing $pool_name..."
+        sudo zpool import "$pool_name"
+    fi
+    
+    if [[ $? -eq 0 ]]; then
+        local imported_name="${new_pool_name:-$pool_name}"
+        echo "Pool imported successfully as: $imported_name"
+        
+        # Verify import
+        zpool status "$imported_name"
+        zfs list -r "$imported_name"
+        
+        # Check and fix any mount issues
+        echo "Checking dataset mount points..."
+        zfs mount -a
+        
+    else
+        echo "ERROR: Failed to import pool $pool_name"
+        return 1
+    fi
+}
+
+# Cross-platform pool migration
+migrate_pool_cross_platform() {
+    local source_pool="$1"
+    local target_system="$2"
+    local migration_method="$3"  # export-import, send-receive
+    
+    case "$migration_method" in
+        "export-import")
+            echo "Using export-import method for migration"
+            export_pool_safely "$source_pool" "Cross-platform migration"
+            
+            # Instructions for target system
+            cat << EOF > "/tmp/${source_pool}_migration_instructions.txt"
+Migration Instructions for $source_pool
+=====================================
+
+1. Copy the physical drives to the target system
+2. On the target system, run:
+   sudo zpool import $source_pool
+
+3. If pool name conflicts exist:
+   sudo zpool import $source_pool new-pool-name
+
+4. Verify all datasets mounted correctly:
+   zfs mount -a
+   zfs list -r $source_pool
+
+5. Test pool functionality before going live
+EOF
+            echo "Migration instructions created: /tmp/${source_pool}_migration_instructions.txt"
+            ;;
+            
+        "send-receive")
+            echo "Using send-receive method for migration"
+            # This method requires the target system to already have a ZFS pool
+            echo "Creating migration snapshots..."
+            
+            # Create consistent snapshots
+            zfs list -H -o name -t filesystem -r "$source_pool" | while read dataset; do
+                snapshot_name="${dataset}@migration-$(date +%Y%m%d_%H%M%S)"
+                echo "Creating snapshot: $snapshot_name"
+                sudo zfs snapshot "$snapshot_name"
+            done
+            
+            # Generate send commands for each dataset
+            echo "Creating send-receive script..."
+            cat > "/tmp/${source_pool}_send_script.sh" << 'EOF'
+#!/bin/bash
+# Generated migration script - run on source system
+
+TARGET_HOST="$1"
+TARGET_POOL="$2"
+
+if [[ -z "$TARGET_HOST" ]] || [[ -z "$TARGET_POOL" ]]; then
+    echo "Usage: $0 <target-host> <target-pool>"
+    exit 1
+fi
+
+EOF
+            
+            zfs list -H -o name -t filesystem -r "$source_pool" | while read dataset; do
+                snapshot=$(zfs list -H -o name -t snapshot -s creation "$dataset" | tail -1)
+                echo "sudo zfs send $snapshot | ssh $TARGET_HOST sudo zfs receive $TARGET_POOL/$(basename $dataset)" >> "/tmp/${source_pool}_send_script.sh"
+            done
+            
+            chmod +x "/tmp/${source_pool}_send_script.sh"
+            echo "Send script created: /tmp/${source_pool}_send_script.sh"
+            ;;
+    esac
+}
+
+# Example usage
+# export_pool_safely "storage-pool" "Hardware maintenance"
+# import_pool_safely "storage-pool"
+# migrate_pool_cross_platform "old-pool" "new-server.example.com" "send-receive"
+```
+
+### Dataset Operations
+
+#### Hierarchical Dataset Management
+```bash
+#!/bin/bash
+# zfs-dataset-management.sh - Enterprise dataset hierarchy management
+
+DATASET_LOG="/var/log/zfs-datasets.log"
+
+log_dataset_operation() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$DATASET_LOG"
+}
+
+# Create comprehensive dataset hierarchy for enterprise use
+create_enterprise_hierarchy() {
+    local pool_name="$1"
+    
+    log_dataset_operation "Creating enterprise dataset hierarchy for pool: $pool_name"
+    
+    # Root organizational datasets
+    sudo zfs create "$pool_name/corporate"
+    sudo zfs create "$pool_name/projects"
+    sudo zfs create "$pool_name/users"
+    sudo zfs create "$pool_name/shared"
+    sudo zfs create "$pool_name/backups"
+    
+    # Corporate datasets with different retention policies
+    sudo zfs create "$pool_name/corporate/finance"
+    sudo zfs create "$pool_name/corporate/hr"
+    sudo zfs create "$pool_name/corporate/legal"
+    sudo zfs create "$pool_name/corporate/it"
+    
+    # Project-based datasets
+    sudo zfs create "$pool_name/projects/development"
+    sudo zfs create "$pool_name/projects/testing"
+    sudo zfs create "$pool_name/projects/production"
+    sudo zfs create "$pool_name/projects/archive"
+    
+    # User home directories
+    sudo zfs create "$pool_name/users/homes"
+    sudo zfs create "$pool_name/users/profiles"
+    sudo zfs create "$pool_name/users/temp"
+    
+    # Shared resources
+    sudo zfs create "$pool_name/shared/software"
+    sudo zfs create "$pool_name/shared/templates"
+    sudo zfs create "$pool_name/shared/public"
+    
+    # Backup categories
+    sudo zfs create "$pool_name/backups/daily"
+    sudo zfs create "$pool_name/backups/weekly"
+    sudo zfs create "$pool_name/backups/monthly"
+    sudo zfs create "$pool_name/backups/archive"
+    
+    log_dataset_operation "Enterprise hierarchy created successfully"
+}
+
+# Configure dataset properties based on business requirements
+configure_dataset_policies() {
+    local pool_name="$1"
+    
+    log_dataset_operation "Configuring dataset policies for pool: $pool_name"
+    
+    # Finance: High security, compliance retention
+    sudo zfs set recordsize=32K "$pool_name/corporate/finance"
+    sudo zfs set compression=zstd "$pool_name/corporate/finance"
+    sudo zfs set copies=2 "$pool_name/corporate/finance"
+    sudo zfs set atime=on "$pool_name/corporate/finance"  # Compliance requirement
+    sudo zfs set quota=500G "$pool_name/corporate/finance"
+    sudo zfs set encryption=on "$pool_name/corporate/finance" 2>/dev/null || true
+    
+    # Development: Fast access, frequent snapshots
+    sudo zfs set recordsize=128K "$pool_name/projects/development"
+    sudo zfs set compression=lz4 "$pool_name/projects/development"
+    sudo zfs set atime=off "$pool_name/projects/development"
+    sudo zfs set quota=2T "$pool_name/projects/development"
+    sudo zfs set com.sun:auto-snapshot=true "$pool_name/projects/development"
+    
+    # Production: Balanced performance and reliability
+    sudo zfs set recordsize=64K "$pool_name/projects/production"
+    sudo zfs set compression=lz4 "$pool_name/projects/production"
+    sudo zfs set copies=2 "$pool_name/projects/production"
+    sudo zfs set sync=standard "$pool_name/projects/production"
+    sudo zfs set quota=5T "$pool_name/projects/production"
+    
+    # User homes: Individual quotas, personal snapshots
+    sudo zfs set recordsize=128K "$pool_name/users/homes"
+    sudo zfs set compression=lz4 "$pool_name/users/homes"
+    sudo zfs set atime=off "$pool_name/users/homes"
+    sudo zfs set quota=10T "$pool_name/users/homes"  # Total for all users
+    
+    # Temp: Fast access, automatic cleanup
+    sudo zfs set recordsize=64K "$pool_name/users/temp"
+    sudo zfs set compression=lz4 "$pool_name/users/temp"
+    sudo zfs set atime=off "$pool_name/users/temp"
+    sudo zfs set quota=500G "$pool_name/users/temp"
+    sudo zfs set com.sun:auto-snapshot=false "$pool_name/users/temp"
+    
+    # Backups: Maximum compression, no access time
+    sudo zfs set recordsize=1M "$pool_name/backups"
+    sudo zfs set compression=zstd-19 "$pool_name/backups"
+    sudo zfs set atime=off "$pool_name/backups"
+    sudo zfs set readonly=on "$pool_name/backups" 2>/dev/null || true
+    
+    log_dataset_operation "Dataset policies configured successfully"
+}
+
+# Create individual user datasets with quotas
+create_user_datasets() {
+    local pool_name="$1"
+    local users_file="$2"  # File containing username:quota pairs
+    
+    log_dataset_operation "Creating user datasets from file: $users_file"
+    
+    while IFS=':' read -r username quota; do
+        # Skip comments and empty lines
+        [[ "$username" =~ ^#.*$ ]] && continue
+        [[ -z "$username" ]] && continue
+        
+        local user_dataset="$pool_name/users/homes/$username"
+        
+        # Create user dataset
+        sudo zfs create "$user_dataset"
+        
+        # Set user-specific properties
+        sudo zfs set quota="$quota" "$user_dataset"
+        sudo zfs set compression=lz4 "$user_dataset"
+        sudo zfs set atime=off "$user_dataset"
+        
+        # Set mount point and permissions
+        sudo zfs set mountpoint="/home/$username" "$user_dataset"
+        
+        # Create user if doesn't exist
+        if ! id "$username" &>/dev/null; then
+            sudo useradd -m -d "/home/$username" "$username"
+        fi
+        
+        # Set ownership
+        sudo chown "$username:$username" "/home/$username"
+        sudo chmod 750 "/home/$username"
+        
+        log_dataset_operation "Created user dataset for $username with quota $quota"
+        
+    done < "$user_file"
+}
+
+# Implement dataset delegation for departmental administration
+setup_dataset_delegation() {
+    local pool_name="$1"
+    
+    log_dataset_operation "Setting up dataset delegation for pool: $pool_name"
+    
+    # Finance department delegation
+    sudo zfs allow finance_admin snapshot,mount,create,destroy "$pool_name/corporate/finance"
+    sudo zfs allow finance_users mount "$pool_name/corporate/finance"
+    
+    # Development team delegation
+    sudo zfs allow dev_lead snapshot,rollback,mount,create,destroy "$pool_name/projects/development"
+    sudo zfs allow developers snapshot,mount "$pool_name/projects/development"
+    
+    # IT team gets broader permissions
+    sudo zfs allow it_admin snapshot,rollback,mount,create,destroy,send,receive "$pool_name/corporate/it"
+    sudo zfs allow it_admin snapshot,mount "$pool_name/users"
+    
+    # HR delegation with restricted permissions
+    sudo zfs allow hr_admin snapshot,mount "$pool_name/corporate/hr"
+    
+    log_dataset_operation "Dataset delegation configured successfully"
+}
+
+# Monitor dataset usage and send alerts
+monitor_dataset_usage() {
+    local pool_name="$1"
+    local alert_threshold="$2"  # Percentage
+    
+    log_dataset_operation "Monitoring dataset usage for pool: $pool_name (threshold: $alert_threshold%)"
+    
+    # Check each dataset with quota
+    zfs list -H -o name,quota,used -r "$pool_name" | while IFS=$'\t' read -r dataset quota used; do
+        # Skip datasets without quotas
+        [[ "$quota" == "-" ]] && continue
+        
+        # Convert to bytes for calculation
+        local quota_bytes=$(echo "$quota" | numfmt --from=iec)
+        local used_bytes=$(echo "$used" | numfmt --from=iec)
+        
+        if [[ $quota_bytes -gt 0 ]]; then
+            local usage_percent=$(( (used_bytes * 100) / quota_bytes ))
+            
+            if [[ $usage_percent -ge $alert_threshold ]]; then
+                log_dataset_operation "ALERT: Dataset $dataset at $usage_percent% capacity ($used / $quota)"
+                
+                # Send notification (implement your notification method)
+                echo "Dataset Usage Alert: $dataset is $usage_percent% full" | \
+                    mail -s "ZFS Quota Alert" admin@company.com 2>/dev/null || true
+            fi
+        fi
+    done
+}
+
+# Example usage files
+cat > /tmp/users_quota.txt << 'EOF'
+# username:quota
+alice:50G
+bob:100G
+charlie:25G
+development_shared:500G
+EOF
+
+# Execute dataset management workflow
+POOL_NAME="corporate-pool"
+
+create_enterprise_hierarchy "$POOL_NAME"
+configure_dataset_policies "$POOL_NAME"
+create_user_datasets "$POOL_NAME" "/tmp/users_quota.txt"
+setup_dataset_delegation "$POOL_NAME"
+
+# Start monitoring
+monitor_dataset_usage "$POOL_NAME" 80
+
+log_dataset_operation "Enterprise dataset management setup completed"
+```
 #!/bin/bash
 # checksum-monitor.sh
 
