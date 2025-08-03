@@ -1,115 +1,2252 @@
 # Module 10: Storage & Filesystem Management
 
+## Table of Contents
+- [Overview](#overview)
+- [Learning Objectives](#learning-objectives)
+- [Topics](#topics)
+  - [10.1 Storage Fundamentals and Partition Management](#101-storage-fundamentals-and-partition-management)
+  - [10.2 Filesystem Creation and Advanced Tuning](#102-filesystem-creation-and-advanced-tuning)
+  - [10.3 Logical Volume Manager (LVM) Deep Dive](#103-logical-volume-manager-lvm-deep-dive)
+  - [10.4 Software and Hardware RAID Implementation](#104-software-and-hardware-raid-implementation)
+  - [10.5 Storage Performance Optimization](#105-storage-performance-optimization)
+  - [10.6 Backup and Recovery Strategies](#106-backup-and-recovery-strategies)
+  - [10.7 Network Storage and Clustering](#107-network-storage-and-clustering)
+  - [10.8 Storage Security and Encryption](#108-storage-security-and-encryption)
+- [Essential Command Reference](#essential-command-reference)
+- [Practical Examples](#practical-examples)
+  - [Partition Management](#partition-management)
+  - [Filesystem Operations](#filesystem-operations)
+  - [LVM Administration](#lvm-administration)
+  - [RAID Configuration](#raid-configuration)
+  - [Performance Optimization](#performance-optimization)
+  - [Storage Security](#storage-security)
+- [Lab Exercises](#lab-exercises)
+  - [Lab 1: Advanced Partitioning and Filesystem Management](#lab-1-advanced-partitioning-and-filesystem-management)
+  - [Lab 2: LVM Implementation and Management](#lab-2-lvm-implementation-and-management)
+  - [Lab 3: RAID Configuration and Recovery](#lab-3-raid-configuration-and-recovery)
+  - [Lab 4: Storage Performance Optimization](#lab-4-storage-performance-optimization)
+  - [Lab 5: Enterprise Storage Infrastructure](#lab-5-enterprise-storage-infrastructure)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+- [Assessment Criteria](#assessment-criteria)
+- [Next Steps](#next-steps)
+
 ## Overview
-Focuses on disk partitioning, LVM, RAID, and advanced filesystem tuning to optimize performance and resilience. This module covers advanced storage management and filesystem administration in Linux, providing hands-on experience with enterprise-grade storage solutions that balance performance and data integrity.
+This module provides comprehensive coverage of enterprise-grade storage management and filesystem administration in Linux. Students will master advanced storage technologies including software and hardware RAID, Logical Volume Manager (LVM), and filesystem optimization techniques. The curriculum emphasizes hands-on experience with real-world scenarios, balancing performance optimization with data integrity and disaster recovery capabilities.
+
+**Key Learning Outcomes:**
+- Design and implement resilient storage architectures using RAID and LVM
+- Optimize filesystem performance for specific workloads and use cases
+- Manage live storage operations without system downtime
+- Implement comprehensive backup and recovery strategies
+- Configure network storage solutions and clustering technologies
+- Secure storage systems with encryption and access controls
 
 ## Learning Objectives
 By the end of this module, you will be able to:
-1. **Design and implement RAID configurations, and recover from disk failures** - Master software and hardware RAID concepts, implement various RAID levels, and perform complete disaster recovery procedures
-2. **Create, extend, and shrink LVM volumes and snapshots on a live system** - Manage Logical Volume Manager operations including dynamic resizing, snapshot management, and live system modifications without downtime
-3. **Partition disks, format filesystems, and manage partition tables (GPT/MBR)** - Utilize fdisk/gdisk for partitioning, understand partition types, and make informed decisions between GPT and MBR partition schemes
-4. **Tune filesystem and mount options to strike the right balance between performance and data integrity** - Optimize ext4/XFS parameters and mount options (noatime, barriers, etc.) for specific workloads and performance requirements
+
+1. **Master Partition Management**: Create, modify, and recover partition tables using fdisk, gdisk, and parted across MBR and GPT schemes
+2. **Optimize Filesystem Performance**: Select appropriate filesystems and configure mount options for maximum performance and reliability
+3. **Implement LVM Solutions**: Design and manage logical volumes with snapshots, thin provisioning, and live resizing capabilities
+4. **Configure RAID Arrays**: Build and maintain software and hardware RAID configurations with comprehensive failure recovery procedures
+5. **Optimize Storage Performance**: Analyze and tune storage subsystems for specific workload requirements and performance characteristics
+6. **Design Backup Strategies**: Implement enterprise backup and disaster recovery solutions with automated testing and validation
 
 ## Topics
 
 ### 10.1 Storage Fundamentals and Partition Management
-- **Block devices and storage hierarchy**: Understanding device mapping, identification, and naming conventions
-- **Partition types and schemes**: MBR vs GPT comparison, partition alignment, and optimization strategies
-- **fdisk vs gdisk**: Command-line partitioning tools for MBR and GPT partition tables
-- **Advanced partitioning with parted**: Cross-platform partitioning for complex layouts
-- **Partition table recovery**: Disaster recovery techniques for corrupted partition tables
-
-**🔗 Practical Examples**: [Partitioning with fdisk/gdisk](#partitioning-with-fdisk-and-gdisk) | [Advanced Partitioning Scenarios](#advanced-partitioning-scenarios)
+- Block device architecture and storage hierarchy mapping
+- Partition table comparison: MBR vs GPT advantages and limitations
+- Advanced partitioning tools: fdisk, gdisk, parted, and cfdisk
+- Partition alignment and performance optimization strategies
+- Partition table recovery and disaster recovery procedures
+- Device naming conventions and persistent identification methods
 
 ### 10.2 Filesystem Creation and Advanced Tuning
-- **Filesystem selection criteria**: ext4, XFS, Btrfs comparison and use case analysis
-- **Filesystem parameters**: Block sizes, inode ratios, journal configurations
-- **Performance tuning**: Mount options (noatime, barriers, data modes) for optimization
-- **UUID and label management**: Persistent device identification and naming
-- **Filesystem maintenance**: Checking, repair, and optimization procedures
-
-**🔗 Practical Examples**: [Filesystem Performance Tuning](#filesystem-performance-tuning) | [Mount Options Optimization](#mount-options-optimization)
+- Comprehensive filesystem comparison: ext4, XFS, Btrfs, and ZFS
+- Filesystem creation parameters and optimization techniques
+- Mount options for performance: noatime, barriers, data modes, and compression
+- UUID and label management for persistent device identification
+- Filesystem maintenance: checking, repair, defragmentation, and optimization
+- Performance monitoring and capacity planning strategies
 
 ### 10.3 Logical Volume Manager (LVM) Deep Dive
-- **LVM architecture**: Physical Volumes (PV), Volume Groups (VG), and Logical Volumes (LV)
-- **Live system operations**: Creating, extending, and shrinking volumes without downtime
-- **LVM snapshots**: Backup strategies, snapshot management, and live system backups
-- **Advanced LVM features**: Thin provisioning, RAID LVs, and cache volumes
-- **LVM troubleshooting**: Recovery procedures and common issue resolution
-
-**🔗 Practical Examples**: [Live LVM Operations](#live-lvm-operations) | [LVM Snapshot Management](#lvm-snapshot-management)
+- LVM architecture: Physical Volumes, Volume Groups, and Logical Volumes
+- Live system operations: extending, shrinking, and migrating volumes
+- LVM snapshots: creation, management, and backup integration
+- Advanced features: thin provisioning, cache volumes, and RAID LVs
+- LVM troubleshooting and recovery procedures
+- Performance optimization and capacity management
 
 ### 10.4 Software and Hardware RAID Implementation
-- **RAID levels comparison**: RAID 0, 1, 5, 6, 10 - performance vs resilience trade-offs
-- **Software vs Hardware RAID**: Implementation differences and use case analysis
-- **mdadm RAID management**: Creating, monitoring, and maintaining arrays
-- **RAID failure recovery**: Hot spare configuration and disk replacement procedures
-- **RAID performance optimization**: Chunk sizes, read-ahead, and stripe optimization
+- RAID level analysis: RAID 0, 1, 5, 6, 10 performance and resilience characteristics
+- Software RAID with mdadm: creation, monitoring, and maintenance
+- Hardware RAID configuration and management interfaces
+- RAID failure detection, hot spare configuration, and replacement procedures
+- RAID performance optimization: chunk sizes, read-ahead, and stripe configuration
+- RAID disaster recovery and data reconstruction techniques
 
-**🔗 Practical Examples**: [RAID Implementation](#raid-implementation-and-management) | [RAID Disaster Recovery](#raid-disaster-recovery)
+### 10.5 Storage Performance Optimization
+- I/O pattern analysis and workload characterization
+- Storage subsystem tuning: scheduler selection and queue optimization
+- SSD optimization: TRIM support, over-provisioning, and wear leveling
+- Cache configuration and buffer management
+- Performance monitoring tools and metrics analysis
+- Capacity planning and growth prediction modeling
 
-### 10.5 Advanced Storage Performance and Monitoring
-- **I/O performance analysis**: iostat, iotop, and sar for storage monitoring
-- **Filesystem benchmarking**: Performance testing and bottleneck identification
-- **SSD optimization**: TRIM, over-provisioning, and wear leveling
-- **Storage capacity planning**: Trend analysis and growth prediction
-- **Performance troubleshooting**: Identifying and resolving storage bottlenecks
+### 10.6 Backup and Recovery Strategies
+- Backup architecture design and strategy development
+- Snapshot-based backup systems and point-in-time recovery
+- Incremental and differential backup implementations
+- Disaster recovery planning and testing procedures
+- Backup validation and integrity verification
+- Cloud backup integration and hybrid storage strategies
 
-**🔗 Practical Examples**: [Storage Performance Monitoring](#storage-performance-monitoring) | [SSD Optimization](#ssd-optimization-techniques)
+### 10.7 Network Storage and Clustering
+- NFS configuration and performance optimization
+- iSCSI target and initiator setup and management
+- Shared storage clustering with GFS2 and OCFS2
+- Storage area network (SAN) integration and management
+- High availability storage configurations
+- Load balancing and failover mechanisms
 
-### 10.6 Security and Access Control
-- **Filesystem quotas**: User and group quota implementation and management
-- **Access Control Lists (ACLs)**: Extended permissions and inheritance
-- **Encrypted filesystems (LUKS)**: Full disk encryption and key management
-- **Network filesystems**: NFS, CIFS configuration and security
-- **Storage security best practices**: Data protection and compliance
+### 10.8 Storage Security and Encryption
+- Full disk encryption with LUKS and dm-crypt
+- File-level encryption and secure key management
+- Access control and permission management
+- Storage audit logging and compliance monitoring
+- Secure erasure and data destruction procedures
+- Regulatory compliance and data protection standards
 
-**🔗 Practical Examples**: [Filesystem Quotas](#filesystem-quotas-implementation) | [LUKS Encryption](#luks-encryption-setup)
+## Essential Command Reference
+
+### Storage Discovery and Analysis
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `lsblk` | List block devices in tree format | `lsblk -f` |
+| `blkid` | Display block device attributes | `blkid /dev/sda1` |
+| `fdisk -l` | List disk partition tables | `fdisk -l /dev/sda` |
+| `parted -l` | List partition information | `parted -l` |
+| `lshw -class disk` | Show hardware disk information | `lshw -class disk -short` |
+| `df -h` | Display filesystem disk space usage | `df -h` |
+| `du -sh` | Show directory space usage | `du -sh /var/log` |
+
+### Partitioning Operations
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `fdisk /dev/sdX` | Interactive disk partitioning (MBR) | `fdisk /dev/sda` |
+| `gdisk /dev/sdX` | Interactive disk partitioning (GPT) | `gdisk /dev/sda` |
+| `parted /dev/sdX` | GNU parted partitioning tool | `parted /dev/sda print` |
+| `cfdisk /dev/sdX` | Curses-based disk partitioning | `cfdisk /dev/sda` |
+| `sfdisk -l` | Script-friendly disk partitioning | `sfdisk -l /dev/sda` |
+| `partprobe` | Inform kernel of partition changes | `partprobe /dev/sda` |
+
+### Filesystem Operations
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `mkfs.ext4` | Create ext4 filesystem | `mkfs.ext4 /dev/sda1` |
+| `mkfs.xfs` | Create XFS filesystem | `mkfs.xfs /dev/sda1` |
+| `mkfs.btrfs` | Create Btrfs filesystem | `mkfs.btrfs /dev/sda1` |
+| `mount` | Mount filesystem | `mount /dev/sda1 /mnt` |
+| `umount` | Unmount filesystem | `umount /mnt` |
+| `fsck` | Check and repair filesystem | `fsck.ext4 /dev/sda1` |
+| `tune2fs` | Adjust ext2/3/4 parameters | `tune2fs -l /dev/sda1` |
+| `xfs_admin` | Adjust XFS parameters | `xfs_admin -l /dev/sda1` |
+
+### LVM Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `pvcreate` | Create physical volume | `pvcreate /dev/sda1` |
+| `vgcreate` | Create volume group | `vgcreate vg01 /dev/sda1` |
+| `lvcreate` | Create logical volume | `lvcreate -L 10G -n lv01 vg01` |
+| `pvdisplay` | Show physical volume information | `pvdisplay /dev/sda1` |
+| `vgdisplay` | Show volume group information | `vgdisplay vg01` |
+| `lvdisplay` | Show logical volume information | `lvdisplay /dev/vg01/lv01` |
+| `lvextend` | Extend logical volume | `lvextend -L +5G /dev/vg01/lv01` |
+| `lvcreate -s` | Create LVM snapshot | `lvcreate -s -L 1G -n snap01 /dev/vg01/lv01` |
+
+### RAID Management
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `mdadm --create` | Create RAID array | `mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1` |
+| `mdadm --detail` | Show RAID array details | `mdadm --detail /dev/md0` |
+| `mdadm --examine` | Examine RAID superblock | `mdadm --examine /dev/sda1` |
+| `mdadm --add` | Add device to array | `mdadm --add /dev/md0 /dev/sdc1` |
+| `mdadm --remove` | Remove device from array | `mdadm --remove /dev/md0 /dev/sda1` |
+| `mdadm --fail` | Mark device as failed | `mdadm --fail /dev/md0 /dev/sda1` |
+| `cat /proc/mdstat` | Show RAID status | `cat /proc/mdstat` |
+
+### Performance Monitoring
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `iostat` | I/O statistics for devices | `iostat -x 1` |
+| `iotop` | I/O usage by processes | `iotop -o` |
+| `sar -d` | Disk activity report | `sar -d 1 5` |
+| `hdparm` | Get/set disk parameters | `hdparm -I /dev/sda` |
+| `smartctl` | Control SMART monitoring | `smartctl -a /dev/sda` |
+| `fio` | Flexible I/O tester | `fio --name=test --rw=read --size=1G` |
+
+### Storage Security
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `cryptsetup` | LUKS encryption management | `cryptsetup luksFormat /dev/sda1` |
+| `setfacl` | Set file access control lists | `setfacl -m u:user:rw file.txt` |
+| `getfacl` | Get file access control lists | `getfacl file.txt` |
+| `quotacheck` | Build quota database files | `quotacheck -cug /home` |
+| `quotaon` | Enable filesystem quotas | `quotaon /home` |
+| `edquota` | Edit user quotas | `edquota username` |
+| `shred` | Securely delete files | `shred -vfz -n 3 file.txt` |
 
 ## Practical Examples
 
-### Disk Information and Analysis
+### Partition Management
 
-#### Comprehensive Storage Discovery
+#### Advanced GPT Partitioning with gdisk
 ```bash
-# Complete storage overview
-lsblk -f -o NAME,SIZE,FSTYPE,MOUNTPOINT,UUID,LABEL
-tree /dev/disk/
+#!/bin/bash
+# advanced-partitioning.sh - Enterprise disk partitioning script
 
-# Detailed block device information
-sudo blkid -o list
-sudo lshw -class disk -short
-sudo hwinfo --disk --short
+DISK="/dev/sdb"
+LOG_FILE="/var/log/partition-setup.log"
 
-# Show all storage devices with detailed info
-sudo fdisk -l
-sudo parted -l
-cat /proc/partitions
+log_message() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
 
-# Display filesystem usage and performance
-df -h -T
-sudo dumpe2fs /dev/sda1 | grep -E "(Block count|Block size|Free blocks)"
-findmnt -D  # Show mount propagation
+create_gpt_layout() {
+    local disk="$1"
+    
+    log_message "Starting GPT partitioning on $disk"
+    
+    # Backup existing partition table
+    sudo sgdisk --backup="/tmp/$(basename $disk).backup" "$disk"
+    
+    # Create new GPT partition table
+    sudo sgdisk --zap-all "$disk"
+    
+    # Create partitions with optimal alignment
+    sudo sgdisk --new=1:2048:+512M --typecode=1:ef00 --change-name=1:"EFI System" "$disk"
+    sudo sgdisk --new=2:0:+1G --typecode=2:8300 --change-name=2:"Boot" "$disk"
+    sudo sgdisk --new=3:0:+2G --typecode=3:8200 --change-name=3:"Swap" "$disk"
+    sudo sgdisk --new=4:0:0 --typecode=4:8e00 --change-name=4:"LVM" "$disk"
+    
+    # Verify partition alignment
+    sudo sgdisk --verify "$disk"
+    
+    # Display final layout
+    sudo sgdisk --print "$disk"
+    
+    log_message "GPT partitioning completed successfully"
+}
 
-# Check device health and performance
-sudo smartctl -a /dev/sda
-sudo hdparm -I /dev/sda
-sudo hdparm -tT /dev/sda  # Performance test
+# Partition alignment verification
+check_alignment() {
+    local disk="$1"
+    
+    log_message "Checking partition alignment for $disk"
+    
+    for partition in ${disk}[1-9]; do
+        if [[ -e "$partition" ]]; then
+            start_sector=$(sudo sgdisk --info=1 "$disk" | grep "First sector" | awk '{print $3}')
+            if (( start_sector % 2048 == 0 )); then
+                log_message "Partition $partition: Properly aligned (start: $start_sector)"
+            else
+                log_message "WARNING: Partition $partition: Misaligned (start: $start_sector)"
+            fi
+        fi
+    done
+}
+
+# Performance optimization setup
+optimize_partitions() {
+    local disk="$1"
+    
+    log_message "Applying performance optimizations"
+    
+    # Set optimal I/O scheduler for SSDs
+    if sudo smartctl -a "$disk" | grep -q "Solid State"; then
+        echo "none" | sudo tee "/sys/block/$(basename $disk)/queue/scheduler"
+        log_message "Set 'none' scheduler for SSD $disk"
+    else
+        echo "mq-deadline" | sudo tee "/sys/block/$(basename $disk)/queue/scheduler"
+        log_message "Set 'mq-deadline' scheduler for HDD $disk"
+    fi
+    
+    # Optimize read-ahead settings
+    sudo blockdev --setra 256 "$disk"
+    log_message "Set read-ahead to 256 sectors for $disk"
+}
+
+# Execute partitioning workflow
+if [[ -b "$DISK" ]]; then
+    create_gpt_layout "$DISK"
+    check_alignment "$DISK"
+    optimize_partitions "$DISK"
+    
+    # Update kernel partition table
+    sudo partprobe "$DISK"
+    sleep 2
+    
+    log_message "Partition setup workflow completed"
+else
+    log_message "ERROR: Disk $DISK not found or not a block device"
+    exit 1
+fi
 ```
 
-### Partitioning with fdisk and gdisk
-
-#### MBR Partitioning with fdisk
+#### MBR to GPT Conversion
 ```bash
-# Interactive fdisk session for MBR
-sudo fdisk /dev/sdb
+#!/bin/bash
+# mbr-to-gpt-conversion.sh - Safe MBR to GPT conversion
 
-# Automated fdisk partitioning
-sudo fdisk /dev/sdb << EOF
-o      # Create new DOS partition table
-n      # New partition
-p      # Primary partition
-1      # Partition number
+DISK="/dev/sdc"
+BACKUP_DIR="/backup/partition-tables"
+
+perform_conversion() {
+    local disk="$1"
+    
+    # Create backup directory
+    sudo mkdir -p "$BACKUP_DIR"
+    
+    # Backup MBR and partition table
+    sudo dd if="$disk" of="$BACKUP_DIR/$(basename $disk)-mbr.backup" bs=512 count=1
+    sudo sfdisk -d "$disk" > "$BACKUP_DIR/$(basename $disk)-layout.backup"
+    
+    echo "Backing up current MBR and partition layout..."
+    
+    # Check if conversion is safe
+    if sudo sgdisk --verify "$disk" 2>/dev/null; then
+        echo "Disk already has GPT partition table"
+        exit 0
+    fi
+    
+    # Perform conversion
+    echo "Converting MBR to GPT..."
+    sudo sgdisk --mbrtogpt "$disk"
+    
+    # Verify conversion
+    if sudo sgdisk --verify "$disk"; then
+        echo "Conversion successful!"
+        sudo sgdisk --print "$disk"
+    else
+        echo "Conversion failed! Restoring from backup..."
+        sudo dd if="$BACKUP_DIR/$(basename $disk)-mbr.backup" of="$disk" bs=512 count=1
+        exit 1
+    fi
+}
+
+perform_conversion "$DISK"
+```
+
+### Filesystem Operations
+
+#### Advanced Filesystem Creation and Tuning
+```bash
+#!/bin/bash
+# filesystem-optimization.sh - Optimized filesystem creation
+
+create_optimized_ext4() {
+    local device="$1"
+    local mount_point="$2"
+    local workload="$3"  # database, web, general
+    
+    case "$workload" in
+        "database")
+            # Database optimizations: larger block size, fewer inodes
+            sudo mkfs.ext4 -b 4096 -i 16384 -E stride=32,stripe-width=64 \
+                          -O ^has_journal,extent,flex_bg \
+                          -L "database" "$device"
+            mount_opts="noatime,nodev,data=writeback,barrier=0,nobh"
+            ;;
+        "web")
+            # Web server optimizations: balanced performance
+            sudo mkfs.ext4 -b 4096 -i 8192 -E stride=16,stripe-width=32 \
+                          -O extent,flex_bg \
+                          -L "webserver" "$device"
+            mount_opts="noatime,nodev,data=ordered,barrier=1"
+            ;;
+        "general"|*)
+            # General purpose optimizations
+            sudo mkfs.ext4 -b 4096 -i 4096 -E stride=8,stripe-width=16 \
+                          -O extent,flex_bg,dir_index \
+                          -L "general" "$device"
+            mount_opts="noatime,data=ordered,barrier=1"
+            ;;
+    esac
+    
+    # Create mount point and mount with optimized options
+    sudo mkdir -p "$mount_point"
+    echo "$device $mount_point ext4 $mount_opts 0 2" | sudo tee -a /etc/fstab
+    sudo mount "$mount_point"
+    
+    echo "Created optimized ext4 filesystem for $workload workload"
+    sudo tune2fs -l "$device" | grep -E "(Block size|Inode size|Journal|Features)"
+}
+
+create_optimized_xfs() {
+    local device="$1"
+    local mount_point="$2"
+    local raid_setup="$3"  # none, raid0, raid10
+    
+    case "$raid_setup" in
+        "raid0")
+            # RAID 0 optimizations
+            sudo mkfs.xfs -f -d agcount=8,sunit=64,swidth=128 \
+                         -l size=128m -n size=64k \
+                         -L "xfs_raid0" "$device"
+            mount_opts="noatime,largeio,swalloc,allocsize=16m"
+            ;;
+        "raid10")
+            # RAID 10 optimizations  
+            sudo mkfs.xfs -f -d agcount=16,sunit=64,swidth=256 \
+                         -l size=256m -n size=64k \
+                         -L "xfs_raid10" "$device"
+            mount_opts="noatime,largeio,swalloc,allocsize=32m"
+            ;;
+        "none"|*)
+            # Single disk optimizations
+            sudo mkfs.xfs -f -d agcount=4 -l size=64m -n size=64k \
+                         -L "xfs_single" "$device"
+            mount_opts="noatime,largeio"
+            ;;
+    esac
+    
+    # Mount with optimized options
+    sudo mkdir -p "$mount_point"
+    echo "$device $mount_point xfs $mount_opts 0 2" | sudo tee -a /etc/fstab
+    sudo mount "$mount_point"
+    
+    echo "Created optimized XFS filesystem for $raid_setup configuration"
+    sudo xfs_info "$mount_point"
+}
+
+# Example usage
+create_optimized_ext4 "/dev/sdb1" "/var/lib/mysql" "database"
+create_optimized_xfs "/dev/md0" "/data" "raid10"
+```
+
+#### Filesystem Performance Analysis
+```bash
+#!/bin/bash
+# filesystem-benchmark.sh - Comprehensive filesystem performance testing
+
+MOUNT_POINT="/data"
+TEST_SIZE="1G"
+RESULTS_DIR="/tmp/benchmark-results"
+
+run_filesystem_benchmark() {
+    local mount_point="$1"
+    local test_size="$2"
+    
+    mkdir -p "$RESULTS_DIR"
+    local timestamp=$(date +%Y%m%d_%H%M%S)
+    local results_file="$RESULTS_DIR/benchmark_${timestamp}.txt"
+    
+    echo "=== Filesystem Benchmark Results ===" > "$results_file"
+    echo "Mount Point: $mount_point" >> "$results_file"
+    echo "Test Size: $test_size" >> "$results_file"
+    echo "Date: $(date)" >> "$results_file"
+    echo "" >> "$results_file"
+    
+    # Sequential read/write performance
+    echo "Running sequential I/O tests..." | tee -a "$results_file"
+    
+    # Sequential write
+    echo "Sequential Write Test:" >> "$results_file"
+    dd if=/dev/zero of="$mount_point/test_seq_write" bs=1M count=1024 conv=fsync 2>&1 | \
+        grep -E "(copied|MB/s)" >> "$results_file"
+    
+    # Sequential read
+    echo "Sequential Read Test:" >> "$results_file"
+    dd if="$mount_point/test_seq_write" of=/dev/null bs=1M 2>&1 | \
+        grep -E "(copied|MB/s)" >> "$results_file"
+    
+    # Random I/O performance with fio
+    echo "Running random I/O tests..." | tee -a "$results_file"
+    
+    # Random read
+    fio --name=random_read --directory="$mount_point" --rw=randread \
+        --bs=4k --size="$test_size" --numjobs=4 --runtime=60 \
+        --group_reporting --output-format=normal >> "$results_file"
+    
+    # Random write
+    fio --name=random_write --directory="$mount_point" --rw=randwrite \
+        --bs=4k --size="$test_size" --numjobs=4 --runtime=60 \
+        --group_reporting --output-format=normal >> "$results_file"
+    
+    # Mixed workload
+    fio --name=mixed_workload --directory="$mount_point" --rw=randrw \
+        --bs=4k --size="$test_size" --numjobs=4 --runtime=60 \
+        --rwmixread=70 --group_reporting --output-format=normal >> "$results_file"
+    
+    # Cleanup test files
+    rm -f "$mount_point"/test_*
+    rm -f "$mount_point"/*.fio.*
+    
+    echo "Benchmark completed. Results saved to: $results_file"
+    
+    # Display summary
+    echo ""
+    echo "=== Performance Summary ==="
+    grep -E "(WRITE:|READ:|mixed)" "$results_file" | tail -10
+}
+
+# Filesystem-specific optimizations analysis
+analyze_filesystem_performance() {
+    local mount_point="$1"
+    
+    echo "=== Filesystem Analysis ==="
+    
+    # Get filesystem type and mount options
+    local fs_info=$(findmnt -n -o FSTYPE,OPTIONS "$mount_point")
+    echo "Filesystem: $fs_info"
+    
+    # Check for performance-impacting mount options
+    if echo "$fs_info" | grep -q "noatime"; then
+        echo "✓ noatime option detected (good for performance)"
+    else
+        echo "⚠ atime updates enabled (may impact performance)"
+    fi
+    
+    if echo "$fs_info" | grep -q "barrier=0"; then
+        echo "⚠ Write barriers disabled (performance gain but data risk)"
+    else
+        echo "✓ Write barriers enabled (safer but slower)"
+    fi
+    
+    # Check I/O scheduler
+    local device=$(findmnt -n -o SOURCE "$mount_point" | sed 's/[0-9]*$//')
+    local scheduler=$(cat "/sys/block/$(basename $device)/queue/scheduler" 2>/dev/null)
+    echo "I/O Scheduler: $scheduler"
+    
+    # Check read-ahead settings
+    local readahead=$(blockdev --getra "$device" 2>/dev/null)
+    echo "Read-ahead: $readahead sectors"
+}
+
+# Execute comprehensive benchmark
+run_filesystem_benchmark "$MOUNT_POINT" "$TEST_SIZE"
+analyze_filesystem_performance "$MOUNT_POINT"
+```
+
+### LVM Administration
+
+#### Advanced LVM Operations
+```bash
+#!/bin/bash
+# advanced-lvm-operations.sh - Enterprise LVM management
+
+VG_NAME="vg_data"
+SNAPSHOT_SIZE="10G"
+LOG_FILE="/var/log/lvm-operations.log"
+
+log_operation() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
+# Create comprehensive LVM setup
+create_lvm_infrastructure() {
+    local disks=("$@")
+    
+    log_operation "Starting LVM infrastructure creation"
+    
+    # Create physical volumes with optimal alignment
+    for disk in "${disks[@]}"; do
+        log_operation "Creating PV on $disk"
+        sudo pvcreate --dataalignment 1M "$disk"
+        
+        # Verify PV creation
+        if sudo pvdisplay "$disk" &>/dev/null; then
+            log_operation "PV created successfully on $disk"
+        else
+            log_operation "ERROR: Failed to create PV on $disk"
+            exit 1
+        fi
+    done
+    
+    # Create volume group with optimal extent size
+    log_operation "Creating volume group $VG_NAME"
+    sudo vgcreate -s 32M "$VG_NAME" "${disks[@]}"
+    
+    # Display VG information
+    sudo vgdisplay "$VG_NAME"
+    log_operation "Volume group $VG_NAME created successfully"
+}
+
+# Advanced logical volume creation with thin provisioning
+create_thin_provisioned_volumes() {
+    local vg_name="$1"
+    local pool_size="$2"
+    
+    log_operation "Creating thin provisioning setup"
+    
+    # Create thin pool
+    sudo lvcreate -L "$pool_size" --thinpool thinpool01 "$vg_name"
+    
+    # Create thin volumes (overprovisioned)
+    sudo lvcreate -V 50G --thin "$vg_name/thinpool01" -n web01
+    sudo lvcreate -V 50G --thin "$vg_name/thinpool01" -n web02
+    sudo lvcreate -V 100G --thin "$vg_name/thinpool01" -n database01
+    
+    # Monitor thin pool usage
+    sudo lvs -o +thin_count,pool_lv,data_percent,metadata_percent "$vg_name"
+    
+    log_operation "Thin provisioning setup completed"
+}
+
+# Live filesystem extension without downtime
+extend_filesystem_online() {
+    local lv_path="$1"
+    local extend_size="$2"
+    local mount_point="$3"
+    
+    log_operation "Starting online filesystem extension for $lv_path"
+    
+    # Check current sizes
+    local current_lv_size=$(sudo lvdisplay "$lv_path" | grep "LV Size" | awk '{print $3 $4}')
+    local current_fs_size=$(df -h "$mount_point" | tail -1 | awk '{print $2}')
+    
+    log_operation "Current LV size: $current_lv_size, FS size: $current_fs_size"
+    
+    # Extend logical volume
+    sudo lvextend -L "+$extend_size" "$lv_path"
+    
+    # Extend filesystem based on type
+    local fs_type=$(findmnt -n -o FSTYPE "$mount_point")
+    
+    case "$fs_type" in
+        "ext4"|"ext3"|"ext2")
+            sudo resize2fs "$lv_path"
+            ;;
+        "xfs")
+            sudo xfs_growfs "$mount_point"
+            ;;
+        "btrfs")
+            sudo btrfs filesystem resize max "$mount_point"
+            ;;
+        *)
+            log_operation "ERROR: Unsupported filesystem type: $fs_type"
+            exit 1
+            ;;
+    esac
+    
+    # Verify extension
+    local new_lv_size=$(sudo lvdisplay "$lv_path" | grep "LV Size" | awk '{print $3 $4}')
+    local new_fs_size=$(df -h "$mount_point" | tail -1 | awk '{print $2}')
+    
+    log_operation "New LV size: $new_lv_size, FS size: $new_fs_size"
+    log_operation "Online filesystem extension completed successfully"
+}
+
+# Automated snapshot management with rotation
+manage_lvm_snapshots() {
+    local lv_path="$1"
+    local retention_days="$2"
+    
+    local lv_name=$(basename "$lv_path")
+    local vg_name=$(dirname "$lv_path" | xargs basename)
+    local timestamp=$(date +%Y%m%d_%H%M%S)
+    local snapshot_name="${lv_name}_snap_${timestamp}"
+    
+    log_operation "Creating snapshot $snapshot_name for $lv_path"
+    
+    # Create snapshot
+    sudo lvcreate -L "$SNAPSHOT_SIZE" -s -n "$snapshot_name" "$lv_path"
+    
+    # Verify snapshot creation
+    if sudo lvdisplay "/dev/$vg_name/$snapshot_name" &>/dev/null; then
+        log_operation "Snapshot $snapshot_name created successfully"
+        
+        # Mount snapshot for backup access
+        local snap_mount="/mnt/snapshots/$snapshot_name"
+        sudo mkdir -p "$snap_mount"
+        sudo mount "/dev/$vg_name/$snapshot_name" "$snap_mount" -o ro,nouuid 2>/dev/null
+        
+        log_operation "Snapshot mounted at $snap_mount for backup access"
+    else
+        log_operation "ERROR: Failed to create snapshot $snapshot_name"
+        exit 1
+    fi
+    
+    # Cleanup old snapshots
+    log_operation "Cleaning up snapshots older than $retention_days days"
+    
+    while IFS= read -r old_snapshot; do
+        local snap_date=$(echo "$old_snapshot" | grep -o '[0-9]\{8\}_[0-9]\{6\}')
+        local snap_epoch=$(date -d "${snap_date:0:8} ${snap_date:9:2}:${snap_date:11:2}:${snap_date:13:2}" +%s)
+        local cutoff_epoch=$(date -d "$retention_days days ago" +%s)
+        
+        if [[ $snap_epoch -lt $cutoff_epoch ]]; then
+            log_operation "Removing old snapshot: $old_snapshot"
+            
+            # Unmount if mounted
+            local old_snap_mount="/mnt/snapshots/$old_snapshot"
+            if mountpoint -q "$old_snap_mount" 2>/dev/null; then
+                sudo umount "$old_snap_mount"
+                sudo rmdir "$old_snap_mount"
+            fi
+            
+            # Remove snapshot
+            sudo lvremove -f "/dev/$vg_name/$old_snapshot"
+        fi
+    done <<< "$(sudo lvs --noheadings -o lv_name "$vg_name" | grep "${lv_name}_snap_" | tr -d ' ')"
+}
+
+# Performance monitoring and optimization
+monitor_lvm_performance() {
+    local vg_name="$1"
+    
+    echo "=== LVM Performance Analysis ==="
+    
+    # VG performance metrics
+    echo "Volume Group Statistics:"
+    sudo vgdisplay "$vg_name" | grep -E "(VG Size|PE Size|Alloc PE|Free PE)"
+    
+    # LV performance metrics
+    echo ""
+    echo "Logical Volume Statistics:"
+    sudo lvs -o +stripes,stripesize,chunksize "$vg_name"
+    
+    # Physical volume performance
+    echo ""
+    echo "Physical Volume Performance:"
+    for pv in $(sudo vgdisplay "$vg_name" | grep "PV Name" | awk '{print $3}'); do
+        echo "PV: $pv"
+        sudo pvs -o +pv_used,pv_free "$pv"
+        
+        # Check underlying device performance
+        local device=$(echo "$pv" | sed 's/[0-9]*$//')
+        iostat -x 1 1 "$device" | tail -1
+    done
+    
+    # Thin pool monitoring (if exists)
+    if sudo lvs --noheadings -o pool_lv "$vg_name" | grep -q "thinpool"; then
+        echo ""
+        echo "Thin Pool Statistics:"
+        sudo lvs -o +data_percent,metadata_percent,pool_lv "$vg_name" | grep thinpool
+    fi
+}
+
+# Example usage
+DISKS=("/dev/sdb" "/dev/sdc" "/dev/sdd")
+create_lvm_infrastructure "${DISKS[@]}"
+create_thin_provisioned_volumes "$VG_NAME" "200G"
+extend_filesystem_online "/dev/$VG_NAME/web01" "10G" "/var/www"
+manage_lvm_snapshots "/dev/$VG_NAME/database01" "7"
+monitor_lvm_performance "$VG_NAME"
+```
+
+### RAID Configuration
+
+#### Comprehensive RAID Management System
+```bash
+#!/bin/bash
+# enterprise-raid-manager.sh - Complete RAID management solution
+
+RAID_CONFIG_DIR="/etc/mdadm"
+LOG_FILE="/var/log/raid-operations.log"
+ALERT_EMAIL="admin@company.com"
+
+log_raid_operation() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
+send_alert() {
+    local subject="$1"
+    local message="$2"
+    
+    echo "$message" | mail -s "$subject" "$ALERT_EMAIL"
+    log_raid_operation "Alert sent: $subject"
+}
+
+# Create RAID array with optimal settings
+create_raid_array() {
+    local raid_level="$1"
+    local array_name="$2"
+    shift 2
+    local devices=("$@")
+    
+    log_raid_operation "Creating RAID $raid_level array $array_name with devices: ${devices[*]}"
+    
+    # Validate devices
+    for device in "${devices[@]}"; do
+        if [[ ! -b "$device" ]]; then
+            log_raid_operation "ERROR: Device $device is not a valid block device"
+            exit 1
+        fi
+        
+        # Check if device is already in use
+        if sudo mdadm --examine "$device" &>/dev/null; then
+            log_raid_operation "WARNING: Device $device appears to contain RAID metadata"
+        fi
+    done
+    
+    # Calculate optimal chunk size based on RAID level
+    local chunk_size
+    case "$raid_level" in
+        "0"|"10")
+            chunk_size="512"  # Optimal for performance
+            ;;
+        "1")
+            chunk_size=""     # Not applicable for RAID 1
+            ;;
+        "5"|"6")
+            chunk_size="256"  # Balance between performance and parity overhead
+            ;;
+        *)
+            log_raid_operation "ERROR: Unsupported RAID level: $raid_level"
+            exit 1
+            ;;
+    esac
+    
+    # Create array with optimal parameters
+    local create_cmd="sudo mdadm --create $array_name --level=$raid_level"
+    create_cmd+=" --raid-devices=${#devices[@]}"
+    
+    if [[ -n "$chunk_size" ]]; then
+        create_cmd+=" --chunk=$chunk_size"
+    fi
+    
+    create_cmd+=" --metadata=1.2 --assume-clean ${devices[*]}"
+    
+    log_raid_operation "Executing: $create_cmd"
+    eval "$create_cmd"
+    
+    # Wait for array to become active
+    sleep 5
+    
+    # Verify array creation
+    if sudo mdadm --detail "$array_name" &>/dev/null; then
+        log_raid_operation "RAID array $array_name created successfully"
+        
+        # Add to mdadm.conf for persistence
+        sudo mkdir -p "$RAID_CONFIG_DIR"
+        sudo mdadm --detail --scan >> "$RAID_CONFIG_DIR/mdadm.conf"
+        sudo update-initramfs -u
+        
+        # Display array information
+        sudo mdadm --detail "$array_name"
+        
+        send_alert "RAID Array Created" "RAID $raid_level array $array_name has been created successfully"
+    else
+        log_raid_operation "ERROR: Failed to create RAID array $array_name"
+        exit 1
+    fi
+}
+
+# Advanced RAID monitoring and alerting
+monitor_raid_arrays() {
+    local check_interval="$1"  # in minutes
+    
+    log_raid_operation "Starting RAID monitoring with $check_interval minute intervals"
+    
+    while true; do
+        # Check all RAID arrays
+        while IFS= read -r array; do
+            if [[ -n "$array" ]]; then
+                local array_name=$(echo "$array" | awk '{print $1}')
+                local array_status=$(sudo mdadm --detail "$array_name" | grep "State :" | awk '{print $3}')
+                
+                case "$array_status" in
+                    "clean")
+                        log_raid_operation "Array $array_name: Status OK ($array_status)"
+                        ;;
+                    "active")
+                        log_raid_operation "Array $array_name: Status OK ($array_status)"
+                        ;;
+                    "degraded")
+                        log_raid_operation "WARNING: Array $array_name is degraded"
+                        send_alert "RAID Degraded" "RAID array $array_name is in degraded state. Immediate attention required."
+                        ;;
+                    "failed")
+                        log_raid_operation "CRITICAL: Array $array_name has failed"
+                        send_alert "RAID Failed" "RAID array $array_name has failed. Data loss possible. Immediate intervention required."
+                        ;;
+                    *)
+                        log_raid_operation "WARNING: Array $array_name has unknown status: $array_status"
+                        send_alert "RAID Unknown Status" "RAID array $array_name has unknown status: $array_status"
+                        ;;
+                esac
+                
+                # Check individual device health
+                sudo mdadm --detail "$array_name" | grep -E "(Faulty|Spare)" | while read -r line; do
+                    log_raid_operation "Device issue in $array_name: $line"
+                done
+                
+                # Monitor rebuild progress
+                if sudo cat /proc/mdstat | grep -q "recovery\|resync\|reshape"; then
+                    local progress=$(sudo cat /proc/mdstat | grep -E "recovery|resync|reshape" | tail -1)
+                    log_raid_operation "Rebuild in progress for $array_name: $progress"
+                fi
+            fi
+        done <<< "$(cat /proc/mdstat | grep '^md' | awk '{print "/dev/" $1}')"
+        
+        sleep $((check_interval * 60))
+    done
+}
+
+# Automated RAID recovery procedures
+handle_disk_failure() {
+    local array_name="$1"
+    local failed_device="$2"
+    local replacement_device="$3"
+    
+    log_raid_operation "Handling disk failure: $failed_device in array $array_name"
+    
+    # Mark device as failed (if not already)
+    sudo mdadm --manage "$array_name" --fail "$failed_device" 2>/dev/null
+    
+    # Remove failed device
+    log_raid_operation "Removing failed device $failed_device from $array_name"
+    sudo mdadm --manage "$array_name" --remove "$failed_device"
+    
+    # Add replacement device
+    if [[ -n "$replacement_device" ]] && [[ -b "$replacement_device" ]]; then
+        log_raid_operation "Adding replacement device $replacement_device to $array_name"
+        
+        # Copy partition table if necessary
+        local source_device=$(sudo mdadm --detail "$array_name" | grep "active sync" | head -1 | awk '{print $7}')
+        if [[ -n "$source_device" ]]; then
+            sudo sfdisk -d "$source_device" | sudo sfdisk "$replacement_device" 2>/dev/null || true
+        fi
+        
+        # Add to array
+        sudo mdadm --manage "$array_name" --add "$replacement_device"
+        
+        # Monitor rebuild progress
+        log_raid_operation "Rebuild started for $array_name with replacement device $replacement_device"
+        send_alert "RAID Rebuild Started" "RAID rebuild started for $array_name with replacement device $replacement_device"
+        
+        # Wait for rebuild to complete
+        while sudo cat /proc/mdstat | grep -q "recovery\|resync"; do
+            local progress=$(sudo cat /proc/mdstat | grep -E "recovery|resync" | tail -1)
+            log_raid_operation "Rebuild progress: $progress"
+            sleep 300  # Check every 5 minutes
+        done
+        
+        log_raid_operation "Rebuild completed for $array_name"
+        send_alert "RAID Rebuild Complete" "RAID rebuild completed successfully for $array_name"
+    else
+        log_raid_operation "No replacement device specified or device not available"
+        send_alert "RAID Manual Intervention Required" "Failed device removed from $array_name. Manual replacement required."
+    fi
+}
+
+# Performance optimization for RAID arrays
+optimize_raid_performance() {
+    local array_name="$1"
+    local workload_type="$2"  # random, sequential, mixed
+    
+    log_raid_operation "Optimizing RAID performance for $array_name (workload: $workload_type)"
+    
+    # Get underlying devices
+    local devices=($(sudo mdadm --detail "$array_name" | grep "active sync" | awk '{print $7}'))
+    
+    # Set optimal read-ahead based on RAID level and workload
+    local raid_level=$(sudo mdadm --detail "$array_name" | grep "Raid Level" | awk '{print $4}')
+    local read_ahead
+    
+    case "$raid_level" in
+        "raid0")
+            read_ahead=$((512 * ${#devices[@]}))  # Multiply by number of devices
+            ;;
+        "raid1")
+            read_ahead=512
+            ;;
+        "raid5"|"raid6")
+            read_ahead=$((256 * (${#devices[@]} - 1)))  # Account for parity
+            ;;
+        "raid10")
+            read_ahead=$((512 * (${#devices[@]} / 2)))  # Account for mirroring
+            ;;
+        *)
+            read_ahead=512
+            ;;
+    esac
+    
+    # Apply read-ahead settings
+    sudo blockdev --setra "$read_ahead" "$array_name"
+    log_raid_operation "Set read-ahead to $read_ahead for $array_name"
+    
+    # Optimize underlying devices
+    for device in "${devices[@]}"; do
+        local base_device=$(echo "$device" | sed 's/[0-9]*$//')
+        
+        # Set appropriate I/O scheduler
+        if sudo smartctl -a "$base_device" | grep -q "Solid State"; then
+            echo "none" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+            log_raid_operation "Set 'none' scheduler for SSD $base_device"
+        else
+            echo "mq-deadline" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+            log_raid_operation "Set 'mq-deadline' scheduler for HDD $base_device"
+        fi
+        
+        # Optimize queue settings
+        case "$workload_type" in
+            "random")
+                echo 1 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
+                echo 32 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
+                ;;
+            "sequential")
+                echo 2 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
+                echo 128 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
+                ;;
+            "mixed"|*)
+                echo 1 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
+                echo 64 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
+                ;;
+        esac
+    done
+    
+    log_raid_operation "Performance optimization completed for $array_name"
+}
+
+# Comprehensive RAID testing and validation
+test_raid_functionality() {
+    local array_name="$1"
+    
+    log_raid_operation "Starting comprehensive RAID functionality test for $array_name"
+    
+    # Create test filesystem and mount point
+    local test_mount="/mnt/raid_test_$(date +%s)"
+    sudo mkdir -p "$test_mount"
+    
+    # Create test filesystem
+    sudo mkfs.ext4 -F "$array_name" >/dev/null 2>&1
+    sudo mount "$array_name" "$test_mount"
+    
+    # Performance baseline test
+    log_raid_operation "Running performance baseline test"
+    
+    # Sequential write test
+    local write_speed=$(dd if=/dev/zero of="$test_mount/testfile" bs=1M count=1024 conv=fsync 2>&1 | \
+                       grep "MB/s" | awk '{print $(NF-1)}')
+    log_raid_operation "Sequential write speed: $write_speed MB/s"
+    
+    # Sequential read test
+    local read_speed=$(dd if="$test_mount/testfile" of=/dev/null bs=1M 2>&1 | \
+                      grep "MB/s" | awk '{print $(NF-1)}')
+    log_raid_operation "Sequential read speed: $read_speed MB/s"
+    
+    # Cleanup test environment
+    sudo umount "$test_mount"
+    sudo rmdir "$test_mount"
+    
+    # Simulated failure test (if safe to do so)
+    local device_count=$(sudo mdadm --detail "$array_name" | grep "active sync" | wc -l)
+    local raid_level=$(sudo mdadm --detail "$array_name" | grep "Raid Level" | awk '{print $4}')
+    
+    if [[ "$device_count" -gt 2 ]] && [[ "$raid_level" =~ raid[56] ]]; then
+        log_raid_operation "RAID configuration supports failure simulation - skipping for safety"
+        # In production, you might want to implement controlled failure testing
+    fi
+    
+    log_raid_operation "RAID functionality test completed for $array_name"
+}
+
+# Example usage for different RAID configurations
+setup_enterprise_raid() {
+    # RAID 1 for OS (high availability)
+    create_raid_array "1" "/dev/md0" "/dev/sdb1" "/dev/sdc1"
+    optimize_raid_performance "/dev/md0" "mixed"
+    
+    # RAID 5 for data (balance of performance and redundancy)
+    create_raid_array "5" "/dev/md1" "/dev/sdd1" "/dev/sde1" "/dev/sdf1" "/dev/sdg1"
+    optimize_raid_performance "/dev/md1" "sequential"
+    
+    # RAID 10 for databases (high performance and redundancy)
+    create_raid_array "10" "/dev/md2" "/dev/sdh1" "/dev/sdi1" "/dev/sdj1" "/dev/sdk1"
+    optimize_raid_performance "/dev/md2" "random"
+    
+    # Start monitoring
+    monitor_raid_arrays 15 &  # Check every 15 minutes
+    
+    # Test all arrays
+    test_raid_functionality "/dev/md0"
+    test_raid_functionality "/dev/md1"
+    test_raid_functionality "/dev/md2"
+}
+
+# Disaster recovery procedures
+raid_disaster_recovery() {
+    local array_name="$1"
+    local backup_metadata_file="$2"
+    
+    log_raid_operation "Starting disaster recovery for $array_name"
+    
+    # Stop array if running
+    sudo mdadm --stop "$array_name" 2>/dev/null || true
+    
+    # Attempt to reassemble array
+    if [[ -f "$backup_metadata_file" ]]; then
+        log_raid_operation "Attempting recovery using metadata backup"
+        sudo mdadm --assemble "$array_name" --backup-file="$backup_metadata_file"
+    else
+        log_raid_operation "Attempting auto-assembly of array"
+        sudo mdadm --assemble --scan
+    fi
+    
+    # Force assembly if necessary (last resort)
+    if ! sudo mdadm --detail "$array_name" &>/dev/null; then
+        log_raid_operation "Normal assembly failed, attempting force assembly"
+        sudo mdadm --assemble --force "$array_name" /dev/sd*
+    fi
+    
+    # Check filesystem after recovery
+    if sudo mdadm --detail "$array_name" &>/dev/null; then
+        log_raid_operation "Array recovery successful, checking filesystem"
+        sudo fsck -y "$array_name" || log_raid_operation "Filesystem check completed with errors"
+    else
+        log_raid_operation "CRITICAL: Array recovery failed"
+        send_alert "RAID Recovery Failed" "Failed to recover RAID array $array_name. Manual intervention required."
+    fi
+}
+
+# Start enterprise RAID setup
+setup_enterprise_raid
+```
+
+### Performance Optimization
+
+#### Storage Performance Analysis and Tuning
+```bash
+#!/bin/bash
+# storage-performance-optimizer.sh - Comprehensive storage performance optimization
+
+PERFORMANCE_LOG="/var/log/storage-performance.log"
+BENCHMARK_DIR="/tmp/storage-benchmarks"
+
+log_performance() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$PERFORMANCE_LOG"
+}
+
+# Comprehensive I/O performance analysis
+analyze_storage_performance() {
+    local device="$1"
+    local duration="$2"  # in seconds
+    
+    log_performance "Starting performance analysis for $device"
+    
+    mkdir -p "$BENCHMARK_DIR"
+    local report_file="$BENCHMARK_DIR/performance_$(basename $device)_$(date +%Y%m%d_%H%M%S).txt"
+    
+    echo "=== Storage Performance Analysis Report ===" > "$report_file"
+    echo "Device: $device" >> "$report_file"
+    echo "Analysis Duration: $duration seconds" >> "$report_file"
+    echo "Timestamp: $(date)" >> "$report_file"
+    echo "" >> "$report_file"
+    
+    # Device information
+    echo "=== Device Information ===" >> "$report_file"
+    lsblk "$device" >> "$report_file" 2>/dev/null
+    echo "" >> "$report_file"
+    
+    # Current I/O scheduler and queue settings
+    local base_device=$(echo "$device" | sed 's/[0-9]*$//')
+    echo "=== Current Settings ===" >> "$report_file"
+    echo "I/O Scheduler: $(cat /sys/block/$(basename $base_device)/queue/scheduler 2>/dev/null)" >> "$report_file"
+    echo "Queue Depth: $(cat /sys/block/$(basename $base_device)/queue/nr_requests 2>/dev/null)" >> "$report_file"
+    echo "Read-ahead: $(blockdev --getra $device 2>/dev/null) sectors" >> "$report_file"
+    echo "" >> "$report_file"
+    
+    # Real-time I/O monitoring
+    echo "=== Real-time I/O Analysis ===" >> "$report_file"
+    iostat -x "$device" 1 "$duration" >> "$report_file" 2>/dev/null &
+    local iostat_pid=$!
+    
+    # Concurrent workload simulation
+    echo "=== Workload Simulation Results ===" >> "$report_file"
+    
+    # Sequential read test
+    echo "Sequential Read Performance:" >> "$report_file"
+    dd if="$device" of=/dev/null bs=1M count=1024 2>&1 | grep -E "(copied|MB/s)" >> "$report_file"
+    
+    # Random read test with multiple threads
+    echo "Random Read Performance (4K blocks, 4 threads):" >> "$report_file"
+    fio --name=random_read_test --filename="$device" --rw=randread --bs=4k \
+        --numjobs=4 --runtime=30 --group_reporting --direct=1 \
+        --output-format=normal 2>/dev/null | grep -E "(read:|IOPS)" >> "$report_file"
+    
+    # Mixed workload test
+    echo "Mixed Workload Performance (70% read, 30% write):" >> "$report_file"
+    fio --name=mixed_test --filename="$device" --rw=randrw --rwmixread=70 \
+        --bs=4k --numjobs=2 --runtime=30 --group_reporting --direct=1 \
+        --output-format=normal 2>/dev/null | grep -E "(read:|write:|IOPS)" >> "$report_file"
+    
+    # Wait for iostat to complete
+    wait $iostat_pid 2>/dev/null || true
+    
+    # SMART data analysis (if available)
+    if command -v smartctl &>/dev/null; then
+        echo "=== SMART Health Analysis ===" >> "$report_file"
+        smartctl -H "$base_device" 2>/dev/null >> "$report_file" || echo "SMART data not available" >> "$report_file"
+    fi
+    
+    log_performance "Performance analysis completed. Report: $report_file"
+    
+    # Display summary
+    echo ""
+    echo "=== Performance Summary ==="
+    grep -E "(MB/s|IOPS)" "$report_file" | head -10
+}
+
+# Optimize I/O scheduler and queue settings
+optimize_io_settings() {
+    local device="$1"
+    local workload_type="$2"  # ssd, hdd, mixed
+    local io_pattern="$3"     # random, sequential, mixed
+    
+    local base_device=$(echo "$device" | sed 's/[0-9]*$//')
+    log_performance "Optimizing I/O settings for $device (type: $workload_type, pattern: $io_pattern)"
+    
+    # Set optimal I/O scheduler
+    case "$workload_type" in
+        "ssd")
+            echo "none" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+            log_performance "Set 'none' scheduler for SSD"
+            ;;
+        "hdd")
+            case "$io_pattern" in
+                "random")
+                    echo "mq-deadline" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+                    ;;
+                "sequential")
+                    echo "mq-deadline" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+                    ;;
+                *)
+                    echo "mq-deadline" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+                    ;;
+            esac
+            log_performance "Set 'mq-deadline' scheduler for HDD"
+            ;;
+        "mixed"|*)
+            echo "mq-deadline" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+            log_performance "Set 'mq-deadline' scheduler for mixed workload"
+            ;;
+    esac
+    
+    # Optimize queue depth
+    case "$io_pattern" in
+        "random")
+            echo 32 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
+            ;;
+        "sequential")
+            echo 128 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
+            ;;
+        "mixed"|*)
+            echo 64 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
+            ;;
+    esac
+    
+    # Optimize read-ahead
+    case "$io_pattern" in
+        "random")
+            sudo blockdev --setra 128 "$device"
+            ;;
+        "sequential")
+            sudo blockdev --setra 1024 "$device"
+            ;;
+        "mixed"|*)
+            sudo blockdev --setra 512 "$device"
+            ;;
+    esac
+    
+    # Set CPU affinity for better NUMA performance
+    echo 1 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
+    
+    log_performance "I/O optimization completed for $device"
+}
+
+# SSD-specific optimizations
+optimize_ssd_performance() {
+    local device="$1"
+    
+    log_performance "Applying SSD-specific optimizations for $device"
+    
+    local base_device=$(echo "$device" | sed 's/[0-9]*$//')
+    
+    # Enable TRIM support
+    if sudo fstrim -v "$(findmnt -n -o TARGET $device)" 2>/dev/null; then
+        log_performance "TRIM operation completed for $device"
+        
+        # Enable periodic TRIM via systemd timer
+        sudo systemctl enable fstrim.timer
+        sudo systemctl start fstrim.timer
+        log_performance "Enabled periodic TRIM via systemd timer"
+    else
+        log_performance "TRIM not supported or device not mounted"
+    fi
+    
+    # Disable write cache if battery backup not available
+    if ! sudo smartctl -a "$base_device" | grep -q "Power"; then
+        sudo hdparm -W 0 "$base_device" 2>/dev/null || true
+        log_performance "Disabled write cache (no battery backup detected)"
+    fi
+    
+    # Optimize for SSD characteristics
+    echo "none" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
+    echo 1 | sudo tee "/sys/block/$(basename $base_device)/queue/nomerges" >/dev/null
+    echo 1 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
+    
+    log_performance "SSD optimizations applied for $device"
+}
+
+# Network storage optimization
+optimize_network_storage() {
+    local mount_point="$1"
+    local storage_type="$2"  # nfs, iscsi, cifs
+    
+    log_performance "Optimizing network storage at $mount_point (type: $storage_type)"
+    
+    case "$storage_type" in
+        "nfs")
+            # NFS-specific optimizations
+            local current_opts=$(findmnt -n -o OPTIONS "$mount_point")
+            
+            if ! echo "$current_opts" | grep -q "rsize="; then
+                log_performance "Consider remounting with larger rsize (e.g., rsize=1048576)"
+            fi
+            
+            if ! echo "$current_opts" | grep -q "wsize="; then
+                log_performance "Consider remounting with larger wsize (e.g., wsize=1048576)"
+            fi
+            
+            if ! echo "$current_opts" | grep -q "timeo="; then
+                log_performance "Consider setting appropriate timeout (e.g., timeo=600)"
+            fi
+            ;;
+            
+        "iscsi")
+            # iSCSI-specific optimizations
+            local iscsi_device=$(findmnt -n -o SOURCE "$mount_point")
+            if [[ -n "$iscsi_device" ]]; then
+                optimize_io_settings "$iscsi_device" "mixed" "mixed"
+                
+                # Increase iSCSI session parameters
+                echo 32 | sudo tee /sys/module/libiscsi/parameters/iscsi_max_lun >/dev/null 2>&1 || true
+                log_performance "Applied iSCSI optimizations"
+            fi
+            ;;
+            
+        "cifs")
+            # CIFS/SMB-specific optimizations
+            local current_opts=$(findmnt -n -o OPTIONS "$mount_point")
+            
+            if ! echo "$current_opts" | grep -q "cache="; then
+                log_performance "Consider using cache=strict for better performance"
+            fi
+            
+            if ! echo "$current_opts" | grep -q "rsize="; then
+                log_performance "Consider setting larger rsize (e.g., rsize=1048576)"
+            fi
+            ;;
+    esac
+    
+    log_performance "Network storage optimization completed for $mount_point"
+}
+
+# Continuous performance monitoring
+monitor_storage_performance() {
+    local devices=("$@")
+    local monitoring_duration=300  # 5 minutes
+    
+    log_performance "Starting continuous performance monitoring for devices: ${devices[*]}"
+    
+    while true; do
+        for device in "${devices[@]}"; do
+            # Check for performance anomalies
+            local current_util=$(iostat -x "$device" 1 2 | tail -1 | awk '{print $10}')
+            local current_await=$(iostat -x "$device" 1 2 | tail -1 | awk '{print $9}')
+            
+            # Alert on high utilization (>90%)
+            if (( $(echo "$current_util > 90" | bc -l) )); then
+                log_performance "WARNING: High utilization ($current_util%) on $device"
+            fi
+            
+            # Alert on high average wait time (>50ms)
+            if (( $(echo "$current_await > 50" | bc -l) )); then
+                log_performance "WARNING: High average wait time (${current_await}ms) on $device"
+            fi
+            
+            # Check for SMART warnings
+            if command -v smartctl &>/dev/null; then
+                local base_device=$(echo "$device" | sed 's/[0-9]*$//')
+                if smartctl -H "$base_device" 2>/dev/null | grep -q "FAILED"; then
+                    log_performance "CRITICAL: SMART health check failed for $device"
+                fi
+            fi
+        done
+        
+        sleep "$monitoring_duration"
+    done
+}
+
+# Example usage
+STORAGE_DEVICES=("/dev/sda" "/dev/md0" "/dev/vg01/lv_data")
+
+for device in "${STORAGE_DEVICES[@]}"; do
+    analyze_storage_performance "$device" 60
+    
+    # Apply optimizations based on device type detection
+    if sudo smartctl -a "$(echo $device | sed 's/[0-9]*$//')" 2>/dev/null | grep -q "Solid State"; then
+        optimize_ssd_performance "$device"
+        optimize_io_settings "$device" "ssd" "mixed"
+    else
+        optimize_io_settings "$device" "hdd" "mixed"
+    fi
+done
+
+# Start continuous monitoring in background
+monitor_storage_performance "${STORAGE_DEVICES[@]}" &
+
+log_performance "Storage performance optimization workflow completed"
+```
+
+### Storage Security
+
+#### LUKS Encryption Implementation
+```bash
+#!/bin/bash
+# luks-encryption-manager.sh - Enterprise LUKS encryption management
+
+ENCRYPTION_LOG="/var/log/encryption-operations.log"
+KEY_BACKUP_DIR="/secure/key-backups"
+
+log_encryption() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$ENCRYPTION_LOG"
+}
+
+# Comprehensive LUKS setup with multiple authentication methods
+setup_luks_encryption() {
+    local device="$1"
+    local container_name="$2"
+    local key_file="$3"
+    
+    log_encryption "Setting up LUKS encryption for $device"
+    
+    # Securely wipe device (optional but recommended)
+    read -p "Perform secure wipe of $device? This will take time (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        log_encryption "Performing secure wipe of $device"
+        sudo shred -vfz -n 3 "$device" || {
+            log_encryption "WARNING: Secure wipe failed or interrupted"
+        }
+    fi
+    
+    # Generate secure key file if not provided
+    if [[ -z "$key_file" ]]; then
+        key_file="/tmp/luks_${container_name}_$(date +%s).key"
+        sudo dd if=/dev/urandom of="$key_file" bs=512 count=1
+        sudo chmod 600 "$key_file"
+        log_encryption "Generated random key file: $key_file"
+    fi
+    
+    # Format LUKS container with strong parameters
+    log_encryption "Creating LUKS container with advanced parameters"
+    sudo cryptsetup luksFormat \
+        --type luks2 \
+        --cipher aes-xts-plain64 \
+        --key-size 512 \
+        --hash sha512 \
+        --iter-time 5000 \
+        --use-random \
+        --verify-passphrase \
+        "$device" "$key_file"
+    
+    if [[ $? -eq 0 ]]; then
+        log_encryption "LUKS container created successfully"
+        
+        # Open the container
+        sudo cryptsetup luksOpen "$device" "$container_name" --key-file "$key_file"
+        
+        # Backup LUKS header
+        sudo mkdir -p "$KEY_BACKUP_DIR"
+        sudo cryptsetup luksHeaderBackup "$device" \
+            --header-backup-file "$KEY_BACKUP_DIR/${container_name}_header.backup"
+        log_encryption "LUKS header backed up to $KEY_BACKUP_DIR"
+        
+        # Add additional key slots for redundancy
+        setup_additional_key_slots "$device" "$key_file"
+        
+        # Create filesystem on encrypted device
+        create_encrypted_filesystem "/dev/mapper/$container_name" "$container_name"
+        
+    else
+        log_encryption "ERROR: Failed to create LUKS container"
+        exit 1
+    fi
+}
+
+# Setup multiple authentication methods
+setup_additional_key_slots() {
+    local device="$1"
+    local primary_key="$2"
+    
+    log_encryption "Setting up additional key slots for $device"
+    
+    # Add passphrase-based slot
+    echo "Setting up passphrase authentication (slot 1):"
+    sudo cryptsetup luksAddKey "$device" --key-file "$primary_key"
+    
+    # Add secondary key file
+    local secondary_key="/tmp/luks_secondary_$(date +%s).key"
+    sudo dd if=/dev/urandom of="$secondary_key" bs=512 count=1
+    sudo chmod 600 "$secondary_key"
+    
+    sudo cryptsetup luksAddKey "$device" "$secondary_key" --key-file "$primary_key"
+    log_encryption "Added secondary key file: $secondary_key"
+    
+    # Backup all key files securely
+    sudo cp "$primary_key" "$KEY_BACKUP_DIR/"
+    sudo cp "$secondary_key" "$KEY_BACKUP_DIR/"
+    
+    # Display key slot information
+    sudo cryptsetup luksDump "$device" | grep -A2 "Key Slot"
+}
+
+# Create optimized filesystem on encrypted device
+create_encrypted_filesystem() {
+    local encrypted_device="$1"
+    local label="$2"
+    
+    log_encryption "Creating filesystem on encrypted device $encrypted_device"
+    
+    # Create ext4 with encryption-optimized parameters
+    sudo mkfs.ext4 \
+        -F \
+        -L "encrypted_$label" \
+        -O encrypt \
+        -E stride=32,stripe-width=64 \
+        "$encrypted_device"
+    
+    # Set filesystem mount options for encrypted storage
+    local mount_point="/mnt/encrypted_$label"
+    sudo mkdir -p "$mount_point"
+    
+    # Add to fstab with secure mount options
+    echo "$encrypted_device $mount_point ext4 nodev,nosuid,noexec,noatime 0 2" | \
+        sudo tee -a /etc/fstab
+    
+    log_encryption "Encrypted filesystem created and configured"
+}
+
+# Automated encryption key rotation
+rotate_luks_keys() {
+    local device="$1"
+    local old_key_slot="$2"
+    
+    log_encryption "Starting key rotation for $device (slot $old_key_slot)"
+    
+    # Generate new key
+    local new_key="/tmp/luks_rotated_$(date +%s).key"
+    sudo dd if=/dev/urandom of="$new_key" bs=512 count=1
+    sudo chmod 600 "$new_key"
+    
+    # Add new key to available slot
+    sudo cryptsetup luksAddKey "$device" "$new_key"
+    
+    if [[ $? -eq 0 ]]; then
+        # Remove old key slot
+        sudo cryptsetup luksRemoveKey "$device" --key-slot "$old_key_slot"
+        log_encryption "Key rotation completed successfully"
+        
+        # Update backup
+        sudo cryptsetup luksHeaderBackup "$device" \
+            --header-backup-file "$KEY_BACKUP_DIR/$(basename $device)_header_$(date +%s).backup"
+        
+        # Secure deletion of old key
+        sudo shred -vfz -n 3 "$new_key"
+    else
+        log_encryption "ERROR: Key rotation failed"
+        sudo rm -f "$new_key"
+        exit 1
+    fi
+}
+
+# Performance monitoring for encrypted storage
+monitor_encryption_performance() {
+    local encrypted_device="$1"
+    
+    log_encryption "Monitoring encryption performance for $encrypted_device"
+    
+    # Baseline performance without encryption overhead measurement
+    echo "=== Encryption Performance Analysis ==="
+    
+    # CPU usage during encryption operations
+    echo "CPU encryption capability:"
+    openssl speed -evp aes-256-xts 2>/dev/null | tail -1
+    
+    # I/O performance on encrypted device
+    echo "Encrypted device I/O performance:"
+    dd if=/dev/zero of="$encrypted_device" bs=1M count=100 conv=fsync 2>&1 | \
+        grep -E "(copied|MB/s)"
+    
+    # Memory usage
+    echo "Current memory usage for encryption:"
+    ps aux | grep -E "(cryptsetup|dm-crypt)" | grep -v grep
+    
+    log_encryption "Performance monitoring completed"
+}
+
+# Disaster recovery procedures
+luks_disaster_recovery() {
+    local device="$1"
+    local header_backup="$2"
+    local container_name="$3"
+    
+    log_encryption "Starting LUKS disaster recovery for $device"
+    
+    # Restore LUKS header from backup
+    if [[ -f "$header_backup" ]]; then
+        log_encryption "Restoring LUKS header from backup: $header_backup"
+        sudo cryptsetup luksHeaderRestore "$device" --header-backup-file "$header_backup"
+        
+        if [[ $? -eq 0 ]]; then
+            log_encryption "LUKS header restored successfully"
+            
+            # Attempt to open the container
+            echo "Please provide the passphrase to unlock the recovered container:"
+            sudo cryptsetup luksOpen "$device" "$container_name"
+            
+            if [[ $? -eq 0 ]]; then
+                log_encryption "Container opened successfully after recovery"
+                
+                # Check filesystem integrity
+                sudo fsck -y "/dev/mapper/$container_name"
+                log_encryption "Filesystem check completed"
+            else
+                log_encryption "ERROR: Failed to open recovered container"
+            fi
+        else
+            log_encryption "ERROR: Failed to restore LUKS header"
+        fi
+    else
+        log_encryption "ERROR: Header backup file not found: $header_backup"
+    fi
+}
+
+# Security audit for encrypted storage
+audit_encryption_security() {
+    local device="$1"
+    
+    log_encryption "Starting security audit for encrypted device $device"
+    
+    echo "=== LUKS Security Audit ==="
+    
+    # Check LUKS version and parameters
+    echo "LUKS Configuration:"
+    sudo cryptsetup luksDump "$device" | grep -E "(Version|Cipher|Hash|Key size)"
+    
+    # Check active key slots
+    echo "Active Key Slots:"
+    sudo cryptsetup luksDump "$device" | grep -A5 "Key Slot"
+    
+    # Verify cipher strength
+    local cipher=$(sudo cryptsetup luksDump "$device" | grep "Cipher:" | awk '{print $2}')
+    local key_size=$(sudo cryptsetup luksDump "$device" | grep "MK bits:" | awk '{print $3}')
+    
+    if [[ "$cipher" == "aes-xts-plain64" ]] && [[ "$key_size" -ge 256 ]]; then
+        echo "✓ Strong encryption configuration detected"
+    else
+        echo "⚠ Weak encryption configuration - consider upgrading"
+    fi
+    
+    # Check for backup files
+    echo "Backup Status:"
+    if [[ -d "$KEY_BACKUP_DIR" ]]; then
+        ls -la "$KEY_BACKUP_DIR"/*.backup 2>/dev/null || echo "No backup files found"
+    else
+        echo "⚠ Backup directory not found"
+    fi
+    
+    log_encryption "Security audit completed"
+}
+
+# Example usage
+DEVICE="/dev/sdb1"
+CONTAINER="secure_data"
+KEY_FILE="/secure/keys/primary.key"
+
+# Setup comprehensive encryption
+setup_luks_encryption "$DEVICE" "$CONTAINER" "$KEY_FILE"
+
+# Monitor performance
+monitor_encryption_performance "/dev/mapper/$CONTAINER"
+
+# Perform security audit
+audit_encryption_security "$DEVICE"
+
+# Schedule key rotation (monthly)
+echo "0 2 1 * * /path/to/rotate_luks_keys.sh $DEVICE 0" | sudo crontab -
+
+log_encryption "LUKS encryption setup and monitoring completed"
+```
+
+#### Access Control and Quotas Management
+```bash
+#!/bin/bash
+# storage-access-control.sh - Comprehensive storage security management
+
+ACL_LOG="/var/log/acl-operations.log"
+QUOTA_LOG="/var/log/quota-operations.log"
+
+log_acl() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$ACL_LOG"
+}
+
+log_quota() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$QUOTA_LOG"
+}
+
+# Advanced ACL implementation
+setup_advanced_acls() {
+    local directory="$1"
+    local security_profile="$2"  # high, medium, low
+    
+    log_acl "Setting up advanced ACLs for $directory (profile: $security_profile)"
+    
+    # Ensure ACL support is enabled
+    if ! mount | grep "$(df --output=source "$directory" | tail -1)" | grep -q "acl"; then
+        log_acl "WARNING: ACL support not enabled. Remounting with ACL support"
+        local mount_point=$(df --output=target "$directory" | tail -1)
+        sudo mount -o remount,acl "$mount_point"
+    fi
+    
+    case "$security_profile" in
+        "high")
+            # High security: Restrictive permissions with detailed logging
+            sudo setfacl -R -m d:g:wheel:rx "$directory"
+            sudo setfacl -R -m d:o::--- "$directory"
+            sudo setfacl -R -m d:u::rwx "$directory"
+            
+            # Enable audit logging for this directory
+            sudo auditctl -w "$directory" -p warx -k filesystem_access
+            log_acl "High security profile applied with audit logging"
+            ;;
+            
+        "medium")
+            # Medium security: Balanced permissions for collaboration
+            sudo setfacl -R -m d:g:users:rx "$directory"
+            sudo setfacl -R -m d:g:staff:rwx "$directory"
+            sudo setfacl -R -m d:o::r-- "$directory"
+            log_acl "Medium security profile applied"
+            ;;
+            
+        "low")
+            # Low security: Open permissions for public areas
+            sudo setfacl -R -m d:g:users:rwx "$directory"
+            sudo setfacl -R -m d:o::r-x "$directory"
+            log_acl "Low security profile applied"
+            ;;
+    esac
+    
+    # Set up automatic inheritance
+    sudo setfacl -R -d -m u::rwx,g::rx,o::--- "$directory"
+    
+    # Display current ACL configuration
+    log_acl "Current ACL configuration for $directory:"
+    getfacl "$directory" >> "$ACL_LOG"
+}
+
+# Comprehensive quota system implementation
+setup_filesystem_quotas() {
+    local filesystem="$1"
+    local quota_type="$2"  # user, group, project
+    
+    log_quota "Setting up $quota_type quotas for $filesystem"
+    
+    # Enable quota support
+    local mount_options=$(findmnt -n -o OPTIONS "$filesystem")
+    if ! echo "$mount_options" | grep -q "quota"; then
+        log_quota "Enabling quota support for $filesystem"
+        
+        # Add quota options to fstab
+        local device=$(findmnt -n -o SOURCE "$filesystem")
+        sudo sed -i "s|\($device.*\)\(defaults\)|\1\2,usrquota,grpquota|" /etc/fstab
+        
+        # Remount with quota support
+        sudo mount -o remount "$filesystem"
+    fi
+    
+    # Create quota database files
+    case "$quota_type" in
+        "user")
+            sudo quotacheck -cug "$filesystem"
+            sudo quotaon -u "$filesystem"
+            log_quota "User quotas enabled for $filesystem"
+            ;;
+        "group")
+            sudo quotacheck -cug "$filesystem"
+            sudo quotaon -g "$filesystem"
+            log_quota "Group quotas enabled for $filesystem"
+            ;;
+        "project")
+            # Project quotas (XFS only)
+            if df -T "$filesystem" | grep -q "xfs"; then
+                sudo xfs_quota -x -c "project -s" "$filesystem"
+                log_quota "Project quotas enabled for XFS filesystem $filesystem"
+            else
+                log_quota "WARNING: Project quotas only supported on XFS"
+            fi
+            ;;
+    esac
+}
+
+# Automated quota management with policies
+manage_quota_policies() {
+    local filesystem="$1"
+    local policy_file="$2"
+    
+    log_quota "Applying quota policies from $policy_file to $filesystem"
+    
+    # Read policy file and apply quotas
+    while IFS=',' read -r user_type name soft_limit hard_limit grace_period; do
+        # Skip comments and empty lines
+        [[ "$user_type" =~ ^#.*$ ]] && continue
+        [[ -z "$user_type" ]] && continue
+        
+        case "$user_type" in
+            "user")
+                sudo setquota -u "$name" "$soft_limit" "$hard_limit" 0 0 "$filesystem"
+                log_quota "Set user quota for $name: soft=$soft_limit, hard=$hard_limit"
+                ;;
+            "group")
+                sudo setquota -g "$name" "$soft_limit" "$hard_limit" 0 0 "$filesystem"
+                log_quota "Set group quota for $name: soft=$soft_limit, hard=$hard_limit"
+                ;;
+        esac
+        
+        # Set grace period if specified
+        if [[ -n "$grace_period" ]]; then
+            sudo setquota -t -u "$grace_period" "$grace_period" "$filesystem"
+        fi
+        
+    done < "$policy_file"
+    
+    log_quota "Quota policies applied successfully"
+}
+
+# Quota monitoring and alerting
+monitor_quota_usage() {
+    local filesystem="$1"
+    local alert_threshold="$2"  # percentage
+    
+    log_quota "Starting quota monitoring for $filesystem (alert at $alert_threshold%)"
+    
+    # Check user quotas
+    while IFS= read -r quota_line; do
+        if [[ "$quota_line" =~ ^[^#] ]] && [[ -n "$quota_line" ]]; then
+            local username=$(echo "$quota_line" | awk '{print $1}')
+            local used=$(echo "$quota_line" | awk '{print $3}')
+            local soft_limit=$(echo "$quota_line" | awk '{print $4}')
+            
+            if [[ "$soft_limit" -gt 0 ]]; then
+                local usage_percent=$(( (used * 100) / soft_limit ))
+                
+                if [[ "$usage_percent" -ge "$alert_threshold" ]]; then
+                    log_quota "ALERT: User $username at $usage_percent% quota usage"
+                    
+                    # Send notification to user
+                    echo "Quota Alert: You are using $usage_percent% of your allocated space." | \
+                        mail -s "Quota Warning" "$username@$(hostname -d)" 2>/dev/null || true
+                fi
+            fi
+        fi
+    done <<< "$(sudo repquota -u "$filesystem" 2>/dev/null)"
+    
+    # Check group quotas
+    while IFS= read -r quota_line; do
+        if [[ "$quota_line" =~ ^[^#] ]] && [[ -n "$quota_line" ]]; then
+            local groupname=$(echo "$quota_line" | awk '{print $1}')
+            local used=$(echo "$quota_line" | awk '{print $3}')
+            local soft_limit=$(echo "$quota_line" | awk '{print $4}')
+            
+            if [[ "$soft_limit" -gt 0 ]]; then
+                local usage_percent=$(( (used * 100) / soft_limit ))
+                
+                if [[ "$usage_percent" -ge "$alert_threshold" ]]; then
+                    log_quota "ALERT: Group $groupname at $usage_percent% quota usage"
+                fi
+            fi
+        fi
+    done <<< "$(sudo repquota -g "$filesystem" 2>/dev/null)"
+}
+
+# Security audit for storage access
+audit_storage_access() {
+    local directory="$1"
+    
+    log_acl "Starting storage access audit for $directory"
+    
+    echo "=== Storage Access Security Audit ===" > "/tmp/storage_audit_$(date +%s).txt"
+    local audit_file="/tmp/storage_audit_$(date +%s).txt"
+    
+    # Check file permissions
+    echo "=== Permission Analysis ===" >> "$audit_file"
+    find "$directory" -type f -perm /o+w -exec ls -la {} \; >> "$audit_file" 2>/dev/null
+    
+    # Check for SUID/SGID files
+    echo "=== SUID/SGID Files ===" >> "$audit_file"
+    find "$directory" -type f \( -perm -4000 -o -perm -2000 \) -exec ls -la {} \; >> "$audit_file" 2>/dev/null
+    
+    # Check ACL configurations
+    echo "=== ACL Configurations ===" >> "$audit_file"
+    find "$directory" -type d -exec getfacl {} \; >> "$audit_file" 2>/dev/null
+    
+    # Check quota status
+    echo "=== Quota Status ===" >> "$audit_file"
+    local filesystem=$(df --output=target "$directory" | tail -1)
+    repquota -a 2>/dev/null >> "$audit_file" || echo "Quotas not enabled" >> "$audit_file"
+    
+    # Check for world-writable files
+    echo "=== World-Writable Files ===" >> "$audit_file"
+    find "$directory" -type f -perm -o+w >> "$audit_file" 2>/dev/null
+    
+    log_acl "Storage access audit completed. Report: $audit_file"
+    echo "Audit report generated: $audit_file"
+}
+
+# Automated compliance checking
+check_compliance_standards() {
+    local filesystem="$1"
+    local standard="$2"  # pci, hipaa, sox
+    
+    log_acl "Checking compliance for $filesystem against $standard standards"
+    
+    case "$standard" in
+        "pci")
+            # PCI DSS requirements
+            echo "=== PCI DSS Compliance Check ==="
+            
+            # Check encryption status
+            if cryptsetup status "$(basename $filesystem)" &>/dev/null; then
+                echo "✓ Encryption: PASS (Data encrypted at rest)"
+            else
+                echo "✗ Encryption: FAIL (Data not encrypted)"
+            fi
+            
+            # Check access controls
+            if mount | grep "$filesystem" | grep -q "nodev,nosuid"; then
+                echo "✓ Mount Security: PASS (Secure mount options)"
+            else
+                echo "✗ Mount Security: FAIL (Insecure mount options)"
+            fi
+            ;;
+            
+        "hipaa")
+            # HIPAA requirements
+            echo "=== HIPAA Compliance Check ==="
+            
+            # Check audit logging
+            if auditctl -l | grep -q "$filesystem"; then
+                echo "✓ Audit Logging: PASS (Access logging enabled)"
+            else
+                echo "✗ Audit Logging: FAIL (No access logging)"
+            fi
+            
+            # Check user access controls
+            if getfacl "$filesystem" | grep -q "group:"; then
+                echo "✓ Access Control: PASS (Group-based access)"
+            else
+                echo "✗ Access Control: FAIL (No group access controls)"
+            fi
+            ;;
+            
+        "sox")
+            # SOX requirements
+            echo "=== SOX Compliance Check ==="
+            
+            # Check data retention
+            if [[ -f "/etc/logrotate.d/$(basename $filesystem)" ]]; then
+                echo "✓ Data Retention: PASS (Rotation configured)"
+            else
+                echo "✗ Data Retention: FAIL (No retention policy)"
+            fi
+            ;;
+    esac
+    
+    log_acl "Compliance check completed for $standard"
+}
+
+# Example usage and policy implementation
+SECURE_DIR="/data/secure"
+PUBLIC_DIR="/data/public"
+FILESYSTEM="/data"
+
+# Create quota policy file
+cat > /tmp/quota_policy.csv << 'EOF'
+# user_type,name,soft_limit_kb,hard_limit_kb,grace_period
+user,alice,1048576,1153024,7days
+user,bob,2097152,2306048,7days
+group,developers,10485760,11534336,14days
+group,staff,5242880,5767168,14days
+EOF
+
+# Setup comprehensive storage security
+setup_advanced_acls "$SECURE_DIR" "high"
+setup_advanced_acls "$PUBLIC_DIR" "low"
+
+setup_filesystem_quotas "$FILESYSTEM" "user"
+setup_filesystem_quotas "$FILESYSTEM" "group"
+manage_quota_policies "$FILESYSTEM" "/tmp/quota_policy.csv"
+
+# Start monitoring
+monitor_quota_usage "$FILESYSTEM" 80 &
+
+# Perform audits
+audit_storage_access "$SECURE_DIR"
+check_compliance_standards "$FILESYSTEM" "pci"
+
+log_acl "Storage security setup completed"
+log_quota "Quota management setup completed"
+```
+
+## Lab Exercises
+
+### Lab 1: Advanced Partitioning and Filesystem Management
+
+**Objective**: Master advanced partitioning techniques and filesystem optimization for enterprise storage requirements.
+
+**Tasks**:
+1. Create a comprehensive partitioning scheme using both MBR and GPT on different devices
+2. Implement filesystem optimization for different workload types (database, web, general)
+3. Configure and test filesystem mount options for performance and security
+4. Implement filesystem monitoring and maintenance procedures
+5. Design and test filesystem backup and recovery strategies
+
+**Deliverables**:
+- Complete partitioning documentation with performance benchmarks
+- Filesystem optimization report comparing different configurations
+- Automated maintenance scripts with scheduling
+- Backup and recovery test results with validation procedures
+
+**Assessment Criteria**:
+- Partitioning accuracy and optimization (25%)
+- Filesystem performance tuning effectiveness (25%)
+- Monitoring and maintenance automation (25%)
+- Backup and recovery reliability (25%)
+
+### Lab 2: LVM Implementation and Management
+
+**Objective**: Design and implement enterprise LVM infrastructure with advanced features and automation.
+
+**Tasks**:
+1. Create complex LVM hierarchy with multiple volume groups and logical volumes
+2. Implement thin provisioning with monitoring and alerting
+3. Design and test live volume expansion and contraction procedures
+4. Create automated snapshot management with retention policies
+5. Develop LVM performance monitoring and optimization procedures
+
+**Deliverables**:
+- Complete LVM infrastructure design documentation
+- Thin provisioning implementation with monitoring dashboards
+- Live operation procedures with testing validation
+- Automated snapshot management system with rotation
+- Performance optimization report with before/after metrics
+
+**Assessment Criteria**:
+- LVM architecture design and implementation (30%)
+- Thin provisioning and monitoring effectiveness (25%)
+- Live operations reliability and safety (25%)
+- Automation quality and error handling (20%)
+
+### Lab 3: RAID Configuration and Recovery
+
+**Objective**: Build comprehensive RAID infrastructure with failure recovery and performance optimization.
+
+**Tasks**:
+1. Design and implement multiple RAID levels for different use cases
+2. Create automated RAID monitoring and alerting systems
+3. Test and document complete failure recovery procedures
+4. Implement RAID performance optimization for different workloads
+5. Develop disaster recovery and business continuity procedures
+
+**Deliverables**:
+- Multi-level RAID infrastructure with performance benchmarks
+- Comprehensive monitoring and alerting system
+- Complete failure recovery documentation with test results
+- Performance optimization guide with workload-specific recommendations
+- Disaster recovery plan with tested procedures
+
+**Assessment Criteria**:
+- RAID implementation complexity and reliability (30%)
+- Monitoring and alerting effectiveness (25%)
+- Recovery procedures thoroughness and testing (25%)
+- Performance optimization results (20%)
+
+### Lab 4: Storage Performance Optimization
+
+**Objective**: Analyze and optimize storage performance for enterprise workloads with comprehensive monitoring.
+
+**Tasks**:
+1. Conduct baseline performance analysis across different storage types
+2. Implement I/O optimization for SSD and HDD configurations
+3. Design and deploy storage performance monitoring infrastructure
+4. Optimize network storage configurations (NFS, iSCSI)
+5. Create performance capacity planning and prediction models
+
+**Deliverables**:
+- Comprehensive performance baseline report
+- I/O optimization implementation with measurable improvements
+- Complete monitoring infrastructure with dashboards and alerting
+- Network storage optimization guide with performance metrics
+- Capacity planning model with growth predictions
+
+**Assessment Criteria**:
+- Performance analysis depth and accuracy (30%)
+- Optimization implementation and effectiveness (25%)
+- Monitoring infrastructure completeness (25%)
+- Capacity planning accuracy and usefulness (20%)
+
+### Lab 5: Enterprise Storage Infrastructure
+
+**Objective**: Design and implement complete enterprise storage infrastructure with security, compliance, and automation.
+
+**Tasks**:
+1. Design comprehensive storage architecture for enterprise requirements
+2. Implement storage security with encryption, access controls, and auditing
+3. Create automated provisioning and management workflows
+4. Develop compliance monitoring for industry standards (PCI, HIPAA, SOX)
+5. Build complete disaster recovery and business continuity infrastructure
+
+**Deliverables**:
+- Enterprise storage architecture design with scalability planning
+- Complete security implementation with compliance documentation
+- Automated provisioning and management system
+- Compliance monitoring and reporting infrastructure
+- Tested disaster recovery and business continuity procedures
+
+**Assessment Criteria**:
+- Architecture design quality and scalability (25%)
+- Security implementation and compliance coverage (25%)
+- Automation effectiveness and reliability (25%)
+- Disaster recovery completeness and testing (25%)
+
+## Best Practices
+
+### Storage Architecture Design
+- **Capacity Planning**: Plan for 3-5 years growth with 20% buffer for unexpected expansion
+- **Performance Requirements**: Match storage technology to workload IOPS and throughput needs
+- **Redundancy Strategy**: Implement appropriate RAID levels based on availability and performance requirements
+- **Scalability Design**: Use LVM and modular architecture for easy expansion
+- **Network Integration**: Design storage networks with adequate bandwidth and redundancy
+
+### Performance Optimization
+- **I/O Scheduler Selection**: Use appropriate schedulers (none for SSDs, mq-deadline for HDDs)
+- **Filesystem Tuning**: Optimize mount options and filesystem parameters for workload types
+- **Cache Configuration**: Implement appropriate caching strategies at multiple levels
+- **Alignment Optimization**: Ensure proper partition and filesystem alignment for performance
+- **Monitoring Integration**: Implement comprehensive performance monitoring with trend analysis
+
+### Security Implementation
+- **Encryption Strategy**: Use LUKS for data at rest and secure key management
+- **Access Controls**: Implement ACLs and quotas for granular access management
+- **Audit Logging**: Enable comprehensive audit logging for compliance requirements
+- **Network Security**: Secure storage networks with proper segmentation and authentication
+- **Regular Security Audits**: Perform periodic security assessments and vulnerability scans
+
+### Operational Excellence
+- **Automation**: Automate routine tasks including monitoring, backups, and maintenance
+- **Documentation**: Maintain comprehensive documentation of all storage configurations
+- **Change Management**: Implement proper change control procedures for storage modifications
+- **Testing Procedures**: Regular testing of backup, recovery, and disaster recovery procedures
+- **Staff Training**: Ensure staff are trained on storage technologies and emergency procedures
+
+## Troubleshooting
+
+### Common Storage Issues
+
+| Issue | Symptoms | Resolution |
+|-------|----------|------------|
+| **Partition Table Corruption** | Device not recognized, boot failures | Use gdisk/fdisk recovery, restore from backup |
+| **Filesystem Corruption** | I/O errors, mount failures | Run fsck, restore from backup if necessary |
+| **LVM Volume Issues** | Cannot access logical volumes | Check PV/VG status, use vgchange to activate |
+| **RAID Degradation** | Performance issues, error messages | Replace failed drives, monitor rebuild process |
+| **Performance Problems** | Slow I/O, high wait times | Check I/O scheduler, optimize mount options |
+| **Quota Exceeded** | Write failures, application errors | Increase quotas or clean up space |
+| **Encryption Problems** | Cannot unlock containers | Check key files, verify passphrase |
+
+### Diagnostic Techniques
+```bash
+# Storage health monitoring
+smartctl -a /dev/sda              # Check drive health
+hdparm -I /dev/sda               # Drive information
+iostat -x 1                      # I/O performance monitoring
+iotop -o                         # Process I/O usage
+
+# Filesystem diagnostics
+fsck.ext4 -n /dev/sda1           # Check filesystem (read-only)
+tune2fs -l /dev/sda1             # Filesystem parameters
+xfs_info /mount/point            # XFS filesystem info
+btrfs fi show                    # Btrfs filesystem status
+
+# LVM diagnostics
+pvdisplay -v                     # Physical volume details
+vgdisplay -v                     # Volume group details
+lvdisplay -v                     # Logical volume details
+dmsetup info                     # Device mapper status
+
+# RAID diagnostics
+cat /proc/mdstat                 # RAID status
+mdadm --detail /dev/md0          # Detailed RAID info
+mdadm --examine /dev/sda1        # Examine RAID member
+```
+
+### Recovery Procedures
+```bash
+# Partition table recovery
+gdisk /dev/sda                   # Use recovery options
+testdisk                         # Advanced recovery tool
+ddrescue /dev/sda /backup/sda.img # Image damaged drive
+
+# Filesystem recovery
+fsck -y /dev/sda1               # Automatic repair
+debugfs /dev/sda1               # Advanced ext filesystem debugging
+xfs_repair /dev/sda1            # XFS filesystem repair
+
+# LVM recovery
+vgchange -ay                    # Activate volume groups
+vgscan --mknodes               # Recreate device nodes
+vgcfgrestore                   # Restore VG configuration
+
+# RAID recovery
+mdadm --assemble --scan         # Auto-assemble arrays
+mdadm --create --assume-clean   # Recreate array without sync
+```
+
+## Assessment Criteria
+
+Students will be evaluated on their ability to:
+
+| Criteria | Proficient (4) | Developing (3) | Beginning (2) | Inadequate (1) |
+|----------|----------------|----------------|---------------|----------------|
+| **Technical Implementation** | Implements complex storage solutions with advanced features and optimization | Implements storage solutions with good understanding of concepts | Basic implementation with some understanding gaps | Struggles with basic storage concepts |
+| **Performance Optimization** | Achieves measurable performance improvements through systematic optimization | Shows good understanding of performance factors with some optimization | Basic performance awareness with limited optimization | Little understanding of performance optimization |
+| **Security Implementation** | Implements comprehensive security with encryption, access controls, and compliance | Good security implementation with most controls in place | Basic security implementation with some gaps | Inadequate security implementation |
+| **Problem Solving** | Systematically diagnoses and resolves complex storage issues | Good problem-solving skills with most issues resolved | Basic troubleshooting with some assistance needed | Struggles with basic troubleshooting |
+| **Automation and Documentation** | Creates comprehensive automation with detailed documentation | Good automation with adequate documentation | Basic automation with minimal documentation | Little automation or documentation |
+
+## Next Steps
+
+After mastering storage and filesystem management, proceed to:
+
+- **Module 11: ZFS Fundamentals** - Learn advanced filesystem features with ZFS including snapshots, compression, and data integrity
+- **Module 12: Proxmox Virtual Environment** - Apply storage skills in virtualization contexts with advanced storage backends
+- **Module 14: Proxmox Infrastructure Automation** - Integrate storage management into infrastructure automation workflows
+
+The storage management skills developed in this module form the foundation for all enterprise infrastructure implementations, from virtualization platforms to container orchestration and cloud deployments.
+
+---
+
+**Module 10 Complete**: You have successfully mastered enterprise storage and filesystem management, from basic partitioning to advanced RAID configurations, LVM administration, and storage security. These skills provide the foundation for all enterprise infrastructure storage requirements.
        # First sector (default)
 +10G   # Size
 n      # New partition  
