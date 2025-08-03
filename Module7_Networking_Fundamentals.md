@@ -1,53 +1,129 @@
-# Module 7: Networking & Firewalls
+# Module 7: Networking Fundamentals
 
 ## Table of Contents
 - [Overview](#overview)
 - [Learning Objectives](#learning-objectives)
-- [Topics](#topics)
-  - [7.1 Modern Network Interface Management](#71-modern-network-interface-management)
-  - [7.2 IP Address Configuration and Management](#72-ip-address-configuration-and-management)
-  - [7.3 DNS Resolution and Host Management](#73-dns-resolution-and-host-management)
-  - [7.4 Network Connectivity Diagnostics](#74-network-connectivity-diagnostics)
-  - [7.5 SSH Security and Hardening](#75-ssh-security-and-hardening)
-  - [7.6 Comprehensive Firewall Management](#76-comprehensive-firewall-management)
-  - [7.7 Network Security Best Practices](#77-network-security-best-practices)
+- [Topics Covered](#topics-covered)
+  - [7.1 Network Interface Management](#71-network-interface-management)
+  - [7.2 IP Configuration and Routing](#72-ip-configuration-and-routing)
+  - [7.3 DNS and Name Resolution](#73-dns-and-name-resolution)
+  - [7.4 Network Diagnostics and Troubleshooting](#74-network-diagnostics-and-troubleshooting)
+  - [7.5 Firewall Configuration and Management](#75-firewall-configuration-and-management)
+  - [7.6 SSH Security and Remote Access](#76-ssh-security-and-remote-access)
+  - [7.7 Network Monitoring and Performance](#77-network-monitoring-and-performance)
+  - [7.8 VPN and Secure Tunneling](#78-vpn-and-secure-tunneling)
 - [Essential Command Reference](#essential-command-reference)
 - [Practical Examples](#practical-examples)
-  - [Modern Network Interface Management](#modern-network-interface-management)
-    - [Viewing Interface Information](#viewing-interface-information)
-    - [Interface State Management](#interface-state-management)
-  - [Comprehensive IP Address Configuration](#comprehensive-ip-address-configuration)
-    - [Static IP Configuration with NetworkManager](#static-ip-configuration-with-networkmanager)
-    - [Using systemd-networkd](#using-systemd-networkd)
-    - [Legacy Network Configuration](#legacy-network-configuration)
-  - [DNS Resolution and Host Management](#dns-resolution-and-host-management)
-    - [DNS Configuration and Testing](#dns-configuration-and-testing)
-  - [Advanced Connectivity Diagnostics](#advanced-connectivity-diagnostics)
-    - [Comprehensive Connectivity Testing](#comprehensive-connectivity-testing)
-  - [SSH Security and Hardening](#ssh-security-and-hardening)
-    - [SSH Server Configuration and Hardening](#ssh-server-configuration-and-hardening)
-    - [SSH Key Management](#ssh-key-management)
-  - [Comprehensive Firewall Management](#comprehensive-firewall-management)
-    - [firewalld Zone-Based Management](#firewalld-zone-based-management)
-    - [iptables Legacy Firewall Management](#iptables-legacy-firewall-management)
-    - [UFW Simplified Firewall Management](#ufw-simplified-firewall-management)
-- [Advanced Network Configuration Files](#advanced-network-configuration-files)
-  - [NetworkManager Configuration](#networkmanager-configuration)
-  - [systemd-networkd Configuration](#systemd-networkd-configuration)
-  - [Legacy Network Configuration](#legacy-network-configuration)
-    - [Debian/Ubuntu Network Interfaces](#debianubuntu-network-interfaces)
-    - [Red Hat/CentOS Network Scripts](#red-hatcentos-network-scripts)
-- [Network Troubleshooting Methodologies](#network-troubleshooting-methodologies)
-  - [Systematic Network Diagnosis](#systematic-network-diagnosis)
-  - [Advanced Network Monitoring](#advanced-network-monitoring)
-- [Network Security Best Practices](#network-security-best-practices)
-  - [Host-Level Security Implementation](#host-level-security-implementation)
-- [Comprehensive Troubleshooting Reference](#comprehensive-troubleshooting-reference)
-- [Advanced Lab Exercises](#advanced-lab-exercises)
-  - [Lab 1: Network Interface Configuration Mastery](#lab-1-network-interface-configuration-mastery)
-  - [Lab 2: SSH Hardening and Key Management](#lab-2-ssh-hardening-and-key-management)
-  - [Lab 3: Advanced Firewall Implementation](#lab-3-advanced-firewall-implementation)
-  - [Lab 4: Network Troubleshooting Simulation](#lab-4-network-troubleshooting-simulation)
+  - [Network Interface Management](#network-interface-management)
+  - [Advanced IP Configuration](#advanced-ip-configuration)
+  - [DNS and Name Resolution](#dns-and-name-resolution)
+  - [Network Troubleshooting Tools](#network-troubleshooting-tools)
+  - [Enterprise Firewall Management](#enterprise-firewall-management)
+  - [SSH Security Hardening](#ssh-security-hardening)
+  - [Network Monitoring and Analysis](#network-monitoring-and-analysis)
+  - [VPN Configuration and Management](#vpn-configuration-and-management)
+- [Lab Exercises](#lab-exercises)
+  - [Lab 1: Network Configuration and Management](#lab-1-network-configuration-and-management)
+  - [Lab 2: Firewall Security Implementation](#lab-2-firewall-security-implementation)
+  - [Lab 3: SSH Infrastructure Hardening](#lab-3-ssh-infrastructure-hardening)
+  - [Lab 4: Network Monitoring and Troubleshooting](#lab-4-network-monitoring-and-troubleshooting)
+  - [Lab 5: VPN and Secure Remote Access](#lab-5-vpn-and-secure-remote-access)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+- [Assessment Criteria](#assessment-criteria)
+- [Next Steps](#next-steps)
+
+## Overview
+
+This module provides comprehensive coverage of Linux networking fundamentals, from basic interface configuration to advanced security implementations. Students will master modern network management tools, implement enterprise-grade security measures, and develop skills for maintaining robust network infrastructure in production environments.
+
+**Module Focus Areas:**
+- Modern network interface management with NetworkManager and systemd-networkd
+- Advanced IP configuration, routing, and VLAN management
+- DNS infrastructure and name resolution troubleshooting
+- Enterprise firewall configuration with multiple management systems
+- SSH security hardening and key management at scale
+- Network monitoring, performance analysis, and capacity planning
+- VPN implementations for secure remote access
+
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+1. **Configure Network Interfaces**: Master modern tools like NetworkManager, systemd-networkd, and legacy configurations
+2. **Implement IP Management**: Configure static/dynamic IP addressing, routing tables, and VLAN networking
+3. **Manage DNS Infrastructure**: Configure resolvers, implement caching, and troubleshoot name resolution
+4. **Diagnose Network Issues**: Use advanced diagnostic tools to identify and resolve connectivity problems
+5. **Secure Network Access**: Implement comprehensive firewall rules and SSH security hardening
+6. **Monitor Network Performance**: Deploy monitoring solutions and analyze network traffic patterns
+7. **Design Secure Architecture**: Plan and implement enterprise-grade network security measures
+8. **Automate Network Tasks**: Create scripts for network management, monitoring, and incident response
+
+## Topics Covered
+
+### 7.1 Network Interface Management
+- Modern interface naming conventions (predictable network interface names)
+- NetworkManager command-line and configuration management
+- systemd-networkd configuration and integration
+- Legacy ifconfig and network scripts (backward compatibility)
+- Bonding, bridging, and VLAN configuration
+- Wireless interface management and enterprise authentication
+
+### 7.2 IP Configuration and Routing
+- Static and dynamic IP address assignment
+- Advanced routing configuration and policy routing
+- Network namespaces and container networking
+- IPv6 configuration and dual-stack implementations
+- DHCP client and server configuration
+- Network address translation (NAT) and port forwarding
+
+### 7.3 DNS and Name Resolution
+- DNS resolver configuration and optimization
+- Local DNS caching with systemd-resolved
+- DNS over HTTPS (DoH) and DNS over TLS (DoT)
+- Host file management and local name resolution
+- DNS troubleshooting and query analysis
+- Split-horizon DNS for complex environments
+
+### 7.4 Network Diagnostics and Troubleshooting
+- Layer 2 and Layer 3 connectivity testing
+- Advanced packet analysis with tcpdump and Wireshark
+- Network performance testing and bandwidth analysis
+- MTU discovery and path optimization
+- Network latency and jitter measurement
+- Automated network health monitoring
+
+### 7.5 Firewall Configuration and Management
+- iptables/netfilter framework and rule management
+- firewalld zone-based configuration for enterprise environments
+- UFW simplified firewall management for Ubuntu systems
+- Application-level firewall rules and service management
+- Connection tracking and stateful inspection
+- DDoS protection and rate limiting implementations
+
+### 7.6 SSH Security and Remote Access
+- SSH server hardening and security best practices
+- Key-based authentication and certificate management
+- SSH tunneling, port forwarding, and jump hosts
+- Multi-factor authentication integration
+- SSH session monitoring and audit logging
+- Automated SSH security compliance checking
+
+### 7.7 Network Monitoring and Performance
+- Real-time network traffic analysis and alerting
+- Bandwidth monitoring and capacity planning
+- Network protocol analysis and optimization
+- Performance metrics collection and visualization
+- Network inventory and asset management
+- Incident response and escalation procedures
+
+### 7.8 VPN and Secure Tunneling
+- OpenVPN server and client configuration
+- WireGuard modern VPN implementation
+- IPSec VPN tunnels for site-to-site connectivity
+- SSL/TLS VPN solutions for remote access
+- VPN performance optimization and troubleshooting
+- Certificate management for VPN infrastructure
   - [Lab 5: Enterprise Network Security Implementation](#lab-5-enterprise-network-security-implementation)
 - [Performance Optimization Guidelines](#performance-optimization-guidelines)
   - [Network Performance Tuning](#network-performance-tuning)
@@ -178,80 +254,1351 @@ By the end of this module, you will be able to:
 
 ## Essential Command Reference
 
-| Command | Purpose |
-|---------|---------|
-| `ip a` | Show all network interfaces and their addresses |
-| `ip route show` | Display routing table and default gateway |
-| `ip link show` | List all network interfaces and their states |
-| `nmcli device show` | List NetworkManager-managed devices |
-| `nmcli connection show` | Display all network connections |
-| `ping <host>` | Test reachability and measure latency |
-| `traceroute <host>` | Trace the path packets take to a destination |
-| `mtr <host>` | Combined ping and traceroute with real-time updates |
-| `ss -tulwn` | Display all listening sockets and ports |
-| `netstat -tulpn` | Show network connections with process information |
-| `dig <domain>` | Perform DNS lookup with detailed information |
-| `nslookup <domain>` | Query DNS servers for domain information |
-| `firewall-cmd --get-active-zones` | List currently active `firewalld` zones |
-| `firewall-cmd --zone=public --add-service=ssh` | Open SSH service in public zone (runtime) |
-| `firewall-cmd --zone=public --add-service=ssh --permanent` | Persist SSH service across reboots |
-| `firewall-cmd --reload` | Reload `firewalld` to apply permanent changes |
-| `firewall-cmd --zone=trusted --add-source=192.168.1.0/24` | Trust an entire subnet in trusted zone |
-| `iptables -L -n -v` | List IPv4 rules in legacy `iptables` with counters |
-| `nft list ruleset` | Display the full `nftables` rule set |
-| `ufw status verbose` | Show UFW firewall status and active rules |
+### Network Interface Management
+| Command | Description | Example |
+|---------|-------------|---------|
+| `ip a` | Show all network interfaces and addresses | `ip a show eth0` |
+| `ip link show` | Display interface link status | `ip link show` |
+| `ip link set` | Configure interface state | `ip link set eth0 up` |
+| `nmcli device` | NetworkManager device management | `nmcli device status` |
+| `nmcli connection` | NetworkManager connection management | `nmcli connection show` |
+
+### IP Configuration and Routing
+| Command | Description | Example |
+|---------|-------------|---------|
+| `ip addr add` | Add IP address to interface | `ip addr add 192.168.1.10/24 dev eth0` |
+| `ip route show` | Display routing table | `ip route show` |
+| `ip route add` | Add route to routing table | `ip route add 10.0.0.0/8 via 192.168.1.1` |
+| `dhclient` | DHCP client configuration | `dhclient eth0` |
+| `systemd-resolve` | Resolve DNS queries | `systemd-resolve --status` |
+
+### Network Diagnostics
+| Command | Description | Example |
+|---------|-------------|---------|
+| `ping` | Test network connectivity | `ping -c 4 google.com` |
+| `traceroute` | Trace packet path | `traceroute 8.8.8.8` |
+| `mtr` | Network diagnostic tool | `mtr --report google.com` |
+| `ss` | Socket statistics | `ss -tulpn` |
+| `netstat` | Network connections (legacy) | `netstat -tulpn` |
+| `tcpdump` | Packet capture and analysis | `tcpdump -i eth0 port 80` |
+| `nmap` | Network scanning and discovery | `nmap -sn 192.168.1.0/24` |
+
+### DNS and Name Resolution
+| Command | Description | Example |
+|---------|-------------|---------|
+| `dig` | DNS lookup utility | `dig google.com A` |
+| `nslookup` | DNS query tool | `nslookup google.com` |
+| `host` | DNS lookup utility | `host google.com` |
+| `systemd-resolve` | Modern DNS resolver | `systemd-resolve google.com` |
+| `resolvectl` | Resolve configuration | `resolvectl status` |
+
+### Firewall Management
+| Command | Description | Example |
+|---------|-------------|---------|
+| `firewall-cmd` | firewalld management | `firewall-cmd --list-all` |
+| `iptables` | Legacy firewall rules | `iptables -L -n` |
+| `ufw` | Uncomplicated Firewall | `ufw status verbose` |
+| `nft` | nftables management | `nft list tables` |
+
+### SSH and Remote Access
+| Command | Description | Example |
+|---------|-------------|---------|
+| `ssh` | Secure shell client | `ssh user@hostname` |
+| `ssh-keygen` | Generate SSH keys | `ssh-keygen -t ed25519` |
+| `ssh-copy-id` | Copy SSH keys | `ssh-copy-id user@hostname` |
+| `scp` | Secure copy | `scp file.txt user@host:/path/` |
+| `rsync` | Remote synchronization | `rsync -av /local/ user@host:/remote/` |
+
+### Network Monitoring
+| Command | Description | Example |
+|---------|-------------|---------|
+| `iftop` | Network bandwidth monitor | `iftop -i eth0` |
+| `nethogs` | Process network usage | `nethogs eth0` |
+| `vnstat` | Network statistics | `vnstat -i eth0` |
+| `iotop` | I/O monitor | `iotop -o` |
+| `lsof` | List open files/network connections | `lsof -i :80` |
 
 ## Practical Examples
 
-### Modern Network Interface Management
+### Network Interface Management
 
-#### Viewing Interface Information
+#### Modern Interface Management Script
 ```bash
-# Show all interfaces with IP addresses
-ip a
-ip addr show
+#!/bin/bash
+# network-interface.sh - Comprehensive network interface management
 
-# Show specific interface details
-ip a show eth0
-ip link show eth0
+# Function to display interface information
+show_interface_info() {
+    local interface="$1"
+    
+    if [[ -z "$interface" ]]; then
+        echo "Usage: show_interface_info <interface>"
+        return 1
+    fi
+    
+    echo "=== Interface Information for $interface ==="
+    
+    # Basic interface information
+    echo "Link Status:"
+    ip link show "$interface" 2>/dev/null || { echo "Interface $interface not found"; return 1; }
+    
+    echo ""
+    echo "IP Addresses:"
+    ip addr show "$interface" | grep -E "inet6?|link"
+    
+    echo ""
+    echo "Interface Statistics:"
+    ip -s link show "$interface" | grep -A2 "RX:\|TX:"
+    
+    echo ""
+    echo "Interface Speed and Duplex:"
+    if [[ -f "/sys/class/net/$interface/speed" ]]; then
+        local speed=$(cat "/sys/class/net/$interface/speed" 2>/dev/null)
+        local duplex=$(cat "/sys/class/net/$interface/duplex" 2>/dev/null)
+        echo "Speed: ${speed:-Unknown} Mbps"
+        echo "Duplex: ${duplex:-Unknown}"
+    else
+        echo "Speed/Duplex information not available"
+    fi
+    
+    echo ""
+    echo "Driver Information:"
+    if command -v ethtool &>/dev/null; then
+        ethtool -i "$interface" 2>/dev/null | head -5
+    else
+        echo "ethtool not available"
+    fi
+    
+    # NetworkManager information if available
+    if command -v nmcli &>/dev/null; then
+        echo ""
+        echo "NetworkManager Status:"
+        nmcli device show "$interface" 2>/dev/null | head -10
+    fi
+}
 
-# Display interface statistics
-ip -s link show eth0
-cat /proc/net/dev
+# Function to configure interface with NetworkManager
+configure_interface_nm() {
+    local interface="$1"
+    local ip_address="$2"
+    local gateway="$3"
+    local dns="$4"
+    local connection_name="${5:-$interface-static}"
+    
+    if [[ -z "$interface" || -z "$ip_address" ]]; then
+        echo "Usage: configure_interface_nm <interface> <ip/prefix> [gateway] [dns] [connection_name]"
+        echo "Example: configure_interface_nm eth0 192.168.1.100/24 192.168.1.1 8.8.8.8"
+        return 1
+    fi
+    
+    echo "Configuring interface $interface with NetworkManager..."
+    
+    # Remove existing connections for this interface
+    local existing_connections=$(nmcli -t -f NAME,DEVICE connection show | grep ":$interface$" | cut -d: -f1)
+    for conn in $existing_connections; do
+        echo "Removing existing connection: $conn"
+        nmcli connection delete "$conn" 2>/dev/null
+    done
+    
+    # Create new connection
+    local cmd="nmcli connection add type ethernet con-name '$connection_name' ifname '$interface' ip4 '$ip_address'"
+    
+    if [[ -n "$gateway" ]]; then
+        cmd+=" gw4 '$gateway'"
+    fi
+    
+    if [[ -n "$dns" ]]; then
+        cmd+=" ipv4.dns '$dns'"
+    fi
+    
+    cmd+=" ipv4.method manual"
+    
+    echo "Executing: $cmd"
+    eval "$cmd"
+    
+    if [[ $? -eq 0 ]]; then
+        echo "Activating connection..."
+        nmcli connection up "$connection_name"
+        echo "Interface $interface configured successfully"
+        
+        # Display configuration
+        echo ""
+        echo "New Configuration:"
+        nmcli connection show "$connection_name" | grep -E "ipv4\.(addresses|gateway|dns)"
+    else
+        echo "Failed to configure interface"
+        return 1
+    fi
+}
 
-# Show interface routing information
-ip route show dev eth0
+# Function to configure interface with ip command (temporary)
+configure_interface_ip() {
+    local interface="$1"
+    local ip_address="$2"
+    local gateway="$3"
+    
+    if [[ -z "$interface" || -z "$ip_address" ]]; then
+        echo "Usage: configure_interface_ip <interface> <ip/prefix> [gateway]"
+        echo "Example: configure_interface_ip eth0 192.168.1.100/24 192.168.1.1"
+        return 1
+    fi
+    
+    echo "Configuring interface $interface with ip command (temporary)..."
+    
+    # Configure IP address
+    sudo ip addr flush dev "$interface"
+    sudo ip addr add "$ip_address" dev "$interface"
+    sudo ip link set "$interface" up
+    
+    # Configure gateway if provided
+    if [[ -n "$gateway" ]]; then
+        # Remove existing default routes for this interface
+        sudo ip route del default dev "$interface" 2>/dev/null || true
+        sudo ip route add default via "$gateway" dev "$interface"
+    fi
+    
+    echo "Interface $interface configured with IP: $ip_address"
+    if [[ -n "$gateway" ]]; then
+        echo "Gateway: $gateway"
+    fi
+    
+    # Show current configuration
+    echo ""
+    echo "Current Configuration:"
+    ip addr show "$interface"
+    echo ""
+    echo "Routing Table:"
+    ip route show dev "$interface"
+}
 
-# NetworkManager interface management
-nmcli device status
-nmcli device show eth0
-nmcli connection show
+# Function to create network bridge
+create_bridge() {
+    local bridge_name="$1"
+    local interface="$2"
+    local bridge_ip="$3"
+    
+    if [[ -z "$bridge_name" || -z "$interface" ]]; then
+        echo "Usage: create_bridge <bridge_name> <interface> [bridge_ip]"
+        echo "Example: create_bridge br0 eth0 192.168.1.50/24"
+        return 1
+    fi
+    
+    echo "Creating bridge $bridge_name with interface $interface..."
+    
+    # Create bridge
+    sudo ip link add name "$bridge_name" type bridge
+    sudo ip link set "$bridge_name" up
+    
+    # Add interface to bridge
+    sudo ip link set "$interface" master "$bridge_name"
+    sudo ip link set "$interface" up
+    
+    # Configure bridge IP if provided
+    if [[ -n "$bridge_ip" ]]; then
+        sudo ip addr add "$bridge_ip" dev "$bridge_name"
+    fi
+    
+    echo "Bridge $bridge_name created successfully"
+    echo "Bridge configuration:"
+    ip addr show "$bridge_name"
+    
+    echo ""
+    echo "Bridge details:"
+    sudo bridge link show
+}
 
-# Show interface configuration files
-nmcli connection show "Wired connection 1"
+# Function to create VLAN interface
+create_vlan() {
+    local parent_interface="$1"
+    local vlan_id="$2"
+    local vlan_ip="$3"
+    
+    if [[ -z "$parent_interface" || -z "$vlan_id" ]]; then
+        echo "Usage: create_vlan <parent_interface> <vlan_id> [vlan_ip]"
+        echo "Example: create_vlan eth0 100 192.168.100.10/24"
+        return 1
+    fi
+    
+    local vlan_interface="${parent_interface}.${vlan_id}"
+    
+    echo "Creating VLAN $vlan_id on interface $parent_interface..."
+    
+    # Create VLAN interface
+    sudo ip link add link "$parent_interface" name "$vlan_interface" type vlan id "$vlan_id"
+    sudo ip link set "$vlan_interface" up
+    
+    # Configure VLAN IP if provided
+    if [[ -n "$vlan_ip" ]]; then
+        sudo ip addr add "$vlan_ip" dev "$vlan_interface"
+    fi
+    
+    echo "VLAN interface $vlan_interface created successfully"
+    echo "VLAN configuration:"
+    ip addr show "$vlan_interface"
+}
 
-# Monitor interface changes in real-time
-ip monitor link
-ip monitor addr
+# Function to monitor interface traffic
+monitor_interface() {
+    local interface="$1"
+    local duration="${2:-10}"
+    
+    if [[ -z "$interface" ]]; then
+        echo "Usage: monitor_interface <interface> [duration_seconds]"
+        echo "Example: monitor_interface eth0 30"
+        return 1
+    fi
+    
+    if ! ip link show "$interface" &>/dev/null; then
+        echo "Interface $interface not found"
+        return 1
+    fi
+    
+    echo "Monitoring interface $interface for $duration seconds..."
+    echo "Press Ctrl+C to stop"
+    
+    # Get initial statistics
+    local stats_file="/sys/class/net/$interface/statistics"
+    local rx_bytes_start=$(cat "$stats_file/rx_bytes")
+    local tx_bytes_start=$(cat "$stats_file/tx_bytes")
+    local rx_packets_start=$(cat "$stats_file/rx_packets")
+    local tx_packets_start=$(cat "$stats_file/tx_packets")
+    
+    sleep "$duration"
+    
+    # Get final statistics
+    local rx_bytes_end=$(cat "$stats_file/rx_bytes")
+    local tx_bytes_end=$(cat "$stats_file/tx_bytes")
+    local rx_packets_end=$(cat "$stats_file/rx_packets")
+    local tx_packets_end=$(cat "$stats_file/tx_packets")
+    
+    # Calculate differences
+    local rx_bytes_diff=$((rx_bytes_end - rx_bytes_start))
+    local tx_bytes_diff=$((tx_bytes_end - tx_bytes_start))
+    local rx_packets_diff=$((rx_packets_end - rx_packets_start))
+    local tx_packets_diff=$((tx_packets_end - tx_packets_start))
+    
+    # Convert bytes to human readable format
+    local rx_mbps=$(echo "scale=2; $rx_bytes_diff * 8 / $duration / 1000000" | bc -l)
+    local tx_mbps=$(echo "scale=2; $tx_bytes_diff * 8 / $duration / 1000000" | bc -l)
+    
+    echo ""
+    echo "=== Traffic Statistics for $interface ($duration seconds) ==="
+    echo "Received: $rx_packets_diff packets, $(numfmt --to=iec $rx_bytes_diff)B (${rx_mbps} Mbps)"
+    echo "Transmitted: $tx_packets_diff packets, $(numfmt --to=iec $tx_bytes_diff)B (${tx_mbps} Mbps)"
+}
+
+# Usage function
+usage() {
+    echo "Usage: $0 {show|configure-nm|configure-ip|bridge|vlan|monitor} [arguments]"
+    echo ""
+    echo "Commands:"
+    echo "  show <interface>                              - Show interface information"
+    echo "  configure-nm <interface> <ip/prefix> [gw] [dns] [name] - Configure with NetworkManager"
+    echo "  configure-ip <interface> <ip/prefix> [gw]     - Configure with ip command (temporary)"
+    echo "  bridge <bridge_name> <interface> [bridge_ip] - Create network bridge"
+    echo "  vlan <parent_interface> <vlan_id> [vlan_ip]  - Create VLAN interface"
+    echo "  monitor <interface> [duration]               - Monitor interface traffic"
+    echo ""
+    echo "Examples:"
+    echo "  $0 show eth0"
+    echo "  $0 configure-nm eth0 192.168.1.100/24 192.168.1.1 8.8.8.8"
+    echo "  $0 configure-ip eth0 192.168.1.100/24 192.168.1.1"
+    echo "  $0 bridge br0 eth0 192.168.1.50/24"
+    echo "  $0 vlan eth0 100 192.168.100.10/24"
+    echo "  $0 monitor eth0 30"
+}
+
+# Main script logic
+case "${1:-help}" in
+    "show")
+        show_interface_info "$2"
+        ;;
+    "configure-nm")
+        configure_interface_nm "$2" "$3" "$4" "$5" "$6"
+        ;;
+    "configure-ip")
+        configure_interface_ip "$2" "$3" "$4"
+        ;;
+    "bridge")
+        create_bridge "$2" "$3" "$4"
+        ;;
+    "vlan")
+        create_vlan "$2" "$3" "$4"
+        ;;
+    "monitor")
+        monitor_interface "$2" "$3"
+        ;;
+    "help"|*)
+        usage
+        ;;
+esac
 ```
 
-#### Interface State Management
+### DNS and Name Resolution
+
+#### DNS Management and Testing Script
 ```bash
-# Bring interface up/down
-sudo ip link set eth0 up
-sudo ip link set eth0 down
+#!/bin/bash
+# dns-management.sh - Comprehensive DNS management and testing
 
-# Using NetworkManager
-nmcli device connect eth0
-nmcli device disconnect eth0
+# Function to configure DNS servers
+configure_dns() {
+    local method="$1"
+    shift
+    local dns_servers=("$@")
+    
+    if [[ -z "$method" || ${#dns_servers[@]} -eq 0 ]]; then
+        echo "Usage: configure_dns <method> <dns1> [dns2] [dns3] ..."
+        echo "Methods: systemd-resolved, resolvconf, manual"
+        echo "Example: configure_dns systemd-resolved 8.8.8.8 8.8.4.4 1.1.1.1"
+        return 1
+    fi
+    
+    case "$method" in
+        "systemd-resolved")
+            echo "Configuring DNS using systemd-resolved..."
+            
+            # Configure global DNS
+            local dns_config="/etc/systemd/resolved.conf"
+            sudo cp "$dns_config" "${dns_config}.backup"
+            
+            cat > /tmp/resolved.conf << EOF
+[Resolve]
+DNS=${dns_servers[*]}
+FallbackDNS=8.8.8.8 8.8.4.4
+Domains=~.
+DNSSEC=yes
+DNSOverTLS=opportunistic
+Cache=yes
+DNSStubListener=yes
+EOF
+            
+            sudo mv /tmp/resolved.conf "$dns_config"
+            
+            # Restart systemd-resolved
+            sudo systemctl restart systemd-resolved
+            
+            # Update /etc/resolv.conf symlink
+            sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+            
+            echo "DNS configuration completed using systemd-resolved"
+            ;;
+            
+        "resolvconf")
+            echo "Configuring DNS using resolvconf..."
+            
+            if ! command -v resolvconf &>/dev/null; then
+                echo "resolvconf not available, installing..."
+                if command -v apt &>/dev/null; then
+                    sudo apt update && sudo apt install -y resolvconf
+                elif command -v yum &>/dev/null; then
+                    sudo yum install -y openresolv
+                else
+                    echo "Cannot install resolvconf automatically"
+                    return 1
+                fi
+            fi
+            
+            # Configure DNS servers
+            for i in "${!dns_servers[@]}"; do
+                echo "nameserver ${dns_servers[$i]}" | sudo resolvconf -a "lo.dns$((i+1))"
+            done
+            
+            echo "DNS configuration completed using resolvconf"
+            ;;
+            
+        "manual")
+            echo "Configuring DNS manually in /etc/resolv.conf..."
+            
+            # Backup original resolv.conf
+            sudo cp /etc/resolv.conf /etc/resolv.conf.backup
+            
+            # Create new resolv.conf
+            cat > /tmp/resolv.conf << EOF
+# Generated by dns-management.sh
+# Date: $(date)
+EOF
+            
+            for dns_server in "${dns_servers[@]}"; do
+                echo "nameserver $dns_server" >> /tmp/resolv.conf
+            done
+            
+            # Add search domains
+            echo "search local" >> /tmp/resolv.conf
+            echo "options timeout:2 attempts:3" >> /tmp/resolv.conf
+            
+            sudo mv /tmp/resolv.conf /etc/resolv.conf
+            
+            echo "DNS configuration completed manually"
+            ;;
+            
+        *)
+            echo "Unknown method: $method"
+            return 1
+            ;;
+    esac
+    
+    echo ""
+    echo "Current DNS configuration:"
+    cat /etc/resolv.conf
+}
 
-# Restart network interface
-sudo nmcli connection down "Wired connection 1"
-sudo nmcli connection up "Wired connection 1"
-``` ### Comprehensive IP Address Configuration
+# Function to test DNS resolution
+test_dns() {
+    local domain="$1"
+    local record_type="${2:-A}"
+    local dns_server="$3"
+    
+    if [[ -z "$domain" ]]; then
+        echo "Usage: test_dns <domain> [record_type] [dns_server]"
+        echo "Record types: A, AAAA, MX, TXT, NS, CNAME, PTR"
+        echo "Example: test_dns google.com A 8.8.8.8"
+        return 1
+    fi
+    
+    echo "Testing DNS resolution for $domain (type: $record_type)"
+    if [[ -n "$dns_server" ]]; then
+        echo "Using DNS server: $dns_server"
+    fi
+    
+    echo ""
+    
+    # Test with dig
+    if command -v dig &>/dev/null; then
+        echo "=== dig results ==="
+        local dig_cmd="dig"
+        if [[ -n "$dns_server" ]]; then
+            dig_cmd+=" @$dns_server"
+        fi
+        dig_cmd+=" $domain $record_type +short"
+        
+        eval "$dig_cmd"
+        echo ""
+        
+        # Detailed dig output
+        echo "=== Detailed dig output ==="
+        dig_cmd="dig"
+        if [[ -n "$dns_server" ]]; then
+            dig_cmd+=" @$dns_server"
+        fi
+        dig_cmd+=" $domain $record_type"
+        
+        eval "$dig_cmd"
+    fi
+    
+    echo ""
+    
+    # Test with nslookup
+    if command -v nslookup &>/dev/null; then
+        echo "=== nslookup results ==="
+        if [[ -n "$dns_server" ]]; then
+            nslookup "$domain" "$dns_server"
+        else
+            nslookup "$domain"
+        fi
+    fi
+    
+    echo ""
+    
+    # Test with host
+    if command -v host &>/dev/null; then
+        echo "=== host results ==="
+        local host_cmd="host -t $record_type $domain"
+        if [[ -n "$dns_server" ]]; then
+            host_cmd+=" $dns_server"
+        fi
+        
+        eval "$host_cmd"
+    fi
+    
+    echo ""
+    
+    # Test with systemd-resolve
+    if command -v systemd-resolve &>/dev/null; then
+        echo "=== systemd-resolve results ==="
+        systemd-resolve "$domain"
+    fi
+}
 
-#### Static IP Configuration with NetworkManager
+# Function to perform comprehensive DNS benchmarking
+benchmark_dns() {
+    local domains=("${@:-google.com cloudflare.com github.com stackoverflow.com}")
+    local dns_servers=("8.8.8.8" "8.8.4.4" "1.1.1.1" "1.0.0.1" "9.9.9.9")
+    
+    echo "Benchmarking DNS servers..."
+    echo "Testing domains: ${domains[*]}"
+    echo "DNS servers: ${dns_servers[*]}"
+    echo ""
+    
+    # Create results file
+    local results_file="/tmp/dns_benchmark_$(date +%Y%m%d_%H%M%S).txt"
+    echo "DNS Benchmark Results - $(date)" > "$results_file"
+    echo "===============================" >> "$results_file"
+    echo "" >> "$results_file"
+    
+    for dns_server in "${dns_servers[@]}"; do
+        echo "Testing DNS server: $dns_server"
+        local total_time=0
+        local successful_queries=0
+        
+        for domain in "${domains[@]}"; do
+            local start_time=$(date +%s.%N)
+            
+            if dig @"$dns_server" "$domain" A +short +time=3 &>/dev/null; then
+                local end_time=$(date +%s.%N)
+                local query_time=$(echo "$end_time - $start_time" | bc -l)
+                total_time=$(echo "$total_time + $query_time" | bc -l)
+                ((successful_queries++))
+                
+                printf "  %-20s: %.3fs\n" "$domain" "$query_time"
+            else
+                printf "  %-20s: FAILED\n" "$domain"
+            fi
+        done
+        
+        if [[ $successful_queries -gt 0 ]]; then
+            local avg_time=$(echo "scale=3; $total_time / $successful_queries" | bc -l)
+            printf "  Average time: %.3fs (%d/%d successful)\n" "$avg_time" "$successful_queries" "${#domains[@]}"
+            
+            # Log to results file
+            echo "$dns_server: Average ${avg_time}s (${successful_queries}/${#domains[@]} successful)" >> "$results_file"
+        else
+            echo "  No successful queries"
+            echo "$dns_server: No successful queries" >> "$results_file"
+        fi
+        
+        echo ""
+    done
+    
+    echo "Benchmark results saved to: $results_file"
+}
+
+# Function to configure DNS caching
+configure_dns_cache() {
+    local cache_type="$1"
+    
+    case "$cache_type" in
+        "systemd-resolved")
+            echo "Configuring DNS caching with systemd-resolved..."
+            
+            cat > /tmp/resolved.conf << 'EOF'
+[Resolve]
+DNS=8.8.8.8 8.8.4.4 1.1.1.1
+Cache=yes
+CacheFromLocalhost=yes
+DNSStubListener=yes
+ReadEtcHosts=yes
+EOF
+            
+            sudo mv /tmp/resolved.conf /etc/systemd/resolved.conf
+            sudo systemctl restart systemd-resolved
+            
+            echo "systemd-resolved DNS caching configured"
+            ;;
+            
+        "dnsmasq")
+            echo "Installing and configuring dnsmasq..."
+            
+            # Install dnsmasq
+            if command -v apt &>/dev/null; then
+                sudo apt update && sudo apt install -y dnsmasq
+            elif command -v yum &>/dev/null; then
+                sudo yum install -y dnsmasq
+            else
+                echo "Cannot install dnsmasq automatically"
+                return 1
+            fi
+            
+            # Configure dnsmasq
+            cat > /tmp/dnsmasq.conf << 'EOF'
+# Listen on localhost only
+listen-address=127.0.0.1
+bind-interfaces
+
+# Cache size
+cache-size=1000
+
+# Upstream DNS servers
+server=8.8.8.8
+server=8.8.4.4
+server=1.1.1.1
+
+# Don't read /etc/hosts
+no-hosts
+
+# Log queries
+log-queries
+log-facility=/var/log/dnsmasq.log
+EOF
+            
+            sudo mv /tmp/dnsmasq.conf /etc/dnsmasq.conf
+            
+            # Configure to use local dnsmasq
+            echo "nameserver 127.0.0.1" | sudo tee /etc/resolv.conf
+            
+            # Start and enable dnsmasq
+            sudo systemctl enable dnsmasq
+            sudo systemctl start dnsmasq
+            
+            echo "dnsmasq DNS caching configured"
+            ;;
+            
+        "unbound")
+            echo "Installing and configuring unbound..."
+            
+            # Install unbound
+            if command -v apt &>/dev/null; then
+                sudo apt update && sudo apt install -y unbound
+            elif command -v yum &>/dev/null; then
+                sudo yum install -y unbound
+            else
+                echo "Cannot install unbound automatically"
+                return 1
+            fi
+            
+            # Configure unbound
+            cat > /tmp/unbound.conf << 'EOF'
+server:
+    verbosity: 1
+    interface: 127.0.0.1
+    port: 53
+    do-ip4: yes
+    do-ip6: yes
+    do-udp: yes
+    do-tcp: yes
+    
+    # Cache settings
+    cache-min-ttl: 300
+    cache-max-ttl: 86400
+    msg-cache-size: 50m
+    rrset-cache-size: 100m
+    
+    # Security
+    hide-identity: yes
+    hide-version: yes
+    harden-glue: yes
+    harden-dnssec-stripped: yes
+    use-caps-for-id: yes
+    
+    # Prefetch
+    prefetch: yes
+    prefetch-key: yes
+
+forward-zone:
+    name: "."
+    forward-addr: 8.8.8.8
+    forward-addr: 8.8.4.4
+    forward-addr: 1.1.1.1
+EOF
+            
+            sudo mv /tmp/unbound.conf /etc/unbound/unbound.conf
+            
+            # Configure to use local unbound
+            echo "nameserver 127.0.0.1" | sudo tee /etc/resolv.conf
+            
+            # Start and enable unbound
+            sudo systemctl enable unbound
+            sudo systemctl start unbound
+            
+            echo "unbound DNS caching configured"
+            ;;
+            
+        *)
+            echo "Available cache types: systemd-resolved, dnsmasq, unbound"
+            return 1
+            ;;
+    esac
+    
+    echo ""
+    echo "Testing DNS cache..."
+    test_dns google.com A
+}
+
+# Function to manage hosts file
+manage_hosts() {
+    local action="$1"
+    local hostname="$2"
+    local ip_address="$3"
+    
+    case "$action" in
+        "add")
+            if [[ -z "$hostname" || -z "$ip_address" ]]; then
+                echo "Usage: manage_hosts add <hostname> <ip_address>"
+                echo "Example: manage_hosts add myserver.local 192.168.1.100"
+                return 1
+            fi
+            
+            # Check if entry already exists
+            if grep -q "^$ip_address[[:space:]]*$hostname" /etc/hosts; then
+                echo "Entry already exists: $ip_address $hostname"
+                return 0
+            fi
+            
+            # Add entry
+            echo "$ip_address $hostname" | sudo tee -a /etc/hosts
+            echo "Added hosts entry: $ip_address $hostname"
+            ;;
+            
+        "remove")
+            if [[ -z "$hostname" ]]; then
+                echo "Usage: manage_hosts remove <hostname>"
+                return 1
+            fi
+            
+            sudo sed -i "/[[:space:]]$hostname$/d" /etc/hosts
+            echo "Removed hosts entry for: $hostname"
+            ;;
+            
+        "list")
+            echo "Current hosts file entries:"
+            grep -v "^#" /etc/hosts | grep -v "^$"
+            ;;
+            
+        "backup")
+            local backup_file="/etc/hosts.backup.$(date +%Y%m%d_%H%M%S)"
+            sudo cp /etc/hosts "$backup_file"
+            echo "Hosts file backed up to: $backup_file"
+            ;;
+            
+        *)
+            echo "Available actions: add, remove, list, backup"
+            return 1
+            ;;
+    esac
+}
+
+# Function to troubleshoot DNS issues
+troubleshoot_dns() {
+    local domain="${1:-google.com}"
+    
+    echo "=== DNS Troubleshooting for $domain ==="
+    echo ""
+    
+    # Check current DNS configuration
+    echo "1. Current DNS Configuration:"
+    echo "   /etc/resolv.conf:"
+    cat /etc/resolv.conf | grep -v "^#" | head -5
+    echo ""
+    
+    # Check systemd-resolved status
+    if command -v systemd-resolve &>/dev/null; then
+        echo "2. systemd-resolved Status:"
+        systemd-resolve --status | head -20
+        echo ""
+    fi
+    
+    # Test DNS resolution with different tools
+    echo "3. DNS Resolution Tests:"
+    
+    # Test with ping
+    echo "   Ping test:"
+    if ping -c 1 -W 2 "$domain" &>/dev/null; then
+        local ip=$(ping -c 1 "$domain" | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
+        echo "   ✓ Ping successful: $domain -> $ip"
+    else
+        echo "   ✗ Ping failed"
+    fi
+    
+    # Test with different DNS servers
+    echo ""
+    echo "   DNS Server Tests:"
+    local test_servers=("8.8.8.8" "8.8.4.4" "1.1.1.1")
+    
+    for server in "${test_servers[@]}"; do
+        if dig @"$server" "$domain" A +short +time=3 &>/dev/null; then
+            local result=$(dig @"$server" "$domain" A +short | head -1)
+            echo "   ✓ $server: $result"
+        else
+            echo "   ✗ $server: Failed"
+        fi
+    done
+    
+    # Check for DNS issues
+    echo ""
+    echo "4. Common Issues Check:"
+    
+    # Check if DNS port is open
+    if ss -tuln | grep -q ":53 "; then
+        echo "   ✓ DNS port 53 is listening"
+    else
+        echo "   ⚠ DNS port 53 not listening locally"
+    fi
+    
+    # Check DNS response time
+    echo ""
+    echo "5. DNS Response Time:"
+    local start_time=$(date +%s.%N)
+    dig "$domain" A +short &>/dev/null
+    local end_time=$(date +%s.%N)
+    local response_time=$(echo "$end_time - $start_time" | bc -l)
+    printf "   Response time: %.3fs\n" "$response_time"
+    
+    if (( $(echo "$response_time > 1.0" | bc -l) )); then
+        echo "   ⚠ Slow DNS response (>1s)"
+    else
+        echo "   ✓ Good DNS response time"
+    fi
+}
+
+# Usage function
+usage() {
+    echo "Usage: $0 {configure|test|benchmark|cache|hosts|troubleshoot} [arguments]"
+    echo ""
+    echo "Commands:"
+    echo "  configure <method> <dns1> [dns2] [dns3] ...     - Configure DNS servers"
+    echo "  test <domain> [record_type] [dns_server]        - Test DNS resolution"
+    echo "  benchmark [domain1] [domain2] ...               - Benchmark DNS servers"
+    echo "  cache <systemd-resolved|dnsmasq|unbound>        - Configure DNS caching"
+    echo "  hosts <add|remove|list|backup> [hostname] [ip] - Manage hosts file"
+    echo "  troubleshoot [domain]                           - Troubleshoot DNS issues"
+    echo ""
+    echo "Examples:"
+    echo "  $0 configure systemd-resolved 8.8.8.8 8.8.4.4"
+    echo "  $0 test google.com A 8.8.8.8"
+    echo "  $0 benchmark google.com github.com"
+    echo "  $0 cache systemd-resolved"
+    echo "  $0 hosts add myserver.local 192.168.1.100"
+    echo "  $0 troubleshoot google.com"
+}
+
+# Main script logic
+case "${1:-help}" in
+    "configure")
+        shift
+        configure_dns "$@"
+        ;;
+    "test")
+        test_dns "$2" "$3" "$4"
+        ;;
+    "benchmark")
+        shift
+        benchmark_dns "$@"
+        ;;
+    "cache")
+        configure_dns_cache "$2"
+        ;;
+    "hosts")
+        manage_hosts "$2" "$3" "$4"
+        ;;
+    "troubleshoot")
+        troubleshoot_dns "$2"
+        ;;
+    "help"|*)
+        usage
+        ;;
+esac
+``` ### Advanced IP Configuration
+
+#### IP Address Management Script
 ```bash
+#!/bin/bash
+# ip-management.sh - Advanced IP address and routing management
+
+# Function to configure static IP with NetworkManager
+configure_static_ip() {
+    local interface="$1"
+    local ip_address="$2" 
+    local gateway="$3"
+    local dns1="${4:-8.8.8.8}"
+    local dns2="${5:-8.8.4.4}"
+    local connection_name="${6:-Static-$interface}"
+    
+    if [[ -z "$interface" || -z "$ip_address" || -z "$gateway" ]]; then
+        echo "Usage: configure_static_ip <interface> <ip/prefix> <gateway> [dns1] [dns2] [connection_name]"
+        echo "Example: configure_static_ip eth0 192.168.1.100/24 192.168.1.1 8.8.8.8 8.8.4.4"
+        return 1
+    fi
+    
+    echo "Configuring static IP for $interface..."
+    
+    # Create new connection
+    nmcli connection add \
+        type ethernet \
+        con-name "$connection_name" \
+        ifname "$interface" \
+        ipv4.method manual \
+        ipv4.addresses "$ip_address" \
+        ipv4.gateway "$gateway" \
+        ipv4.dns "$dns1,$dns2" \
+        ipv4.dns-search "local" \
+        connection.autoconnect yes
+    
+    # Activate the connection
+    nmcli connection up "$connection_name"
+    
+    echo "Static IP configuration completed for $interface"
+    echo "IP: $ip_address"
+    echo "Gateway: $gateway" 
+    echo "DNS: $dns1, $dns2"
+}
+
+# Function to configure DHCP with NetworkManager
+configure_dhcp() {
+    local interface="$1"
+    local connection_name="${2:-DHCP-$interface}"
+    
+    if [[ -z "$interface" ]]; then
+        echo "Usage: configure_dhcp <interface> [connection_name]"
+        return 1
+    fi
+    
+    echo "Configuring DHCP for $interface..."
+    
+    nmcli connection add \
+        type ethernet \
+        con-name "$connection_name" \
+        ifname "$interface" \
+        ipv4.method auto \
+        connection.autoconnect yes
+    
+    nmcli connection up "$connection_name"
+    
+    echo "DHCP configuration completed for $interface"
+}
+
+# Function to manage routing table
+manage_routes() {
+    local action="$1"
+    local destination="$2"
+    local gateway="$3"
+    local interface="$4"
+    local metric="${5:-100}"
+    
+    case "$action" in
+        "add")
+            if [[ -z "$destination" || -z "$gateway" ]]; then
+                echo "Usage: manage_routes add <destination> <gateway> [interface] [metric]"
+                echo "Example: manage_routes add 10.0.0.0/8 192.168.1.1 eth0 100"
+                return 1
+            fi
+            
+            local route_cmd="sudo ip route add $destination via $gateway"
+            if [[ -n "$interface" ]]; then
+                route_cmd+=" dev $interface"
+            fi
+            if [[ -n "$metric" ]]; then
+                route_cmd+=" metric $metric"
+            fi
+            
+            echo "Adding route: $route_cmd"
+            eval "$route_cmd"
+            ;;
+            
+        "delete")
+            if [[ -z "$destination" ]]; then
+                echo "Usage: manage_routes delete <destination>"
+                echo "Example: manage_routes delete 10.0.0.0/8"
+                return 1
+            fi
+            
+            echo "Deleting route: $destination"
+            sudo ip route del "$destination"
+            ;;
+            
+        "show")
+            echo "Current routing table:"
+            ip route show
+            ;;
+            
+        "default")
+            if [[ -z "$gateway" ]]; then
+                echo "Usage: manage_routes default <gateway> [interface]"
+                return 1
+            fi
+            
+            echo "Setting default gateway: $gateway"
+            sudo ip route del default 2>/dev/null || true
+            
+            local default_cmd="sudo ip route add default via $gateway"
+            if [[ -n "$interface" ]]; then
+                default_cmd+=" dev $interface"
+            fi
+            
+            eval "$default_cmd"
+            ;;
+            
+        *)
+            echo "Available actions: add, delete, show, default"
+            return 1
+            ;;
+    esac
+}
+
+# Function to configure multiple IP addresses on one interface
+configure_multiple_ips() {
+    local interface="$1"
+    shift
+    local ip_addresses=("$@")
+    
+    if [[ -z "$interface" || ${#ip_addresses[@]} -eq 0 ]]; then
+        echo "Usage: configure_multiple_ips <interface> <ip1/prefix> [ip2/prefix] [ip3/prefix] ..."
+        echo "Example: configure_multiple_ips eth0 192.168.1.100/24 192.168.1.101/24"
+        return 1
+    fi
+    
+    echo "Configuring multiple IP addresses on $interface..."
+    
+    # Remove existing IP addresses
+    sudo ip addr flush dev "$interface"
+    
+    # Add each IP address
+    for ip_addr in "${ip_addresses[@]}"; do
+        echo "Adding IP: $ip_addr"
+        sudo ip addr add "$ip_addr" dev "$interface"
+    done
+    
+    # Ensure interface is up
+    sudo ip link set "$interface" up
+    
+    echo "Multiple IP configuration completed for $interface"
+    echo "Current addresses:"
+    ip addr show "$interface" | grep -E "inet6?|link"
+}
+
+# Function to create network aliases (IP aliases)
+create_ip_alias() {
+    local base_interface="$1"
+    local alias_number="$2"
+    local ip_address="$3"
+    
+    if [[ -z "$base_interface" || -z "$alias_number" || -z "$ip_address" ]]; then
+        echo "Usage: create_ip_alias <base_interface> <alias_number> <ip/prefix>"
+        echo "Example: create_ip_alias eth0 1 192.168.1.101/24"
+        return 1
+    fi
+    
+    local alias_interface="${base_interface}:${alias_number}"
+    
+    echo "Creating IP alias $alias_interface with IP $ip_address..."
+    
+    # Create alias using ip command
+    sudo ip addr add "$ip_address" dev "$base_interface" label "$alias_interface"
+    
+    echo "IP alias $alias_interface created successfully"
+    echo "Interface information:"
+    ip addr show "$base_interface" | grep -A1 "$alias_interface"
+}
+
+# Function to configure IPv6
+configure_ipv6() {
+    local interface="$1"
+    local action="$2"
+    local ipv6_address="$3"
+    
+    case "$action" in
+        "enable")
+            echo "Enabling IPv6 on $interface..."
+            sudo sysctl -w net.ipv6.conf."$interface".disable_ipv6=0
+            sudo ip link set "$interface" up
+            ;;
+            
+        "disable")
+            echo "Disabling IPv6 on $interface..."
+            sudo sysctl -w net.ipv6.conf."$interface".disable_ipv6=1
+            ;;
+            
+        "add")
+            if [[ -z "$ipv6_address" ]]; then
+                echo "Usage: configure_ipv6 <interface> add <ipv6_address/prefix>"
+                echo "Example: configure_ipv6 eth0 add 2001:db8::1/64"
+                return 1
+            fi
+            
+            echo "Adding IPv6 address $ipv6_address to $interface..."
+            sudo ip -6 addr add "$ipv6_address" dev "$interface"
+            ;;
+            
+        "show")
+            echo "IPv6 configuration for $interface:"
+            ip -6 addr show "$interface"
+            echo ""
+            echo "IPv6 routing table:"
+            ip -6 route show dev "$interface"
+            ;;
+            
+        *)
+            echo "Available actions: enable, disable, add, show"
+            return 1
+            ;;
+    esac
+}
+
+# Function to configure network namespaces
+manage_netns() {
+    local action="$1"
+    local namespace="$2"
+    local interface="$3"
+    
+    case "$action" in
+        "create")
+            if [[ -z "$namespace" ]]; then
+                echo "Usage: manage_netns create <namespace>"
+                return 1
+            fi
+            
+            echo "Creating network namespace: $namespace"
+            sudo ip netns add "$namespace"
+            
+            # Enable loopback in namespace
+            sudo ip netns exec "$namespace" ip link set lo up
+            
+            echo "Network namespace $namespace created"
+            ;;
+            
+        "delete")
+            if [[ -z "$namespace" ]]; then
+                echo "Usage: manage_netns delete <namespace>"
+                return 1
+            fi
+            
+            echo "Deleting network namespace: $namespace"
+            sudo ip netns del "$namespace"
+            ;;
+            
+        "move")
+            if [[ -z "$namespace" || -z "$interface" ]]; then
+                echo "Usage: manage_netns move <namespace> <interface>"
+                return 1
+            fi
+            
+            echo "Moving interface $interface to namespace $namespace"
+            sudo ip link set "$interface" netns "$namespace"
+            ;;
+            
+        "exec")
+            if [[ -z "$namespace" ]]; then
+                echo "Usage: manage_netns exec <namespace> <command>"
+                return 1
+            fi
+            
+            shift 2
+            echo "Executing in namespace $namespace: $*"
+            sudo ip netns exec "$namespace" "$@"
+            ;;
+            
+        "list")
+            echo "Available network namespaces:"
+            ip netns list
+            ;;
+            
+        *)
+            echo "Available actions: create, delete, move, exec, list"
+            return 1
+            ;;
+    esac
+}
+
+# Function to test network connectivity
+test_connectivity() {
+    local target="$1"
+    local test_type="${2:-ping}"
+    local interface="$3"
+    
+    if [[ -z "$target" ]]; then
+        echo "Usage: test_connectivity <target> [ping|trace|port] [interface]"
+        return 1
+    fi
+    
+    case "$test_type" in
+        "ping")
+            echo "Testing ping connectivity to $target..."
+            local ping_cmd="ping -c 4 -W 3"
+            if [[ -n "$interface" ]]; then
+                ping_cmd+=" -I $interface"
+            fi
+            ping_cmd+=" $target"
+            
+            eval "$ping_cmd"
+            ;;
+            
+        "trace")
+            echo "Tracing route to $target..."
+            local trace_cmd="traceroute"
+            if [[ -n "$interface" ]]; then
+                trace_cmd+=" -i $interface"
+            fi
+            trace_cmd+=" $target"
+            
+            eval "$trace_cmd"
+            ;;
+            
+        "port")
+            local port="${4:-80}"
+            echo "Testing port connectivity to $target:$port..."
+            if command -v nc &>/dev/null; then
+                timeout 5 nc -zv "$target" "$port"
+            elif command -v telnet &>/dev/null; then
+                timeout 5 telnet "$target" "$port"
+            else
+                echo "Neither nc nor telnet available for port testing"
+                return 1
+            fi
+            ;;
+            
+        *)
+            echo "Available test types: ping, trace, port"
+            return 1
+            ;;
+    esac
+}
+
+# Usage function
+usage() {
+    echo "Usage: $0 {static|dhcp|routes|multi-ip|alias|ipv6|netns|test} [arguments]"
+    echo ""
+    echo "Commands:"
+    echo "  static <interface> <ip/prefix> <gateway> [dns1] [dns2]  - Configure static IP"
+    echo "  dhcp <interface>                                        - Configure DHCP"
+    echo "  routes <add|delete|show|default> [args]                - Manage routing table"
+    echo "  multi-ip <interface> <ip1/prefix> [ip2/prefix] ...     - Configure multiple IPs"
+    echo "  alias <interface> <alias_num> <ip/prefix>              - Create IP alias"
+    echo "  ipv6 <interface> <enable|disable|add|show> [ipv6]     - Configure IPv6"
+    echo "  netns <create|delete|move|exec|list> [args]            - Manage network namespaces"
+    echo "  test <target> [ping|trace|port] [interface]           - Test connectivity"
+    echo ""
+    echo "Examples:"
+    echo "  $0 static eth0 192.168.1.100/24 192.168.1.1"
+    echo "  $0 routes add 10.0.0.0/8 192.168.1.1 eth0"
+    echo "  $0 multi-ip eth0 192.168.1.100/24 192.168.1.101/24"
+    echo "  $0 alias eth0 1 192.168.2.100/24"
+    echo "  $0 ipv6 eth0 add 2001:db8::1/64"
+    echo "  $0 netns create test-ns"
+    echo "  $0 test google.com ping"
+}
+
+# Main script logic
+case "${1:-help}" in
+    "static")
+        configure_static_ip "$2" "$3" "$4" "$5" "$6" "$7"
+        ;;
+    "dhcp")
+        configure_dhcp "$2" "$3"
+        ;;
+    "routes")
+        manage_routes "$2" "$3" "$4" "$5" "$6"
+        ;;
+    "multi-ip")
+        shift
+        configure_multiple_ips "$@"
+        ;;
+    "alias")
+        create_ip_alias "$2" "$3" "$4"
+        ;;
+    "ipv6")
+        configure_ipv6 "$2" "$3" "$4"
+        ;;
+    "netns")
+        shift
+        manage_netns "$@"
+        ;;
+    "test")
+        test_connectivity "$2" "$3" "$4" "$5"
+        ;;
+    "help"|*)
+        usage
+        ;;
+esac
+```
 # Create static IP connection
 sudo nmcli connection add type ethernet con-name static-eth0 \
     ifname eth0 ip4 192.168.1.100/24 gw4 192.168.1.1
@@ -1304,14 +2651,626 @@ echo "*/5 * * * * /usr/local/bin/network-security-monitor.sh" | sudo crontab -
 | **Plan for Failure** | Design redundancy and failover mechanisms |
 | **Regular Updates** | Keep network services and tools updated |
 
-### Security Implementation Checklist
-- [ ] SSH server hardened with key-based authentication
-- [ ] Firewall configured with minimal required access
-- [ ] Network services secured and unnecessary services disabled
-- [ ] Regular security monitoring and log analysis implemented
-- [ ] Network segmentation applied where appropriate
-- [ ] Incident response procedures documented and tested
-- [ ] Regular security assessments and penetration testing scheduled
+## Lab Exercises
+
+### Lab 1: Network Configuration and Management
+**Objective**: Master comprehensive network interface configuration and management across different systems.
+
+**Tasks**:
+1. Interface configuration automation:
+   - Create scripts for static and dynamic IP configuration
+   - Implement VLAN and bridge setup automation
+   - Configure network bonding for redundancy
+   - Test IPv6 dual-stack configurations
+
+2. Network service management:
+   - Configure DHCP server with reservations
+   - Set up local DNS caching and forwarding
+   - Implement network monitoring and alerting
+   - Create network documentation and diagrams
+
+**Deliverables**:
+- Network configuration automation scripts
+- DHCP and DNS server configurations
+- Network monitoring dashboard
+- Comprehensive network documentation
+
+**Success Criteria**:
+- All network configurations work reliably
+- Automation scripts handle error conditions
+- Monitoring detects and alerts on issues
+- Documentation is complete and accurate
+
+### Lab 2: Firewall Security Implementation
+**Objective**: Implement comprehensive firewall security across multiple systems and use cases.
+
+**Tasks**:
+1. Multi-platform firewall deployment:
+   - Configure iptables rules for complex scenarios
+   - Implement firewalld zones for enterprise environments
+   - Set up UFW for simplified Ubuntu management
+   - Create firewall rule management automation
+
+2. Advanced security features:
+   - Implement connection tracking and stateful rules
+   - Configure DDoS protection and rate limiting
+   - Set up network segmentation and DMZ zones
+   - Deploy intrusion detection integration
+
+**Deliverables**:
+- Firewall rule sets for different environments
+- Automated firewall management system
+- Security testing and validation reports
+- Incident response procedures
+
+**Success Criteria**:
+- Firewall rules block unauthorized access
+- Legitimate traffic flows without issues
+- Automation maintains security posture
+- Security tests validate protection effectiveness
+
+### Lab 3: SSH Infrastructure Hardening
+**Objective**: Deploy enterprise-grade SSH security infrastructure with comprehensive hardening measures.
+
+**Tasks**:
+1. SSH security implementation:
+   - Configure SSH servers with security hardening
+   - Implement certificate-based authentication
+   - Set up SSH jump hosts and bastion architecture
+   - Deploy SSH session monitoring and logging
+
+2. Key management and automation:
+   - Create automated SSH key rotation system
+   - Implement centralized key management
+   - Configure SSH agent forwarding controls
+   - Set up emergency access procedures
+
+**Deliverables**:
+- Hardened SSH configurations for all systems
+- Automated key management system
+- SSH monitoring and alerting solution
+- Security compliance documentation
+
+**Success Criteria**:
+- SSH passes security compliance scans
+- Key rotation works without service disruption
+- Monitoring detects unauthorized access attempts
+- Emergency procedures are tested and documented
+
+### Lab 4: Network Monitoring and Troubleshooting
+**Objective**: Implement comprehensive network monitoring and develop advanced troubleshooting capabilities.
+
+**Tasks**:
+1. Monitoring infrastructure:
+   - Deploy network traffic analysis tools
+   - Implement bandwidth monitoring and alerting
+   - Set up performance metrics collection
+   - Create network health dashboards
+
+2. Troubleshooting capabilities:
+   - Develop network diagnostic automation
+   - Create packet capture and analysis procedures
+   - Implement automated connectivity testing
+   - Design escalation and response workflows
+
+**Deliverables**:
+- Complete network monitoring solution
+- Automated diagnostic and testing tools
+- Network performance analysis reports
+- Troubleshooting runbooks and procedures
+
+**Success Criteria**:
+- Monitoring provides real-time network visibility
+- Automated tools accurately diagnose issues
+- Performance baselines are established
+- Response times for issues are minimized
+
+### Lab 5: VPN and Secure Remote Access
+**Objective**: Design and implement secure remote access solutions using multiple VPN technologies.
+
+**Tasks**:
+1. VPN infrastructure deployment:
+   - Configure OpenVPN for site-to-site connectivity
+   - Implement WireGuard for modern client access
+   - Set up IPSec tunnels for enterprise connections
+   - Deploy SSL/TLS VPN for web-based access
+
+2. Security and management:
+   - Implement certificate management for VPN
+   - Configure multi-factor authentication
+   - Set up VPN monitoring and logging
+   - Create user access management procedures
+
+**Deliverables**:
+- Multi-protocol VPN infrastructure
+- Certificate management system
+- VPN monitoring and reporting tools
+- User access management procedures
+
+**Success Criteria**:
+- VPN connections are stable and secure
+- Certificate management is automated
+- User access is properly controlled
+- Performance meets business requirements
+
+## Best Practices
+
+### Network Configuration Best Practices
+
+#### Interface Management
+- **Consistent Naming**: Use predictable interface naming conventions
+- **Documentation**: Maintain accurate network configuration documentation
+- **Version Control**: Track network configuration changes in version control
+- **Testing**: Test network changes in non-production environments first
+- **Rollback Plans**: Always have rollback procedures for network changes
+
+#### IP Address Management
+- **IPAM Strategy**: Implement proper IP address management and documentation
+- **Subnet Planning**: Plan IP addressing schemes for future growth
+- **DHCP Reservations**: Use DHCP reservations for servers and infrastructure
+- **IPv6 Preparation**: Plan for IPv6 implementation in network designs
+- **Network Segmentation**: Segment networks based on security and functional requirements
+
+#### DNS Configuration
+- **Redundancy**: Configure multiple DNS servers for reliability
+- **Caching**: Implement local DNS caching for performance
+- **Security**: Use DNS over HTTPS/TLS where appropriate
+- **Monitoring**: Monitor DNS resolution performance and availability
+- **Split-Horizon**: Implement split-horizon DNS for internal/external resolution
+
+### Security Best Practices
+
+#### Firewall Management
+- **Default Deny**: Implement default deny policies with explicit allow rules
+- **Principle of Least Privilege**: Grant minimum necessary network access
+- **Regular Reviews**: Conduct periodic firewall rule reviews and cleanup
+- **Logging**: Enable comprehensive firewall logging for security monitoring
+- **Testing**: Regularly test firewall rules and security effectiveness
+
+#### SSH Security
+- **Key-Based Authentication**: Disable password authentication in favor of keys
+- **Regular Key Rotation**: Implement automated SSH key rotation procedures
+- **Session Monitoring**: Monitor and log SSH sessions for security analysis
+- **Jump Hosts**: Use jump hosts/bastions for secure administrative access
+- **Rate Limiting**: Implement connection rate limiting to prevent brute force attacks
+
+#### Network Monitoring
+- **Comprehensive Coverage**: Monitor all critical network components and services
+- **Baseline Establishment**: Establish performance baselines for anomaly detection
+- **Automated Alerting**: Configure intelligent alerting to minimize false positives
+- **Capacity Planning**: Use monitoring data for network capacity planning
+- **Incident Response**: Integrate monitoring with incident response procedures
+
+### Operational Best Practices
+
+#### Change Management
+- **Documentation**: Document all network changes with justification and procedures
+- **Testing**: Test changes in lab environments before production deployment
+- **Approval Process**: Implement change approval processes for critical systems
+- **Rollback Planning**: Always have tested rollback procedures available
+- **Communication**: Communicate changes to affected stakeholders
+
+#### Automation
+- **Infrastructure as Code**: Manage network configurations as code
+- **Automated Testing**: Implement automated testing for network configurations
+- **Deployment Automation**: Automate network deployment and configuration management
+- **Monitoring Integration**: Integrate automation with monitoring and alerting systems
+- **Error Handling**: Implement robust error handling in automation scripts
+
+#### Disaster Recovery
+- **Network Redundancy**: Design networks with appropriate redundancy levels
+- **Backup Configurations**: Regularly backup network device configurations
+- **Recovery Procedures**: Document and test network recovery procedures
+- **Geographic Distribution**: Consider geographic distribution for critical services
+- **Regular Testing**: Conduct regular disaster recovery testing exercises
+
+## Troubleshooting
+
+### Network Connectivity Issues
+
+#### No Network Connectivity
+**Symptoms**: Complete loss of network access, cannot reach any destinations
+
+**Diagnostic Steps**:
+1. Check physical connectivity:
+   ```bash
+   # Check link status
+   ip link show
+   ethtool eth0
+   
+   # Check for cable issues
+   dmesg | grep -i "link\|carrier"
+   ```
+
+2. Verify interface configuration:
+   ```bash
+   # Check IP configuration
+   ip addr show
+   ip route show
+   
+   # Test local connectivity
+   ping -c 4 $(ip route | grep default | awk '{print $3}')
+   ```
+
+3. Check DNS resolution:
+   ```bash
+   # Test DNS
+   nslookup google.com
+   dig google.com
+   
+   # Check DNS configuration
+   cat /etc/resolv.conf
+   systemd-resolve --status
+   ```
+
+**Solutions**:
+- Verify cable connections and switch ports
+- Check interface configuration and bring up if needed
+- Verify IP addressing and routing configuration
+- Fix DNS configuration if resolution fails
+- Restart network services if configuration is correct
+
+#### Intermittent Connectivity
+**Symptoms**: Network works sometimes but fails intermittently
+
+**Diagnostic Steps**:
+1. Monitor interface statistics:
+   ```bash
+   # Watch for errors
+   watch -n 1 'ip -s link show eth0'
+   
+   # Check system logs
+   journalctl -f -u NetworkManager
+   dmesg -w
+   ```
+
+2. Test connectivity patterns:
+   ```bash
+   # Continuous ping test
+   ping -i 0.2 8.8.8.8
+   
+   # MTR for path analysis
+   mtr --report --cycles 100 8.8.8.8
+   ```
+
+3. Analyze network performance:
+   ```bash
+   # Check for packet loss
+   ss -i
+   netstat -i
+   
+   # Monitor bandwidth usage
+   iftop -i eth0
+   nethogs
+   ```
+
+**Solutions**:
+- Replace faulty cables or network hardware
+- Adjust network interface settings (duplex, speed)
+- Update network drivers
+- Configure Quality of Service (QoS) if needed
+- Investigate and resolve bandwidth saturation
+
+### DNS Resolution Problems
+
+#### Slow DNS Resolution
+**Symptoms**: Web browsing and network services are slow due to DNS delays
+
+**Diagnostic Steps**:
+1. Measure DNS response times:
+   ```bash
+   # Test multiple DNS servers
+   for server in 8.8.8.8 8.8.4.4 1.1.1.1; do
+       echo "Testing $server:"
+       time dig @$server google.com A +short
+   done
+   ```
+
+2. Check local DNS configuration:
+   ```bash
+   # Check systemd-resolved
+   systemd-resolve --status
+   systemd-resolve --statistics
+   
+   # Check for local DNS cache
+   ss -tuln | grep :53
+   ```
+
+**Solutions**:
+- Switch to faster DNS servers (1.1.1.1, 8.8.8.8)
+- Configure local DNS caching (systemd-resolved, dnsmasq)
+- Fix network connectivity to DNS servers
+- Implement DNS over HTTPS/TLS for better performance
+
+#### DNS Resolution Failures
+**Symptoms**: Cannot resolve domain names, but IP addresses work
+
+**Diagnostic Steps**:
+1. Test DNS servers directly:
+   ```bash
+   # Test current DNS servers
+   dig google.com
+   nslookup google.com
+   
+   # Test with different DNS servers
+   dig @8.8.8.8 google.com
+   dig @1.1.1.1 google.com
+   ```
+
+2. Check DNS configuration:
+   ```bash
+   # Check resolv.conf
+   cat /etc/resolv.conf
+   
+   # Check systemd-resolved configuration
+   cat /etc/systemd/resolved.conf
+   systemctl status systemd-resolved
+   ```
+
+**Solutions**:
+- Fix /etc/resolv.conf configuration
+- Restart systemd-resolved service
+- Configure working DNS servers
+- Check firewall rules for DNS traffic (port 53)
+
+### Firewall Configuration Issues
+
+#### Services Inaccessible After Firewall Changes
+**Symptoms**: Network services become inaccessible after firewall rule changes
+
+**Diagnostic Steps**:
+1. Check current firewall rules:
+   ```bash
+   # Check active rules
+   iptables -L -n -v
+   firewall-cmd --list-all
+   ufw status verbose
+   ```
+
+2. Test specific connections:
+   ```bash
+   # Test from client
+   telnet server_ip port
+   nc -zv server_ip port
+   
+   # Check if service is listening
+   ss -tuln | grep :port
+   ```
+
+3. Analyze blocked connections:
+   ```bash
+   # Check firewall logs
+   journalctl -f -g "REJECT\|DROP"
+   tail -f /var/log/ufw.log
+   dmesg | grep -i firewall
+   ```
+
+**Solutions**:
+- Add explicit allow rules for required services
+- Check rule order and precedence
+- Verify source and destination addresses in rules
+- Temporarily disable firewall to confirm it's the issue
+
+#### Firewall Rules Not Working
+**Symptoms**: Firewall rules are configured but not blocking unwanted traffic
+
+**Diagnostic Steps**:
+1. Verify rule syntax and order:
+   ```bash
+   # Check rule order
+   iptables -L -n --line-numbers
+   
+   # Test rule matching
+   iptables -L -n -v
+   ```
+
+2. Test rule effectiveness:
+   ```bash
+   # Monitor rule hits
+   watch -n 1 'iptables -L -n -v'
+   
+   # Check for conflicting rules
+   iptables-save | grep -E "ACCEPT|REJECT|DROP"
+   ```
+
+**Solutions**:
+- Fix rule syntax and ordering
+- Remove conflicting rules
+- Ensure rules are persistent across reboots
+- Test rules thoroughly after implementation
+
+### SSH Connection Problems
+
+#### SSH Connection Refused
+**Symptoms**: Cannot connect to SSH server, connection refused error
+
+**Diagnostic Steps**:
+1. Check SSH service status:
+   ```bash
+   # Check if SSH is running
+   systemctl status ssh
+   systemctl status sshd
+   
+   # Check if SSH is listening
+   ss -tuln | grep :22
+   netstat -tuln | grep :22
+   ```
+
+2. Check SSH configuration:
+   ```bash
+   # Test SSH configuration
+   sshd -T
+   
+   # Check SSH logs
+   journalctl -u ssh -f
+   tail -f /var/log/auth.log
+   ```
+
+3. Test network connectivity:
+   ```bash
+   # Test port connectivity
+   telnet ssh_server 22
+   nc -zv ssh_server 22
+   ```
+
+**Solutions**:
+- Start SSH service if not running
+- Fix SSH configuration errors
+- Open SSH port in firewall
+- Check if SSH is bound to correct interfaces
+
+#### SSH Authentication Failures
+**Symptoms**: SSH connection established but authentication fails
+
+**Diagnostic Steps**:
+1. Check SSH authentication methods:
+   ```bash
+   # Test with verbose output
+   ssh -v user@hostname
+   
+   # Check authorized keys
+   ls -la ~/.ssh/authorized_keys
+   cat ~/.ssh/authorized_keys
+   ```
+
+2. Verify key permissions:
+   ```bash
+   # Check SSH directory permissions
+   ls -la ~/.ssh/
+   
+   # Fix permissions if needed
+   chmod 700 ~/.ssh
+   chmod 600 ~/.ssh/authorized_keys
+   ```
+
+3. Check SSH server configuration:
+   ```bash
+   # Check authentication settings
+   grep -E "PubkeyAuthentication|PasswordAuthentication|PermitRootLogin" /etc/ssh/sshd_config
+   ```
+
+**Solutions**:
+- Fix SSH key permissions
+- Verify public key is correctly installed
+- Check SSH server authentication settings
+- Regenerate SSH keys if corrupted
+
+## Assessment Criteria
+
+### Knowledge Assessment
+
+#### Theoretical Understanding (25 points)
+- **Network Fundamentals** (5 points): OSI model, TCP/IP stack, addressing schemes
+- **Interface Management** (5 points): Modern tools (NetworkManager, systemd-networkd) and legacy methods
+- **DNS and Name Resolution** (5 points): DNS hierarchy, caching, security considerations
+- **Firewall Technologies** (5 points): iptables, firewalld, UFW, and rule management concepts
+- **Security Principles** (5 points): Network security best practices and threat mitigation
+
+#### Practical Implementation (50 points)
+- **Network Configuration** (15 points):
+  - Configure static and dynamic IP addressing
+  - Implement VLANs and network bridging
+  - Set up IPv6 dual-stack networking
+  - Configure routing and network namespaces
+
+- **DNS Infrastructure** (10 points):
+  - Configure DNS servers and caching
+  - Implement secure DNS (DoH/DoT)
+  - Manage hosts files and local resolution
+  - Troubleshoot DNS resolution issues
+
+- **Firewall Implementation** (15 points):
+  - Configure iptables rules for complex scenarios
+  - Implement firewalld zones and policies
+  - Set up UFW for simplified management
+  - Deploy DDoS protection and rate limiting
+
+- **SSH Security** (10 points):
+  - Harden SSH server configuration
+  - Implement key-based authentication
+  - Configure SSH tunneling and forwarding
+  - Set up monitoring and audit logging
+
+#### Problem-Solving and Troubleshooting (15 points)
+- **Diagnostic Skills** (5 points): Systematic approach to network problem diagnosis
+- **Tool Proficiency** (5 points): Effective use of network diagnostic and monitoring tools
+- **Resolution Techniques** (5 points): Ability to implement lasting solutions to network issues
+
+#### Documentation and Automation (10 points)
+- **Technical Documentation** (5 points): Clear network diagrams, configuration documentation
+- **Automation Scripts** (5 points): Functional scripts for network management and monitoring
+
+### Practical Evaluation Rubric
+
+#### Excellent (90-100%)
+- Demonstrates mastery of all networking concepts and technologies
+- Implements comprehensive security measures with enterprise-grade hardening
+- Creates robust, scalable automation solutions with proper error handling
+- Provides detailed documentation and follows all security best practices
+- Troubleshoots complex network issues efficiently and systematically
+
+#### Proficient (80-89%)
+- Shows solid understanding of networking fundamentals and management
+- Implements most security measures correctly with minor gaps
+- Creates functional automation with basic error handling
+- Provides adequate documentation covering essential elements
+- Handles most networking scenarios with minimal guidance
+
+#### Developing (70-79%)
+- Understands basic networking concepts with some limitations
+- Implements fundamental security measures inconsistently
+- Creates basic functional solutions with limited automation
+- Documentation covers core requirements but lacks detail
+- Requires guidance for complex networking scenarios
+
+#### Needs Improvement (Below 70%)
+- Limited understanding of networking fundamentals
+- Inconsistent or ineffective security implementations
+- Solutions lack robustness and have significant functional issues
+- Minimal or incomplete documentation
+- Cannot troubleshoot effectively without significant assistance
+
+### Certification Requirements
+
+To receive certification for Module 7, candidates must:
+
+1. **Score 80% or higher** on the practical assessment
+2. **Complete all lab exercises** with satisfactory results
+3. **Demonstrate proficiency** in network troubleshooting scenarios
+4. **Submit comprehensive documentation** of network implementations
+5. **Pass a practical evaluation** demonstrating real-world networking skills
+
+### Continuing Education
+
+#### Advanced Topics for Further Study
+- Software-Defined Networking (SDN)
+- Network automation with Ansible/Terraform
+- Container networking (Docker, Kubernetes)
+- Advanced VPN technologies (DMVPN, SD-WAN)
+- Network security monitoring and threat hunting
+
+#### Recommended Certifications
+- CompTIA Network+
+- Cisco CCNA (Routing and Switching)
+- Linux Professional Institute Certification (LPIC-2)
+- Red Hat Certified Engineer (RHCE)
+- Certified Ethical Hacker (CEH)
+
+#### Industry Resources
+- RFC documents for networking standards
+- NIST Cybersecurity Framework
+- CIS Critical Security Controls
+- Linux networking documentation
+- Vendor-specific networking guides
 
 ## Next Steps
-With networking fundamentals mastered, you're ready to explore Logging & Monitoring in Module 8, where you'll learn to manage system logs and implement comprehensive monitoring solutions.
+
+With comprehensive networking fundamentals mastered, you're ready to advance to **Module 8: Logging and Monitoring**. This next module will build upon your network troubleshooting skills by covering:
+
+- System log management and analysis
+- Performance monitoring and alerting
+- Log aggregation and centralization
+- Monitoring infrastructure and automation
+- Incident response and escalation procedures
+
+The networking skills learned in this module are essential for understanding how distributed systems communicate and for implementing effective monitoring and logging strategies across network infrastructure.
