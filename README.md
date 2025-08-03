@@ -40,6 +40,7 @@ This repo takes experienced Windows sysadmins from basic Linux administration th
 12. [Module 12: Proxmox Virtual Environment](Module12_Proxmox_Virtual_Environment.md)
 13. [Module 13: OpenSSH Best Practices](Module13_OpenSSH_Best_Practices.md)
 14. [Module 14: Proxmox Infrastructure Automation](Module14_Proxmox_Infrastructure_Automation.md)
+15. [Module 15: Git & GitHub Setup with SSH Access](Module15_Git_GitHub_SSH_Setup.md)
  
 ---
  
