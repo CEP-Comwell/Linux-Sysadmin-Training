@@ -122,7 +122,8 @@ By the end of this module, you will be able to:
 - Understanding network interface naming conventions
 - Network device status and configuration inspection
 - Interface statistics and performance monitoring
-- **Practical Examples**: [Viewing Interface Information](#viewing-interface-information) | [Interface State Management](#interface-state-management)
+
+**🔗 Practical Examples**: [Viewing Interface Information](Module7_Networking_Fundamentals.md#viewing-interface-information) | [Interface State Management](Module7_Networking_Fundamentals.md#interface-state-management)
 
 ### 7.2 IP Address Configuration and Management
 - Static vs dynamic IP addressing strategies
@@ -130,21 +131,24 @@ By the end of this module, you will be able to:
 - NetworkManager and systemd-networkd management
 - Persistent network configuration across reboots
 - DHCP client configuration and troubleshooting
-- **Practical Examples**: [NetworkManager Configuration](#static-ip-configuration-with-networkmanager) | [systemd-networkd Setup](#using-systemd-networkd) | [Legacy Methods](#legacy-network-configuration)
+
+**🔗 Practical Examples**: [NetworkManager Configuration](Module7_Networking_Fundamentals.md#static-ip-configuration-with-networkmanager) | [systemd-networkd Setup](Module7_Networking_Fundamentals.md#using-systemd-networkd) | [Legacy Methods](Module7_Networking_Fundamentals.md#legacy-network-configuration)
 
 ### 7.3 DNS Resolution and Host Management
 - DNS resolution configuration in `/etc/resolv.conf`
 - Local host resolution with `/etc/hosts`
 - DNS troubleshooting with `dig`, `nslookup`, and `host`
 - systemd-resolved configuration and management
-- **Practical Examples**: [DNS Configuration and Testing](#dns-configuration-and-testing)
+
+**🔗 Practical Examples**: [DNS Configuration and Testing](Module7_Networking_Fundamentals.md#dns-configuration-and-testing)
 
 ### 7.4 Network Connectivity Diagnostics
 - Connectivity testing with `ping` and advanced options
 - Path tracing with `traceroute` and `mtr`
 - Port and service checking with `netstat`, `ss`, and `nmap`
 - Network performance analysis and bandwidth testing
-- **Practical Examples**: [Comprehensive Connectivity Testing](#comprehensive-connectivity-testing)
+
+**🔗 Practical Examples**: [Comprehensive Connectivity Testing](Module7_Networking_Fundamentals.md#comprehensive-connectivity-testing)
 
 ### 7.5 SSH Security and Hardening
 - SSH server configuration and `/etc/ssh/sshd_config` hardening
@@ -152,7 +156,8 @@ By the end of this module, you will be able to:
 - Disabling password authentication and changing default ports
 - SSH client configuration and connection management
 - Advanced SSH features: tunneling, port forwarding, and agent forwarding
-- **Practical Examples**: [SSH Server Hardening](#ssh-server-configuration-and-hardening) | [SSH Key Management](#ssh-key-management)
+
+**🔗 Practical Examples**: [SSH Server Hardening](Module7_Networking_Fundamentals.md#ssh-server-configuration-and-hardening) | [SSH Key Management](Module7_Networking_Fundamentals.md#ssh-key-management)
 
 ### 7.6 Comprehensive Firewall Management
 - Zone-based firewall management with `firewalld`
@@ -160,14 +165,16 @@ By the end of this module, you will be able to:
 - UFW (Uncomplicated Firewall) for simplified management
 - Rich rules and advanced filtering techniques
 - NAT, port forwarding, and traffic redirection
-- **Practical Examples**: [firewalld Management](#firewalld-zone-based-management) | [iptables Configuration](#iptables-legacy-firewall-management) | [UFW Setup](#ufw-simplified-firewall-management)
+
+**🔗 Practical Examples**: [firewalld Management](Module7_Networking_Fundamentals.md#firewalld-zone-based-management) | [iptables Configuration](Module7_Networking_Fundamentals.md#iptables-legacy-firewall-management) | [UFW Setup](Module7_Networking_Fundamentals.md#ufw-simplified-firewall-management)
 
 ### 7.7 Network Security Best Practices
 - Host-level security implementations
 - Network service hardening
 - Intrusion detection and prevention
 - Security monitoring and log analysis
-- **Practical Examples**: [Host-Level Security Implementation](#host-level-security-implementation) | [Security Monitoring](#network-security-monitoring)
+
+**🔗 Practical Examples**: [Host-Level Security Implementation](Module7_Networking_Fundamentals.md#host-level-security-implementation) | [Security Monitoring](Module7_Networking_Fundamentals.md#network-security-monitoring)
 
 ## Essential Command Reference
 
