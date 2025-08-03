@@ -1,16 +1,21 @@
-# Module 7: Networking Fundamentals
+# Module 7: Networking & Firewalls
 
 ## Overview
-This module covers Linux networking fundamentals including network configuration, troubleshooting, firewalls, and network services. You'll learn to configure network interfaces, manage routing, and secure network communications.
+Master interface configuration, connectivity diagnostics, secure remote access, and both traditional and zone-based firewall controls to safeguard your Linux host. This comprehensive module covers modern networking tools and security practices essential for Linux system administration.
 
 ## Learning Objectives
 By the end of this module, you will be able to:
-- Configure network interfaces and routing
-- Troubleshoot network connectivity issues
-- Implement firewall rules and network security
-- Configure and manage network services
-- Monitor network traffic and performance
-- Understand network protocols and services
+1. Display interface details, address assignments, and routing tables to map packet flows using modern tools
+2. Persist DHCP or static IP configurations for stable network setups across different Linux distributions
+3. Resolve and troubleshoot domain names and hosts via DNS queries and host files
+4. Secure SSH by editing `/etc/ssh/sshd_config`, generating key pairs, and managing authorized keys
+5. Craft comprehensive firewall policies:
+   - Define and inspect active zones in `firewalld`
+   - Add or remove services, ports, sources, and interfaces from zones
+   - Write rich rules for advanced filtering (logging, IP-based restrictions)
+   - Compare and fallback to `iptables`/`nftables` or `ufw` when needed
+6. Diagnose connectivity issues using systematic troubleshooting approaches
+7. Implement network security best practices for production environments
 
 ## Topics
 
