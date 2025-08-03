@@ -14,15 +14,29 @@
 - [Essential Command Reference](#essential-command-reference)
 - [Practical Examples](#practical-examples)
   - [Modern Network Interface Management](#modern-network-interface-management)
+    - [Viewing Interface Information](#viewing-interface-information)
+    - [Interface State Management](#interface-state-management)
   - [Comprehensive IP Address Configuration](#comprehensive-ip-address-configuration)
+    - [Static IP Configuration with NetworkManager](#static-ip-configuration-with-networkmanager)
+    - [Using systemd-networkd](#using-systemd-networkd)
+    - [Legacy Network Configuration](#legacy-network-configuration)
   - [DNS Resolution and Host Management](#dns-resolution-and-host-management)
+    - [DNS Configuration and Testing](#dns-configuration-and-testing)
   - [Advanced Connectivity Diagnostics](#advanced-connectivity-diagnostics)
+    - [Comprehensive Connectivity Testing](#comprehensive-connectivity-testing)
   - [SSH Security and Hardening](#ssh-security-and-hardening)
+    - [SSH Server Configuration and Hardening](#ssh-server-configuration-and-hardening)
+    - [SSH Key Management](#ssh-key-management)
   - [Comprehensive Firewall Management](#comprehensive-firewall-management)
+    - [firewalld Zone-Based Management](#firewalld-zone-based-management)
+    - [iptables Legacy Firewall Management](#iptables-legacy-firewall-management)
+    - [UFW Simplified Firewall Management](#ufw-simplified-firewall-management)
 - [Advanced Network Configuration Files](#advanced-network-configuration-files)
   - [NetworkManager Configuration](#networkmanager-configuration)
   - [systemd-networkd Configuration](#systemd-networkd-configuration)
   - [Legacy Network Configuration](#legacy-network-configuration)
+    - [Debian/Ubuntu Network Interfaces](#debianubuntu-network-interfaces)
+    - [Red Hat/CentOS Network Scripts](#red-hatcentos-network-scripts)
 - [Network Troubleshooting Methodologies](#network-troubleshooting-methodologies)
   - [Systematic Network Diagnosis](#systematic-network-diagnosis)
   - [Advanced Network Monitoring](#advanced-network-monitoring)
@@ -108,6 +122,7 @@ By the end of this module, you will be able to:
 - Understanding network interface naming conventions
 - Network device status and configuration inspection
 - Interface statistics and performance monitoring
+- **Practical Examples**: [Viewing Interface Information](#viewing-interface-information) | [Interface State Management](#interface-state-management)
 
 ### 7.2 IP Address Configuration and Management
 - Static vs dynamic IP addressing strategies
@@ -115,18 +130,21 @@ By the end of this module, you will be able to:
 - NetworkManager and systemd-networkd management
 - Persistent network configuration across reboots
 - DHCP client configuration and troubleshooting
+- **Practical Examples**: [NetworkManager Configuration](#static-ip-configuration-with-networkmanager) | [systemd-networkd Setup](#using-systemd-networkd) | [Legacy Methods](#legacy-network-configuration)
 
 ### 7.3 DNS Resolution and Host Management
 - DNS resolution configuration in `/etc/resolv.conf`
 - Local host resolution with `/etc/hosts`
 - DNS troubleshooting with `dig`, `nslookup`, and `host`
 - systemd-resolved configuration and management
+- **Practical Examples**: [DNS Configuration and Testing](#dns-configuration-and-testing)
 
 ### 7.4 Network Connectivity Diagnostics
 - Connectivity testing with `ping` and advanced options
 - Path tracing with `traceroute` and `mtr`
 - Port and service checking with `netstat`, `ss`, and `nmap`
 - Network performance analysis and bandwidth testing
+- **Practical Examples**: [Comprehensive Connectivity Testing](#comprehensive-connectivity-testing)
 
 ### 7.5 SSH Security and Hardening
 - SSH server configuration and `/etc/ssh/sshd_config` hardening
@@ -134,6 +152,7 @@ By the end of this module, you will be able to:
 - Disabling password authentication and changing default ports
 - SSH client configuration and connection management
 - Advanced SSH features: tunneling, port forwarding, and agent forwarding
+- **Practical Examples**: [SSH Server Hardening](#ssh-server-configuration-and-hardening) | [SSH Key Management](#ssh-key-management)
 
 ### 7.6 Comprehensive Firewall Management
 - Zone-based firewall management with `firewalld`
@@ -141,12 +160,14 @@ By the end of this module, you will be able to:
 - UFW (Uncomplicated Firewall) for simplified management
 - Rich rules and advanced filtering techniques
 - NAT, port forwarding, and traffic redirection
+- **Practical Examples**: [firewalld Management](#firewalld-zone-based-management) | [iptables Configuration](#iptables-legacy-firewall-management) | [UFW Setup](#ufw-simplified-firewall-management)
 
 ### 7.7 Network Security Best Practices
 - Host-level security implementations
 - Network service hardening
 - Intrusion detection and prevention
 - Security monitoring and log analysis
+- **Practical Examples**: [Host-Level Security Implementation](#host-level-security-implementation) | [Security Monitoring](#network-security-monitoring)
 
 ## Essential Command Reference
 
