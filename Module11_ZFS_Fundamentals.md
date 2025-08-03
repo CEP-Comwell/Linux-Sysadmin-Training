@@ -1,60 +1,71 @@
 # Module 11: ZFS Fundamentals
 
 ## Overview
-This module introduces ZFS (Zettabyte File System), a next-generation filesystem that combines traditional filesystem and volume manager functionality. You'll learn ZFS concepts, pool management, dataset administration, and advanced features like snapshots, clones, and data protection.
+Introduces ZFS's pooled storage model, end-to-end checksums, snapshots, and self-healing data integrity. This module covers ZFS (Zettabyte File System), a next-generation filesystem that combines traditional filesystem and volume manager functionality with revolutionary features like copy-on-write architecture, automatic data integrity verification, and advanced storage management capabilities.
 
 ## Learning Objectives
 By the end of this module, you will be able to:
-- Understand ZFS architecture and concepts
-- Create and manage ZFS pools and datasets
-- Implement ZFS snapshots and clones
-- Configure ZFS data protection features
-- Monitor and maintain ZFS storage systems
-- Optimize ZFS performance for different workloads
+1. **Create, expand, and destroy ZFS pools and associated datasets/zvols** - Master ZFS pool architecture, understand vdev types, and manage storage pools with different redundancy levels and performance characteristics
+2. **Automate snapshot lifecycles with scripts or cron jobs; perform rollbacks** - Implement comprehensive snapshot strategies, automate retention policies, and execute point-in-time recovery procedures
+3. **Use `zfs send/receive` to replicate datasets and implement offsite backups** - Configure efficient incremental replication, implement disaster recovery solutions, and manage cross-platform data migration
+4. **Configure quotas, reservations, and dataset delegation for multi-tenant use** - Implement hierarchical storage management, configure space allocation policies, and delegate administrative privileges for enterprise environments
+5. **Tune ZFS parameters (recordsize, cache settings, log devices) for workload optimization** - Optimize performance through ARC/L2ARC configuration, recordsize tuning, and ZIL device placement for specific workload requirements
 
 ## Topics
 
-### 11.1 ZFS Architecture and Concepts
-- ZFS vs traditional filesystems
-- Copy-on-Write (COW) architecture
-- Storage pools (zpools) and datasets
-- Virtual devices (vdevs) and redundancy
-- ZFS feature flags and compatibility
+### 11.1 ZFS Architecture and Copy-on-Write Fundamentals
+- **Copy-on-Write (COW) architecture**: Transaction-based filesystem design and atomic operations
+- **End-to-end data integrity**: Automatic checksumming, silent corruption detection, and self-healing
+- **Pooled storage model**: Virtual devices (vdevs), storage pools (zpools), and dynamic allocation
+- **ZFS vs traditional filesystems**: Integrated volume management and advanced feature comparison
+- **Feature flags and compatibility**: OpenZFS evolution and cross-platform considerations
 
-### 11.2 ZFS Pool Management
-- Creating and destroying pools
-- Pool layouts and redundancy levels
-- Adding and removing devices
-- Pool properties and tuning
-- Pool scrubbing and resilver operations
+**🔗 Practical Examples**: [ZFS Architecture Deep Dive](#zfs-architecture-deep-dive) | [Data Integrity Verification](#data-integrity-verification)
 
-### 11.3 ZFS Dataset Management
-- Filesystems, volumes, and snapshots
-- Dataset properties and inheritance
-- Mountpoints and sharing
-- Compression and deduplication
-- Encryption and security
+### 11.2 Pool Management and Storage Hierarchies
+- **Pool creation and expansion**: Vdev types, redundancy levels, and growth strategies
+- **RAID-Z implementation**: RAIDZ, RAIDZ2, RAIDZ3 configurations and performance characteristics
+- **Mirror and stripe configurations**: Performance vs redundancy trade-offs
+- **Hot spares and fault tolerance**: Automatic replacement and resilver operations
+- **Pool properties and tuning**: Feature flags, compression, and performance optimization
 
-### 11.4 ZFS Snapshots and Clones
-- Creating and managing snapshots
-- Snapshot automation and retention
-- Rolling back to snapshots
-- Creating and using clones
-- Send/receive for replication
+**🔗 Practical Examples**: [Pool Creation and Management](#pool-creation-and-management) | [Advanced Pool Configurations](#advanced-pool-configurations)
 
-### 11.5 ZFS Data Protection
-- Checksumming and data integrity
-- RAID-Z levels (RAIDZ, RAIDZ2, RAIDZ3)
-- Mirror configurations
-- Hot spares and fault tolerance
-- Pool health monitoring
+### 11.3 Datasets, Zvols, and Hierarchical Management
+- **Dataset types**: Filesystems, volumes (zvols), and their use cases
+- **Hierarchical quotas and reservations**: Space management and allocation policies
+- **Dataset delegation and permissions**: Multi-tenant administration and security
+- **Property inheritance**: Configuration management and policy enforcement
+- **Mountpoint management**: Automatic mounting and sharing configurations
 
-### 11.6 ZFS Performance and Tuning
-- ARC (Adaptive Replacement Cache)
-- L2ARC and ZIL configuration
-- Performance monitoring tools
-- Workload-specific optimizations
-- Best practices for production
+**🔗 Practical Examples**: [Dataset Hierarchy Management](#dataset-hierarchy-management) | [Multi-tenant Configuration](#multi-tenant-configuration)
+
+### 11.4 Advanced Features: Compression, Deduplication, and Optimization
+- **Compression algorithms**: LZ4, GZIP, ZSTD comparison and workload optimization
+- **Deduplication strategies**: Block-level dedup, memory requirements, and performance impact
+- **Recordsize tuning**: Workload-specific optimization for databases, VMs, and file servers
+- **Transparent compression**: Real-time compression and space efficiency
+- **Feature interaction**: Compression + deduplication synergies and trade-offs
+
+**🔗 Practical Examples**: [Compression and Deduplication](#compression-and-deduplication) | [Recordsize Optimization](#recordsize-optimization)
+
+### 11.5 Snapshot and Clone Workflows
+- **Snapshot lifecycle management**: Automated creation, retention policies, and cleanup strategies
+- **Clone operations**: Instant dataset cloning and promotion workflows
+- **Rollback procedures**: Point-in-time recovery and data restoration
+- **Snapshot automation**: Cron-based scheduling and enterprise-grade management
+- **Space-efficient snapshots**: Copy-on-write efficiency and storage optimization
+
+**🔗 Practical Examples**: [Automated Snapshot Management](#automated-snapshot-management) | [Clone and Rollback Operations](#clone-and-rollback-operations)
+
+### 11.6 Replication and Performance Tuning
+- **ZFS send/receive workflows**: Incremental replication and backup strategies
+- **Offsite backup implementation**: Cross-platform replication and disaster recovery
+- **ARC/L2ARC optimization**: Adaptive Replacement Cache tuning and SSD acceleration
+- **ZIL and log devices**: Write performance optimization and consistency guarantees
+- **Performance monitoring**: Workload analysis and bottleneck identification
+
+**🔗 Practical Examples**: [Send/Receive Replication](#send-receive-replication) | [Performance Optimization](#performance-optimization)
 
 ## Practical Examples
 
