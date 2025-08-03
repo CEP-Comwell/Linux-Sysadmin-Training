@@ -80,6 +80,8 @@ By the end of this module, you will be able to:
 - Commercial support and professional services
 - Ecosystem integration and third-party software availability
 
+**[⬆️ Back to Top](#module-1-linux-distributions--philosophy)** | **[📚 Main Index](README.md)**
+
 ## Essential Command Reference
 
 | Command | Description | Example |
@@ -92,6 +94,8 @@ By the end of this module, you will be able to:
 | `which <package_manager>` | Identify available package manager | `which apt yum dnf` |
 | `<pm> --version` | Check package manager version | `apt --version` |
 | `systemctl --version` | Check systemd version | `systemctl --version` |
+
+**[⬆️ Back to Top](#module-1-linux-distributions--philosophy)** | **[📚 Main Index](README.md)**
 
 ## Practical Examples
 
@@ -379,6 +383,8 @@ echo ""
 
 echo "=== Survey Complete ==="
 ```
+
+**[⬆️ Back to Top](#module-1-linux-distributions--philosophy)** | **[📚 Main Index](README.md)**
 
 ## Lab Exercises
 

@@ -371,6 +371,8 @@ By completing this module, you will master:
 | | `git stash list` | List stashes | `git stash list` |
 | | `git stash drop` | Delete stash | `git stash drop stash@{0}` |
 
+**[⬆️ Back to Top](#module-15-git--github-setup-with-ssh-access)** | **[📚 Main Index](README.md)**
+
 ## Practical Examples
 
 ### SSH Key Generation and GitHub Setup
@@ -1727,6 +1729,8 @@ git checkout main
 git merge upstream/main
 git push origin main
 ```
+
+**[⬆️ Back to Top](#module-15-git--github-setup-with-ssh-access)** | **[📚 Main Index](README.md)**
 
 ## Lab Exercises
 

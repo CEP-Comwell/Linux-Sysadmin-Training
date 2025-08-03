@@ -192,8 +192,6 @@ By the end of this module, you will be able to:
 | `time` | Measure execution time | `time ./script.sh` |
 | `strace` | System call tracing | `strace -f ./script.sh` |
 
-**[⬆️ Back to Top](#module9-shell-scripting-fundamentals)** | **[📚 Main Index](README.md)**
-
 ## Practical Examples
 
 ### Script Foundation and Best Practices
@@ -1652,8 +1650,6 @@ main() {
 main "$@"
 ```
 
-**[⬆️ Back to Top](#module9-shell-scripting-fundamentals)** | **[�� Main Index](README.md)**
-
 ## Lab Exercises
 
 ### Lab 1: Advanced Script Development
@@ -1848,8 +1844,6 @@ time {
 # System call tracing
 strace -c ./script.sh
 ```
-
-**[⬆️ Back to Top](#module9-shell-scripting-fundamentals)** | **[📚 Main Index](README.md)**
 
 ## Assessment Criteria
 
