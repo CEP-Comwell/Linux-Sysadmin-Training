@@ -813,11 +813,2039 @@ monitor_dataset_usage "$POOL_NAME" 80
 
 log_dataset_operation "Enterprise dataset management setup completed"
 ```
-#!/bin/bash
-# checksum-monitor.sh
 
-while true; do
-    echo "=== ZFS Integrity Status $(date) ==="
+### Snapshot Management
+
+#### Automated Snapshot Lifecycle Management
+```bash
+#!/bin/bash
+# zfs-snapshot-manager.sh - Enterprise snapshot lifecycle management
+
+SNAPSHOT_LOG="/var/log/zfs-snapshots.log"
+SNAPSHOT_CONFIG="/etc/zfs/snapshot-policies.conf"
+
+log_snapshot_operation() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$SNAPSHOT_LOG"
+}
+
+# Create snapshot policy configuration
+create_snapshot_policies() {
+    log_snapshot_operation "Creating snapshot policy configuration"
+    
+    sudo mkdir -p "$(dirname "$SNAPSHOT_CONFIG")"
+    cat > "$SNAPSHOT_CONFIG" << 'EOF'
+# ZFS Snapshot Policies Configuration
+# Format: dataset_pattern:frequency:retention:prefix
+
+# Corporate data - frequent snapshots with long retention
+corporate-pool/corporate:hourly:720:hourly
+corporate-pool/corporate:daily:90:daily
+corporate-pool/corporate:weekly:52:weekly
+corporate-pool/corporate:monthly:24:monthly
+
+# Development - frequent snapshots with shorter retention
+corporate-pool/projects/development:15min:96:dev
+corporate-pool/projects/development:hourly:168:hourly
+corporate-pool/projects/development:daily:30:daily
+
+# Production - balanced approach
+corporate-pool/projects/production:hourly:168:prod-hourly
+corporate-pool/projects/production:daily:60:prod-daily
+corporate-pool/projects/production:weekly:26:prod-weekly
+
+# User homes - daily snapshots
+corporate-pool/users/homes:daily:30:user-daily
+corporate-pool/users/homes:weekly:12:user-weekly
+
+# Backups - minimal snapshots (they are backups themselves)
+corporate-pool/backups:weekly:4:backup-weekly
+
+EOF
+    
+    log_snapshot_operation "Snapshot policies configuration created: $SNAPSHOT_CONFIG"
+}
+
+# Execute snapshot creation based on policies
+create_scheduled_snapshots() {
+    local frequency="$1"  # hourly, daily, weekly, monthly, 15min
+    
+    log_snapshot_operation "Creating $frequency snapshots"
+    
+    # Read policy configuration
+    while IFS=':' read -r dataset_pattern freq retention prefix; do
+        # Skip comments and empty lines
+        [[ "$dataset_pattern" =~ ^#.*$ ]] && continue
+        [[ -z "$dataset_pattern" ]] && continue
+        
+        # Process only matching frequency
+        [[ "$freq" != "$frequency" ]] && continue
+        
+        # Find matching datasets
+        zfs list -H -o name | grep "^$dataset_pattern" | while read -r dataset; do
+            local timestamp=$(date +%Y%m%d_%H%M%S)
+            local snapshot_name="${dataset}@${prefix}_${timestamp}"
+            
+            log_snapshot_operation "Creating snapshot: $snapshot_name"
+            
+            # Create snapshot with error handling
+            if sudo zfs snapshot "$snapshot_name"; then
+                log_snapshot_operation "Successfully created snapshot: $snapshot_name"
+                
+                # Apply retention policy
+                cleanup_old_snapshots "$dataset" "$prefix" "$retention"
+            else
+                log_snapshot_operation "ERROR: Failed to create snapshot: $snapshot_name"
+            fi
+        done
+        
+    done < "$SNAPSHOT_CONFIG"
+}
+
+# Cleanup old snapshots based on retention policy
+cleanup_old_snapshots() {
+    local dataset="$1"
+    local prefix="$2"
+    local retention_count="$3"
+    
+    log_snapshot_operation "Cleaning up old snapshots for $dataset (prefix: $prefix, keep: $retention_count)"
+    
+    # Get snapshots matching prefix, sorted by creation time (oldest first)
+    local snapshots=($(zfs list -H -t snapshot -o name -S creation "$dataset" | grep "@${prefix}_" | tail -n +$((retention_count + 1))))
+    
+    for snapshot in "${snapshots[@]}"; do
+        log_snapshot_operation "Removing old snapshot: $snapshot"
+        
+        if sudo zfs destroy "$snapshot"; then
+            log_snapshot_operation "Successfully removed snapshot: $snapshot"
+        else
+            log_snapshot_operation "ERROR: Failed to remove snapshot: $snapshot"
+        fi
+    done
+}
+
+# Advanced snapshot operations
+perform_recursive_snapshots() {
+    local parent_dataset="$1"
+    local snapshot_suffix="$2"
+    local recursive="$3"  # true/false
+    
+    log_snapshot_operation "Creating snapshots for $parent_dataset with suffix: $snapshot_suffix"
+    
+    if [[ "$recursive" == "true" ]]; then
+        # Recursive snapshot - creates snapshots for all child datasets atomically
+        local snapshot_name="${parent_dataset}@${snapshot_suffix}"
+        sudo zfs snapshot -r "$snapshot_name"
+        log_snapshot_operation "Created recursive snapshots: $snapshot_name"
+    else
+        # Individual snapshots for each dataset
+        zfs list -H -o name -r "$parent_dataset" | while read -r dataset; do
+            local snapshot_name="${dataset}@${snapshot_suffix}"
+            sudo zfs snapshot "$snapshot_name"
+            log_snapshot_operation "Created individual snapshot: $snapshot_name"
+        done
+    fi
+}
+
+# Snapshot rollback with safety checks
+safe_snapshot_rollback() {
+    local dataset="$1"
+    local snapshot_name="$2"
+    local backup_current="$3"  # true/false
+    
+    log_snapshot_operation "Preparing rollback for $dataset to snapshot: $snapshot_name"
+    
+    # Verify snapshot exists
+    if ! zfs list -t snapshot "$snapshot_name" &>/dev/null; then
+        log_snapshot_operation "ERROR: Snapshot $snapshot_name does not exist"
+        return 1
+    fi
+    
+    # Create backup of current state if requested
+    if [[ "$backup_current" == "true" ]]; then
+        local backup_snapshot="${dataset}@rollback_backup_$(date +%Y%m%d_%H%M%S)"
+        log_snapshot_operation "Creating backup snapshot before rollback: $backup_snapshot"
+        sudo zfs snapshot "$backup_snapshot"
+    fi
+    
+    # Check for newer snapshots that will be destroyed
+    local newer_snapshots=($(zfs list -H -t snapshot -o name "$dataset" | awk -F'@' "/$snapshot_name/{found=1; next} found" | head -5))
+    
+    if [[ ${#newer_snapshots[@]} -gt 0 ]]; then
+        log_snapshot_operation "WARNING: Rollback will destroy ${#newer_snapshots[@]} newer snapshots:"
+        printf '%s\n' "${newer_snapshots[@]}" | while read snapshot; do
+            log_snapshot_operation "  - $snapshot"
+        done
+        
+        # In production, you might want to require confirmation here
+        read -p "Continue with rollback? This will destroy newer snapshots [y/N]: " -r
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            log_snapshot_operation "Rollback cancelled by user"
+            return 1
+        fi
+    fi
+    
+    # Perform rollback
+    log_snapshot_operation "Executing rollback to: $snapshot_name"
+    if sudo zfs rollback -r "$snapshot_name"; then
+        log_snapshot_operation "Rollback completed successfully"
+    else
+        log_snapshot_operation "ERROR: Rollback failed"
+        return 1
+    fi
+}
+
+# Clone management for development environments
+manage_development_clones() {
+    local source_snapshot="$1"
+    local clone_name="$2"
+    local purpose="$3"  # development, testing, staging
+    
+    log_snapshot_operation "Creating development clone: $clone_name from $source_snapshot"
+    
+    # Create clone
+    sudo zfs clone "$source_snapshot" "$clone_name"
+    
+    # Configure clone based on purpose
+    case "$purpose" in
+        "development")
+            sudo zfs set compression=lz4 "$clone_name"
+            sudo zfs set atime=off "$clone_name"
+            sudo zfs set sync=disabled "$clone_name"  # Performance over safety for dev
+            sudo zfs set quota=100G "$clone_name"
+            ;;
+        "testing")
+            sudo zfs set compression=lz4 "$clone_name"
+            sudo zfs set atime=off "$clone_name"
+            sudo zfs set sync=standard "$clone_name"
+            sudo zfs set quota=200G "$clone_name"
+            ;;
+        "staging")
+            # Mirror production settings
+            sudo zfs set compression=zstd "$clone_name"
+            sudo zfs set sync=always "$clone_name"
+            sudo zfs set quota=500G "$clone_name"
+            ;;
+    esac
+    
+    # Set expiration metadata for cleanup
+    local expiration_date=$(date -d "+30 days" +%Y-%m-%d)
+    sudo zfs set com.company:expires="$expiration_date" "$clone_name"
+    sudo zfs set com.company:purpose="$purpose" "$clone_name"
+    
+    log_snapshot_operation "Development clone $clone_name created and configured for $purpose"
+}
+
+# Automated clone cleanup based on expiration
+cleanup_expired_clones() {
+    log_snapshot_operation "Checking for expired development clones"
+    
+    local current_date=$(date +%Y-%m-%d)
+    
+    # Find clones with expiration metadata
+    zfs list -H -o name,com.company:expires | while IFS=$'\t' read -r dataset expires; do
+        [[ "$expires" == "-" ]] && continue
+        
+        # Check if expired
+        if [[ "$expires" < "$current_date" ]]; then
+            log_snapshot_operation "Found expired clone: $dataset (expired: $expires)"
+            
+            # Get clone purpose for logging
+            local purpose=$(zfs get -H -o value com.company:purpose "$dataset" 2>/dev/null || echo "unknown")
+            
+            # Destroy expired clone
+            log_snapshot_operation "Destroying expired $purpose clone: $dataset"
+            sudo zfs destroy "$dataset"
+            
+            if [[ $? -eq 0 ]]; then
+                log_snapshot_operation "Successfully destroyed expired clone: $dataset"
+            else
+                log_snapshot_operation "ERROR: Failed to destroy clone: $dataset"
+            fi
+        fi
+    done
+}
+
+# Create cron jobs for automated snapshot management
+setup_snapshot_automation() {
+    log_snapshot_operation "Setting up automated snapshot scheduling"
+    
+    # Create cron entries
+    cat > /tmp/zfs-snapshot-crontab << 'EOF'
+# ZFS Automated Snapshot Management
+# 15-minute snapshots for development datasets
+*/15 * * * * /usr/local/bin/zfs-snapshot-manager.sh create_scheduled_snapshots 15min
+
+# Hourly snapshots
+0 * * * * /usr/local/bin/zfs-snapshot-manager.sh create_scheduled_snapshots hourly
+
+# Daily snapshots at 2 AM
+0 2 * * * /usr/local/bin/zfs-snapshot-manager.sh create_scheduled_snapshots daily
+
+# Weekly snapshots on Sunday at 3 AM
+0 3 * * 0 /usr/local/bin/zfs-snapshot-manager.sh create_scheduled_snapshots weekly
+
+# Monthly snapshots on the 1st at 4 AM
+0 4 1 * * /usr/local/bin/zfs-snapshot-manager.sh create_scheduled_snapshots monthly
+
+# Cleanup expired clones daily at 5 AM
+0 5 * * * /usr/local/bin/zfs-snapshot-manager.sh cleanup_expired_clones
+
+EOF
+    
+    # Install cron job
+    sudo crontab /tmp/zfs-snapshot-crontab
+    log_snapshot_operation "Automated snapshot scheduling configured"
+}
+
+# Example usage
+create_snapshot_policies
+setup_snapshot_automation
+
+# Manual operations examples
+# create_scheduled_snapshots "daily"
+# safe_snapshot_rollback "corporate-pool/projects/development" "corporate-pool/projects/development@daily_20250802_020000" "true"
+# manage_development_clones "corporate-pool/projects/production@prod-daily_20250802_020000" "corporate-pool/projects/dev-clone-001" "development"
+
+log_snapshot_operation "Snapshot management system initialized"
+```
+
+### Replication Setup
+
+#### Enterprise ZFS Replication Infrastructure
+```bash
+#!/bin/bash
+# zfs-replication-manager.sh - Enterprise ZFS replication and disaster recovery
+
+REPLICATION_LOG="/var/log/zfs-replication.log"
+REPLICATION_CONFIG="/etc/zfs/replication-config.conf"
+BANDWIDTH_LIMIT="100M"  # Bandwidth limit for remote transfers
+
+log_replication() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$REPLICATION_LOG"
+}
+
+# Configure replication topology
+setup_replication_config() {
+    log_replication "Setting up replication configuration"
+    
+    sudo mkdir -p "$(dirname "$REPLICATION_CONFIG")"
+    cat > "$REPLICATION_CONFIG" << 'EOF'
+# ZFS Replication Configuration
+# Format: source_dataset:target_host:target_dataset:frequency:compression:bandwidth_limit
+
+# Primary to DR site replication
+corporate-pool/corporate:dr-site.company.com:dr-pool/corporate:daily:gzip:50M
+corporate-pool/projects/production:dr-site.company.com:dr-pool/production:hourly:lz4:100M
+
+# Offsite backup replication
+corporate-pool/corporate:backup.company.com:backup-pool/corporate:weekly:gzip-9:20M
+corporate-pool/projects:backup.company.com:backup-pool/projects:daily:gzip:30M
+
+# Branch office replication
+corporate-pool/shared:branch.company.com:branch-pool/shared:daily:lz4:25M
+
+EOF
+    
+    log_replication "Replication configuration created: $REPLICATION_CONFIG"
+}
+
+# Initial full replication setup
+perform_initial_replication() {
+    local source_dataset="$1"
+    local target_host="$2"
+    local target_dataset="$3"
+    local compression="$4"
+    local bandwidth_limit="$5"
+    
+    log_replication "Starting initial replication: $source_dataset -> $target_host:$target_dataset"
+    
+    # Create initial snapshot for replication
+    local initial_snapshot="${source_dataset}@initial_replication_$(date +%Y%m%d_%H%M%S)"
+    sudo zfs snapshot -r "$initial_snapshot"
+    
+    # Prepare send command with options
+    local send_cmd="sudo zfs send -R"
+    
+    # Add compression if specified
+    case "$compression" in
+        "gzip"|"gzip-1"|"gzip-2"|"gzip-3"|"gzip-4"|"gzip-5"|"gzip-6"|"gzip-7"|"gzip-8"|"gzip-9")
+            send_cmd+=" | gzip"
+            [[ "$compression" != "gzip" ]] && send_cmd+=" -${compression#gzip-}"
+            ;;
+        "lz4")
+            send_cmd+=" | lz4 -c"
+            ;;
+        "zstd")
+            send_cmd+=" | zstd -c"
+            ;;
+    esac
+    
+    # Add bandwidth limiting
+    if [[ -n "$bandwidth_limit" ]]; then
+        send_cmd+=" | pv -L $bandwidth_limit"
+    fi
+    
+    # Add SSH transport and receive command
+    local receive_cmd="ssh $target_host"
+    
+    # Handle decompression on target if compression was used
+    case "$compression" in
+        "gzip"|"gzip-"*)
+            receive_cmd+=" 'gunzip | sudo zfs receive $target_dataset'"
+            ;;
+        "lz4")
+            receive_cmd+=" 'lz4 -d | sudo zfs receive $target_dataset'"
+            ;;
+        "zstd")
+            receive_cmd+=" 'zstd -d | sudo zfs receive $target_dataset'"
+            ;;
+        *)
+            receive_cmd+=" 'sudo zfs receive $target_dataset'"
+            ;;
+    esac
+    
+    # Execute initial replication
+    local full_command="$send_cmd $initial_snapshot | $receive_cmd"
+    log_replication "Executing: $full_command"
+    
+    if eval "$full_command"; then
+        log_replication "Initial replication completed successfully"
+        
+        # Record replication state
+        echo "$source_dataset:$target_host:$target_dataset:$initial_snapshot" >> "/var/lib/zfs/replication-state"
+        
+    else
+        log_replication "ERROR: Initial replication failed"
+        return 1
+    fi
+}
+
+# Incremental replication
+perform_incremental_replication() {
+    local source_dataset="$1"
+    local target_host="$2"
+    local target_dataset="$3"
+    local compression="$4"
+    local bandwidth_limit="$5"
+    
+    log_replication "Starting incremental replication: $source_dataset -> $target_host:$target_dataset"
+    
+    # Find last replicated snapshot
+    local last_snapshot=$(grep "^$source_dataset:$target_host:$target_dataset:" "/var/lib/zfs/replication-state" | tail -1 | cut -d':' -f4)
+    
+    if [[ -z "$last_snapshot" ]]; then
+        log_replication "No previous replication found, performing initial replication"
+        perform_initial_replication "$source_dataset" "$target_host" "$target_dataset" "$compression" "$bandwidth_limit"
+        return $?
+    fi
+    
+    # Create new snapshot for incremental replication
+    local new_snapshot="${source_dataset}@incremental_$(date +%Y%m%d_%H%M%S)"
+    sudo zfs snapshot -r "$new_snapshot"
+    
+    # Build incremental send command
+    local send_cmd="sudo zfs send -R -i $last_snapshot $new_snapshot"
+    
+    # Add compression
+    case "$compression" in
+        "gzip"|"gzip-"*)
+            send_cmd+=" | gzip"
+            [[ "$compression" != "gzip" ]] && send_cmd+=" -${compression#gzip-}"
+            ;;
+        "lz4")
+            send_cmd+=" | lz4 -c"
+            ;;
+        "zstd")
+            send_cmd+=" | zstd -c"
+            ;;
+    esac
+    
+    # Add bandwidth limiting
+    if [[ -n "$bandwidth_limit" ]]; then
+        send_cmd+=" | pv -L $bandwidth_limit"
+    fi
+    
+    # Build receive command
+    local receive_cmd="ssh $target_host"
+    
+    case "$compression" in
+        "gzip"|"gzip-"*)
+            receive_cmd+=" 'gunzip | sudo zfs receive -F $target_dataset'"
+            ;;
+        "lz4")
+            receive_cmd+=" 'lz4 -d | sudo zfs receive -F $target_dataset'"
+            ;;
+        "zstd")
+            receive_cmd+=" 'zstd -d | sudo zfs receive -F $target_dataset'"
+            ;;
+        *)
+            receive_cmd+=" 'sudo zfs receive -F $target_dataset'"
+            ;;
+    esac
+    
+    # Execute incremental replication
+    local full_command="$send_cmd | $receive_cmd"
+    log_replication "Executing incremental: $full_command"
+    
+    if eval "$full_command"; then
+        log_replication "Incremental replication completed successfully"
+        
+        # Update replication state
+        sed -i "s|^$source_dataset:$target_host:$target_dataset:.*|$source_dataset:$target_host:$target_dataset:$new_snapshot|" "/var/lib/zfs/replication-state"
+        
+        # Cleanup old local snapshots (keep last 3 replication snapshots)
+        cleanup_replication_snapshots "$source_dataset" 3
+        
+    else
+        log_replication "ERROR: Incremental replication failed"
+        return 1
+    fi
+}
+
+# Cleanup old replication snapshots
+cleanup_replication_snapshots() {
+    local dataset="$1"
+    local keep_count="$2"
+    
+    log_replication "Cleaning up old replication snapshots for $dataset (keeping $keep_count)"
+    
+    # Get replication snapshots sorted by creation time
+    local snapshots=($(zfs list -H -t snapshot -o name -S creation "$dataset" | grep "@.*replication_\|@initial_replication_\|@incremental_" | tail -n +$((keep_count + 1))))
+    
+    for snapshot in "${snapshots[@]}"; do
+        log_replication "Removing old replication snapshot: $snapshot"
+        sudo zfs destroy -r "$snapshot" || log_replication "Warning: Failed to destroy $snapshot"
+    done
+}
+
+# Automated replication based on schedule
+run_scheduled_replication() {
+    local frequency="$1"  # hourly, daily, weekly
+    
+    log_replication "Running scheduled $frequency replication"
+    
+    while IFS=':' read -r source target_host target freq compression bandwidth; do
+        # Skip comments and empty lines
+        [[ "$source" =~ ^#.*$ ]] && continue
+        [[ -z "$source" ]] && continue
+        
+        # Process only matching frequency
+        [[ "$freq" != "$frequency" ]] && continue
+        
+        log_replication "Processing replication: $source -> $target_host:$target"
+        
+        # Verify SSH connectivity
+        if ! ssh -o ConnectTimeout=10 "$target_host" "echo 'SSH OK'" &>/dev/null; then
+            log_replication "ERROR: Cannot connect to $target_host via SSH"
+            continue
+        fi
+        
+        # Perform incremental replication
+        perform_incremental_replication "$source" "$target_host" "$target" "$compression" "$bandwidth"
+        
+    done < "$REPLICATION_CONFIG"
+}
+
+# Disaster recovery failover procedure
+perform_disaster_failover() {
+    local failed_site="$1"
+    local recovery_site="$2"
+    local dataset_pattern="$3"
+    
+    log_replication "Starting disaster recovery failover from $failed_site to $recovery_site"
+    
+    # Find datasets to promote on recovery site
+    ssh "$recovery_site" "zfs list -H -o name | grep '$dataset_pattern'" | while read -r dataset; do
+        log_replication "Promoting dataset for production use: $dataset"
+        
+        # Make dataset writable and accessible
+        ssh "$recovery_site" "sudo zfs set readonly=off $dataset"
+        ssh "$recovery_site" "sudo zfs mount $dataset"
+        
+        # Update any application configurations as needed
+        # This would be customized based on your environment
+        
+        log_replication "Dataset $dataset promoted successfully"
+    done
+    
+    log_replication "Disaster recovery failover completed"
+}
+
+# Monitoring and alerting for replication
+monitor_replication_health() {
+    log_replication "Monitoring replication health"
+    
+    local current_time=$(date +%s)
+    local alert_threshold=86400  # 24 hours in seconds
+    
+    while IFS=':' read -r source target_host target last_snapshot; do
+        [[ "$source" =~ ^#.*$ ]] && continue
+        [[ -z "$source" ]] && continue
+        
+        # Extract timestamp from snapshot name
+        local snapshot_timestamp=$(echo "$last_snapshot" | grep -o '[0-9]\{8\}_[0-9]\{6\}')
+        
+        if [[ -n "$snapshot_timestamp" ]]; then
+            local snapshot_time=$(date -d "${snapshot_timestamp:0:8} ${snapshot_timestamp:9:2}:${snapshot_timestamp:11:2}:${snapshot_timestamp:13:2}" +%s)
+            local time_diff=$((current_time - snapshot_time))
+            
+            if [[ $time_diff -gt $alert_threshold ]]; then
+                log_replication "ALERT: Replication lag detected for $source -> $target_host:$target (last: $snapshot_timestamp)"
+                # Send alert (implement your notification method)
+                echo "Replication lag alert: $source to $target_host" | mail -s "ZFS Replication Alert" admin@company.com 2>/dev/null || true
+            fi
+        fi
+        
+    done < "/var/lib/zfs/replication-state"
+}
+
+# Example automated replication setup
+setup_replication_config
+
+# Initialize replication state tracking
+sudo mkdir -p /var/lib/zfs
+sudo touch /var/lib/zfs/replication-state
+
+# Set up cron jobs for automated replication
+cat > /tmp/zfs-replication-crontab << 'EOF'
+# ZFS Automated Replication
+# Hourly replication
+0 * * * * /usr/local/bin/zfs-replication-manager.sh run_scheduled_replication hourly
+
+# Daily replication at 1 AM
+0 1 * * * /usr/local/bin/zfs-replication-manager.sh run_scheduled_replication daily
+
+# Weekly replication on Sunday at 2 AM
+0 2 * * 0 /usr/local/bin/zfs-replication-manager.sh run_scheduled_replication weekly
+
+# Monitor replication health every 4 hours
+0 */4 * * * /usr/local/bin/zfs-replication-manager.sh monitor_replication_health
+
+EOF
+
+sudo crontab /tmp/zfs-replication-crontab
+
+log_replication "Replication infrastructure setup completed"
+```
+
+### Performance Optimization
+
+#### ZFS Performance Tuning and Monitoring
+```bash
+#!/bin/bash
+# zfs-performance-optimizer.sh - Enterprise ZFS performance optimization
+
+PERF_LOG="/var/log/zfs-performance.log"
+TUNING_CONFIG="/etc/zfs/performance-tuning.conf"
+
+log_performance() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$PERF_LOG"
+}
+
+# Create performance tuning configuration
+create_performance_config() {
+    log_performance "Creating performance tuning configuration"
+    
+    sudo mkdir -p "$(dirname "$TUNING_CONFIG")"
+    cat > "$TUNING_CONFIG" << 'EOF'
+# ZFS Performance Tuning Configuration
+# Format: parameter:value:description
+
+# ARC (Adaptive Replacement Cache) Settings
+zfs_arc_max:17179869184:Maximum ARC size (16GB for 32GB system)
+zfs_arc_min:2147483648:Minimum ARC size (2GB)
+zfs_arc_meta_limit_percent:75:Metadata limit as percentage of ARC
+
+# L2ARC (Level 2 ARC) Settings
+l2arc_write_max:134217728:L2ARC write throughput (128MB/s)
+l2arc_write_boost:268435456:L2ARC initial write boost (256MB/s)
+l2arc_headroom:2:L2ARC headroom multiplier
+
+# ZIL (ZFS Intent Log) Settings
+zfs_immediate_write_sz:32768:Immediate write size threshold (32KB)
+zfs_sync_pass_deferred_free:2:Deferred free passes for sync
+zil_slog_bulk:786432:SLOG bulk write threshold (768KB)
+
+# Transaction Group Settings
+zfs_txg_timeout:5:Transaction group timeout (seconds)
+zfs_dirty_data_max:4294967296:Maximum dirty data (4GB)
+zfs_dirty_data_max_percent:10:Maximum dirty data percentage
+
+# I/O Scheduler Settings
+zfs_vdev_max_active:1000:Maximum active I/O per vdev
+zfs_vdev_sync_read_min_active:10:Minimum sync read I/O
+zfs_vdev_sync_read_max_active:10:Maximum sync read I/O
+zfs_vdev_sync_write_min_active:10:Minimum sync write I/O
+zfs_vdev_sync_write_max_active:10:Maximum sync write I/O
+zfs_vdev_async_read_min_active:1:Minimum async read I/O
+zfs_vdev_async_read_max_active:3:Maximum async read I/O
+zfs_vdev_async_write_min_active:1:Minimum async write I/O
+zfs_vdev_async_write_max_active:10:Maximum async write I/O
+
+EOF
+    
+    log_performance "Performance tuning configuration created: $TUNING_CONFIG"
+}
+
+# Apply system-level ZFS tuning parameters
+apply_kernel_tuning() {
+    log_performance "Applying kernel-level ZFS tuning parameters"
+    
+    # Read and apply tuning parameters
+    while IFS=':' read -r param value description; do
+        # Skip comments and empty lines
+        [[ "$param" =~ ^#.*$ ]] && continue
+        [[ -z "$param" ]] && continue
+        
+        log_performance "Setting $param = $value ($description)"
+        
+        # Apply parameter
+        if echo "$value" | sudo tee "/sys/module/zfs/parameters/$param" >/dev/null 2>&1; then
+            log_performance "Successfully set $param"
+        else
+            log_performance "Warning: Failed to set $param (may not exist on this system)"
+        fi
+        
+    done < "$TUNING_CONFIG"
+    
+    # Make tuning persistent across reboots
+    create_persistent_tuning
+}
+
+# Create persistent tuning configuration
+create_persistent_tuning() {
+    log_performance "Creating persistent tuning configuration"
+    
+    # Create modprobe configuration for ZFS
+    cat > /tmp/zfs-tuning.conf << 'EOF'
+# ZFS Performance Tuning - Persistent Configuration
+options zfs zfs_arc_max=17179869184
+options zfs zfs_arc_min=2147483648
+options zfs zfs_arc_meta_limit_percent=75
+options zfs l2arc_write_max=134217728
+options zfs l2arc_write_boost=268435456
+options zfs l2arc_headroom=2
+options zfs zfs_immediate_write_sz=32768
+options zfs zfs_sync_pass_deferred_free=2
+options zfs zil_slog_bulk=786432
+options zfs zfs_txg_timeout=5
+options zfs zfs_dirty_data_max=4294967296
+options zfs zfs_dirty_data_max_percent=10
+options zfs zfs_vdev_max_active=1000
+options zfs zfs_vdev_sync_read_min_active=10
+options zfs zfs_vdev_sync_read_max_active=10
+options zfs zfs_vdev_sync_write_min_active=10
+options zfs zfs_vdev_sync_write_max_active=10
+options zfs zfs_vdev_async_read_min_active=1
+options zfs zfs_vdev_async_read_max_active=3
+options zfs zfs_vdev_async_write_min_active=1
+options zfs zfs_vdev_async_write_max_active=10
+
+EOF
+    
+    sudo mv /tmp/zfs-tuning.conf /etc/modprobe.d/zfs-performance.conf
+    log_performance "Persistent tuning configuration created: /etc/modprobe.d/zfs-performance.conf"
+}
+
+# Optimize dataset properties for specific workloads
+optimize_dataset_for_workload() {
+    local dataset="$1"
+    local workload_type="$2"  # database, fileserver, backup, vms, development
+    
+    log_performance "Optimizing $dataset for $workload_type workload"
+    
+    case "$workload_type" in
+        "database")
+            # Database optimization: small random I/O, low latency
+            sudo zfs set recordsize=8K "$dataset"
+            sudo zfs set primarycache=metadata "$dataset"
+            sudo zfs set secondarycache=metadata "$dataset"
+            sudo zfs set sync=always "$dataset"
+            sudo zfs set compression=lz4 "$dataset"
+            sudo zfs set atime=off "$dataset"
+            sudo zfs set logbias=latency "$dataset"
+            log_performance "Database optimization applied to $dataset"
+            ;;
+            
+        "fileserver")
+            # File server optimization: large sequential I/O
+            sudo zfs set recordsize=1M "$dataset"
+            sudo zfs set primarycache=all "$dataset"
+            sudo zfs set secondarycache=all "$dataset"
+            sudo zfs set sync=standard "$dataset"
+            sudo zfs set compression=zstd "$dataset"
+            sudo zfs set atime=off "$dataset"
+            sudo zfs set logbias=throughput "$dataset"
+            log_performance "File server optimization applied to $dataset"
+            ;;
+            
+        "backup")
+            # Backup optimization: maximum compression, lower performance
+            sudo zfs set recordsize=1M "$dataset"
+            sudo zfs set primarycache=metadata "$dataset"
+            sudo zfs set secondarycache=none "$dataset"
+            sudo zfs set sync=disabled "$dataset"
+            sudo zfs set compression=zstd-19 "$dataset"
+            sudo zfs set atime=off "$dataset"
+            sudo zfs set redundant_metadata=most "$dataset"
+            log_performance "Backup optimization applied to $dataset"
+            ;;
+            
+        "vms")
+            # Virtual machine optimization: balanced approach
+            sudo zfs set recordsize=64K "$dataset"
+            sudo zfs set primarycache=all "$dataset"
+            sudo zfs set secondarycache=all "$dataset"
+            sudo zfs set sync=always "$dataset"
+            sudo zfs set compression=lz4 "$dataset"
+            sudo zfs set atime=off "$dataset"
+            sudo zfs set volblocksize=16K "$dataset" 2>/dev/null || true  # For zvols
+            log_performance "Virtual machine optimization applied to $dataset"
+            ;;
+            
+        "development")
+            # Development optimization: performance over safety
+            sudo zfs set recordsize=128K "$dataset"
+            sudo zfs set primarycache=all "$dataset"
+            sudo zfs set secondarycache=all "$dataset"
+            sudo zfs set sync=disabled "$dataset"
+            sudo zfs set compression=lz4 "$dataset"
+            sudo zfs set atime=off "$dataset"
+            sudo zfs set logbias=throughput "$dataset"
+            log_performance "Development optimization applied to $dataset"
+            ;;
+            
+        *)
+            log_performance "Unknown workload type: $workload_type"
+            return 1
+            ;;
+    esac
+}
+
+# Performance monitoring and analysis
+monitor_zfs_performance() {
+    local duration="${1:-300}"  # Default 5 minutes
+    local interval="${2:-5}"    # Default 5 seconds
+    
+    log_performance "Starting ZFS performance monitoring for ${duration}s (interval: ${interval}s)"
+    
+    local monitor_file="/tmp/zfs-performance-$(date +%Y%m%d_%H%M%S).log"
+    local end_time=$(($(date +%s) + duration))
+    
+    # Initialize monitoring
+    echo "# ZFS Performance Monitor - $(date)" > "$monitor_file"
+    echo "# Timestamp,ARC_Hit_Rate,ARC_Size_MB,L2ARC_Hit_Rate,TXG_Sync_Time,Read_IOPS,Write_IOPS" >> "$monitor_file"
+    
+    while [[ $(date +%s) -lt $end_time ]]; do
+        local timestamp=$(date +%Y-%m-%d_%H:%M:%S)
+        
+        # ARC statistics
+        local arc_hits=$(awk '/hits/ {print $3; exit}' /proc/spl/kstat/zfs/arcstats)
+        local arc_misses=$(awk '/misses/ {print $3; exit}' /proc/spl/kstat/zfs/arcstats)
+        local arc_size=$(awk '/^size/ {print $3; exit}' /proc/spl/kstat/zfs/arcstats)
+        local arc_hit_rate=$(echo "scale=2; $arc_hits / ($arc_hits + $arc_misses) * 100" | bc -l 2>/dev/null || echo "0")
+        local arc_size_mb=$(echo "scale=0; $arc_size / 1048576" | bc -l)
+        
+        # L2ARC statistics
+        local l2arc_hits=$(awk '/l2_hits/ {print $3; exit}' /proc/spl/kstat/zfs/arcstats)
+        local l2arc_misses=$(awk '/l2_misses/ {print $3; exit}' /proc/spl/kstat/zfs/arcstats)
+        local l2arc_hit_rate=$(echo "scale=2; $l2arc_hits / ($l2arc_hits + $l2arc_misses) * 100" | bc -l 2>/dev/null || echo "0")
+        
+        # Transaction group statistics
+        local txg_sync_time=$(awk '/txg_sync_time/ {print $3; exit}' /proc/spl/kstat/zfs/*/txgs 2>/dev/null || echo "0")
+        
+        # I/O statistics (simplified)
+        local read_iops=$(iostat -x 1 1 | awk '/^[sz]d/ {reads += $4} END {print reads}' 2>/dev/null || echo "0")
+        local write_iops=$(iostat -x 1 1 | awk '/^[sz]d/ {writes += $5} END {print writes}' 2>/dev/null || echo "0")
+        
+        # Log current statistics
+        echo "$timestamp,$arc_hit_rate,$arc_size_mb,$l2arc_hit_rate,$txg_sync_time,$read_iops,$write_iops" >> "$monitor_file"
+        
+        # Display real-time stats
+        printf "\r[%s] ARC: %0.1f%% (%dMB) L2ARC: %0.1f%% TXG: %dns R/W IOPS: %d/%d" \
+            "$timestamp" "$arc_hit_rate" "$arc_size_mb" "$l2arc_hit_rate" "$txg_sync_time" "$read_iops" "$write_iops"
+        
+        sleep "$interval"
+    done
+    
+    echo  # New line after monitoring
+    log_performance "Performance monitoring completed. Data saved to: $monitor_file"
+    
+    # Generate summary report
+    generate_performance_report "$monitor_file"
+}
+
+# Generate performance analysis report
+generate_performance_report() {
+    local monitor_file="$1"
+    local report_file="${monitor_file%.log}-report.txt"
+    
+    log_performance "Generating performance analysis report: $report_file"
+    
+    cat > "$report_file" << EOF
+# ZFS Performance Analysis Report
+Generated: $(date)
+Monitor Data: $monitor_file
+
+## Summary Statistics
+
+EOF
+    
+    # Calculate averages and statistics using awk
+    awk -F',' '
+    NR > 2 {  # Skip header lines
+        count++
+        arc_hit_sum += $2
+        arc_size_sum += $3
+        l2arc_hit_sum += $4
+        txg_sync_sum += $5
+        read_iops_sum += $6
+        write_iops_sum += $7
+        
+        if ($2 < arc_hit_min || NR == 3) arc_hit_min = $2
+        if ($2 > arc_hit_max || NR == 3) arc_hit_max = $2
+    }
+    END {
+        if (count > 0) {
+            printf "Average ARC Hit Rate: %.2f%% (Min: %.2f%%, Max: %.2f%%)\n", 
+                   arc_hit_sum/count, arc_hit_min, arc_hit_max
+            printf "Average ARC Size: %.0f MB\n", arc_size_sum/count
+            printf "Average L2ARC Hit Rate: %.2f%%\n", l2arc_hit_sum/count
+            printf "Average TXG Sync Time: %.0f ns\n", txg_sync_sum/count
+            printf "Average Read IOPS: %.0f\n", read_iops_sum/count
+            printf "Average Write IOPS: %.0f\n", write_iops_sum/count
+        }
+    }' "$monitor_file" >> "$report_file"
+    
+    # Add recommendations
+    cat >> "$report_file" << 'EOF'
+
+## Performance Recommendations
+
+### ARC Tuning
+- ARC hit rate should be > 90% for optimal performance
+- If hit rate is low, consider increasing zfs_arc_max
+- Monitor for memory pressure on the system
+
+### L2ARC Optimization
+- L2ARC effective when hit rate > 10%
+- Use fast SSDs for L2ARC devices
+- Size L2ARC at 5-10x the ARC size
+
+### Transaction Group Performance
+- TXG sync times > 1 second indicate potential bottlenecks
+- Consider faster storage or more SLOG devices
+- Check for I/O scheduler conflicts
+
+### General Recommendations
+- Use appropriate record sizes for workload
+- Enable compression for space and performance benefits
+- Monitor disk utilization and plan for expansion
+
+EOF
+    
+    log_performance "Performance analysis report generated: $report_file"
+}
+
+# Automated performance alerting
+setup_performance_alerts() {
+    log_performance "Setting up performance monitoring alerts"
+    
+    cat > /tmp/zfs-performance-monitor.sh << 'EOF'
+#!/bin/bash
+# ZFS Performance Alert Monitor
+
+ALERT_THRESHOLD_ARC=85  # Alert if ARC hit rate below 85%
+ALERT_THRESHOLD_TXG=2000000000  # Alert if TXG sync > 2 seconds (in ns)
+
+check_performance_alerts() {
+    # Check ARC hit rate
+    local arc_hits=$(awk '/hits/ {print $3; exit}' /proc/spl/kstat/zfs/arcstats)
+    local arc_misses=$(awk '/misses/ {print $3; exit}' /proc/spl/kstat/zfs/arcstats)
+    local arc_hit_rate=$(echo "scale=2; $arc_hits / ($arc_hits + $arc_misses) * 100" | bc -l)
+    
+    if (( $(echo "$arc_hit_rate < $ALERT_THRESHOLD_ARC" | bc -l) )); then
+        echo "ALERT: ZFS ARC hit rate is ${arc_hit_rate}% (threshold: ${ALERT_THRESHOLD_ARC}%)" | \
+        mail -s "ZFS Performance Alert - Low ARC Hit Rate" admin@company.com 2>/dev/null || \
+        logger "ZFS ALERT: Low ARC hit rate ${arc_hit_rate}%"
+    fi
+    
+    # Check TXG sync time
+    local txg_sync_time=$(awk '/txg_sync_time/ {print $3; exit}' /proc/spl/kstat/zfs/*/txgs 2>/dev/null || echo "0")
+    
+    if (( txg_sync_time > ALERT_THRESHOLD_TXG )); then
+        local txg_seconds=$(echo "scale=2; $txg_sync_time / 1000000000" | bc -l)
+        echo "ALERT: ZFS TXG sync time is ${txg_seconds}s (threshold: 2s)" | \
+        mail -s "ZFS Performance Alert - High TXG Sync Time" admin@company.com 2>/dev/null || \
+        logger "ZFS ALERT: High TXG sync time ${txg_seconds}s"
+    fi
+}
+
+check_performance_alerts
+EOF
+    
+    sudo mv /tmp/zfs-performance-monitor.sh /usr/local/bin/zfs-performance-monitor.sh
+    sudo chmod +x /usr/local/bin/zfs-performance-monitor.sh
+    
+    # Add to cron for regular monitoring
+    echo "*/15 * * * * /usr/local/bin/zfs-performance-monitor.sh" | sudo crontab -
+    
+    log_performance "Performance alerting configured"
+}
+
+# Example usage and initialization
+create_performance_config
+apply_kernel_tuning
+setup_performance_alerts
+
+# Example workload optimizations
+# optimize_dataset_for_workload "corporate-pool/databases" "database"
+# optimize_dataset_for_workload "corporate-pool/fileserver" "fileserver"
+# optimize_dataset_for_workload "corporate-pool/backups" "backup"
+
+log_performance "ZFS performance optimization setup completed"
+```
+
+### Monitoring and Diagnostics
+
+#### Comprehensive ZFS Health Monitoring
+```bash
+#!/bin/bash
+# zfs-monitoring-system.sh - Enterprise ZFS monitoring and diagnostics
+
+MONITOR_LOG="/var/log/zfs-monitoring.log"
+STATUS_DIR="/var/lib/zfs/status"
+ALERT_CONFIG="/etc/zfs/monitoring-alerts.conf"
+
+log_monitor() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$MONITOR_LOG"
+}
+
+# Initialize monitoring system
+initialize_monitoring() {
+    log_monitor "Initializing ZFS monitoring system"
+    
+    sudo mkdir -p "$STATUS_DIR"
+    sudo mkdir -p "$(dirname "$ALERT_CONFIG")"
+    
+    # Create monitoring configuration
+    cat > "$ALERT_CONFIG" << 'EOF'
+# ZFS Monitoring Alert Configuration
+# Format: metric:threshold:severity:action
+
+# Pool health monitoring
+pool_status:DEGRADED:CRITICAL:email,sms
+pool_status:FAULTED:CRITICAL:email,sms,page
+pool_errors:10:WARNING:email
+pool_errors:100:CRITICAL:email,sms
+
+# Capacity monitoring
+pool_capacity:80:WARNING:email
+pool_capacity:90:CRITICAL:email,sms
+dataset_quota_usage:90:WARNING:email
+
+# Performance monitoring
+arc_hit_rate:85:WARNING:email
+txg_sync_time:2000000000:WARNING:email
+scrub_age:604800:WARNING:email
+
+# Hardware monitoring
+disk_errors:5:WARNING:email
+disk_errors:20:CRITICAL:email,sms
+
+EOF
+    
+    log_monitor "Monitoring system initialized"
+}
+
+# Comprehensive pool health check
+check_pool_health() {
+    log_monitor "Performing comprehensive pool health check"
+    
+    local health_report="$STATUS_DIR/pool-health-$(date +%Y%m%d_%H%M%S).json"
+    
+    # Initialize health report
+    echo "{" > "$health_report"
+    echo "  \"timestamp\": \"$(date -Iseconds)\"," >> "$health_report"
+    echo "  \"pools\": [" >> "$health_report"
+    
+    local first_pool=true
+    
+    # Check each pool
+    zpool list -H -o name | while read -r pool; do
+        [[ "$first_pool" != "true" ]] && echo "    }," >> "$health_report"
+        first_pool=false
+        
+        echo "    {" >> "$health_report"
+        echo "      \"name\": \"$pool\"," >> "$health_report"
+        
+        # Basic pool information
+        local status=$(zpool status "$pool" | head -1 | awk '{print $2}')
+        local health=$(zpool list -H -o health "$pool")
+        local capacity=$(zpool list -H -o cap "$pool" | tr -d '%')
+        local size=$(zpool list -H -o size "$pool")
+        local alloc=$(zpool list -H -o alloc "$pool")
+        local free=$(zpool list -H -o free "$pool")
+        
+        echo "      \"status\": \"$status\"," >> "$health_report"
+        echo "      \"health\": \"$health\"," >> "$health_report"
+        echo "      \"capacity_percent\": $capacity," >> "$health_report"
+        echo "      \"size\": \"$size\"," >> "$health_report"
+        echo "      \"allocated\": \"$alloc\"," >> "$health_report"
+        echo "      \"free\": \"$free\"," >> "$health_report"
+        
+        # Error counts
+        local read_errors=$(zpool status "$pool" | awk '/errors:/ {print $2; exit}')
+        local write_errors=$(zpool status "$pool" | awk '/errors:/ {getline; print $2; exit}')
+        local cksum_errors=$(zpool status "$pool" | awk '/errors:/ {getline; getline; print $2; exit}')
+        
+        echo "      \"errors\": {" >> "$health_report"
+        echo "        \"read\": \"$read_errors\"," >> "$health_report"
+        echo "        \"write\": \"$write_errors\"," >> "$health_report"
+        echo "        \"checksum\": \"$cksum_errors\"" >> "$health_report"
+        echo "      }," >> "$health_report"
+        
+        # Scrub information
+        local scrub_status=$(zpool status "$pool" | grep -A1 "scan:" | tail -1 | sed 's/^[[:space:]]*//')
+        local last_scrub_date="unknown"
+        
+        if echo "$scrub_status" | grep -q "completed"; then
+            last_scrub_date=$(echo "$scrub_status" | grep -o '[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9]*:[0-9]*:[0-9]* [0-9]*')
+        fi
+        
+        echo "      \"scrub\": {" >> "$health_report"
+        echo "        \"status\": \"$scrub_status\"," >> "$health_report"
+        echo "        \"last_completed\": \"$last_scrub_date\"" >> "$health_report"
+        echo "      }," >> "$health_report"
+        
+        # Device information
+        echo "      \"devices\": [" >> "$health_report"
+        
+        local first_device=true
+        zpool status "$pool" | grep -E '^\s+[a-zA-Z0-9/\-_]+' | while read -r device state read write cksum; do
+            [[ "$first_device" != "true" ]] && echo "        }," >> "$health_report"
+            first_device=false
+            
+            echo "        {" >> "$health_report"
+            echo "          \"name\": \"$device\"," >> "$health_report"
+            echo "          \"state\": \"$state\"," >> "$health_report"
+            echo "          \"read_errors\": \"$read\"," >> "$health_report"
+            echo "          \"write_errors\": \"$write\"," >> "$health_report"
+            echo "          \"checksum_errors\": \"$cksum\"" >> "$health_report"
+        done
+        
+        echo "        }" >> "$health_report"
+        echo "      ]" >> "$health_report"
+    done
+    
+    echo "    }" >> "$health_report"
+    echo "  ]" >> "$health_report"
+    echo "}" >> "$health_report"
+    
+    # Process alerts based on health data
+    process_health_alerts "$health_report"
+    
+    log_monitor "Pool health check completed: $health_report"
+}
+
+# Process alerts based on monitoring data
+process_health_alerts() {
+    local health_file="$1"
+    
+    log_monitor "Processing health alerts from: $health_file"
+    
+    # Read alert configuration and check against health data
+    while IFS=':' read -r metric threshold severity action; do
+        [[ "$metric" =~ ^#.*$ ]] && continue
+        [[ -z "$metric" ]] && continue
+        
+        case "$metric" in
+            "pool_capacity")
+                # Check pool capacity alerts
+                local pools_over_threshold=$(jq -r ".pools[] | select(.capacity_percent > $threshold) | .name" "$health_file" 2>/dev/null)
+                for pool in $pools_over_threshold; do
+                    local capacity=$(jq -r ".pools[] | select(.name == \"$pool\") | .capacity_percent" "$health_file")
+                    send_alert "$severity" "$action" "Pool $pool capacity at ${capacity}% (threshold: ${threshold}%)"
+                done
+                ;;
+                
+            "pool_status")
+                # Check pool status alerts
+                local degraded_pools=$(jq -r ".pools[] | select(.health == \"$threshold\") | .name" "$health_file" 2>/dev/null)
+                for pool in $degraded_pools; do
+                    send_alert "$severity" "$action" "Pool $pool status: $threshold"
+                done
+                ;;
+                
+            "pool_errors")
+                # Check error count alerts
+                local error_pools=$(jq -r ".pools[] | select((.errors.read | tonumber) + (.errors.write | tonumber) + (.errors.checksum | tonumber) > $threshold) | .name" "$health_file" 2>/dev/null)
+                for pool in $error_pools; do
+                    local total_errors=$(jq -r ".pools[] | select(.name == \"$pool\") | (.errors.read | tonumber) + (.errors.write | tonumber) + (.errors.checksum | tonumber)" "$health_file")
+                    send_alert "$severity" "$action" "Pool $pool has $total_errors total errors (threshold: $threshold)"
+                done
+                ;;
+        esac
+        
+    done < "$ALERT_CONFIG"
+}
+
+# Send alerts based on configuration
+send_alert() {
+    local severity="$1"
+    local actions="$2"
+    local message="$3"
+    
+    log_monitor "ALERT [$severity]: $message"
+    
+    # Process each action
+    IFS=',' read -ra ACTION_LIST <<< "$actions"
+    for action in "${ACTION_LIST[@]}"; do
+        case "$action" in
+            "email")
+                echo "$message" | mail -s "ZFS Alert [$severity]" admin@company.com 2>/dev/null || \
+                log_monitor "Warning: Failed to send email alert"
+                ;;
+            "sms")
+                # Implement SMS alerting (example using SMS gateway)
+                curl -X POST "https://api.sms-gateway.com/send" \
+                     -d "to=+1234567890" \
+                     -d "message=ZFS Alert: $message" 2>/dev/null || \
+                log_monitor "Warning: Failed to send SMS alert"
+                ;;
+            "page")
+                # Implement pager alerting
+                log_monitor "PAGER ALERT: $message"
+                ;;
+            "webhook")
+                # Send to monitoring system webhook
+                curl -X POST "http://monitoring.company.com/webhook/zfs" \
+                     -H "Content-Type: application/json" \
+                     -d "{\"severity\":\"$severity\",\"message\":\"$message\"}" 2>/dev/null || \
+                log_monitor "Warning: Failed to send webhook alert"
+                ;;
+        esac
+    done
+}
+
+# Dataset monitoring and quota management
+monitor_dataset_usage() {
+    log_monitor "Monitoring dataset usage and quotas"
+    
+    local usage_report="$STATUS_DIR/dataset-usage-$(date +%Y%m%d_%H%M%S).json"
+    
+    echo "{" > "$usage_report"
+    echo "  \"timestamp\": \"$(date -Iseconds)\"," >> "$usage_report"
+    echo "  \"datasets\": [" >> "$usage_report"
+    
+    local first_dataset=true
+    
+    # Get all datasets with quotas
+    zfs list -H -o name,used,avail,quota,refquota,usedsnap,usedrefreserv | while IFS=$'\t' read -r name used avail quota refquota usedsnap usedrefreserv; do
+        # Skip if no quota set
+        [[ "$quota" == "-" && "$refquota" == "-" ]] && continue
+        
+        [[ "$first_dataset" != "true" ]] && echo "    }," >> "$usage_report"
+        first_dataset=false
+        
+        echo "    {" >> "$usage_report"
+        echo "      \"name\": \"$name\"," >> "$usage_report"
+        echo "      \"used\": \"$used\"," >> "$usage_report"
+        echo "      \"available\": \"$avail\"," >> "$usage_report"
+        echo "      \"quota\": \"$quota\"," >> "$usage_report"
+        echo "      \"refquota\": \"$refquota\"," >> "$usage_report"
+        echo "      \"snapshot_usage\": \"$usedsnap\"," >> "$usage_report"
+        echo "      \"reservation_usage\": \"$usedrefreserv\"" >> "$usage_report"
+        
+        # Calculate usage percentage
+        if [[ "$quota" != "-" ]]; then
+            local quota_bytes=$(numfmt --from=iec "$quota" 2>/dev/null || echo "0")
+            local used_bytes=$(numfmt --from=iec "$used" 2>/dev/null || echo "0")
+            if [[ $quota_bytes -gt 0 ]]; then
+                local usage_percent=$(echo "scale=2; $used_bytes / $quota_bytes * 100" | bc -l)
+                echo "      \"quota_usage_percent\": $usage_percent" >> "$usage_report"
+            fi
+        fi
+    done
+    
+    echo "    }" >> "$usage_report"
+    echo "  ]" >> "$usage_report"
+    echo "}" >> "$usage_report"
+    
+    log_monitor "Dataset usage monitoring completed: $usage_report"
+}
+
+# Performance metrics collection
+collect_performance_metrics() {
+    log_monitor "Collecting ZFS performance metrics"
+    
+    local metrics_file="$STATUS_DIR/performance-metrics-$(date +%Y%m%d_%H%M%S).json"
+    
+    # ARC statistics
+    local arc_stats=$(awk '
+    /^hits/ {hits = $3}
+    /^misses/ {misses = $3}
+    /^size/ {size = $3}
+    /^c_max/ {c_max = $3}
+    /^mru_size/ {mru_size = $3}
+    /^mfu_size/ {mfu_size = $3}
+    END {
+        hit_rate = (hits + misses > 0) ? hits / (hits + misses) * 100 : 0
+        printf "{\"hits\":%d,\"misses\":%d,\"hit_rate\":%.2f,\"size\":%d,\"max_size\":%d,\"mru_size\":%d,\"mfu_size\":%d}", 
+               hits, misses, hit_rate, size, c_max, mru_size, mfu_size
+    }' /proc/spl/kstat/zfs/arcstats)
+    
+    # L2ARC statistics
+    local l2arc_stats=$(awk '
+    /^l2_hits/ {l2_hits = $3}
+    /^l2_misses/ {l2_misses = $3}
+    /^l2_size/ {l2_size = $3}
+    END {
+        l2_hit_rate = (l2_hits + l2_misses > 0) ? l2_hits / (l2_hits + l2_misses) * 100 : 0
+        printf "{\"hits\":%d,\"misses\":%d,\"hit_rate\":%.2f,\"size\":%d}", 
+               l2_hits, l2_misses, l2_hit_rate, l2_size
+    }' /proc/spl/kstat/zfs/arcstats)
+    
+    # Create metrics JSON
+    cat > "$metrics_file" << EOF
+{
+  "timestamp": "$(date -Iseconds)",
+  "arc": $arc_stats,
+  "l2arc": $l2arc_stats,
+  "system": {
+    "memory_total": $(grep MemTotal /proc/meminfo | awk '{print $2 * 1024}'),
+    "memory_available": $(grep MemAvailable /proc/meminfo | awk '{print $2 * 1024}'),
+    "load_average": "$(uptime | awk -F'load average:' '{print $2}' | sed 's/^[[:space:]]*//')"
+  }
+}
+EOF
+    
+    log_monitor "Performance metrics collected: $metrics_file"
+}
+
+# Automated monitoring setup
+setup_monitoring_automation() {
+    log_monitor "Setting up automated monitoring"
+    
+    # Create comprehensive monitoring script
+    cat > /tmp/zfs-monitor-runner.sh << 'EOF'
+#!/bin/bash
+# ZFS Automated Monitoring Runner
+
+/usr/local/bin/zfs-monitoring-system.sh check_pool_health
+/usr/local/bin/zfs-monitoring-system.sh monitor_dataset_usage
+/usr/local/bin/zfs-monitoring-system.sh collect_performance_metrics
+
+# Cleanup old monitoring files (keep 30 days)
+find /var/lib/zfs/status -name "*.json" -mtime +30 -delete
+find /var/log -name "zfs-*.log" -mtime +30 -delete
+EOF
+    
+    sudo mv /tmp/zfs-monitor-runner.sh /usr/local/bin/zfs-monitor-runner.sh
+    sudo chmod +x /usr/local/bin/zfs-monitor-runner.sh
+    
+    # Create cron jobs
+    cat > /tmp/zfs-monitoring-crontab << 'EOF'
+# ZFS Comprehensive Monitoring
+# Health check every 15 minutes
+*/15 * * * * /usr/local/bin/zfs-monitoring-system.sh check_pool_health
+
+# Dataset usage monitoring every hour
+0 * * * * /usr/local/bin/zfs-monitoring-system.sh monitor_dataset_usage
+
+# Performance metrics every 5 minutes
+*/5 * * * * /usr/local/bin/zfs-monitoring-system.sh collect_performance_metrics
+
+# Comprehensive monitoring run daily at 6 AM
+0 6 * * * /usr/local/bin/zfs-monitor-runner.sh
+
+EOF
+    
+    sudo crontab /tmp/zfs-monitoring-crontab
+    
+    log_monitor "Automated monitoring setup completed"
+}
+
+# Initialize monitoring system
+initialize_monitoring
+setup_monitoring_automation
+
+log_monitor "ZFS monitoring and diagnostics system ready"
+```
+
+## Lab Exercises
+
+### Lab 1: Enterprise ZFS Pool Architecture
+**Objective**: Design and implement a multi-tier ZFS storage architecture for a corporate environment.
+
+**Scenario**: You are implementing storage for a company with the following requirements:
+- High-performance database storage (10TB)
+- General file server storage (50TB)
+- Backup storage with maximum compression (100TB)
+- Development environment storage (20TB)
+
+**Tasks**:
+1. **Plan Pool Architecture**:
+   ```bash
+   # Document your pool design decisions
+   # Consider RAID levels, device types, and performance characteristics
+   
+   # Database pool - RAID-10 for performance
+   # File server pool - RAID-Z2 for capacity and redundancy
+   # Backup pool - RAID-Z3 for maximum data protection
+   # Development pool - RAID-Z1 for cost efficiency
+   ```
+
+2. **Create Storage Pools**:
+   ```bash
+   # Create database pool with NVMe devices
+   sudo zpool create db-pool mirror \
+       /dev/nvme0n1 /dev/nvme1n1 \
+       mirror /dev/nvme2n1 /dev/nvme3n1
+   
+   # Create file server pool with large drives
+   sudo zpool create fileserver-pool raidz2 \
+       /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg
+   
+   # Create backup pool with maximum redundancy
+   sudo zpool create backup-pool raidz3 \
+       /dev/sdh /dev/sdi /dev/sdj /dev/sdk /dev/sdl /dev/sdm /dev/sdn
+   
+   # Create development pool
+   sudo zpool create dev-pool raidz \
+       /dev/sdo /dev/sdp /dev/sdq /dev/sdr
+   ```
+
+3. **Configure Pool Properties**:
+   ```bash
+   # Database pool optimization
+   sudo zfs set ashift=12 db-pool
+   sudo zfs set compression=lz4 db-pool
+   sudo zfs set atime=off db-pool
+   
+   # File server optimization
+   sudo zfs set compression=zstd fileserver-pool
+   sudo zfs set atime=off fileserver-pool
+   
+   # Backup pool optimization
+   sudo zfs set compression=zstd-19 backup-pool
+   sudo zfs set atime=off backup-pool
+   
+   # Development pool optimization
+   sudo zfs set compression=lz4 dev-pool
+   sudo zfs set sync=disabled dev-pool
+   ```
+
+4. **Add Hot Spares and Cache Devices**:
+   ```bash
+   # Add hot spares to critical pools
+   sudo zpool add db-pool spare /dev/nvme4n1
+   sudo zpool add fileserver-pool spare /dev/sds /dev/sdt
+   
+   # Add L2ARC cache devices
+   sudo zpool add db-pool cache /dev/nvme5n1
+   sudo zpool add fileserver-pool cache /dev/sdu
+   
+   # Add SLOG devices for synchronous writes
+   sudo zpool add db-pool log mirror /dev/nvme6n1 /dev/nvme7n1
+   ```
+
+**Verification**:
+```bash
+# Verify pool configuration
+zpool list
+zpool status -v
+zfs list
+
+# Test performance characteristics
+dd if=/dev/zero of=/db-pool/test-db bs=8K count=10000 oflag=sync
+dd if=/dev/zero of=/fileserver-pool/test-file bs=1M count=1000
+```
+
+### Lab 2: Advanced Dataset Management and Delegation
+**Objective**: Implement a hierarchical dataset structure with user quotas and administrative delegation.
+
+**Tasks**:
+1. **Create Corporate Dataset Hierarchy**:
+   ```bash
+   # Corporate structure
+   sudo zfs create fileserver-pool/corporate
+   sudo zfs create fileserver-pool/corporate/departments
+   sudo zfs create fileserver-pool/corporate/departments/engineering
+   sudo zfs create fileserver-pool/corporate/departments/marketing
+   sudo zfs create fileserver-pool/corporate/departments/finance
+   sudo zfs create fileserver-pool/corporate/departments/hr
+   
+   # Project structure
+   sudo zfs create fileserver-pool/projects
+   sudo zfs create fileserver-pool/projects/active
+   sudo zfs create fileserver-pool/projects/archived
+   sudo zfs create fileserver-pool/projects/development
+   
+   # User homes
+   sudo zfs create fileserver-pool/users
+   sudo zfs create fileserver-pool/users/homes
+   sudo zfs create fileserver-pool/users/profiles
+   
+   # Shared resources
+   sudo zfs create fileserver-pool/shared
+   sudo zfs create fileserver-pool/shared/templates
+   sudo zfs create fileserver-pool/shared/software
+   ```
+
+2. **Configure Quotas and Reservations**:
+   ```bash
+   # Department quotas
+   sudo zfs set quota=10G fileserver-pool/corporate/departments/engineering
+   sudo zfs set quota=5G fileserver-pool/corporate/departments/marketing
+   sudo zfs set quota=3G fileserver-pool/corporate/departments/finance
+   sudo zfs set quota=2G fileserver-pool/corporate/departments/hr
+   
+   # Project quotas
+   sudo zfs set quota=50G fileserver-pool/projects/active
+   sudo zfs set quota=100G fileserver-pool/projects/archived
+   sudo zfs set quota=20G fileserver-pool/projects/development
+   
+   # User quota template
+   sudo zfs set quota=1G fileserver-pool/users/homes
+   sudo zfs set refquota=500M fileserver-pool/users/profiles
+   
+   # Reserve space for critical data
+   sudo zfs set reservation=5G fileserver-pool/corporate/departments/finance
+   ```
+
+3. **Implement Administrative Delegation**:
+   ```bash
+   # Create departmental admin users
+   sudo useradd -m engadmin
+   sudo useradd -m mktadmin
+   sudo useradd -m finadmin
+   
+   # Grant department-specific permissions
+   sudo zfs allow -u engadmin create,destroy,mount,snapshot,rollback,clone,promote,rename fileserver-pool/corporate/departments/engineering
+   sudo zfs allow -u mktadmin create,destroy,mount,snapshot,rollback fileserver-pool/corporate/departments/marketing
+   sudo zfs allow -u finadmin create,mount,snapshot fileserver-pool/corporate/departments/finance
+   
+   # Grant project management permissions
+   sudo zfs allow -g projectmanagers create,destroy,mount,snapshot,rollback,clone fileserver-pool/projects
+   
+   # Create user management delegation
+   sudo zfs allow -u useradmin create,destroy,mount,quota,refquota fileserver-pool/users/homes
+   ```
+
+4. **Create User Datasets with Automated Provisioning**:
+   ```bash
+   # User provisioning script
+   #!/bin/bash
+   # provision-user.sh
+   
+   USERNAME="$1"
+   QUOTA="${2:-1G}"
+   
+   # Create user dataset
+   sudo zfs create "fileserver-pool/users/homes/$USERNAME"
+   sudo zfs set quota="$QUOTA" "fileserver-pool/users/homes/$USERNAME"
+   sudo zfs set mountpoint="/home/$USERNAME" "fileserver-pool/users/homes/$USERNAME"
+   
+   # Set ownership
+   sudo chown "$USERNAME:$USERNAME" "/home/$USERNAME"
+   sudo chmod 750 "/home/$USERNAME"
+   
+   # Create initial snapshot
+   sudo zfs snapshot "fileserver-pool/users/homes/$USERNAME@initial"
+   
+   echo "User $USERNAME provisioned with $QUOTA quota"
+   ```
+
+**Verification**:
+```bash
+# Test delegation
+sudo -u engadmin zfs create fileserver-pool/corporate/departments/engineering/test-project
+sudo -u engadmin zfs snapshot fileserver-pool/corporate/departments/engineering/test-project@milestone1
+
+# Check quotas
+zfs list -o name,used,quota,refquota -r fileserver-pool
+
+# Verify permissions
+zfs allow fileserver-pool/corporate/departments/engineering
+```
+
+### Lab 3: Snapshot Management and Recovery Procedures
+**Objective**: Implement automated snapshot policies and practice disaster recovery scenarios.
+
+**Tasks**:
+1. **Implement Automated Snapshot Policies**:
+   ```bash
+   # Create snapshot policy configuration
+   sudo mkdir -p /etc/zfs/snapshot-policies
+   
+   cat > /etc/zfs/snapshot-policies/corporate.conf << 'EOF'
+   # Corporate data snapshots
+   fileserver-pool/corporate:hourly:24:corp-hourly
+   fileserver-pool/corporate:daily:30:corp-daily
+   fileserver-pool/corporate:weekly:12:corp-weekly
+   fileserver-pool/corporate:monthly:12:corp-monthly
+   EOF
+   
+   cat > /etc/zfs/snapshot-policies/projects.conf << 'EOF'
+   # Project data snapshots
+   fileserver-pool/projects/active:15min:96:proj-15min
+   fileserver-pool/projects/active:hourly:48:proj-hourly
+   fileserver-pool/projects/active:daily:14:proj-daily
+   fileserver-pool/projects/development:hourly:24:dev-hourly
+   fileserver-pool/projects/development:daily:7:dev-daily
+   EOF
+   
+   # Create snapshot automation script
+   sudo cp /usr/local/bin/zfs-snapshot-manager.sh /usr/local/bin/
+   sudo chmod +x /usr/local/bin/zfs-snapshot-manager.sh
+   ```
+
+2. **Test Snapshot Operations**:
+   ```bash
+   # Create test data
+   sudo zfs create fileserver-pool/test-recovery
+   sudo mkdir /fileserver-pool/test-recovery/documents
+   echo "Original data v1" | sudo tee /fileserver-pool/test-recovery/documents/file1.txt
+   echo "Original data v1" | sudo tee /fileserver-pool/test-recovery/documents/file2.txt
+   
+   # Create baseline snapshot
+   sudo zfs snapshot fileserver-pool/test-recovery@baseline
+   
+   # Modify data
+   echo "Modified data v2" | sudo tee /fileserver-pool/test-recovery/documents/file1.txt
+   echo "Modified data v2" | sudo tee /fileserver-pool/test-recovery/documents/file3.txt
+   sudo rm /fileserver-pool/test-recovery/documents/file2.txt
+   
+   # Create second snapshot
+   sudo zfs snapshot fileserver-pool/test-recovery@after-changes
+   
+   # Practice point-in-time recovery
+   sudo zfs rollback fileserver-pool/test-recovery@baseline
+   
+   # Verify recovery
+   ls -la /fileserver-pool/test-recovery/documents/
+   cat /fileserver-pool/test-recovery/documents/file1.txt
+   ```
+
+3. **Implement Snapshot Browsing**:
+   ```bash
+   # Enable snapshot visibility
+   sudo zfs set snapdir=visible fileserver-pool/test-recovery
+   
+   # Browse snapshots
+   ls /fileserver-pool/test-recovery/.zfs/snapshot/
+   ls /fileserver-pool/test-recovery/.zfs/snapshot/baseline/documents/
+   
+   # Selective file recovery
+   sudo cp /fileserver-pool/test-recovery/.zfs/snapshot/after-changes/documents/file3.txt \
+          /fileserver-pool/test-recovery/documents/
+   ```
+
+4. **Clone Management for Development**:
+   ```bash
+   # Create development clone from production snapshot
+   sudo zfs clone fileserver-pool/projects/active@proj-daily_$(date +%Y%m%d) \
+                 fileserver-pool/projects/development/test-clone-$(date +%Y%m%d)
+   
+   # Configure clone for development use
+   sudo zfs set quota=5G fileserver-pool/projects/development/test-clone-$(date +%Y%m%d)
+   sudo zfs set sync=disabled fileserver-pool/projects/development/test-clone-$(date +%Y%m%d)
+   
+   # Set expiration for automatic cleanup
+   sudo zfs set com.company:expires="$(date -d '+7 days' +%Y-%m-%d)" \
+       fileserver-pool/projects/development/test-clone-$(date +%Y%m%d)
+   ```
+
+**Verification**:
+```bash
+# Verify snapshot policies
+/usr/local/bin/zfs-snapshot-manager.sh create_scheduled_snapshots daily
+
+# Check snapshot history
+zfs list -t snapshot -r fileserver-pool/test-recovery
+
+# Verify clone functionality
+zfs list -t filesystem -r fileserver-pool/projects/development
+```
+
+### Lab 4: ZFS Replication and Disaster Recovery
+**Objective**: Set up cross-site replication and practice disaster recovery failover procedures.
+
+**Prerequisites**: Two systems or VMs representing primary and DR sites.
+
+**Tasks**:
+1. **Configure SSH Key Authentication**:
+   ```bash
+   # On primary site
+   ssh-keygen -t ed25519 -f ~/.ssh/zfs-replication
+   ssh-copy-id -i ~/.ssh/zfs-replication.pub root@dr-site
+   
+   # Test connectivity
+   ssh -i ~/.ssh/zfs-replication root@dr-site "zfs list"
+   ```
+
+2. **Perform Initial Replication Setup**:
+   ```bash
+   # Create initial snapshot on primary
+   sudo zfs snapshot -r fileserver-pool/corporate@initial-replication
+   
+   # Send initial replication to DR site
+   sudo zfs send -R fileserver-pool/corporate@initial-replication | \
+   ssh root@dr-site "zfs receive -F dr-pool/corporate"
+   
+   # Verify replication
+   ssh root@dr-site "zfs list -r dr-pool/corporate"
+   ```
+
+3. **Set Up Incremental Replication**:
+   ```bash
+   # Create automation script for incremental replication
+   cat > /usr/local/bin/replicate-to-dr.sh << 'EOF'
+   #!/bin/bash
+   
+   DATASETS=("fileserver-pool/corporate" "fileserver-pool/projects/active")
+   DR_HOST="dr-site"
+   DR_POOL="dr-pool"
+   
+   for dataset in "${DATASETS[@]}"; do
+       # Find last common snapshot
+       LAST_SNAP=$(zfs list -H -t snapshot -o name "$dataset" | \
+                   grep "@repl-" | tail -1)
+       
+       # Create new replication snapshot
+       NEW_SNAP="${dataset}@repl-$(date +%Y%m%d_%H%M%S)"
+       zfs snapshot "$NEW_SNAP"
+       
+       # Send incremental
+       if [[ -n "$LAST_SNAP" ]]; then
+           zfs send -i "$LAST_SNAP" "$NEW_SNAP" | \
+           ssh "$DR_HOST" "zfs receive -F ${DR_POOL}/${dataset#*/}"
+       else
+           zfs send "$NEW_SNAP" | \
+           ssh "$DR_HOST" "zfs receive -F ${DR_POOL}/${dataset#*/}"
+       fi
+       
+       echo "Replicated $dataset to DR site"
+   done
+   EOF
+   
+   sudo chmod +x /usr/local/bin/replicate-to-dr.sh
+   ```
+
+4. **Practice Disaster Recovery Failover**:
+   ```bash
+   # Simulate primary site failure
+   # On DR site, promote replicated datasets for production use
+   
+   ssh root@dr-site << 'EOF'
+   # Make datasets writable
+   zfs set readonly=off dr-pool/corporate
+   zfs set readonly=off dr-pool/projects/active
+   
+   # Update mount points for production use
+   zfs set mountpoint=/corporate dr-pool/corporate
+   zfs set mountpoint=/projects/active dr-pool/projects/active
+   
+   # Mount datasets
+   zfs mount dr-pool/corporate
+   zfs mount dr-pool/projects/active
+   
+   # Verify data accessibility
+   ls -la /corporate/
+   ls -la /projects/active/
+   EOF
+   ```
+
+5. **Practice Failback Procedures**:
+   ```bash
+   # When primary site is restored, reverse replication
+   # This would be done after fixing the primary site
+   
+   # From DR site, send latest data back to primary
+   ssh root@dr-site "zfs snapshot -r dr-pool/corporate@failback-$(date +%Y%m%d)"
+   ssh root@dr-site "zfs send -R dr-pool/corporate@failback-$(date +%Y%m%d)" | \
+   zfs receive -F fileserver-pool/corporate-restored
+   
+   # Compare and merge data as needed
+   ```
+
+**Verification**:
+```bash
+# Verify replication lag
+./usr/local/bin/zfs-replication-manager.sh monitor_replication_health
+
+# Test incremental replication
+/usr/local/bin/replicate-to-dr.sh
+
+# Verify DR site data integrity
+ssh root@dr-site "zfs list -t snapshot -r dr-pool"
+```
+
+### Lab 5: Performance Optimization and Monitoring
+**Objective**: Implement comprehensive performance monitoring and optimize ZFS for different workloads.
+
+**Tasks**:
+1. **Baseline Performance Testing**:
+   ```bash
+   # Install performance testing tools
+   sudo apt-get install fio sysbench
+
+   # Test database workload simulation
+   sudo fio --name=db-test --filename=/db-pool/fio-test \
+            --rw=randrw --bs=8k --iodepth=32 --numjobs=4 \
+            --runtime=300 --group_reporting --size=10G
+   
+   # Test file server workload
+   sudo fio --name=fileserver-test --filename=/fileserver-pool/fio-test \
+            --rw=read --bs=1M --iodepth=8 --numjobs=2 \
+            --runtime=300 --group_reporting --size=50G
+   
+   # Test backup workload
+   sudo fio --name=backup-test --filename=/backup-pool/fio-test \
+            --rw=write --bs=1M --iodepth=1 --numjobs=1 \
+            --runtime=300 --group_reporting --size=100G
+   ```
+
+2. **Monitor ZFS Performance Metrics**:
+   ```bash
+   # Run comprehensive performance monitoring
+   /usr/local/bin/zfs-performance-optimizer.sh monitor_zfs_performance 600 10
+   
+   # Monitor ARC efficiency
+   watch -n 5 'echo "ARC Stats:"; arcstat 1 1'
+   
+   # Monitor I/O patterns
+   zpool iostat -v 5
+   
+   # Monitor transaction group performance
+   echo "TXG Statistics:"
+   cat /proc/spl/kstat/zfs/*/txgs
+   ```
+
+3. **Apply Workload-Specific Optimizations**:
+   ```bash
+   # Optimize for database workload
+   /usr/local/bin/zfs-performance-optimizer.sh optimize_dataset_for_workload \
+       "db-pool/mysql" "database"
+   
+   # Optimize for file server workload
+   /usr/local/bin/zfs-performance-optimizer.sh optimize_dataset_for_workload \
+       "fileserver-pool/shared" "fileserver"
+   
+   # Optimize for backup workload
+   /usr/local/bin/zfs-performance-optimizer.sh optimize_dataset_for_workload \
+       "backup-pool/archives" "backup"
+   
+   # Optimize for VM workload
+   /usr/local/bin/zfs-performance-optimizer.sh optimize_dataset_for_workload \
+       "fileserver-pool/vms" "vms"
+   ```
+
+4. **Implement Performance Alerting**:
+   ```bash
+   # Set up automated performance monitoring
+   /usr/local/bin/zfs-performance-optimizer.sh setup_performance_alerts
+   
+   # Configure custom alert thresholds
+   sudo sed -i 's/ALERT_THRESHOLD_ARC=85/ALERT_THRESHOLD_ARC=90/' \
+       /usr/local/bin/zfs-performance-monitor.sh
+   
+   # Test alert system
+   # Temporarily set very high threshold to trigger alert
+   echo "Testing alert system..."
+   ```
+
+5. **Performance Tuning Validation**:
+   ```bash
+   # Re-run performance tests after optimization
+   sudo fio --name=db-test-optimized --filename=/db-pool/mysql/fio-test \
+            --rw=randrw --bs=8k --iodepth=32 --numjobs=4 \
+            --runtime=300 --group_reporting --size=10G
+   
+   # Compare before and after results
+   echo "Performance improvement analysis:"
+   echo "Before optimization: [record baseline results]"
+   echo "After optimization: [record optimized results]"
+   
+   # Generate performance report
+   /usr/local/bin/zfs-performance-optimizer.sh generate_performance_report \
+       /tmp/zfs-performance-*.log
+   ```
+
+**Verification**:
+```bash
+# Verify applied optimizations
+zfs get all db-pool/mysql | grep -E "(recordsize|primarycache|sync|compression)"
+zfs get all fileserver-pool/shared | grep -E "(recordsize|primarycache|sync|compression)"
+
+# Check performance monitoring setup
+crontab -l | grep performance
+systemctl status zfs-performance-monitor
+
+# Validate ARC settings
+cat /sys/module/zfs/parameters/zfs_arc_max
+cat /sys/module/zfs/parameters/zfs_arc_min
+```
+
+## Best Practices
+
+### ZFS Pool Design
+- **RAID Level Selection**: Use RAID-10 for high-performance workloads, RAID-Z2 for balanced capacity/performance, RAID-Z3 for maximum data protection
+- **Device Sizing**: Use identically sized devices within each vdev for optimal space utilization
+- **Hot Spares**: Configure at least one hot spare per pool, preferably matching the largest device size
+- **L2ARC Sizing**: Size L2ARC devices at 5-10x the ARC size for optimal caching effectiveness
+
+### Dataset Management
+- **Hierarchy Planning**: Design dataset hierarchies to match organizational structure and access patterns
+- **Quota Strategy**: Implement quotas proactively to prevent runaway disk usage
+- **Compression Settings**: Enable compression on all datasets unless specifically contraindicated
+- **Record Size Optimization**: Match record sizes to application I/O patterns (8K for databases, 1M for file servers)
+
+### Snapshot and Backup Strategy
+- **Automated Snapshots**: Implement automated snapshot policies based on data criticality and change frequency
+- **Retention Policies**: Define clear retention policies balancing storage costs with recovery requirements
+- **Replication Planning**: Set up regular replication to geographically separate locations
+- **Recovery Testing**: Regularly test recovery procedures to ensure they work when needed
+
+### Performance Optimization
+- **ARC Tuning**: Size ARC appropriately for your workload, typically 50-75% of system RAM
+- **Workload Matching**: Configure dataset properties to match specific workload characteristics
+- **I/O Scheduler**: Use appropriate I/O schedulers (typically deadline or noop for SSDs)
+- **Monitoring Integration**: Implement comprehensive monitoring to detect performance issues early
+
+### Security and Access Control
+- **Delegation Model**: Use ZFS delegation features to distribute administrative responsibilities
+- **Encryption**: Enable encryption for sensitive datasets, especially on portable storage
+- **Access Auditing**: Monitor and audit access to critical datasets
+- **Network Security**: Secure replication channels with SSH keys and network restrictions
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+#### Pool Performance Issues
+**Symptoms**: Slow I/O performance, high latency
+**Diagnosis**:
+```bash
+zpool iostat -v 5
+iostat -x 1
+cat /proc/spl/kstat/zfs/arcstats
+```
+**Solutions**:
+- Check for device failures or high error rates
+- Verify ARC hit rates (should be >90%)
+- Consider adding L2ARC or SLOG devices
+- Review record size settings for workload
+
+#### Pool Import/Export Problems
+**Symptoms**: Cannot import pool after system migration
+**Diagnosis**:
+```bash
+zpool import
+zpool import -f poolname
+zdb -l /dev/device
+```
+**Solutions**:
+- Use force import if pool was not cleanly exported
+- Check device paths and update if necessary
+- Verify all pool devices are accessible
+- Use device IDs instead of device names for portability
+
+#### Snapshot and Replication Issues
+**Symptoms**: Replication failures, missing snapshots
+**Diagnosis**:
+```bash
+zfs list -t snapshot
+zfs send -n dataset@snapshot
+ssh remotehost "zfs list -t snapshot"
+```
+**Solutions**:
+- Verify network connectivity and SSH key authentication
+- Check available space on destination pool
+- Ensure consistent snapshot names across sites
+- Validate incremental snapshot chains
+
+#### Dataset Access Problems
+**Symptoms**: Cannot access datasets, permission denied
+**Diagnosis**:
+```bash
+zfs get mounted,mountpoint dataset
+zfs mount
+zfs allow dataset
+mount | grep zfs
+```
+**Solutions**:
+- Verify dataset is mounted
+- Check mount point permissions
+- Review ZFS delegation permissions
+- Ensure no conflicting mount points
+
+### Emergency Procedures
+
+#### Pool Recovery
+1. **Assess pool status**: `zpool status -v poolname`
+2. **Attempt automatic repair**: `zpool clear poolname`
+3. **Replace failed devices**: `zpool replace poolname old-device new-device`
+4. **Force import if necessary**: `zpool import -f poolname`
+5. **Restore from backup if pool is unrecoverable**
+
+#### Data Recovery
+1. **Check for available snapshots**: `zfs list -t snapshot`
+2. **Browse snapshot contents**: `ls dataset/.zfs/snapshot/`
+3. **Selective file restore**: Copy files from `.zfs/snapshot/`
+4. **Full rollback if necessary**: `zfs rollback dataset@snapshot`
+5. **Clone for investigation**: `zfs clone snapshot dataset/investigation`
+
+## Assessment Criteria
+
+### Knowledge Assessment
+- **Pool Architecture**: Can design appropriate pool layouts for different use cases
+- **Dataset Management**: Understands hierarchical dataset organization and quota management
+- **Snapshot Strategy**: Can implement comprehensive snapshot and backup policies
+- **Performance Tuning**: Knows how to optimize ZFS for different workloads
+- **Replication Setup**: Can configure and manage ZFS replication infrastructure
+
+### Practical Skills
+- **Command Proficiency**: Demonstrates fluency with ZFS commands and options
+- **Troubleshooting Ability**: Can diagnose and resolve common ZFS issues
+- **Automation Implementation**: Can create scripts for ZFS management tasks
+- **Monitoring Setup**: Can implement comprehensive ZFS monitoring solutions
+- **Recovery Procedures**: Can execute disaster recovery and data restoration procedures
+
+### Advanced Topics Understanding
+- **Enterprise Integration**: Understands how ZFS fits into enterprise storage architectures
+- **Scaling Considerations**: Knows limitations and scaling strategies for ZFS
+- **Hybrid Storage**: Can implement hybrid storage solutions with ZFS
+- **Performance Analysis**: Can analyze and optimize ZFS performance metrics
+- **Security Implementation**: Understands ZFS security features and access control
+
+## Next Steps
+
+### Intermediate Topics
+- ZFS on Linux (ZoL) specific features and limitations
+- Integration with virtualization platforms (Proxmox, VMware)
+- ZFS encryption and security hardening
+- Advanced replication topologies and strategies
+- ZFS performance benchmarking and analysis
+
+### Advanced Topics
+- ZFS storage clustering and distributed storage
+- Integration with backup solutions (Bacula, Bareos, Veeam)
+- ZFS tuning for specific applications (databases, virtualization)
+- Custom ZFS monitoring and alerting solutions
+- ZFS in cloud environments and hybrid storage
+
+### Related Technologies
+- **Module 12**: Proxmox Virtual Environment (ZFS integration)
+- **Module 14**: Proxmox Infrastructure Automation (ZFS automation)
+- BTRFS comparison and migration strategies
+- Software-defined storage solutions
+- Enterprise backup and disaster recovery planning
+
+---
+
+*This completes Module 11: ZFS Fundamentals. Students should now have comprehensive knowledge of ZFS storage management, from basic pool operations to enterprise-grade infrastructure implementation with monitoring, replication, and disaster recovery capabilities.*
     
     # Pool-level integrity
     zpool status -x
