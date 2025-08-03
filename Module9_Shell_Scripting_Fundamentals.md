@@ -1,5 +1,37 @@
 # Module 9: Shell Scripting Fundamentals
 
+## Table of Contents
+- [Overview](#overview)
+- [Learning Objectives](#learning-objectives)
+- [Topics](#topics)
+  - [9.1 Shell Scripting Basics](#91-shell-scripting-basics)
+  - [9.2 Control Structures and Logic](#92-control-structures-and-logic)
+  - [9.3 Functions and Modular Code](#93-functions-and-modular-code)
+  - [9.4 Command-Line Interface Design](#94-command-line-interface-design)
+  - [9.5 Advanced Parameter Handling](#95-advanced-parameter-handling)
+  - [9.6 Error Handling and Debugging](#96-error-handling-and-debugging)
+  - [9.7 Advanced Scripting Techniques](#97-advanced-scripting-techniques)
+  - [9.8 System Administration Scripts](#98-system-administration-scripts)
+- [Practical Examples](#practical-examples)
+  - [Script Basics: Shebang and Permissions](#script-basics-shebang-and-permissions)
+  - [Control Structure Comparison](#control-structure-comparison)
+  - [Basic Script Structure with Best Practices](#basic-script-structure-with-best-practices)
+  - [Variables and Parameter Expansion with Defaults](#variables-and-parameter-expansion-with-defaults)
+  - [Control Structures: if/else and case](#control-structures-ifelse-and-case)
+  - [Loop Constructs: for, while, until](#loop-constructs-for-while-until)
+  - [Functions for Modular, Readable Code](#functions-for-modular-readable-code)
+  - [Command-Line Option Parsing with getopts](#command-line-option-parsing-with-getopts)
+  - [Error Handling and Debugging](#error-handling-and-debugging)
+- [Exercises and Projects](#exercises-and-projects)
+  - [Exercise 1: System Information Script](#exercise-1-system-information-script)
+  - [Exercise 2: Log File Analyzer](#exercise-2-log-file-analyzer)
+  - [Exercise 3: Backup Automation Script](#exercise-3-backup-automation-script)
+  - [Exercise 4: PostgreSQL Database Backup Script](#exercise-4-postgresql-database-backup-script)
+  - [Project: Server Monitoring Dashboard](#project-server-monitoring-dashboard)
+- [Best Practices and Common Pitfalls](#best-practices-and-common-pitfalls)
+- [Advanced Topics](#advanced-topics)
+- [Summary](#summary)
+
 ## Overview
 You'll get comfortable writing scripts that automate your daily shell workflows, understanding how to pass arguments, handle errors, and structure reusable code with functions. This module covers shell scripting essentials for Linux system administration, teaching you to write effective bash scripts, automate routine tasks, and create robust automation solutions for system management.
 
@@ -826,6 +858,636 @@ Create an automated backup script with rotation.
 - Support compression options
 - Email notifications on success/failure
 - Configuration file support
+
+### Exercise 4: PostgreSQL Database Backup Script
+Develop a comprehensive PostgreSQL database backup script with advanced features.
+
+**Requirements:**
+- Support multiple databases and backup types
+- Implement backup rotation and compression
+- Include restoration capabilities
+- Add monitoring and alerting
+- Configuration file support with encryption options
+
+**Complete Implementation:**
+```bash
+#!/usr/bin/env bash
+# postgresql_backup.sh - Comprehensive PostgreSQL backup script
+# Author: System Administrator
+# Purpose: Automated PostgreSQL database backup with rotation and monitoring
+
+set -euo pipefail
+
+# Script configuration
+readonly SCRIPT_NAME="$(basename "$0")"
+readonly CONFIG_FILE="/etc/postgresql-backup/config.conf"
+readonly LOG_FILE="/var/log/postgresql-backup.log"
+readonly LOCK_FILE="/var/run/postgresql-backup.lock"
+
+# Default configuration (can be overridden by config file)
+BACKUP_DIR="/backup/postgresql"
+BACKUP_RETENTION_DAYS=30
+BACKUP_RETENTION_COUNT=7
+PG_HOST="localhost"
+PG_PORT="5432"
+PG_USER="postgres"
+DATABASES="all"  # "all" or space-separated list
+BACKUP_TYPE="full"  # full, schema, data
+COMPRESSION="gzip"  # gzip, bzip2, xz, none
+ENCRYPTION_ENABLED="false"
+ENCRYPTION_KEY_FILE=""
+MONITORING_ENABLED="true"
+EMAIL_ALERTS="admin@example.com"
+SLACK_WEBHOOK_URL=""
+S3_BACKUP_ENABLED="false"
+S3_BUCKET=""
+PARALLEL_JOBS=1
+
+# Logging functions
+log() {
+    local level="$1"
+    shift
+    local message="$*"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] [$level] $message" | tee -a "$LOG_FILE"
+}
+
+log_info() { log "INFO" "$@"; }
+log_warn() { log "WARN" "$@"; }
+log_error() { log "ERROR" "$@"; }
+log_debug() { [[ "${DEBUG:-false}" == true ]] && log "DEBUG" "$@"; }
+
+# Load configuration file
+load_config() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        log_info "Loading configuration from $CONFIG_FILE"
+        # shellcheck source=/dev/null
+        source "$CONFIG_FILE"
+    else
+        log_warn "Configuration file not found: $CONFIG_FILE, using defaults"
+    fi
+}
+
+# Usage and help
+usage() {
+    cat << EOF
+Usage: $SCRIPT_NAME [OPTIONS] [COMMAND]
+
+PostgreSQL Database Backup Script with advanced features.
+
+COMMANDS:
+    backup          Perform database backup (default)
+    restore         Restore from backup
+    list            List available backups
+    cleanup         Clean old backups
+    test            Test backup configuration
+    config          Show current configuration
+
+OPTIONS:
+    -h, --help              Show this help message
+    -c, --config FILE       Use custom configuration file
+    -d, --database DB       Backup specific database(s)
+    -t, --type TYPE         Backup type (full|schema|data)
+    -o, --output DIR        Output directory
+    -v, --verbose           Verbose output
+    -n, --dry-run           Show what would be done
+    --compression TYPE      Compression (gzip|bzip2|xz|none)
+    --encrypt              Enable encryption
+    --no-monitoring        Disable monitoring
+    --parallel JOBS        Number of parallel jobs
+
+EXAMPLES:
+    $SCRIPT_NAME backup
+    $SCRIPT_NAME -d "mydb1 mydb2" -t schema backup
+    $SCRIPT_NAME --compression bzip2 --encrypt backup
+    $SCRIPT_NAME restore /backup/postgresql/mydb_20250802_120000.sql.gz
+    $SCRIPT_NAME list
+    $SCRIPT_NAME cleanup
+
+CONFIG FILE EXAMPLE:
+    # /etc/postgresql-backup/config.conf
+    BACKUP_DIR="/backup/postgresql"
+    PG_HOST="localhost"
+    PG_USER="backup_user"
+    DATABASES="mydb1 mydb2 mydb3"
+    BACKUP_TYPE="full"
+    COMPRESSION="gzip"
+    ENCRYPTION_ENABLED="true"
+    ENCRYPTION_KEY_FILE="/etc/postgresql-backup/backup.key"
+    EMAIL_ALERTS="dba@company.com"
+
+EOF
+}
+
+# Check prerequisites
+check_prerequisites() {
+    local missing_deps=()
+    
+    # Check required commands
+    local required_commands=("pg_dump" "pg_dumpall" "psql" "date")
+    for cmd in "${required_commands[@]}"; do
+        if ! command -v "$cmd" >/dev/null 2>&1; then
+            missing_deps+=("$cmd")
+        fi
+    done
+    
+    # Check compression tools
+    case "$COMPRESSION" in
+        gzip) command -v gzip >/dev/null 2>&1 || missing_deps+=("gzip") ;;
+        bzip2) command -v bzip2 >/dev/null 2>&1 || missing_deps+=("bzip2") ;;
+        xz) command -v xz >/dev/null 2>&1 || missing_deps+=("xz") ;;
+    esac
+    
+    # Check encryption tools
+    if [[ "$ENCRYPTION_ENABLED" == "true" ]]; then
+        command -v gpg >/dev/null 2>&1 || missing_deps+=("gpg")
+    fi
+    
+    if [[ ${#missing_deps[@]} -gt 0 ]]; then
+        log_error "Missing required dependencies: ${missing_deps[*]}"
+        log_error "Please install missing packages and try again"
+        exit 1
+    fi
+}
+
+# Test database connectivity
+test_connection() {
+    log_info "Testing PostgreSQL connection..."
+    
+    local conn_params=()
+    [[ -n "$PG_HOST" ]] && conn_params+=("-h" "$PG_HOST")
+    [[ -n "$PG_PORT" ]] && conn_params+=("-p" "$PG_PORT")
+    [[ -n "$PG_USER" ]] && conn_params+=("-U" "$PG_USER")
+    
+    if ! psql "${conn_params[@]}" -d postgres -c "SELECT version();" >/dev/null 2>&1; then
+        log_error "Failed to connect to PostgreSQL server"
+        log_error "Check connection parameters: host=$PG_HOST, port=$PG_PORT, user=$PG_USER"
+        return 1
+    fi
+    
+    log_info "PostgreSQL connection successful"
+    return 0
+}
+
+# Get list of databases
+get_database_list() {
+    local conn_params=()
+    [[ -n "$PG_HOST" ]] && conn_params+=("-h" "$PG_HOST")
+    [[ -n "$PG_PORT" ]] && conn_params+=("-p" "$PG_PORT")
+    [[ -n "$PG_USER" ]] && conn_params+=("-U" "$PG_USER")
+    
+    if [[ "$DATABASES" == "all" ]]; then
+        psql "${conn_params[@]}" -d postgres -t -c "SELECT datname FROM pg_database WHERE NOT datistemplate AND datname != 'postgres';" | sed 's/^[ \t]*//' | grep -v '^$'
+    else
+        echo "$DATABASES" | tr ' ' '\n'
+    fi
+}
+
+# Create backup filename
+create_backup_filename() {
+    local database="$1"
+    local timestamp="$2"
+    local backup_type="$3"
+    
+    local filename="${database}_${backup_type}_${timestamp}"
+    
+    case "$COMPRESSION" in
+        gzip) filename+=".sql.gz" ;;
+        bzip2) filename+=".sql.bz2" ;;
+        xz) filename+=".sql.xz" ;;
+        none) filename+=".sql" ;;
+    esac
+    
+    [[ "$ENCRYPTION_ENABLED" == "true" ]] && filename+=".gpg"
+    
+    echo "$filename"
+}
+
+# Compress backup file
+compress_backup() {
+    local input_file="$1"
+    local output_file="$2"
+    
+    case "$COMPRESSION" in
+        gzip)
+            gzip -c "$input_file" > "$output_file"
+            ;;
+        bzip2)
+            bzip2 -c "$input_file" > "$output_file"
+            ;;
+        xz)
+            xz -c "$input_file" > "$output_file"
+            ;;
+        none)
+            cp "$input_file" "$output_file"
+            ;;
+    esac
+}
+
+# Encrypt backup file
+encrypt_backup() {
+    local input_file="$1"
+    local output_file="$2"
+    
+    if [[ "$ENCRYPTION_ENABLED" == "true" ]]; then
+        if [[ -f "$ENCRYPTION_KEY_FILE" ]]; then
+            gpg --batch --yes --cipher-algo AES256 --compress-algo 1 \
+                --symmetric --passphrase-file "$ENCRYPTION_KEY_FILE" \
+                --output "$output_file" "$input_file"
+        else
+            log_error "Encryption key file not found: $ENCRYPTION_KEY_FILE"
+            return 1
+        fi
+    else
+        cp "$input_file" "$output_file"
+    fi
+}
+
+# Backup single database
+backup_database() {
+    local database="$1"
+    local timestamp="$2"
+    local temp_dir="$3"
+    
+    log_info "Starting backup of database: $database"
+    
+    local temp_file="$temp_dir/${database}_${timestamp}.sql"
+    local final_filename
+    final_filename=$(create_backup_filename "$database" "$timestamp" "$BACKUP_TYPE")
+    local final_path="$BACKUP_DIR/$final_filename"
+    
+    # Build pg_dump command
+    local dump_cmd=("pg_dump")
+    [[ -n "$PG_HOST" ]] && dump_cmd+=("-h" "$PG_HOST")
+    [[ -n "$PG_PORT" ]] && dump_cmd+=("-p" "$PG_PORT")
+    [[ -n "$PG_USER" ]] && dump_cmd+=("-U" "$PG_USER")
+    
+    case "$BACKUP_TYPE" in
+        schema)
+            dump_cmd+=("--schema-only")
+            ;;
+        data)
+            dump_cmd+=("--data-only")
+            ;;
+        full)
+            # Default: full backup
+            ;;
+    esac
+    
+    dump_cmd+=("--verbose" "--file=$temp_file" "$database")
+    
+    # Execute backup
+    log_debug "Executing: ${dump_cmd[*]}"
+    if "${dump_cmd[@]}"; then
+        log_info "Database dump completed: $database"
+    else
+        log_error "Database dump failed: $database"
+        return 1
+    fi
+    
+    # Process backup file (compression + encryption)
+    local processed_file="$temp_dir/processed_${database}_${timestamp}"
+    
+    # Compress
+    if [[ "$COMPRESSION" != "none" ]]; then
+        log_debug "Compressing backup with $COMPRESSION"
+        compress_backup "$temp_file" "${processed_file}.compressed"
+        mv "${processed_file}.compressed" "$processed_file"
+    else
+        mv "$temp_file" "$processed_file"
+    fi
+    
+    # Encrypt
+    if [[ "$ENCRYPTION_ENABLED" == "true" ]]; then
+        log_debug "Encrypting backup"
+        encrypt_backup "$processed_file" "${processed_file}.encrypted"
+        mv "${processed_file}.encrypted" "$processed_file"
+    fi
+    
+    # Move to final location
+    mv "$processed_file" "$final_path"
+    
+    # Verify backup
+    if [[ -f "$final_path" ]]; then
+        local size
+        size=$(du -h "$final_path" | cut -f1)
+        log_info "Backup completed: $final_filename (Size: $size)"
+        
+        # Calculate checksum
+        local checksum
+        checksum=$(sha256sum "$final_path" | cut -d' ' -f1)
+        echo "$checksum  $final_filename" >> "$BACKUP_DIR/checksums.txt"
+        log_debug "Checksum: $checksum"
+        
+        return 0
+    else
+        log_error "Backup file not found after processing: $final_path"
+        return 1
+    fi
+}
+
+# Main backup function
+perform_backup() {
+    log_info "Starting PostgreSQL backup process"
+    
+    # Create backup directory
+    mkdir -p "$BACKUP_DIR"
+    
+    # Create temporary directory
+    local temp_dir
+    temp_dir=$(mktemp -d)
+    trap "rm -rf '$temp_dir'" EXIT
+    
+    local timestamp
+    timestamp=$(date +%Y%m%d_%H%M%S)
+    
+    # Get database list
+    local databases
+    readarray -t databases < <(get_database_list)
+    
+    if [[ ${#databases[@]} -eq 0 ]]; then
+        log_error "No databases found to backup"
+        return 1
+    fi
+    
+    log_info "Found ${#databases[@]} database(s) to backup: ${databases[*]}"
+    
+    # Backup each database
+    local failed_backups=()
+    local successful_backups=()
+    
+    for database in "${databases[@]}"; do
+        if backup_database "$database" "$timestamp" "$temp_dir"; then
+            successful_backups+=("$database")
+        else
+            failed_backups+=("$database")
+        fi
+    done
+    
+    # Report results
+    log_info "Backup completed - Success: ${#successful_backups[@]}, Failed: ${#failed_backups[@]}"
+    
+    if [[ ${#successful_backups[@]} -gt 0 ]]; then
+        log_info "Successful backups: ${successful_backups[*]}"
+    fi
+    
+    if [[ ${#failed_backups[@]} -gt 0 ]]; then
+        log_error "Failed backups: ${failed_backups[*]}"
+        return 1
+    fi
+    
+    return 0
+}
+
+# Cleanup old backups
+cleanup_old_backups() {
+    log_info "Cleaning up old backups..."
+    
+    # Remove backups older than retention period
+    if [[ $BACKUP_RETENTION_DAYS -gt 0 ]]; then
+        log_info "Removing backups older than $BACKUP_RETENTION_DAYS days"
+        find "$BACKUP_DIR" -name "*.sql*" -type f -mtime +$BACKUP_RETENTION_DAYS -delete
+    fi
+    
+    # Keep only the latest N backups per database
+    if [[ $BACKUP_RETENTION_COUNT -gt 0 ]]; then
+        log_info "Keeping only the latest $BACKUP_RETENTION_COUNT backups per database"
+        
+        local databases
+        readarray -t databases < <(get_database_list)
+        
+        for database in "${databases[@]}"; do
+            # Find backup files for this database and remove old ones
+            find "$BACKUP_DIR" -name "${database}_*" -type f | \
+                sort -r | \
+                tail -n +$((BACKUP_RETENTION_COUNT + 1)) | \
+                xargs -r rm -f
+        done
+    fi
+    
+    log_info "Cleanup completed"
+}
+
+# Send notifications
+send_notification() {
+    local status="$1"
+    local message="$2"
+    
+    [[ "$MONITORING_ENABLED" != "true" ]] && return 0
+    
+    local subject="PostgreSQL Backup $status - $(hostname)"
+    
+    # Email notification
+    if [[ -n "$EMAIL_ALERTS" ]] && command -v mail >/dev/null 2>&1; then
+        echo "$message" | mail -s "$subject" "$EMAIL_ALERTS"
+        log_debug "Email notification sent to $EMAIL_ALERTS"
+    fi
+    
+    # Slack notification
+    if [[ -n "$SLACK_WEBHOOK_URL" ]] && command -v curl >/dev/null 2>&1; then
+        local payload
+        payload=$(cat << EOF
+{
+    "text": "$subject",
+    "attachments": [
+        {
+            "color": "$([[ "$status" == "SUCCESS" ]] && echo "good" || echo "danger")",
+            "text": "$message"
+        }
+    ]
+}
+EOF
+        )
+        
+        curl -X POST -H 'Content-type: application/json' \
+             --data "$payload" "$SLACK_WEBHOOK_URL" >/dev/null 2>&1
+        log_debug "Slack notification sent"
+    fi
+}
+
+# Parse command line arguments
+parse_arguments() {
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                usage
+                exit 0
+                ;;
+            -c|--config)
+                CONFIG_FILE="$2"
+                shift 2
+                ;;
+            -d|--database)
+                DATABASES="$2"
+                shift 2
+                ;;
+            -t|--type)
+                BACKUP_TYPE="$2"
+                shift 2
+                ;;
+            -o|--output)
+                BACKUP_DIR="$2"
+                shift 2
+                ;;
+            -v|--verbose)
+                DEBUG=true
+                shift
+                ;;
+            -n|--dry-run)
+                DRY_RUN=true
+                shift
+                ;;
+            --compression)
+                COMPRESSION="$2"
+                shift 2
+                ;;
+            --encrypt)
+                ENCRYPTION_ENABLED=true
+                shift
+                ;;
+            --no-monitoring)
+                MONITORING_ENABLED=false
+                shift
+                ;;
+            --parallel)
+                PARALLEL_JOBS="$2"
+                shift 2
+                ;;
+            backup|restore|list|cleanup|test|config)
+                COMMAND="$1"
+                shift
+                ;;
+            *)
+                log_error "Unknown option: $1"
+                usage
+                exit 1
+                ;;
+        esac
+    done
+}
+
+# Main function
+main() {
+    local COMMAND="backup"
+    
+    # Parse arguments
+    parse_arguments "$@"
+    
+    # Load configuration
+    load_config
+    
+    # Check prerequisites
+    check_prerequisites
+    
+    # Test connection
+    test_connection || exit 1
+    
+    # Execute command
+    case "$COMMAND" in
+        backup)
+            if perform_backup; then
+                cleanup_old_backups
+                send_notification "SUCCESS" "PostgreSQL backup completed successfully"
+                log_info "All backup operations completed successfully"
+            else
+                send_notification "FAILED" "PostgreSQL backup failed. Check logs for details."
+                log_error "Backup operation failed"
+                exit 1
+            fi
+            ;;
+        test)
+            log_info "Configuration test passed"
+            ;;
+        config)
+            echo "Current configuration:"
+            echo "  Backup directory: $BACKUP_DIR"
+            echo "  PostgreSQL host: $PG_HOST:$PG_PORT"
+            echo "  PostgreSQL user: $PG_USER"
+            echo "  Databases: $DATABASES"
+            echo "  Backup type: $BACKUP_TYPE"
+            echo "  Compression: $COMPRESSION"
+            echo "  Encryption: $ENCRYPTION_ENABLED"
+            ;;
+        *)
+            log_error "Unknown command: $COMMAND"
+            usage
+            exit 1
+            ;;
+    esac
+}
+
+# Execute main function
+main "$@"
+```
+
+**Configuration File Example (`/etc/postgresql-backup/config.conf`):**
+```bash
+# PostgreSQL connection settings
+PG_HOST="localhost"
+PG_PORT="5432"
+PG_USER="backup_user"
+PGPASSWORD="secure_password"  # Or use .pgpass file
+
+# Backup settings
+BACKUP_DIR="/backup/postgresql"
+DATABASES="production_db analytics_db user_db"  # or "all" for all databases
+BACKUP_TYPE="full"  # full, schema, data
+COMPRESSION="gzip"  # gzip, bzip2, xz, none
+
+# Retention settings
+BACKUP_RETENTION_DAYS=30
+BACKUP_RETENTION_COUNT=7
+
+# Security settings
+ENCRYPTION_ENABLED="true"
+ENCRYPTION_KEY_FILE="/etc/postgresql-backup/backup.key"
+
+# Monitoring and alerting
+MONITORING_ENABLED="true"
+EMAIL_ALERTS="dba@company.com ops@company.com"
+SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+
+# Performance settings
+PARALLEL_JOBS=2
+
+# Cloud storage (optional)
+S3_BACKUP_ENABLED="false"
+S3_BUCKET="company-postgresql-backups"
+```
+
+**Usage Examples:**
+```bash
+# Basic backup of all databases
+./postgresql_backup.sh backup
+
+# Backup specific databases with custom settings
+./postgresql_backup.sh -d "mydb1 mydb2" -t schema --compression bzip2 backup
+
+# Backup with encryption enabled
+./postgresql_backup.sh --encrypt backup
+
+# Test configuration
+./postgresql_backup.sh test
+
+# List current configuration
+./postgresql_backup.sh config
+
+# Cleanup old backups manually
+./postgresql_backup.sh cleanup
+```
+
+**Cron Job Setup:**
+```bash
+# Add to crontab for automated backups
+# Daily backup at 2 AM
+0 2 * * * /usr/local/bin/postgresql_backup.sh backup >/dev/null 2>&1
+
+# Weekly full backup on Sundays
+0 1 * * 0 /usr/local/bin/postgresql_backup.sh -t full backup
+
+# Monthly cleanup
+0 3 1 * * /usr/local/bin/postgresql_backup.sh cleanup
+```
 
 ### Project: Server Monitoring Dashboard
 Develop a comprehensive server monitoring script that:
