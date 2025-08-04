@@ -9,16 +9,17 @@
 - [🔍 Overview](#overview)
 - [🎯 Learning Objectives](#learning-objectives)
 - [📚 Topics](#topics)
-  - [5.1 Process Basics](#51-process-basics)
-  - [5.2 Process Monitoring](#52-process-monitoring)
-  - [5.3 Process Control](#53-process-control)
-  - [5.4 Basic Service Management](#54-basic-service-management)
-  - [5.5 Essential Systemd Operations](#55-essential-systemd-operations)
+  - [5.1 Process Basics](#51-process-basics-beginner)
+  - [5.2 Process Monitoring](#52-process-monitoring-intermediate)
+  - [5.3 Process Control](#53-process-control-intermediate)
+  - [5.4 Basic Service Management](#54-basic-service-management-intermediate)
+  - [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
 - [⚡ Essential Command Reference](#essential-command-reference)
   - [Process Monitoring Commands](#process-monitoring-commands)
   - [Process Control Commands](#process-control-commands)
   - [Service Management Commands](#service-management-commands)
   - [System Monitoring Commands](#system-monitoring-commands)
+- [🚀 Quick Start Commands](#quick-start-commands)
 - [🔄 Understanding Linux Service Management Evolution](#understanding-linux-service-management-evolution)
   - [From init.d to systemd: A Brief History](#from-initd-to-systemd-a-brief-history)
   - [Understanding systemd Service States](#understanding-systemd-service-states)
@@ -26,10 +27,10 @@
   - [Basic Process Monitoring Examples](#basic-process-monitoring-examples)
   - [Understanding Background Processes and SSH](#understanding-background-processes-and-ssh)
   - [Service Management Examples](#service-management-examples)
-- [🧪 Lab Exercises](#lab-exercises)
-  - [Lab 1: Basic Process Monitoring](#lab-1-basic-process-monitoring)
-  - [Lab 2: Process Control and SSH Management](#lab-2-process-control-and-ssh-management)
-  - [Lab 3: Mastering Systemd Service Management](#lab-3-mastering-systemd-service-management)
+- [🧪 Lab Exercises](#lab-exercises-45-minutes-total)
+  - [Lab 1: Basic Process Monitoring](#lab-1-basic-process-monitoring-15-minutes)
+  - [Lab 2: Process Control and SSH Management](#lab-2-process-control-and-ssh-management-20-minutes)
+  - [Lab 3: Mastering Systemd Service Management](#lab-3-mastering-systemd-service-management-10-minutes)
 - [✅ Best Practices](#best-practices)
   - [Process Management Best Practices](#process-management-best-practices)
   - [SSH and Remote Process Management](#ssh-and-remote-process-management)
@@ -127,7 +128,7 @@ By the end of this module, you will be able to:
 ## ⚡ Essential Command Reference
 
 ### 🔹 Process Monitoring Commands
-**📚 Related Topics:** [5.1 Process Basics](#51-process-basics) | [5.2 Process Monitoring](#52-process-monitoring)
+**📚 Related Topics:** [5.1 Process Basics](#51-process-basics-beginner) | [5.2 Process Monitoring](#52-process-monitoring-intermediate)
 
 | Command | Purpose | Common Examples |
 |---------|---------|-----------------|
@@ -138,7 +139,7 @@ By the end of this module, you will be able to:
 | `pidof` | Get PID of process | `pidof nginx` |
 
 ### 🔹 Process Control Commands
-**📚 Related Topics:** [5.3 Process Control](#53-process-control)
+**📚 Related Topics:** [5.3 Process Control](#53-process-control-intermediate)
 
 | Command | Purpose | Common Examples | SSH Usage Notes |
 |---------|---------|-----------------|-----------------|
@@ -153,7 +154,7 @@ By the end of this module, you will be able to:
 | `tmux` | Terminal multiplexer | `tmux new -s name` | **Alternative to screen** |
 
 ### 🔹 Service Management Commands
-**📚 Related Topics:** [5.4 Basic Service Management](#54-basic-service-management) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations)
+**📚 Related Topics:** [5.4 Basic Service Management](#54-basic-service-management-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
 
 | Command | Purpose | Common Examples |
 |---------|---------|-----------------|
@@ -166,7 +167,7 @@ By the end of this module, you will be able to:
 | `journalctl` | View service logs | `journalctl -u nginx`, `journalctl -f` |
 
 ### 🔹 System Monitoring Commands
-**📚 Related Topics:** [5.2 Process Monitoring](#52-process-monitoring) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations)
+**📚 Related Topics:** [5.2 Process Monitoring](#52-process-monitoring-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
 
 | Command | Purpose | Common Examples |
 |---------|---------|-----------------|
@@ -176,7 +177,7 @@ By the end of this module, you will be able to:
 | `who` | Who is logged in | `who`, `w` |
 
 ## 🚀 Quick Start Commands
-**📚 Related Topics:** [5.3 Process Control](#53-process-control) | [5.4 Basic Service Management](#54-basic-service-management)
+**📚 Related Topics:** [5.3 Process Control](#53-process-control-intermediate) | [5.4 Basic Service Management](#54-basic-service-management-intermediate)
 
 | Task | Command | Example |
 |------|---------|---------|
