@@ -502,20 +502,3 @@ After mastering Linux distributions and philosophy, proceed to:
 
 The foundation established in this module directly influences decisions throughout your Linux administration journey, from filesystem choices to security implementations and automation strategies.
 
-## Further Learning & Expert Perspectives
-
-
-Explore these expert-driven resources for deeper insight into Linux distributions, philosophy, and decision-making:
-
-- [Linux Distro Picker (Chris Titus Tech)](https://christitus.com/linux-distro-picker/)  
-  Interactive tool and guide for choosing a Linux distribution, with expert commentary.
-- [Linux Distro Families & Philosophy (The Linux Experiment)](https://www.youtube.com/watch?v=ZtqBQ68cfJc)  
-  Video breakdown of major Linux families, their philosophies, and use cases.
-- [Why Are There So Many Linux Distros? (DistroTube)](https://www.youtube.com/watch?v=ZL6gG1U6r6w)  
-  Explores the historical and philosophical reasons behind the diversity of Linux distributions.
-- [Unix Philosophy: Do One Thing Well (Brodie Robertson)](https://www.youtube.com/watch?v=1y8QhRZQ2vA)  
-  Modern take on the Unix philosophy and its impact on Linux development.
-- [How to Choose a Linux Distro (LearnLinuxTV)](https://www.youtube.com/watch?v=Zk6a3j3zOaQ)  
-  A practical video guide to evaluating and selecting Linux distributions for different needs.
-
-> 💡 These resources are curated for their direct relevance to Linux distribution selection, philosophy, and foundational decision-making.

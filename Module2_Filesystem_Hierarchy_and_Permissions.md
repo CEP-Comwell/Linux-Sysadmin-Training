@@ -1,29 +1,36 @@
+
 # Module 2: Filesystem Hierarchy & Permissions
+
+**📍 Module Progress: 2/15 Complete**  
+**⏱️ Estimated Time: 2-3 hours**  
+**📋 Prerequisites: Module 1 (Distributions & Philosophy)**  
+**🎯 Difficulty Level: ⭐⭐ (Beginner to Intermediate)**
 
 ## Table of Contents
 - [Overview](#overview)
 - [Learning Objectives](#learning-objectives)
 - [Topics](#topics)
-  - [2.1 Filesystem Hierarchy Standard (FHS)](#21-filesystem-hierarchy-standard-fhs)
-  - [2.2 Basic File and Directory Permissions](#22-basic-file-and-directory-permissions)
-  - [2.3 Special Permission Modes](#23-special-permission-modes)
-  - [2.4 Access Control Lists (ACLs)](#24-access-control-lists-acls)
-  - [2.5 File Attributes and Extended Attributes](#25-file-attributes-and-extended-attributes)
+  - [2.1 Filesystem Hierarchy Standard (FHS)](#21-filesystem-hierarchy-standard-fhs) 🟢
+  - [2.2 Basic File and Directory Permissions](#22-basic-file-and-directory-permissions) 🟢
+  - [2.3 Special Permission Modes](#23-special-permission-modes) 🟡
+  - [2.4 Access Control Lists (ACLs)](#24-access-control-lists-acls) 🟡
+  - [2.5 File Attributes and Extended Attributes](#25-file-attributes-and-extended-attributes) 🟡
 - [Essential Command Reference](#essential-command-reference)
 - [Practical Examples](#practical-examples)
-  - [Filesystem Navigation and Understanding](#filesystem-navigation-and-understanding)
-  - [Permission Management](#permission-management)
-  - [Advanced Access Control](#advanced-access-control)
-  - [Security Auditing and Troubleshooting](#security-auditing-and-troubleshooting)
+  - [Filesystem Navigation and Understanding](#filesystem-navigation-and-understanding) 🟢
+  - [Permission Management](#permission-management) 🟢
+  - [Advanced Access Control](#advanced-access-control) 🟡
+  - [Security Auditing and Troubleshooting](#security-auditing-and-troubleshooting) 🟡
 - [Lab Exercises](#lab-exercises)
-  - [Lab 1: Filesystem Hierarchy Exploration](#lab-1-filesystem-hierarchy-exploration)
-  - [Lab 2: Permission Management Mastery](#lab-2-permission-management-mastery)
-  - [Lab 3: Advanced Access Control Implementation](#lab-3-advanced-access-control-implementation)
-  - [Lab 4: Security Auditing and Remediation](#lab-4-security-auditing-and-remediation)
+  - [Lab 1: Filesystem Hierarchy Exploration](#lab-1-filesystem-hierarchy-exploration) 🟢
+  - [Lab 2: Permission Management Mastery](#lab-2-permission-management-mastery) 🟢
+  - [Lab 3: Advanced Access Control Implementation](#lab-3-advanced-access-control-implementation) 🟡
+  - [Lab 4: Security Auditing and Remediation](#lab-4-security-auditing-and-remediation) 🟡
 - [Best Practices Summary](#best-practices-summary)
 - [Troubleshooting Common Issues](#troubleshooting-common-issues)
 - [Assessment Criteria](#assessment-criteria)
 - [Next Steps](#next-steps)
+
 
 ## Overview
 This module breaks down the Filesystem Hierarchy Standard (FHS) and Linux permission systems to help you secure and organize your server infrastructure. Students will master the traditional Unix permission model, special permission modes, and modern access control mechanisms to implement robust security policies.
@@ -35,6 +42,9 @@ This module breaks down the Filesystem Hierarchy Standard (FHS) and Linux permis
 - Configure Access Control Lists (ACLs) for granular permission management
 - Audit and troubleshoot permission issues using modern tools
 
+[⬆️ Back to Top](#table-of-contents)
+
+
 ## Learning Objectives
 By the end of this module, you will be able to:
 
@@ -45,9 +55,11 @@ By the end of this module, you will be able to:
 5. **Audit Security**: Identify and remediate permission issues using `find`, `stat`, `getfacl`, and security scanning tools
 6. **Apply Security Principles**: Implement least privilege and defense-in-depth strategies for filesystem security
 
+[⬆️ Back to Top](#table-of-contents)
+
 ## Topics
 
-### 2.1 Filesystem Hierarchy Standard (FHS)
+### 2.1 Filesystem Hierarchy Standard (FHS) 🟢
 - **Root Directory Structure**: Understanding `/`, `/bin`, `/sbin`, `/lib`, `/lib64`
 - **Configuration and Data**: `/etc` for system configuration, `/var` for variable data
 - **User and Application Areas**: `/home`, `/usr`, `/opt`, `/srv` organization
@@ -55,28 +67,28 @@ By the end of this module, you will be able to:
 - **Mount Points and Storage**: `/mnt`, `/media`, `/dev` device management
 - **Distribution-Specific Variations**: How different distributions modify FHS
 
-### 2.2 Basic File and Directory Permissions
+### 2.2 Basic File and Directory Permissions 🟢
 - **Permission Bits**: Read (r), Write (w), Execute (x) for files and directories
 - **Ownership Model**: User (owner), Group, Others permission structure
 - **Numeric and Symbolic Notation**: Octal values and symbolic representation
 - **Default Permissions**: Understanding umask and permission inheritance
 - **Directory vs File Permissions**: Different behaviors for directories and files
 
-### 2.3 Special Permission Modes
+### 2.3 Special Permission Modes 🟡
 - **Set User ID (SUID)**: Execution with owner privileges
 - **Set Group ID (SGID)**: File inheritance and directory group ownership
 - **Sticky Bit**: Directory protection and shared workspace security
 - **Security Implications**: Understanding attack vectors and proper usage
 - **Common SUID/SGID Programs**: System utilities and security considerations
 
-### 2.4 Access Control Lists (ACLs)
+### 2.4 Access Control Lists (ACLs) 🟡
 - **POSIX ACL Implementation**: Extended permissions beyond basic owner/group/other
 - **ACL Types**: Access ACLs vs Default ACLs for directories
 - **Granular Control**: User-specific and group-specific permissions
 - **ACL Inheritance**: How directory ACLs affect new files and subdirectories
 - **Backup and Migration**: Preserving ACLs during system operations
 
-### 2.5 File Attributes and Extended Attributes
+### 2.5 File Attributes and Extended Attributes 🟡
 - **File Attributes**: Immutable, append-only, and other protective attributes
 - **Extended Attributes**: User-defined metadata and system attributes
 - **SELinux/AppArmor Context**: Security context as extended attributes
@@ -84,6 +96,8 @@ By the end of this module, you will be able to:
 - **Security Applications**: Using attributes for system hardening
 
 ## Essential Command Reference
+
+[⬆️ Back to Top](#table-of-contents)
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -103,7 +117,9 @@ By the end of this module, you will be able to:
 
 ## Practical Examples
 
-### Filesystem Navigation and Understanding
+[⬆️ Back to Top](#table-of-contents)
+
+### Filesystem Navigation and Understanding 🟢
 
 #### Exploring the Filesystem Hierarchy
 ```bash
@@ -287,7 +303,7 @@ else
 fi
 ```
 
-### Permission Management
+### Permission Management 🟢
 
 #### Basic Permission Operations
 ```bash
@@ -444,7 +460,7 @@ case "${1:-help}" in
 esac
 ```
 
-### Advanced Access Control
+### Advanced Access Control 🟡
 
 #### SUID, SGID, and Sticky Bit Implementation
 ```bash
@@ -649,7 +665,7 @@ case "${1:-help}" in
 esac
 ```
 
-### Security Auditing and Troubleshooting
+### Security Auditing and Troubleshooting 🟡
 
 #### Permission Audit Script
 ```bash
@@ -780,7 +796,9 @@ echo "Full report saved to: $REPORT_FILE"
 
 ## Lab Exercises
 
-### Lab 1: Filesystem Hierarchy Exploration
+[⬆️ Back to Top](#table-of-contents)
+
+### Lab 1: Filesystem Hierarchy Exploration 🟢
 **Objective:** Navigate and understand the Linux filesystem hierarchy and directory purposes.
 
 **Tasks:**
@@ -795,7 +813,7 @@ echo "Full report saved to: $REPORT_FILE"
 - Disk usage analysis report
 - Custom navigation script or alias collection
 
-### Lab 2: Permission Management Mastery
+### Lab 2: Permission Management Mastery 🟢
 **Objective:** Master basic and advanced permission management techniques.
 
 **Tasks:**
@@ -810,7 +828,7 @@ echo "Full report saved to: $REPORT_FILE"
 - Troubleshooting documentation
 - Permission management scripts
 
-### Lab 3: Advanced Access Control Implementation
+### Lab 3: Advanced Access Control Implementation 🟡
 **Objective:** Implement granular access control using ACLs and special attributes.
 
 **Tasks:**
@@ -825,7 +843,7 @@ echo "Full report saved to: $REPORT_FILE"
 - Backup/restore procedures
 - Security testing results
 
-### Lab 4: Security Auditing and Remediation
+### Lab 4: Security Auditing and Remediation 🟡
 **Objective:** Audit filesystem security and remediate identified issues.
 
 **Tasks:**
@@ -842,6 +860,8 @@ echo "Full report saved to: $REPORT_FILE"
 - Security baseline documentation
 
 ## Best Practices Summary
+
+[⬆️ Back to Top](#table-of-contents)
 
 ### Filesystem Security Guidelines
 
@@ -898,6 +918,8 @@ setfacl -m d:g:team:rwx /shared/temp
 
 ## Troubleshooting Common Issues
 
+[⬆️ Back to Top](#table-of-contents)
+
 ### Permission Denied Errors
 ```bash
 # Diagnose permission issues
@@ -947,6 +969,8 @@ rsync -a source/ destination/  # Archive mode preserves ownership
 
 ## Assessment Criteria
 
+[⬆️ Back to Top](#table-of-contents)
+
 Students will be evaluated based on:
 
 | Criteria | Proficient (4) | Developing (3) | Beginning (2) | Inadequate (1) |
@@ -957,6 +981,8 @@ Students will be evaluated based on:
 | **Troubleshooting Skills** | Quickly diagnoses and resolves complex permission issues | Good troubleshooting with systematic approach | Basic problem-solving with assistance | Difficulty identifying or resolving issues |
 
 ## Next Steps
+
+[⬆️ Back to Top](#table-of-contents)
 
 After mastering filesystem hierarchy and permissions, proceed to:
 
