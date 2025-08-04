@@ -129,10 +129,10 @@ By the end of this module, you will be able to:
 [⬆️ Back to Top](#table-of-contents)
 
 ### Basic User and Group Management
-[Related Commands/Topics: useradd, usermod, userdel, passwd, chage, groupadd, groupdel, gpasswd, groups, getent, id] 🟢
+[Related Commands/Topics: User Management Commands](#user-management-commands) 🟢
 
 #### Creating and Managing Users
-[Related Commands/Topics: useradd, passwd, usermod, chage, id, getent, groups, finger, userdel] 🟢
+[Related Commands/Topics: User Management Commands](#user-management-commands) 🟢
 ```bash
 # Create a new user with home directory
 sudo useradd -m -s /bin/bash john
@@ -163,7 +163,7 @@ sudo userdel -r john        # Remove home directory
 ```
 
 #### Basic Group Management
-[Related Commands/Topics: groupadd, groupdel, gpasswd, usermod, getent, grep] 🟢
+[Related Commands/Topics: Group Management Commands](#group-management-commands) 🟢
 ```bash
 # Create new groups
 sudo groupadd developers
@@ -185,7 +185,7 @@ sudo groupdel developers
 ```
 
 ### Basic Sudo Configuration
-[Related Commands/Topics: sudo, visudo, sudoers, ALL, NOPASSWD] 🟡
+[Related Commands/Topics: Authentication and Access Commands](#authentication-and-access-commands) 🟡
 
 #### Understanding Sudoers File
 ```bash
