@@ -77,7 +77,7 @@ By the end of this module, you will be able to:
 - Understanding process hierarchy
 
 **📖 Related Commands:** [Process Monitoring Commands](#process-monitoring-commands)
-
+#
 ### 🟡 5.2 Process Monitoring (Intermediate)
 - Using `ps` command to list processes
 - Real-time monitoring with `top` and `htop`
