@@ -6,7 +6,7 @@
 - [Topics](#topics)
   - [4.1 Package Management Fundamentals](#41-package-management-fundamentals)
   - [4.2 Debian/Ubuntu Package Management (APT)](#42-debianubuntu-package-management-apt)
-  - [4.3 Red Hat/CentOS Package Management (YUM/DNF)](#43-red-hatcentos-package-management-yumdnf)
+  - [4.3 Red Hat/CentOS Package Management (YUMDNF)](#43-red-hatcentos-package-management-yumdnf)
   - [4.4 SUSE Package Management (Zypper)](#44-suse-package-management-zypper)
   - [4.5 Arch Linux Package Management (Pacman)](#45-arch-linux-package-management-pacman)
   - [4.6 Universal Package Managers](#46-universal-package-managers)
@@ -30,6 +30,7 @@
 - [Next Steps](#next-steps)
 
 ## Overview
+[⬆️ Back to Top](#table-of-contents)
 This module provides comprehensive coverage of package management across different Linux distributions. Students will master the installation, updating, removal, and management of software packages using various package managers including APT, YUM/DNF, Zypper, Pacman, and modern universal package systems. The focus is on practical, enterprise-ready package management strategies that ensure system security, stability, and maintainability.
 
 **Key Learning Outcomes:**
@@ -41,6 +42,7 @@ This module provides comprehensive coverage of package management across differe
 - Integrate modern containerized package solutions into existing workflows
 
 ## Learning Objectives
+[⬆️ Back to Top](#table-of-contents)
 By the end of this module, you will be able to:
 
 1. **Understand Package Ecosystems**: Navigate different package management systems and their philosophies
@@ -53,6 +55,7 @@ By the end of this module, you will be able to:
 8. **Integrate Modern Solutions**: Use Snap, Flatpak, and AppImage effectively
 
 ## Topics
+[⬆️ Back to Top](#table-of-contents)
 
 ### 4.1 Package Management Fundamentals
 - **Package Concepts**: Packages, dependencies, conflicts, and provides relationships
@@ -70,7 +73,7 @@ By the end of this module, you will be able to:
 - **Troubleshooting**: Broken packages, dependency issues, and recovery
 - **Security Features**: Package verification, secure APT, and vulnerability scanning
 
-### 4.3 Red Hat/CentOS Package Management (YUM/DNF)
+### 4.3 Red Hat/CentOS Package Management (YUMDNF)
 - **YUM vs DNF**: Legacy YUM and modern DNF comparison and migration
 - **Package Operations**: Installation, removal, updating, and querying
 - **Repository Management**: .repo files, GPG keys, and repository priorities
@@ -127,6 +130,7 @@ By the end of this module, you will be able to:
 - **Performance Optimization**: Caching strategies, parallel operations, and efficiency
 
 ## Essential Command Reference
+[⬆️ Back to Top](#table-of-contents)
 
 | Distribution | Package Manager | Install | Remove | Update | Search | List Installed |
 |--------------|----------------|---------|---------|---------|---------|----------------|
@@ -147,9 +151,12 @@ By the end of this module, you will be able to:
 | **Fix broken** | `apt --fix-broken install` | `dnf distro-sync` | `zypper verify` | `pacman -Dk` |
 
 ## Practical Examples
+[⬆️ Back to Top](#table-of-contents)
 ### Distribution-Specific Package Management
+[Related Commands/Topics: apt, dnf, yum, zypper, pacman, snap, flatpak, appimage] 🟢
 
 #### Advanced APT Operations (Debian/Ubuntu)
+[Related Commands/Topics: apt, apt-get, aptitude, dpkg, apt-mark, apt-cache] 🟢
 ```bash
 # Comprehensive APT workflow
 sudo apt update                              # Update package lists
@@ -189,6 +196,7 @@ sudo apt autoclean                          # Clear outdated cached packages
 ```
 
 #### Comprehensive DNF/YUM Operations (Red Hat/CentOS)
+[Related Commands/Topics: dnf, yum, rpm, dnf-plugins, dnf config-manager] 🟡
 ```bash
 # Modern DNF operations (preferred on newer systems)
 sudo dnf update                             # Update all packages
@@ -223,6 +231,7 @@ sudo dnf config-manager --enable epel       # Enable repository
 ```
 
 #### Zypper Operations (SUSE)
+[Related Commands/Topics: zypper, rpm, yast, patterns, repos] 🟡
 ```bash
 # Basic zypper operations
 sudo zypper refresh                         # Refresh repositories
@@ -247,6 +256,7 @@ zypper services                             # List services
 ```
 
 #### Pacman Operations (Arch Linux)
+[Related Commands/Topics: pacman, yay, paru, makepkg, PKGBUILD, pacman.conf] 🟡
 ```bash
 # System maintenance
 sudo pacman -Syu                            # Update system (sync, refresh, upgrade)
@@ -275,6 +285,7 @@ yay -Yc                                     # Clean unneeded dependencies
 ```
 
 ### Repository Configuration and Management
+[Related Commands/Topics: apt-add-repository, add-apt-repository, apt-key, dnf config-manager, zypper addrepo, repo files] 🟡
 
 #### APT Repository Management
 ```bash
@@ -451,6 +462,7 @@ esac
 ```
 
 ### Advanced Package Operations
+[Related Commands/Topics: apt depends, dnf deplist, pacman -Si, rpm -qf, apt-file, dnf provides] 🟡
 
 #### Package Dependency Analysis
 ```bash
@@ -567,6 +579,7 @@ esac
 ```
 
 #### Source Compilation Management
+[Related Commands/Topics: make, cmake, meson, checkinstall, build-essential, base-devel] 🟡
 ```bash
 #!/bin/bash
 # source-compiler.sh - Automated source compilation and packaging
@@ -702,6 +715,7 @@ esac
 ```
 
 ### Automation and Maintenance Scripts
+[Related Commands/Topics: cron, unattended-upgrades, dnf-automatic, pacman -Syu, dpkg, rpm, compliance] 🟡
 
 #### Comprehensive Package Maintenance
 ```bash
@@ -879,6 +893,7 @@ main "$@"
 ```
 
 ## Lab Exercises
+[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: Multi-Distribution Package Management
 **Objective:** Master package management across different Linux distributions.
@@ -941,6 +956,7 @@ main "$@"
 - Compliance monitoring system
 
 ## Best Practices Summary
+[⬆️ Back to Top](#table-of-contents)
 
 ### Package Management Security
 
@@ -987,6 +1003,7 @@ main "$@"
    - Implement configuration management integration
 
 ## Troubleshooting Common Issues
+[⬆️ Back to Top](#table-of-contents)
 
 ### Dependency Conflicts
 ```bash
@@ -1034,6 +1051,7 @@ sudo pacman-db-upgrade                # Upgrade database format
 ```
 
 ## Assessment Criteria
+[⬆️ Back to Top](#table-of-contents)
 
 Students will be evaluated on their ability to:
 
@@ -1045,6 +1063,7 @@ Students will be evaluated on their ability to:
 | **Troubleshooting Ability** | Efficiently resolves complex package issues | Good problem-solving with systematic approach | Basic troubleshooting with guidance | Struggles with problem resolution |
 
 ## Next Steps
+[⬆️ Back to Top](#table-of-contents)
 
 After mastering package management, proceed to:
 

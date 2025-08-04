@@ -30,6 +30,7 @@
 - [Next Steps](#next-steps)
 
 ## Overview
+[⬆️ Back to Top](#table-of-contents)
 This module covers essential command-line skills that every Linux system administrator needs. Students will master filesystem navigation, file manipulation, text processing, and shell customization to build a foundation for efficient system administration. The focus is on practical, real-world command-line operations that form the backbone of Linux administration workflows.
 
 **Key Learning Outcomes:**
@@ -42,6 +43,7 @@ This module covers essential command-line skills that every Linux system adminis
 - Automate repetitive tasks with aliases, functions, and scripts
 
 ## Learning Objectives
+[⬆️ Back to Top](#table-of-contents)
 By the end of this module, you will be able to:
 
 1. **Master Shell Environment**: Navigate shell types, command structure, and environment configuration
@@ -54,6 +56,7 @@ By the end of this module, you will be able to:
 8. **Productivity Optimization**: Implement keyboard shortcuts, history management, and automation techniques
 
 ## Topics
+[⬆️ Back to Top](#table-of-contents)
 
 ### 3.1 Shell Basics and Environment
 - **Shell Types and Features**: bash, zsh, dash, and shell compatibility
@@ -124,6 +127,7 @@ By the end of this module, you will be able to:
 - **Compression Strategy**: Choosing appropriate compression for different scenarios
 
 ## Essential Command Reference
+[⬆️ Back to Top](#table-of-contents)
 
 | Command | Description | Common Options | Example |
 |---------|-------------|----------------|---------|
@@ -147,16 +151,19 @@ By the end of this module, you will be able to:
 | `tail` | Show file end | `-n`, `-f` | `tail -f /var/log/syslog` |
 | `sudo` | Execute as another user | `-u`, `-i`, `-s` | `sudo -u www-data whoami` |
 
-## Practical Examples
+[Related Commands/Topics: ls, cd, pwd, cp, mv, rm, find, grep, awk, sed, sort, uniq, xargs, sudo] 🟢
+[⬆️ Back to Top](#table-of-contents)
 - Pipes: `|`
 - Command chaining: `;`, `&&`, `||`
 
-### 3.6 File Searching
+-### 3.6 File Searching
+[Related Commands/Topics: find, locate, which, whereis, type, grep] 🟢
 - Finding files: `find`
 - Locating commands: `which`, `whereis`, `locate`
 - Pattern matching with wildcards
 
-### 3.6.1 Privilege Escalation and User Switching
+-### 3.6.1 Privilege Escalation and User Switching
+[Related Commands/Topics: sudo, su, usermod, groups] 🟡
 The `sudo` (substitute user do) command allows authorized users to execute commands as another user, typically root, without knowing their password.
 
 #### Basic sudo Usage
@@ -231,7 +238,7 @@ sudo -u postgres createdb newdatabase
 - Compression tools: `gzip`, `gunzip`, `zip`, `unzip`
 - Working with compressed archives
 
-### Navigation and File Management
+[Related Commands/Topics: cd, ls, pwd, mkdir, rm, mv, cp, tree] 🟢
 
 #### Advanced File Operations
 ```bash
@@ -376,7 +383,7 @@ analyze_file() {
 analyze_file "$1"
 ```
 
-### Text Processing Pipelines
+[Related Commands/Topics: grep, awk, sed, sort, uniq, cut, paste, column, xargs] 🟡
 
 #### Advanced Text Processing Chains
 ```bash
@@ -475,7 +482,7 @@ END {
 }' /var/log/application.log
 ```
 
-### Shell Customization and Functions
+[Related Commands/Topics: bashrc, profile, alias, function, PS1, history, export] 🟡
 
 #### Advanced Shell Configuration
 ```bash
@@ -720,7 +727,7 @@ alias temperature='sensors'
 alias processes='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head'
 ```
 
-### Advanced Command Combinations
+[Related Commands/Topics: watch, ps, top, ss, netstat, du, find, locate, awk, grep] 🟡
 
 #### System Monitoring One-Liners
 ```bash
@@ -838,6 +845,7 @@ head -5
 ```
 
 ## Lab Exercises
+[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: File System Navigation and Management
 **Objective:** Master efficient filesystem navigation and file operations.
@@ -900,6 +908,7 @@ head -5
 - Monitoring and alerting implementations
 
 ## Best Practices Summary
+[⬆️ Back to Top](#table-of-contents)
 
 ### Command-Line Efficiency Guidelines
 
@@ -943,6 +952,7 @@ head -5
    - Avoid processing untrusted data with shell expansion
 
 ## Troubleshooting Common Issues
+[⬆️ Back to Top](#table-of-contents)
 
 ### Command Not Found
 ```bash
@@ -993,6 +1003,7 @@ command3 < temp2.txt
 ```
 
 ## Assessment Criteria
+[⬆️ Back to Top](#table-of-contents)
 
 Students will be evaluated on their ability to:
 
@@ -1004,6 +1015,7 @@ Students will be evaluated on their ability to:
 | **Problem Solving** | Efficiently solves complex problems using command-line tools | Good problem-solving with systematic approach | Basic problem-solving with guidance | Struggles to approach problems systematically |
 
 ## Next Steps
+[⬆️ Back to Top](#table-of-contents)
 
 After mastering command-line essentials, proceed to:
 
