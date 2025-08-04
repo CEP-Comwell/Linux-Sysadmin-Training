@@ -143,6 +143,7 @@ By the end of this module, you will be able to:
 update-rc.d apache2 enable
 chkconfig apache2 on  # On RedHat systems
 ```
+<button onclick="navigator.clipboard.writeText('/etc/init.d/apache2 start\n/etc/init.d/apache2 stop\n/etc/init.d/apache2 status\n\n# Enable at boot (complex)\nupdate-rc.d apache2 enable\nchkconfig apache2 on  # On RedHat systems')">📋 Copy</button>
 
 **Problems with init.d:**
 - Sequential startup (slow boot times)
@@ -162,6 +163,7 @@ systemctl status apache2
 # Enable at boot (simple)
 systemctl enable apache2
 ```
+<button onclick="navigator.clipboard.writeText('systemctl start apache2\nsystemctl stop apache2\nsystemctl status apache2\n\n# Enable at boot (simple)\nsystemctl enable apache2')">📋 Copy</button>
 
 **Benefits of systemd:**
 - Parallel startup (faster boots)
@@ -192,6 +194,7 @@ systemctl enable service   # Start at boot
 systemctl disable service  # Don't start at boot
 systemctl is-enabled service  # Check boot setting
 ```
+<button onclick="navigator.clipboard.writeText('# Current state commands\nsystemctl start service    # Start now\nsystemctl stop service     # Stop now\nsystemctl restart service  # Restart now\nsystemctl status service   # Check current state\n\n# Boot configuration commands\nsystemctl enable service   # Start at boot\nsystemctl disable service  # Don\'t start at boot\nsystemctl is-enabled service  # Check boot setting')">📋 Copy</button>
 
 #### Complete Service State Matrix
 
@@ -208,6 +211,7 @@ systemctl is-enabled service  # Check boot setting
 # Check comprehensive service status
 systemctl status nginx
 ```
+<button onclick="navigator.clipboard.writeText('systemctl status nginx')">📋 Copy</button>
 
 **Output Explanation:**
 ```
@@ -251,6 +255,7 @@ top
 pgrep firefox
 ps aux | grep firefox
 ```
+<button onclick="navigator.clipboard.writeText('# Check what\'s using the most CPU\nps aux --sort=-%cpu | head -5\n\n# Monitor in real-time\ntop\n\n# Find a specific process\npgrep firefox\nps aux | grep firefox')">📋 Copy</button>
 
 #### Example 2: Checking System Resources
 ```bash
@@ -262,6 +267,7 @@ df -h
 # Find memory-hungry processes
 ps aux --sort=-%mem | head -5
 ```
+<button onclick="navigator.clipboard.writeText('# Quick system overview\nuptime\nfree -h\ndf -h\n\n# Find memory-hungry processes\nps aux --sort=-%mem | head -5')">📋 Copy</button>
 
 #### Example 3: Background Job Management
 ```bash
@@ -280,6 +286,7 @@ bg %1
 # Kill the background job
 kill %1
 ```
+<button onclick="navigator.clipboard.writeText('# Start a long process in background\nping google.com > /tmp/ping.log &\n\n# Check background jobs\njobs\n\n# Bring job to foreground\nfg %1\n\n# Put it back in background (Ctrl+Z, then bg)\nbg %1\n\n# Kill the background job\nkill %1')">📋 Copy</button>
 
 ### Understanding Background Processes and SSH
 
@@ -305,6 +312,7 @@ ps aux | grep rsync
 # Monitor progress
 tail -f nohup.out
 ```
+<button onclick="navigator.clipboard.writeText('# WRONG: This will stop if SSH disconnects\nrsync -av /large/directory/ user@remote:/backup/\n\n# BETTER: Run in background\nrsync -av /large/directory/ user@remote:/backup/ &\n\n# BEST: Use nohup for long-running tasks\nnohup rsync -av /large/directory/ user@remote:/backup/ &\n\n# Check the process is running\njobs\nps aux | grep rsync\n\n# Monitor progress\ntail -f nohup.out')">📋 Copy</button>
 
 #### Example 5: Long-Running Tasks on Remote Servers
 ```bash
@@ -323,6 +331,7 @@ jobs -l
 # Monitor a specific process
 tail -f /tmp/update.log
 ```
+<button onclick="navigator.clipboard.writeText('# Starting a database backup (could take hours)\nnohup mysqldump --all-databases > /backup/full_backup.sql &\n\n# Starting a system update\nnohup apt update && apt upgrade -y > /tmp/update.log 2>&1 &\n\n# Running a log analysis script\nnohup ./analyze_logs.sh > /tmp/analysis.log &\n\n# Check all background jobs\njobs -l\n\n# Monitor a specific process\ntail -f /tmp/update.log')">📋 Copy</button>
 
 #### Example 6: Using Screen/Tmux for Advanced Session Management
 ```bash
@@ -344,6 +353,7 @@ screen -r backup_session
 # List all screen sessions
 screen -ls
 ```
+<button onclick="navigator.clipboard.writeText('# Install screen (if not available)\nsudo apt install screen\n\n# Start a screen session\nscreen -S backup_session\n\n# Run your long command\nrsync -av /data/ user@backup-server:/backups/\n\n# Detach from screen (Ctrl+A, then D)\n# Your process continues running even if SSH disconnects\n\n# Later, reconnect to the session\nscreen -r backup_session\n\n# List all screen sessions\nscreen -ls')">📋 Copy</button>
 
 #### Example 7: Process Management Best Practices for SSH
 ```bash
@@ -363,6 +373,7 @@ ps -p $(cat /tmp/last_job_pid.txt)
 # Properly terminate when done
 kill $(cat /tmp/last_job_pid.txt)
 ```
+<button onclick="navigator.clipboard.writeText('# Always check what\'s running before starting new processes\nps aux | grep your_username\n\n# Start critical processes with nohup\nnohup ./critical_script.sh &\n\n# Keep track of background jobs\njobs\necho $! > /tmp/last_job_pid.txt  # Save PID of last background job\n\n# Check if process is still running\nps -p $(cat /tmp/last_job_pid.txt)\n\n# Properly terminate when done\nkill $(cat /tmp/last_job_pid.txt)')">📋 Copy</button>
 
 ### Service Management Examples
 
@@ -392,6 +403,7 @@ sudo systemctl stop nginx       # Stop now
 sudo systemctl disable nginx    # Disable from boot
 systemctl status nginx          # Shows inactive and disabled
 ```
+<button onclick="navigator.clipboard.writeText('# Check current state and boot configuration\nsystemctl status nginx\nsystemctl is-enabled nginx\n\n# Scenario 1: Start service now and enable for boot\nsudo systemctl start nginx      # Start immediately\nsudo systemctl enable nginx     # Enable for boot\nsystemctl status nginx          # Verify both settings\n\n# Scenario 2: Stop service but keep boot setting\nsudo systemctl stop nginx       # Stop now\nsystemctl is-enabled nginx      # Still enabled for boot\nsystemctl status nginx          # Shows inactive but enabled\n\n# Scenario 3: Disable from boot but keep running\nsudo systemctl start nginx      # Make sure it\'s running\nsudo systemctl disable nginx    # Disable from boot\nsystemctl status nginx          # Shows active but disabled\n\n# Scenario 4: Complete shutdown\nsudo systemctl stop nginx       # Stop now\nsudo systemctl disable nginx    # Disable from boot\nsystemctl status nginx          # Shows inactive and disabled')">📋 Copy</button>
 
 #### Example 2: Understanding Service Dependencies
 ```bash
@@ -545,18 +557,31 @@ ps aux --sort=-%cpu | head -10
 # Sort processes by memory usage
 ps aux --sort=-%mem | head -10
 ```
+<button onclick="navigator.clipboard.writeText('# View all processes\nps aux\n\n# Find your own processes\nps ux\n\n# Find Firefox processes\npgrep firefox\nps aux | grep firefox\n\n# Monitor system in real-time\ntop\nhtop\n\n# Sort processes by CPU usage\nps aux --sort=-%cpu | head -10\n\n# Sort processes by memory usage\nps aux --sort=-%mem | head -10')">📋 Copy</button>
 
 **Deliverables:**
 - Screenshots of `ps`, `top`, and `htop` output
 - List of the top 5 CPU and memory consuming processes
 - Documentation of what each process does
 
-**Common Error Codes to Research:**
+<details>
+<summary>🔍 <strong>Error Codes to Research</strong></summary>
+
+**Common Error Codes:**
 - **Exit Code 1**: General process errors (command not found, permission denied)
 - **Exit Code 127**: Command not found in PATH
 - **Exit Code 130**: Process terminated by Ctrl+C (SIGINT)
 - **ENOENT**: No such file or directory when looking for processes
 - **Permission denied**: Trying to view processes you don't own without sudo
+
+**Lab-Specific Error Scenarios:**
+- **"htop: command not found"**: Package not installed - research `apt install htop`
+- **"ps: user does not exist"**: Invalid username in `ps -u baduser`
+- **"top: failed tty get attr"**: Permission issue when running top as different user
+- **Process shows `<defunct>`**: Zombie process - research parent process cleanup
+- **"Cannot allocate memory"**: System resource exhaustion - research system limits
+
+</details>
 
 ### Lab 2: Process Control and SSH Management
 **Objective:** Learn to control processes safely, especially in SSH environments.
@@ -611,6 +636,7 @@ ping google.com
 # Reconnect: screen -r test_session
 # List sessions: screen -ls
 ```
+<button onclick="navigator.clipboard.writeText('# Basic background job control\nsleep 300 &\njobs\nfg %1\n# Press Ctrl+Z to suspend\nbg %1\nkill %1\n\n# SSH-safe process management\nnohup sleep 600 &\necho $! > sleep.pid  # Save the PID\n\n# Verify it\'s running\nps -p $(cat sleep.pid)\njobs  # May not show nohup processes\n\n# Long-running task simulation\nnohup ping -c 1000 google.com > ping.log &\n\n# Monitor the task\ntail -f ping.log\n# Press Ctrl+C to stop monitoring (not the process)\n\n# Check process status\nps aux | grep ping\npgrep ping\n\n# Clean up\nkill $(cat sleep.pid)\npkill ping\n\n# Advanced: Using screen (if available)\nscreen -S test_session\n# Inside screen: run a long command\nping google.com\n# Detach: Ctrl+A, then D\n# Reconnect: screen -r test_session\n# List sessions: screen -ls')">📋 Copy</button>
 
 **Deliverables:**
 - Command history showing job control
@@ -620,7 +646,10 @@ ping google.com
 - **Examples of finding and managing detached processes**
 - **Screen/tmux session management examples**
 
-**Common Error Codes to Research:**
+<details>
+<summary>🔍 <strong>Error Codes to Research</strong></summary>
+
+**Common Error Codes:**
 - **SIGHUP (Signal 1)**: Process terminated when SSH connection drops (without nohup)
 - **Exit Code 129**: Process terminated by SIGHUP signal
 - **"Broken pipe"**: Output redirected to a terminal that closed
@@ -630,6 +659,20 @@ ping google.com
 - **"Operation not permitted"**: Trying to kill processes you don't own
 - **"screen: command not found"**: Screen not installed (apt install screen)
 - **"There is no screen to be resumed"**: No detached screen sessions exist
+
+**SSH + rsync + nohup Error Scenarios:**
+- **"rsync: connection unexpectedly closed"**: Network drop during transfer - research connection stability
+- **"rsync error: error in rsync protocol data stream (code 12)"**: SSH disconnection mid-transfer
+- **"rsync: writefd_unbuffered failed to write: Broken pipe (32)"**: SSH session terminated abruptly
+- **"rsync terminated by signal 1 (SIGHUP)"**: Process killed by SSH disconnect (needed nohup)
+- **"Permission denied (publickey)"**: SSH key authentication failure - research ssh-copy-id
+- **"Host key verification failed"**: SSH host key changed - research ssh-keygen -R
+- **"nohup: ignoring input and appending output to 'nohup.out'"**: Normal nohup behavior (not an error)
+- **"rsync: failed to connect to host: Connection refused"**: SSH service not running or port blocked
+- **Background job [1] terminated**: Process died after SSH disconnect (forgot nohup)
+- **"Cannot create directory: Permission denied"**: Remote directory permissions issue
+
+</details>
 
 ### Lab 3: Mastering Systemd Service Management
 **Objective:** Understand systemd service states, troubleshooting, and the difference between current state and boot configuration.
@@ -672,6 +715,7 @@ systemctl status $SERVICE  # Note: inactive + disabled
 sudo systemctl enable --now $SERVICE  # Enable and start
 sudo systemctl disable --now $SERVICE # Disable and stop
 ```
+<button onclick="navigator.clipboard.writeText('# Choose a service to work with (e.g., nginx, apache2, or ssh)\nSERVICE=\"nginx\"  # Replace with available service\n\n# Check initial state\nsystemctl status $SERVICE\nsystemctl is-enabled $SERVICE\n\n# Practice state combinations\n# 1. Running + Enabled (production ready)\nsudo systemctl start $SERVICE\nsudo systemctl enable $SERVICE\nsystemctl status $SERVICE  # Note: active + enabled\n\n# 2. Running + Disabled (temporary test)\nsudo systemctl disable $SERVICE\nsystemctl status $SERVICE  # Note: active + disabled\n\n# 3. Stopped + Enabled (will start at boot)\nsudo systemctl stop $SERVICE\nsystemctl status $SERVICE  # Note: inactive + enabled\n\n# 4. Stopped + Disabled (completely off)\nsudo systemctl disable $SERVICE\nsystemctl status $SERVICE  # Note: inactive + disabled\n\n# Convenient commands\nsudo systemctl enable --now $SERVICE  # Enable and start\nsudo systemctl disable --now $SERVICE # Disable and stop')">📋 Copy</button>
 
 **Part B: Reading Service Status**
 ```bash
@@ -692,6 +736,7 @@ systemctl is-active nginx    # Just active state
 systemctl is-enabled nginx   # Just enabled state
 systemctl is-failed nginx    # Failed status
 ```
+<button onclick="navigator.clipboard.writeText('# Detailed status analysis\nsystemctl status nginx --no-pager -l\n\n# Identify these elements in the output:\n# - Service description\n# - Loaded status and file location\n# - Active status and uptime\n# - Main process ID\n# - Memory usage\n# - Recent log entries\n\n# Check specific properties\nsystemctl show nginx --property=ActiveState,LoadState,UnitFileState\nsystemctl is-active nginx    # Just active state\nsystemctl is-enabled nginx   # Just enabled state\nsystemctl is-failed nginx    # Failed status')">📋 Copy</button>
 
 **Part C: Troubleshooting Practice**
 ```bash
@@ -710,6 +755,7 @@ journalctl -u nginx --since "1 hour ago" --until "30 minutes ago"
 journalctl -u nginx -p err  # Error level only
 journalctl -u nginx -f      # Follow mode
 ```
+<button onclick="navigator.clipboard.writeText('# List all services by state\nsystemctl list-units --type=service --state=active\nsystemctl list-units --type=service --state=failed\nsystemctl list-units --type=service --state=inactive\n\n# Check dependencies\nsystemctl list-dependencies nginx\nsystemctl list-dependencies nginx --reverse\n\n# Log analysis\njournalctl -u nginx --since \"today\"\njournalctl -u nginx --since \"1 hour ago\" --until \"30 minutes ago\"\njournalctl -u nginx -p err  # Error level only\njournalctl -u nginx -f      # Follow mode')">📋 Copy</button>
 
 **Part D: Simulated Troubleshooting**
 ```bash
@@ -734,6 +780,7 @@ ss -tulpn | grep :80
 sudo systemctl start nginx
 systemctl status nginx
 ```
+<button onclick="navigator.clipboard.writeText('# If nginx is available, try this troubleshooting scenario:\n\n# 1. Stop nginx and try to start another web server on port 80\nsudo systemctl stop nginx\nsudo python3 -m http.server 80  # This should fail or conflict\n\n# 2. In another terminal, try to start nginx\nsudo systemctl start nginx\n\n# 3. Check what happened\nsystemctl status nginx\njournalctl -u nginx --since \"5 minutes ago\"\n\n# 4. Find the port conflict\nss -tulpn | grep :80\n\n# 5. Resolve and verify\n# Stop the python server (Ctrl+C)\nsudo systemctl start nginx\nsystemctl status nginx')">📋 Copy</button>
 
 **Deliverables:**
 - Examples showing all four state combinations (active/inactive + enabled/disabled)
@@ -743,7 +790,10 @@ systemctl status nginx
 - **Documentation of a complete troubleshooting scenario**
 - Summary of when to use start/stop vs enable/disable
 
-**Common Error Codes to Research:**
+<details>
+<summary>🔍 <strong>Error Codes to Research</strong></summary>
+
+**Common Error Codes:**
 - **Exit Code 1 (systemctl)**: General service start failure
 - **Exit Code 2**: Invalid service name or command syntax
 - **Exit Code 3**: Service not found (unit file doesn't exist)
@@ -757,6 +807,20 @@ systemctl status nginx
 - **"Dependency failed"**: Required service dependencies aren't running
 - **"Connection refused"**: Service running but not accepting connections
 - **"masked" status**: Service is completely disabled (systemctl unmask needed)
+
+**Real Service Failure Scenarios:**
+- **nginx: "nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address already in use)"**: Port 80 taken by apache2
+- **apache2: "Job for apache2.service failed because the control process exited with error code"**: Config syntax error
+- **mysql: "Unit mysql.service could not be found"**: Wrong service name (try mysql.service vs mysqld.service)
+- **sshd: "sshd: no hostkeys available -- exiting"**: Missing SSH host keys after fresh install
+- **"Failed to reload daemon: Access denied"**: Need sudo for systemctl daemon-reload
+- **"systemctl: command not found"**: Not using systemd (older system with init.d)
+- **"Service has no installation config"**: Service can't be enabled (no [Install] section)
+- **"A dependency job for X failed"**: Check systemctl list-dependencies --failed
+- **nginx: "configuration file test failed"**: Run nginx -t to check config syntax
+- **"Timeout: service did not start within expected time"**: Service startup hangs, check logs
+
+</details>
 
 ## Best Practices
 
@@ -978,6 +1042,59 @@ When you encounter an error code in the labs, research it using these steps:
 4. **Look for solutions in forums like Stack Overflow**
 5. **Test the solution in a safe environment**
 6. **Document what worked for future reference**
+
+#### Systematic Error Investigation Method
+```bash
+# Step 1: Capture the complete error
+command_that_failed 2>&1 | tee error.log
+
+# Step 2: Check exit code immediately
+echo "Exit code: $?"
+
+# Step 3: Research the specific error
+man command_name  # Look for exit codes section
+apropos "error keyword"  # Find related man pages
+
+# Step 4: Check system context
+dmesg | tail -20  # System messages
+journalctl --since "5 minutes ago"  # Recent system logs
+
+# Step 5: Search for patterns
+grep -r "error message" /var/log/  # Look in logs
+```
+<button onclick="navigator.clipboard.writeText('# Step 1: Capture the complete error\ncommand_that_failed 2>&1 | tee error.log\n\n# Step 2: Check exit code immediately\necho \"Exit code: $?\"\n\n# Step 3: Research the specific error\nman command_name  # Look for exit codes section\napropos \"error keyword\"  # Find related man pages\n\n# Step 4: Check system context\ndmesg | tail -20  # System messages\njournalctl --since \"5 minutes ago\"  # Recent system logs\n\n# Step 5: Search for patterns\ngrep -r \"error message\" /var/log/  # Look in logs')">📋 Copy</button>
+
+#### Error Code Categories and Research Strategies
+
+**SSH/Network Errors** - Focus on connection and authentication:
+```bash
+# Research these patterns:
+ssh -v user@host  # Verbose SSH debug output
+ping -c 3 hostname  # Basic connectivity
+telnet hostname 22  # Port accessibility
+ssh-keygen -l -f keyfile  # Key fingerprints
+```
+<button onclick="navigator.clipboard.writeText('# Research these patterns:\nssh -v user@host  # Verbose SSH debug output\nping -c 3 hostname  # Basic connectivity\ntelnet hostname 22  # Port accessibility\nssh-keygen -l -f keyfile  # Key fingerprints')">📋 Copy</button>
+
+**Process Management Errors** - Focus on signals and permissions:
+```bash
+# Research these patterns:
+kill -l  # List all signal numbers
+ps aux | grep process_name  # Find actual process state
+pstree  # Show process relationships
+lsof -p PID  # What files process has open
+```
+<button onclick="navigator.clipboard.writeText('# Research these patterns:\nkill -l  # List all signal numbers\nps aux | grep process_name  # Find actual process state\npstree  # Show process relationships\nlsof -p PID  # What files process has open')">📋 Copy</button>
+
+**Service Errors** - Focus on dependencies and configuration:
+```bash
+# Research these patterns:
+journalctl -u service_name --since "1 hour ago"  # Service logs
+systemctl cat service_name  # View service definition
+systemctl list-dependencies service_name  # Check dependencies
+service_name -t  # Test configuration (nginx, apache)
+```
+<button onclick="navigator.clipboard.writeText('# Research these patterns:\njournalctl -u service_name --since \"1 hour ago\"  # Service logs\nsystemctl cat service_name  # View service definition\nsystemctl list-dependencies service_name  # Check dependencies\nservice_name -t  # Test configuration (nginx, apache)')">📋 Copy</button>
 
 ### Common Process Problems
 
