@@ -18,6 +18,7 @@
 - [Next Steps](#next-steps)
 
 ## Overview
+[⬆️ Back to Top](#table-of-contents)
 Master essential user and group management, and sudo configuration for Linux systems. This module focuses on fundamental user administration tasks that every Linux administrator needs to know, providing practical hands-on experience with user accounts, groups, and privilege escalation.
 
 **Key Learning Outcomes:**
@@ -28,6 +29,7 @@ Master essential user and group management, and sudo configuration for Linux sys
 - Perform routine user administration tasks safely and efficiently
 
 ## Learning Objectives
+[⬆️ Back to Top](#table-of-contents)
 By the end of this module, you will be able to:
 
 1. **Master Basic User Administration**: Create, modify, and manage user accounts with appropriate settings
@@ -38,6 +40,7 @@ By the end of this module, you will be able to:
 6. **Troubleshoot Common Issues**: Identify and resolve typical user and authentication problems
 
 ## Topics
+[⬆️ Back to Top](#table-of-contents)
 
 ### 6.1 User Account Fundamentals
 - User account types: regular users, system users, and service accounts
@@ -80,6 +83,7 @@ By the end of this module, you will be able to:
 - Basic security best practices for user management
 
 ## Essential Command Reference
+[⬆️ Back to Top](#table-of-contents)
 
 ### User Management Commands
 
@@ -122,10 +126,13 @@ By the end of this module, you will be able to:
 | `lastb` | Show failed logins | `-n`, `-F` | `lastb -n 20` |
 
 ## Practical Examples
+[⬆️ Back to Top](#table-of-contents)
 
 ### Basic User and Group Management
+[Related Commands/Topics: useradd, usermod, userdel, passwd, chage, groupadd, groupdel, gpasswd, groups, getent, id] 🟢
 
 #### Creating and Managing Users
+[Related Commands/Topics: useradd, passwd, usermod, chage, id, getent, groups, finger, userdel] 🟢
 ```bash
 # Create a new user with home directory
 sudo useradd -m -s /bin/bash john
@@ -156,6 +163,7 @@ sudo userdel -r john        # Remove home directory
 ```
 
 #### Basic Group Management
+[Related Commands/Topics: groupadd, groupdel, gpasswd, usermod, getent, grep] 🟢
 ```bash
 # Create new groups
 sudo groupadd developers
@@ -177,6 +185,7 @@ sudo groupdel developers
 ```
 
 ### Basic Sudo Configuration
+[Related Commands/Topics: sudo, visudo, sudoers, ALL, NOPASSWD] 🟡
 
 #### Understanding Sudoers File
 ```bash
@@ -204,6 +213,7 @@ john    ALL=(www-data) /usr/bin/php
 ```
 
 ## Lab Exercises
+[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: Basic User Management
 **Objective:** Practice fundamental user account operations and group management.
@@ -335,6 +345,7 @@ sudo grep "authentication" /var/log/auth.log
 
 
 ## Best Practices Summary
+[⬆️ Back to Top](#table-of-contents)
 
 ### User Management Best Practices
 
@@ -406,6 +417,7 @@ sudo grep "authentication" /var/log/auth.log
 - **Compliance Monitoring**: Continuously monitor compliance with security policies
 
 ## Troubleshooting Common Issues
+[⬆️ Back to Top](#table-of-contents)
 
 ### User Account Problems
 
