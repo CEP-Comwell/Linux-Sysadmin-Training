@@ -8,7 +8,7 @@
   - [9.2 Variables and Parameter Management](#92-variables-and-parameter-management)
   - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
   - [9.4 Functions and Modular Programming](#94-functions-and-modular-programming)
-  - [9.5 Advanced Input/Output Operations](#95-advanced-inputoutput-operations)
+  - [9.5 Advanced InputOutput Operations](#95-advanced-inputoutput-operations)
   - [9.6 Error Handling and Debugging](#96-error-handling-and-debugging)
   - [9.7 System Integration and Automation](#97-system-integration-and-automation)
   - [9.8 Enterprise Script Development](#98-enterprise-script-development)
@@ -23,11 +23,11 @@
   - [Enterprise Monitoring and Alerting](#enterprise-monitoring-and-alerting)
   - [Database and Service Management](#database-and-service-management)
 - [Lab Exercises](#lab-exercises)
-  - [Lab 1: Advanced Script Development](#lab-1-advanced-script-development)
-  - [Lab 2: System Automation Framework](#lab-2-system-automation-framework)
-  - [Lab 3: Enterprise Monitoring Solutions](#lab-3-enterprise-monitoring-solutions)
-  - [Lab 4: Database Management Automation](#lab-4-database-management-automation)
-  - [Lab 5: Infrastructure Orchestration](#lab-5-infrastructure-orchestration)
+  - [Lab 1 Advanced Script Development](#lab-1-advanced-script-development)
+  - [Lab 2 System Automation Framework](#lab-2-system-automation-framework)
+  - [Lab 3 Enterprise Monitoring Solutions](#lab-3-enterprise-monitoring-solutions)
+  - [Lab 4 Database Management Automation](#lab-4-database-management-automation)
+  - [Lab 5 Infrastructure Orchestration](#lab-5-infrastructure-orchestration)
 - [Best Practices](#best-practices)
 - [Troubleshooting](#troubleshooting)
 - [Assessment Criteria](#assessment-criteria)
@@ -94,7 +94,7 @@ By the end of this module, you will be able to:
 - Function testing and debugging techniques
 - Code organization and maintainability
 
-### 9.5 Advanced Input/Output Operations
+### 9.5 Advanced InputOutput Operations
 - File processing and stream manipulation
 - Network operations and API interactions
 - Database connectivity and query execution
@@ -431,6 +431,7 @@ validate_prerequisites
 # Execute main logic
 main "$@"
 ```
+**Related Commands/Topics:** [Debugging and Testing Commands](#debugging-and-testing-commands) 🟥
 
 #### Advanced Error Handling Framework
 ```bash
@@ -792,6 +793,8 @@ validate_and_sanitize() {
     esac
 }
 ```
+**Related Commands/Topics:** [Control Flow and Testing Commands](#control-flow-and-testing-commands) 🟧
+**Related Commands/Topics:** [Variable and Parameter Commands](#variable-and-parameter-commands) 🟦
 
 ### Control Flow and Logic Implementation
 
@@ -1335,6 +1338,8 @@ echo "System uptime: $(get_system_info uptime)"
 echo "Memory usage: $(get_system_info memory)"
 ```
 
+**Related Commands/Topics:** [Core Shell Scripting Commands](#core-shell-scripting-commands), [Variable and Parameter Commands](#variable-and-parameter-commands) 🟩🟦
+
 ### Command-Line Option Parsing with getopts
 ```bash
 #!/usr/bin/env bash
@@ -1497,6 +1502,7 @@ if [[ -n "$config_file" ]]; then
     # source "$config_file"  # Uncomment to actually load
 fi
 ```
+**Related Commands/Topics:** [Variable and Parameter Commands](#variable-and-parameter-commands), [Core Shell Scripting Commands](#core-shell-scripting-commands) 🟦🟩
 
 ### Error Handling and Debugging
 ```bash
