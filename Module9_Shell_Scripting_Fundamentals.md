@@ -190,7 +190,7 @@ By the end of this module, you will be able to:
 | `time` | Measure execution time | `time ./script.sh` |
 | `strace` | System call tracing | `strace -f ./script.sh` |
 
-**[⬆️ Back to Top](#module9-shell-scripting-fundamentals)** | **[📚 Main Index](README.md)**
+**[Back to Top](#module9-shell-scripting-fundamentals)** ⬆️ | **[Main Index](README.md)** 📚
 
 ## Practical Examples
 
