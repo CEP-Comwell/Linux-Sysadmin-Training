@@ -234,59 +234,280 @@ By completing this module, you will be able to:
 
 ### Modern SSH Key Management and Agent Forwarding
 
-#### ED25519 vs. RSA Key Comparison and Generation
+#### ED25519 vs. RSA: Cryptographic Analysis and Practical Implications
+
+##### **Understanding the Basics: Why Different SSH Key Types Matter**
+
+**ED25519 (The Modern Choice)**
+- **What it is**: A newer encryption method based on mathematical curves
+- **Think of it like**: A high-tech security system designed from the ground up for modern threats
+- **Key benefits**: Fast, secure, and built to resist future attacks
+- **Best for**: All new systems and security-conscious environments
+
+**RSA (The Traditional Choice)**  
+- **What it is**: An older encryption method based on large number factorization
+- **Think of it like**: A reliable, well-tested security system that's been around since the 1970s
+- **Key benefits**: Works everywhere, extensively tested, widely understood
+- **Best for**: Legacy systems and environments requiring maximum compatibility
+
+##### **Why We Care About "Quantum Resistance"**
+
+**The Quantum Computer Threat (Simplified):**
+Imagine if someone invented a tool that could crack any traditional lock in seconds. Quantum computers might be that tool for current encryption.
+
+**Current Status:**
+- **Today**: No quantum computer exists that can break SSH encryption
+- **Timeline**: Experts estimate 10-20 years before this becomes a real threat
+- **Preparation**: Using quantum-resistant encryption now prepares us for the future
+
+**Real-World Impact:**
+```
+If a powerful quantum computer existed today:
+- Your RSA-2048 SSH key: Could be broken in hours/days
+- Your RSA-4096 SSH key: Could be broken in weeks/months  
+- Your ED25519 SSH key: Would take much longer to break
+- Post-quantum algorithms: Would remain secure (still being developed)
+```
+
+##### **Cryptographic Security Advantages**
+
+**Why ED25519 is Better for Modern Security:**
+
+**🔐 Stronger Security Foundation**
+```
+Think of encryption like a lock on your house:
+- ED25519 is like a modern smart lock with multiple security layers
+- RSA is like a traditional lock that's been around for decades
+
+Key Advantages:
+✓ Built-in protection against timing attacks (hackers can't measure how long operations take)
+✓ No "weak" keys possible - every key generated is strong
+✓ Smaller keys = faster operations = better performance
+✓ Future-ready design that's harder for quantum computers to break
+```
+
+**🛡️ Attack Resistance Comparison**
+
+**ED25519 Protection:**
+- **Timing Attacks**: Immune by design - operations always take the same time
+- **Weak Random Numbers**: Can't generate weak keys even with poor randomness
+- **Side-Channel Attacks**: Protected against hackers analyzing power usage or electromagnetic emissions
+- **Implementation Bugs**: Simpler code = fewer places for security vulnerabilities
+
+**RSA Vulnerabilities:**
+- **Timing Attacks**: Vulnerable unless carefully implemented
+- **Weak Key Generation**: Historical problems with poor random number generators
+- **Complex Implementation**: More code = more potential security bugs
+- **Performance**: Slower operations, especially for key generation
+
+**🚀 Quantum Computer Resistance**
+
+**Why This Matters:**
+Large quantum computers (which don't exist yet but are being developed) could potentially break current encryption. Think of it like having a master key that could open any traditional lock.
+
+**ED25519 vs RSA Against Quantum Computers:**
+- **ED25519**: Would take a quantum computer ~2⁶⁴ operations to break (very difficult)
+- **RSA**: Would take a quantum computer ~2⁵¹² operations to break (easier target)
+- **Timeline**: Experts estimate 10-20 years before quantum computers become a real threat
+- **Recommendation**: Start using ED25519 now to be prepared for the future
+
+**📊 Real-World Performance Impact**
+
+**Speed Comparison (simpler terms):**
+```
+Key Generation Time:
+- ED25519: Nearly instant
+- RSA-4096: Noticeable delay (500x slower)
+
+Connection Setup:
+- ED25519: Faster SSH connections
+- RSA: Slower, especially on older hardware
+
+Network Usage:
+- ED25519: 16x smaller keys = less bandwidth
+- RSA: Larger keys = more network traffic
+```
+
+**🎯 Practical Recommendations for System Administrators**
+
+**What to Use When:**
+1. **New Systems (2025+)**: Always use ED25519
+2. **Legacy Support**: Keep RSA-4096 as backup for old systems
+3. **Hardware Tokens**: Use ED25519 if supported, RSA-4096 otherwise
+4. **Compliance**: Check if your security frameworks accept ED25519 (most do now)
+
+**Migration Strategy:**
 ```bash
-# ED25519 Key Generation (Recommended - Modern, Fast, Secure)
-# Advantages: Small key size, fast generation, quantum-resistant design
-ssh-keygen -t ed25519 -C "user@$(hostname)-$(date +%Y%m%d)" -f ~/.ssh/id_ed25519
+# Generate both key types during transition
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_modern
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_legacy
 
-# RSA Key Generation (Legacy Support)
-# Use 4096-bit minimum for security (3072-bit acceptable, 2048-bit deprecated)
-ssh-keygen -t rsa -b 4096 -C "user@$(hostname)-$(date +%Y%m%d)" -f ~/.ssh/id_rsa
+# Use ED25519 for new systems
+Host modern-servers
+    IdentityFile ~/.ssh/id_ed25519_modern
 
-# ECDSA Key Generation (Alternative)
-ssh-keygen -t ecdsa -b 521 -C "user@$(hostname)-$(date +%Y%m%d)" -f ~/.ssh/id_ecdsa
+# Keep RSA for older systems that don't support ED25519
+Host legacy-systems  
+    IdentityFile ~/.ssh/id_rsa_legacy
+```
 
-# Key Comparison Script
+**⚠️ Security Warnings:**
+- **Never use RSA-2048 or smaller** - too weak for modern threats
+- **RSA-1024 is completely broken** - if you see this, replace immediately
+- **ED25519 is not supported** on very old SSH versions (pre-2014)
+- **Always use strong passphrases** regardless of key type
+
+**🔮 Future-Proofing Your Infrastructure**
+
+**Quantum-Resistant Planning:**
+- **Short-term**: ED25519 provides better quantum resistance than RSA
+- **Medium-term**: Monitor post-quantum cryptography standards (NIST is working on this)
+- **Long-term**: Plan for algorithm updates when quantum computers become practical
+- **Best Practice**: Design systems that can easily switch encryption methods
+
+##### **Performance and Efficiency Analysis**
+
+**Computational Complexity:**
+```bash
+# ED25519 Operations (theoretical cycles on modern CPU)
+Key Generation:    ~100,000 cycles
+Signature:         ~150,000 cycles  
+Verification:      ~400,000 cycles
+Key Size:          32 bytes private, 32 bytes public
+
+# RSA-4096 Operations
+Key Generation:    ~50,000,000 cycles (500x slower)
+Signature:         ~8,000,000 cycles (53x slower)
+Verification:      ~200,000 cycles (similar to ED25519)
+Key Size:          512 bytes private, 512 bytes public
+```
+
+**Memory and Bandwidth Efficiency:**
+- **ED25519**: 64-byte signatures, 32-byte public keys (16x smaller than RSA-4096)
+- **RSA-4096**: 512-byte signatures, 512-byte public keys
+- **Network Impact**: ED25519 reduces SSH handshake by ~1KB per connection
+- **Storage Impact**: Certificate chains significantly smaller with ECC
+
+##### **Practical Security Implications**
+
+**Key Generation Security:**
+```bash
+# ED25519: Inherently secure key generation
+# - Private key is 32 random bytes
+# - Public key derived through well-defined curve operations
+# - No "weak" keys possible due to curve properties
+
+openssl genpkey -algorithm Ed25519 -out ed25519.pem
+
+# RSA: Vulnerable to implementation flaws
+# - Requires strong prime generation
+# - Susceptible to weak random number generators
+# - Historical vulnerabilities (Debian OpenSSL bug, etc.)
+
+openssl genpkey -algorithm RSA -pkcs8 -pkeyopt rsa_keygen_bits:4096 -out rsa4096.pem
+```
+
+**Implementation Security:**
+```
+ED25519 Advantages:
+✓ Constant-time operations by design
+✓ Complete addition formulas prevent exceptional cases
+✓ Single coordinate system eliminates conversion vulnerabilities
+✓ Smaller attack surface due to algorithmic simplicity
+
+RSA Vulnerabilities:
+✗ Timing attacks on modular exponentiation
+✗ Blinding required for side-channel resistance
+✗ Padding oracle attacks (if improperly implemented)
+✗ Larger codebase increases vulnerability surface
+```
+
+##### **Enterprise Deployment Considerations**
+
+**Compatibility Matrix:**
+```
+ED25519 Support:
+- OpenSSH: 6.5+ (January 2014)
+- OpenSSL: 1.1.1+ (September 2018)
+- GnuPG: 2.1+ (November 2014)
+- Hardware tokens: Limited (YubiKey 5 series+)
+
+RSA Support:
+- Universal compatibility across all SSH implementations
+- Hardware security modules: Extensive support
+- Legacy systems: Full backward compatibility
+- Compliance frameworks: Widely accepted
+```
+
+**Migration Strategy:**
+```bash
+# Hybrid approach for enterprise environments
+# Primary: ED25519 for modern systems
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_primary
+
+# Fallback: RSA-4096 for legacy compatibility
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_legacy
+
+# SSH config for automatic fallback
+Host modern-systems
+    IdentityFile ~/.ssh/id_ed25519_primary
+    IdentitiesOnly yes
+
+Host legacy-systems
+    IdentityFile ~/.ssh/id_rsa_legacy
+    IdentitiesOnly yes
+```
+
+##### **Cryptographic Recommendations**
+
+**Current Best Practices (2025):**
+1. **Primary Choice**: ED25519 for all new deployments
+2. **Legacy Support**: RSA-4096 minimum (RSA-2048 deprecated)
+3. **Transition Period**: Maintain both key types during migration
+4. **Hardware Tokens**: ED25519 where supported, RSA-4096 otherwise
+5. **Compliance**: Verify ED25519 acceptance with security frameworks
+
+**Future-Proofing Strategy:**
+- **Post-Quantum Preparedness**: Monitor NIST PQC standardization
+- **Algorithm Agility**: Design systems for cryptographic algorithm updates
+- **Key Rotation**: Implement automated key lifecycle management
+- **Quantum Timeline**: Plan migration before cryptographically relevant quantum computers
+
+```bash
+# Key Comparison Script with Cryptographic Analysis
 #!/bin/bash
-# compare-ssh-keys.sh - Analyze SSH key characteristics
+# crypto-analysis.sh - Detailed SSH key cryptographic comparison
 
-compare_key_types() {
-    echo "SSH Key Type Comparison"
-    echo "======================="
+analyze_key_strength() {
+    local key_type=$1
     
-    for key_type in ed25519 rsa ecdsa; do
-        case $key_type in
-            ed25519)
-                echo "ED25519:"
-                echo "  - Key Size: 32 bytes (256-bit)"
-                echo "  - Public Key Size: ~68 characters"
-                echo "  - Security: Excellent (modern, quantum-resistant design)"
-                echo "  - Performance: Very fast"
-                echo "  - Compatibility: OpenSSH 6.5+ (2014)"
-                ;;
-            rsa)
-                echo "RSA 4096:"
-                echo "  - Key Size: 4096 bits"
-                echo "  - Public Key Size: ~724 characters"
-                echo "  - Security: Good (with 4096-bit minimum)"
-                echo "  - Performance: Slower than ED25519"
-                echo "  - Compatibility: Universal"
-                ;;
-            ecdsa)
-                echo "ECDSA P-521:"
-                echo "  - Key Size: 521 bits"
-                echo "  - Public Key Size: ~178 characters"
-                echo "  - Security: Good"
-                echo "  - Performance: Fast"
-                echo "  - Compatibility: OpenSSH 5.7+ (2011)"
-                ;;
-        esac
-        echo
-    done
+    case $key_type in
+        ed25519)
+            echo "ED25519 Cryptographic Profile:"
+            echo "  Mathematical Foundation: Twisted Edwards Curves"
+            echo "  Security Assumption: Elliptic Curve Discrete Logarithm Problem"
+            echo "  Equivalent Symmetric Security: ~128-bit"
+            echo "  Quantum Security: ~64-bit (square root attack)"
+            echo "  Side-Channel Resistance: Excellent (constant-time by design)"
+            echo "  Implementation Complexity: Low"
+            echo "  Standardization: RFC 8032, FIPS 186-5 approved"
+            ;;
+        rsa)
+            echo "RSA-4096 Cryptographic Profile:"
+            echo "  Mathematical Foundation: Integer Factorization Problem"
+            echo "  Security Assumption: Difficulty of factoring large semiprimes"
+            echo "  Equivalent Symmetric Security: ~140-bit"
+            echo "  Quantum Security: ~0-bit (Shor's algorithm)"
+            echo "  Side-Channel Resistance: Requires careful implementation"
+            echo "  Implementation Complexity: High"
+            echo "  Standardization: FIPS 186-5, extensive historical validation"
+            ;;
+    esac
+    echo
 }
 
-compare_key_types
+analyze_key_strength ed25519
+analyze_key_strength rsa
 ```
 
 #### Secure SSH Agent Configuration and Forwarding
