@@ -403,8 +403,6 @@ sudo systemctl stop nginx       # Stop now
 sudo systemctl disable nginx    # Disable from boot
 systemctl status nginx          # Shows inactive and disabled
 ```
-# This section is not working
-<button onclick="navigator.clipboard.writeText('# Check current state and boot configuration\nsystemctl status nginx\nsystemctl is-enabled nginx\n\n# Scenario 1: Start service now and enable for boot\nsudo systemctl start nginx      # Start immediately\nsudo systemctl enable nginx     # Enable for boot\nsystemctl status nginx          # Verify both settings\n\n# Scenario 2: Stop service but keep boot setting\nsudo systemctl stop nginx       # Stop now\nsystemctl is-enabled nginx      # Still enabled for boot\nsystemctl status nginx          # Shows inactive but enabled\n\n# Scenario 3: Disable from boot but keep running\nsudo systemctl start nginx      # Make sure it\'s running\nsudo systemctl disable nginx    # Disable from boot\nsystemctl status nginx          # Shows active but disabled\n\n# Scenario 4: Complete shutdown\nsudo systemctl stop nginx       # Stop now\nsudo systemctl disable nginx    # Disable from boot\nsystemctl status nginx          # Shows inactive and disabled')">📋 Copy</button>
 
 #### Example 2: Understanding Service Dependencies
 ```bash
