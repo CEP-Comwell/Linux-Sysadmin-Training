@@ -4,100 +4,105 @@
 - [Overview](#overview)
 - [Learning Objectives](#learning-objectives)
 - [Topics](#topics)
-  - [10.1 Storage Fundamentals and Partition Management](#101-storage-fundamentals-and-partition-management)
-  - [10.2 Filesystem Creation and Advanced Tuning](#102-filesystem-creation-and-advanced-tuning)
-  - [10.3 Logical Volume Manager (LVM) Deep Dive](#103-logical-volume-manager-lvm-deep-dive)
-  - [10.4 Software and Hardware RAID Implementation](#104-software-and-hardware-raid-implementation)
-  - [10.5 Storage Performance Optimization](#105-storage-performance-optimization)
-  - [10.6 Backup and Recovery Strategies](#106-backup-and-recovery-strategies)
-  - [10.7 Network Storage and Clustering](#107-network-storage-and-clustering)
-  - [10.8 Storage Security and Encryption](#108-storage-security-and-encryption)
+  - [10.1 Storage Fundamentals and Basic Partitioning](#101-storage-fundamentals-and-basic-partitioning)
+  - [10.2 EXT4 and XFS Filesystem Management](#102-ext4-and-xfs-filesystem-management)
+  - [10.3 LVM Fundamentals and Benefits](#103-lvm-fundamentals-and-benefits)
+  - [10.4 Storage Security and Backup Basics](#104-storage-security-and-backup-basics)
+  - [10.5 Looking Ahead: ZFS Overview](#105-looking-ahead-zfs-overview)
 - [Essential Command Reference](#essential-command-reference)
 - [Practical Examples](#practical-examples)
-  - [Partition Management](#partition-management)
-  - [Filesystem Operations](#filesystem-operations)
-  - [LVM Administration](#lvm-administration)
-  - [RAID Configuration](#raid-configuration)
-  - [Performance Optimization](#performance-optimization)
-  - [Storage Security](#storage-security)
-- [Lab Exercises](#lab-exercises)
-  - [Lab 1: Advanced Partitioning and Filesystem Management](#lab-1-advanced-partitioning-and-filesystem-management)
-  - [Lab 2: LVM Implementation and Management](#lab-2-lvm-implementation-and-management)
-  - [Lab 3: RAID Configuration and Recovery](#lab-3-raid-configuration-and-recovery)
-  - [Lab 4: Storage Performance Optimization](#lab-4-storage-performance-optimization)
-  - [Lab 5: Enterprise Storage Infrastructure](#lab-5-enterprise-storage-infrastructure)
+  - [Basic Partitioning](#basic-partitioning)
+  - [Filesystem Creation and Management](#filesystem-creation-and-management)
+  - [LVM Basics](#lvm-basics)
+  - [Storage Maintenance](#storage-maintenance)
+- [Hands-on Labs](#hands-on-labs)
+  - [Lab 1: Partitioning and Filesystem Creation](#lab-1-partitioning-and-filesystem-creation)
+  - [Lab 2: LVM Setup and Management](#lab-2-lvm-setup-and-management)
+  - [Lab 3: Storage Maintenance and Troubleshooting](#lab-3-storage-maintenance-and-troubleshooting)
 - [Best Practices](#best-practices)
 - [Troubleshooting](#troubleshooting)
-- [Assessment Criteria](#assessment-criteria)
 - [Next Steps](#next-steps)
 
 ## Overview
-This module provides comprehensive coverage of enterprise-grade storage management and filesystem administration in Linux. Students will master advanced storage technologies including software and hardware RAID, Logical Volume Manager (LVM), and filesystem optimization techniques. The curriculum emphasizes hands-on experience with real-world scenarios, balancing performance optimization with data integrity and disaster recovery capabilities.
 
-**Key Learning Outcomes:**
-- Design and implement resilient storage architectures using RAID and LVM
-- Optimize filesystem performance for specific workloads and use cases
-- Manage live storage operations without system downtime
-- Implement comprehensive backup and recovery strategies
-- Configure network storage solutions and clustering technologies
-- Secure storage systems with encryption and access controls
+Learn essential Linux storage and filesystem management skills for system administrators. This module covers practical filesystem creation and management using EXT4 and XFS, basic partitioning, and an introduction to Logical Volume Manager (LVM). You'll gain hands-on experience with the most common storage tasks that system administrators perform daily.
+
+This module focuses on practical skills rather than advanced performance tuning, preparing you for real-world storage administration with current best practices and safe procedures.
+
+**Core Skills You'll Learn:**
+- Create and manage EXT4 and XFS filesystems
+- Understand basic partitioning with fdisk and parted
+- Learn LVM fundamentals and when to use it
+- Implement basic storage security and backup practices
+- Troubleshoot common filesystem issues
+- Prepare for advanced storage concepts in Module 11 (ZFS)
 
 ## Learning Objectives
-By the end of this module, you will be able to:
 
-1. **Master Partition Management**: Create, modify, and recover partition tables using fdisk, gdisk, and parted across MBR and GPT schemes
-2. **Optimize Filesystem Performance**: Select appropriate filesystems and configure mount options for maximum performance and reliability
-3. **Implement LVM Solutions**: Design and manage logical volumes with snapshots, thin provisioning, and live resizing capabilities
-4. **Configure RAID Arrays**: Build and maintain software and hardware RAID configurations with comprehensive failure recovery procedures
-5. **Optimize Storage Performance**: Analyze and tune storage subsystems for specific workload requirements and performance characteristics
-6. **Design Backup Strategies**: Implement enterprise backup and disaster recovery solutions with automated testing and validation
+By completing this module, you will be able to:
+
+1. **Create and Manage Filesystems**
+   - Create EXT4 and XFS filesystems with appropriate settings
+   - Understand when to choose EXT4 vs XFS for different use cases
+   - Mount filesystems with secure and efficient options
+   - Perform basic filesystem maintenance and repair
+
+2. **Handle Basic Partitioning**
+   - Create and modify partitions using fdisk and parted
+   - Understand MBR vs GPT partition tables
+   - Use proper partition alignment for modern storage
+   - Work with UUIDs and labels for persistent mounting
+
+3. **Understand LVM Fundamentals**
+   - Grasp the benefits of using LVM vs traditional partitions
+   - Create basic LVM setups with physical volumes, volume groups, and logical volumes
+   - Perform simple LVM operations like extending volumes
+   - Understand when LVM is the right choice for your environment
+
+4. **Implement Storage Best Practices**
+   - Configure secure mount options and file permissions
+   - Perform basic backup and recovery procedures
+   - Monitor filesystem usage and health
+   - Apply security practices for storage management
 
 ## Topics
 
-### 10.1 Storage Fundamentals and Partition Management
-- Block device architecture and storage hierarchy mapping
-- Partition table comparison: MBR vs GPT advantages and limitations
-- Advanced partitioning tools: fdisk, gdisk, parted, and cfdisk
-- Partition alignment and performance optimization strategies
-- Partition table recovery and disaster recovery procedures
-- Device naming conventions and persistent identification methods
+### 10.1 Storage Fundamentals and Basic Partitioning
+- Understanding Linux storage hierarchy and device naming
+- Partition table basics: MBR vs GPT
+- Using fdisk and parted for basic partitioning tasks
+- Proper partition alignment for modern disks
+- UUID and label usage for reliable mounting
+- Safe partitioning practices
 
-### 10.2 Filesystem Creation and Advanced Tuning
-- Comprehensive filesystem comparison: ext4, XFS, Btrfs, and ZFS
-- Filesystem creation parameters and optimization techniques
-- Mount options for performance: noatime, barriers, data modes, and compression
-- UUID and label management for persistent device identification
-- Filesystem maintenance: checking, repair, defragmentation, and optimization
-- Performance monitoring and capacity planning strategies
+### 10.2 EXT4 and XFS Filesystem Management
+- EXT4 vs XFS: when to choose each filesystem
+- Creating filesystems with appropriate settings
+- Essential mount options for security and performance
+- Basic filesystem maintenance and repair
+- Monitoring filesystem usage and health
+- Filesystem resizing basics
 
-### 10.3 Logical Volume Manager (LVM) Deep Dive
-- LVM architecture: Physical Volumes, Volume Groups, and Logical Volumes
-- Live system operations: extending, shrinking, and migrating volumes
-- LVM snapshots: creation, management, and backup integration
-- Advanced features: thin provisioning, cache volumes, and RAID LVs
-- LVM troubleshooting and recovery procedures
-- Performance optimization and capacity management
+### 10.3 LVM Fundamentals and Benefits
+- Why use LVM vs traditional partitions
+- LVM architecture: Physical Volumes, Volume Groups, Logical Volumes
+- Basic LVM operations: create, extend, monitor
+- Simple LVM scenarios and use cases
+- When LVM is (and isn't) the right choice
+- Basic troubleshooting and recovery
 
-### 10.4 Software and Hardware RAID Implementation
-- RAID level analysis: RAID 0, 1, 5, 6, 10 performance and resilience characteristics
-- Software RAID with mdadm: creation, monitoring, and maintenance
-- Hardware RAID configuration and management interfaces
-- RAID failure detection, hot spare configuration, and replacement procedures
-- RAID performance optimization: chunk sizes, read-ahead, and stripe configuration
-- RAID disaster recovery and data reconstruction techniques
+### 10.4 Storage Security and Backup Basics
+- Secure mount options and file permissions
+- Basic backup strategies and tools
+- Understanding storage-related security risks
+- Simple encryption concepts
+- Monitoring and alerting for storage issues
 
-### 10.5 Storage Performance Optimization
-- I/O pattern analysis and workload characterization
-- Storage subsystem tuning: scheduler selection and queue optimization
-- SSD optimization: TRIM support, over-provisioning, and wear leveling
-- Cache configuration and buffer management
-- Performance monitoring tools and metrics analysis
-- Capacity planning and growth prediction modeling
-
-### 10.6 Backup and Recovery Strategies
-- Backup architecture design and strategy development
-- Snapshot-based backup systems and point-in-time recovery
-- Incremental and differential backup implementations
+### 10.5 Looking Ahead: ZFS Overview
+- Introduction to ZFS concepts and benefits
+- How ZFS differs from traditional Linux filesystems
+- When to consider ZFS (covered in detail in Module 11)
+- Migration considerations and compatibility
 - Disaster recovery planning and testing procedures
 - Backup validation and integrity verification
 - Cloud backup integration and hybrid storage strategies
@@ -143,609 +148,1089 @@ By the end of this module, you will be able to:
 | `sfdisk -l` | Script-friendly disk partitioning | `sfdisk -l /dev/sda` |
 | `partprobe` | Inform kernel of partition changes | `partprobe /dev/sda` |
 
+## Essential Command Reference
+
+### Storage Discovery and Information
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `lsblk` | List block devices in tree format | `lsblk -f` |
+| `blkid` | Display block device attributes | `blkid /dev/sda1` |
+| `df -h` | Display filesystem disk space usage | `df -h` |
+| `du -sh` | Show directory space usage | `du -sh /var/log` |
+| `fdisk -l` | List disk partition tables | `fdisk -l /dev/sda` |
+| `parted -l` | List partition information | `parted -l` |
+
+### Basic Partitioning
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `fdisk /dev/sdX` | Interactive disk partitioning (MBR) | `fdisk /dev/sda` |
+| `parted /dev/sdX` | GNU parted partitioning tool | `parted /dev/sda print` |
+| `partprobe` | Inform kernel of partition changes | `partprobe /dev/sda` |
+
 ### Filesystem Operations
 
 | Command | Description | Example |
 |---------|-------------|---------|
 | `mkfs.ext4` | Create ext4 filesystem | `mkfs.ext4 /dev/sda1` |
 | `mkfs.xfs` | Create XFS filesystem | `mkfs.xfs /dev/sda1` |
-| `mkfs.btrfs` | Create Btrfs filesystem | `mkfs.btrfs /dev/sda1` |
 | `mount` | Mount filesystem | `mount /dev/sda1 /mnt` |
 | `umount` | Unmount filesystem | `umount /mnt` |
-| `fsck` | Check and repair filesystem | `fsck.ext4 /dev/sda1` |
-| `tune2fs` | Adjust ext2/3/4 parameters | `tune2fs -l /dev/sda1` |
-| `xfs_admin` | Adjust XFS parameters | `xfs_admin -l /dev/sda1` |
+| `fsck.ext4` | Check and repair ext4 filesystem | `fsck.ext4 /dev/sda1` |
+| `xfs_repair` | Repair XFS filesystem | `xfs_repair /dev/sda1` |
+| `tune2fs` | Display/modify ext4 parameters | `tune2fs -l /dev/sda1` |
+| `resize2fs` | Resize ext4 filesystem | `resize2fs /dev/sda1` |
+| `xfs_growfs` | Grow XFS filesystem | `xfs_growfs /mnt/data` |
 
-### LVM Commands
+### Basic LVM Commands
 
 | Command | Description | Example |
 |---------|-------------|---------|
 | `pvcreate` | Create physical volume | `pvcreate /dev/sda1` |
 | `vgcreate` | Create volume group | `vgcreate vg01 /dev/sda1` |
-| `lvcreate` | Create logical volume | `lvcreate -L 10G -n lv01 vg01` |
-| `pvdisplay` | Show physical volume information | `pvdisplay /dev/sda1` |
-| `vgdisplay` | Show volume group information | `vgdisplay vg01` |
-| `lvdisplay` | Show logical volume information | `lvdisplay /dev/vg01/lv01` |
-| `lvextend` | Extend logical volume | `lvextend -L +5G /dev/vg01/lv01` |
-| `lvcreate -s` | Create LVM snapshot | `lvcreate -s -L 1G -n snap01 /dev/vg01/lv01` |
+| `lvcreate` | Create logical volume | `lvcreate -L 10G -n data vg01` |
+| `pvs` | Show physical volume summary | `pvs` |
+| `vgs` | Show volume group summary | `vgs` |
+| `lvs` | Show logical volume summary | `lvs` |
+| `lvextend` | Extend logical volume | `lvextend -L +5G /dev/vg01/data` |
 
-### RAID Management
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `mdadm --create` | Create RAID array | `mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1` |
-| `mdadm --detail` | Show RAID array details | `mdadm --detail /dev/md0` |
-| `mdadm --examine` | Examine RAID superblock | `mdadm --examine /dev/sda1` |
-| `mdadm --add` | Add device to array | `mdadm --add /dev/md0 /dev/sdc1` |
-| `mdadm --remove` | Remove device from array | `mdadm --remove /dev/md0 /dev/sda1` |
-| `mdadm --fail` | Mark device as failed | `mdadm --fail /dev/md0 /dev/sda1` |
-| `cat /proc/mdstat` | Show RAID status | `cat /proc/mdstat` |
-
-### Performance Monitoring
+### Storage Monitoring
 
 | Command | Description | Example |
 |---------|-------------|---------|
 | `iostat` | I/O statistics for devices | `iostat -x 1` |
-| `iotop` | I/O usage by processes | `iotop -o` |
-| `sar -d` | Disk activity report | `sar -d 1 5` |
-| `hdparm` | Get/set disk parameters | `hdparm -I /dev/sda` |
-| `smartctl` | Control SMART monitoring | `smartctl -a /dev/sda` |
-| `fio` | Flexible I/O tester | `fio --name=test --rw=read --size=1G` |
+| `smartctl` | Check disk health | `smartctl -a /dev/sda` |
 
-### Storage Security
+---
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `cryptsetup` | LUKS encryption management | `cryptsetup luksFormat /dev/sda1` |
-| `setfacl` | Set file access control lists | `setfacl -m u:user:rw file.txt` |
-| `getfacl` | Get file access control lists | `getfacl file.txt` |
-| `quotacheck` | Build quota database files | `quotacheck -cug /home` |
-| `quotaon` | Enable filesystem quotas | `quotaon /home` |
-| `edquota` | Edit user quotas | `edquota username` |
-| `shred` | Securely delete files | `shred -vfz -n 3 file.txt` |
+## 10.1 Storage Fundamentals and Basic Partitioning
 
-## Practical Examples
+### Understanding Linux Storage Hierarchy
 
-### Partition Management
+Linux treats all storage as files under the `/dev` directory. Here's what you need to know:
 
-#### Advanced GPT Partitioning with gdisk
+#### Device Naming Conventions
+```bash
+# Common device names
+/dev/sda    # First SATA/SCSI disk
+/dev/sdb    # Second SATA/SCSI disk
+/dev/sda1   # First partition on first disk
+/dev/sda2   # Second partition on first disk
+
+# Virtual machines often use
+/dev/vda    # First virtual disk
+/dev/xvda   # Xen virtual disk
+
+# NVMe SSDs use
+/dev/nvme0n1    # First NVMe disk
+/dev/nvme0n1p1  # First partition on first NVMe disk
+```
+
+#### Checking Available Storage
+```bash
+# See all block devices
+lsblk
+
+# See mounted filesystems
+df -h
+
+# Get detailed device information
+lsblk -f
+
+# Check partition table type
+sudo parted /dev/sda print
+```
+
+### Partition Tables: MBR vs GPT
+
+#### MBR (Master Boot Record)
+- **Limitations**: Maximum 4 primary partitions, 2TB disk size limit
+- **Use when**: Legacy systems, older BIOS, small disks
+- **Tool**: `fdisk`
+
+#### GPT (GUID Partition Table)
+- **Advantages**: 128 partitions, larger than 2TB disks, more reliable
+- **Use when**: Modern systems, UEFI, larger disks (recommended)
+- **Tool**: `parted` or `gdisk`
+
+### Basic Partitioning with fdisk
+
+#### Creating Basic Partitions
+```bash
+# Start fdisk on a disk (WARNING: This modifies the disk!)
+sudo fdisk /dev/sdb
+
+# Basic fdisk commands:
+# p - print partition table
+# n - create new partition
+# d - delete partition
+# t - change partition type
+# w - write changes and exit
+# q - quit without saving
+
+# Example session:
+sudo fdisk /dev/sdb
+# Press 'n' for new partition
+# Press 'p' for primary
+# Press '1' for partition number
+# Press Enter for default start sector
+# Type '+10G' for 10GB partition
+# Press 'w' to write changes
+```
+
+#### Safe Partitioning Example
+```bash
+# 1. Always check what's on the disk first
+sudo fdisk -l /dev/sdb
+lsblk /dev/sdb
+
+# 2. Create partition table if needed (destroys all data!)
+sudo parted /dev/sdb mklabel gpt
+
+# 3. Create a partition using parted (safer for beginners)
+sudo parted /dev/sdb mkpart primary ext4 1MiB 10GiB
+
+# 4. Verify the partition was created
+sudo parted /dev/sdb print
+lsblk /dev/sdb
+```
+
+### Working with UUIDs and Labels
+
+#### Why Use UUIDs?
+Device names like `/dev/sda1` can change between reboots. UUIDs are permanent identifiers.
+
+```bash
+# See UUIDs of all devices
+blkid
+
+# See specific device UUID
+blkid /dev/sdb1
+
+# Mount by UUID (in /etc/fstab)
+UUID=12345678-1234-1234-1234-123456789abc /data ext4 defaults 0 2
+
+# Set a filesystem label
+sudo e2label /dev/sdb1 "data-disk"
+
+# Mount by label
+LABEL=data-disk /data ext4 defaults 0 2
+```
+
+### Partition Alignment Best Practices
+
+Modern disks work best when partitions are properly aligned:
+
+```bash
+# For parted, always start at 1MiB for optimal alignment
+sudo parted /dev/sdb mkpart primary ext4 1MiB 100%
+
+# Check alignment
+sudo parted /dev/sdb align-check optimal 1
+
+# fdisk automatically aligns partitions in modern versions
+```
+
+---
+
+## 10.2 EXT4 and XFS Filesystem Management
+
+### Choosing Between EXT4 and XFS
+
+Both are excellent filesystems, but they have different strengths:
+
+#### EXT4 (Fourth Extended Filesystem)
+- **Best for**: General purpose, smaller files, legacy compatibility
+- **Strengths**: Very stable, well-tested, good with many small files
+- **Max file size**: 16TB
+- **Max filesystem size**: 1 exabyte
+- **Good for**: Root partitions, home directories, general data storage
+
+#### XFS (High-performance journaling filesystem)
+- **Best for**: Large files, high-performance applications, databases
+- **Strengths**: Excellent with large files, scales well, fast metadata operations
+- **Max file size**: 8 exabytes
+- **Max filesystem size**: 8 exabytes
+- **Good for**: Video storage, databases, large file repositories
+
+### Creating Filesystems
+
+#### Creating EXT4 Filesystems
+```bash
+# Basic EXT4 creation
+sudo mkfs.ext4 /dev/sdb1
+
+# EXT4 with custom label
+sudo mkfs.ext4 -L "data-drive" /dev/sdb1
+
+# EXT4 with custom block size (usually not needed)
+sudo mkfs.ext4 -b 4096 /dev/sdb1
+
+# Check EXT4 filesystem information
+sudo tune2fs -l /dev/sdb1
+```
+
+#### Creating XFS Filesystems
+```bash
+# Basic XFS creation
+sudo mkfs.xfs /dev/sdb1
+
+# XFS with custom label
+sudo mkfs.xfs -L "data-drive" /dev/sdb1
+
+# Force creation (overwrites existing filesystem)
+sudo mkfs.xfs -f /dev/sdb1
+
+# Check XFS filesystem information
+sudo xfs_info /dev/sdb1
+```
+
+### Essential Mount Options
+
+#### Security and Performance Mount Options
+```bash
+# Basic secure mounting
+sudo mount -o nodev,nosuid,noexec /dev/sdb1 /mnt/data
+
+# Performance optimization
+sudo mount -o noatime,relatime /dev/sdb1 /mnt/data
+
+# Combining options
+sudo mount -o defaults,noatime,nodev /dev/sdb1 /mnt/data
+```
+
+#### Important Mount Options Explained
+- **noatime**: Don't update access times (improves performance)
+- **relatime**: Update access times only when necessary (good compromise)
+- **nodev**: Don't allow device files on this filesystem
+- **nosuid**: Don't allow SUID programs
+- **noexec**: Don't allow execution of programs
+
+### Configuring /etc/fstab
+
+#### Basic fstab Entry
+```bash
+# Edit fstab
+sudo nano /etc/fstab
+
+# Add entry using UUID (recommended)
+UUID=12345678-1234-1234-1234-123456789abc /data ext4 defaults,noatime 0 2
+
+# Add entry using label
+LABEL=data-drive /data ext4 defaults,noatime 0 2
+
+# Test fstab entries without rebooting
+sudo mount -a
+```
+
+#### fstab Field Explanation
+```bash
+# Device        Mount Point    FS Type    Options         Dump    Pass
+UUID=...       /data          ext4       defaults,noatime 0       2
+
+# Dump: 0=no backup, 1=backup
+# Pass: 0=no check, 1=check first (root), 2=check after root
+```
+
+### Filesystem Maintenance
+
+#### Checking and Repairing EXT4
+```bash
+# Check filesystem (unmount first!)
+sudo umount /dev/sdb1
+sudo fsck.ext4 /dev/sdb1
+
+# Force check even if filesystem seems clean
+sudo fsck.ext4 -f /dev/sdb1
+
+# Auto-repair minor issues
+sudo fsck.ext4 -p /dev/sdb1
+
+# Check filesystem that's currently mounted (read-only check)
+sudo fsck.ext4 -n /dev/sdb1
+```
+
+#### Checking and Repairing XFS
+```bash
+# Check XFS filesystem (unmount first!)
+sudo umount /dev/sdb1
+sudo xfs_repair /dev/sdb1
+
+# Check without making changes
+sudo xfs_repair -n /dev/sdb1
+
+# Note: XFS has very robust journaling, rarely needs repair
+```
+
+### Resizing Filesystems
+
+#### Extending EXT4 Filesystems
+```bash
+# First, extend the partition (if needed)
+sudo parted /dev/sdb resizepart 1 100%
+
+# Then extend the filesystem
+sudo resize2fs /dev/sdb1
+
+# Can be done while mounted!
+```
+
+#### Growing XFS Filesystems
+```bash
+# First, extend the partition (if needed)
+sudo parted /dev/sdb resizepart 1 100%
+
+# Grow XFS filesystem (must be mounted)
+sudo xfs_growfs /mnt/data
+
+# Note: XFS cannot be shrunk, only grown
+```
+
+### Monitoring Filesystem Usage
+
+#### Basic Usage Commands
+```bash
+# Check disk usage by filesystem
+df -h
+
+# Check specific filesystem
+df -h /data
+
+# Check inode usage
+df -i
+
+# Check directory sizes
+du -sh /data/*
+
+# Find large files
+find /data -type f -size +100M -exec ls -lh {} \;
+```
+
+#### Setting Up Basic Monitoring
+```bash
+# Check filesystem usage in a script
+#!/bin/bash
+USAGE=$(df /data | tail -1 | awk '{print $5}' | sed 's/%//')
+if [ $USAGE -gt 80 ]; then
+    echo "Warning: /data is ${USAGE}% full"
+fi
+
+# Add to crontab for regular monitoring
+# 0 */6 * * * /path/to/disk-check.sh
+```
+
+---
+
+## 10.3 LVM Fundamentals and Benefits
+
+### What is LVM?
+
+LVM (Logical Volume Manager) is a powerful storage abstraction layer that sits between your physical storage devices and your filesystems. Think of it as a flexible way to manage storage that gives you more options than traditional partitioning.
+
+#### Traditional Partitioning vs LVM
+
+**Traditional Partitioning:**
+- Fixed partition sizes
+- Difficult to resize
+- Limited flexibility
+- Direct partition → filesystem relationship
+
+**LVM Benefits:**
+- Dynamic volume resizing
+- Easy to add more storage
+- Snapshot capabilities
+- Better storage utilization
+- Separation of physical and logical storage
+
+### LVM Architecture
+
+LVM has three main components:
+
+#### Physical Volumes (PV)
+- Your actual storage devices (disks, partitions)
+- The foundation of your LVM setup
+
+#### Volume Groups (VG)  
+- Collection of physical volumes
+- Think of it as a "storage pool"
+
+#### Logical Volumes (LV)
+- Virtual partitions created from volume groups
+- Where you create your filesystems
+
+```
+[Physical Disk] → [Physical Volume] → [Volume Group] → [Logical Volume] → [Filesystem]
+```
+
+### Basic LVM Setup
+
+#### Step 1: Create Physical Volumes
+```bash
+# Check available disks
+lsblk
+
+# Create physical volumes (initialize disks for LVM)
+sudo pvcreate /dev/sdb
+sudo pvcreate /dev/sdc
+
+# View physical volumes
+sudo pvdisplay
+sudo pvs
+```
+
+#### Step 2: Create Volume Group
+```bash
+# Create volume group named "data-vg" from both disks
+sudo vgcreate data-vg /dev/sdb /dev/sdc
+
+# View volume group information
+sudo vgdisplay data-vg
+sudo vgs
+```
+
+#### Step 3: Create Logical Volumes
+```bash
+# Create a logical volume for web data (50GB)
+sudo lvcreate -L 50G -n web-data data-vg
+
+# Create a logical volume for backups (100GB)
+sudo lvcreate -L 100G -n backups data-vg
+
+# Create a logical volume using remaining space
+sudo lvcreate -l 100%FREE -n storage data-vg
+
+# View logical volumes
+sudo lvdisplay
+sudo lvs
+```
+
+#### Step 4: Create Filesystems and Mount
+```bash
+# Create filesystems on logical volumes
+sudo mkfs.ext4 /dev/data-vg/web-data
+sudo mkfs.ext4 /dev/data-vg/backups
+sudo mkfs.xfs /dev/data-vg/storage
+
+# Create mount points
+sudo mkdir -p /data/web /data/backups /data/storage
+
+# Mount the volumes
+sudo mount /dev/data-vg/web-data /data/web
+sudo mount /dev/data-vg/backups /data/backups
+sudo mount /dev/data-vg/storage /data/storage
+
+# Add to /etc/fstab for permanent mounting
+echo "/dev/data-vg/web-data /data/web ext4 defaults 0 2" | sudo tee -a /etc/fstab
+echo "/dev/data-vg/backups /data/backups ext4 defaults 0 2" | sudo tee -a /etc/fstab
+echo "/dev/data-vg/storage /data/storage xfs defaults 0 2" | sudo tee -a /etc/fstab
+```
+
+### Common LVM Operations
+
+#### Extending Logical Volumes
+```bash
+# Add more space to an existing logical volume
+sudo lvextend -L +20G /dev/data-vg/web-data
+
+# Extend the filesystem (EXT4 - can be done while mounted)
+sudo resize2fs /dev/data-vg/web-data
+
+# For XFS (must be mounted)
+sudo xfs_growfs /data/storage
+```
+
+#### Adding More Storage
+```bash
+# When you add a new disk, create PV and add to VG
+sudo pvcreate /dev/sdd
+sudo vgextend data-vg /dev/sdd
+
+# Now you have more space available for logical volumes
+sudo vgs  # Check available space
+```
+
+#### Basic Snapshots
+```bash
+# Create a snapshot for backup purposes (10GB snapshot space)
+sudo lvcreate -L 10G -s -n web-data-backup /dev/data-vg/web-data
+
+# Mount the snapshot to access point-in-time data
+sudo mkdir /mnt/snapshot
+sudo mount /dev/data-vg/web-data-backup /mnt/snapshot
+
+# Remove snapshot when done
+sudo umount /mnt/snapshot
+sudo lvremove /dev/data-vg/web-data-backup
+```
+
+### When to Use LVM
+
+#### Good Use Cases:
+- **Server environments** where you need flexibility
+- **Growing storage needs** that may change over time
+- **Multiple disk setups** where you want to combine space
+- **Backup scenarios** where snapshots are useful
+- **Development systems** where you need to test different setups
+
+#### When Traditional Partitioning Might Be Better:
+- **Simple single-disk setups** with fixed requirements
+- **Boot partitions** (though LVM can work, traditional is simpler)
+- **Embedded systems** with minimal storage needs
+- **High-performance scenarios** where simplicity is preferred
+
+### LVM Best Practices
+
+#### Naming Conventions
+```bash
+# Use descriptive names for volume groups and logical volumes
+sudo vgcreate web-servers-vg /dev/sdb
+sudo lvcreate -L 50G -n apache-logs web-servers-vg
+sudo lvcreate -L 100G -n database web-servers-vg
+```
+
+#### Leave Some Free Space
+```bash
+# Don't allocate 100% immediately - keep some space for growth
+# Instead of using all space:
+sudo lvcreate -l 100%FREE -n data data-vg
+
+# Better to leave some space:
+sudo lvcreate -L 80G -n data data-vg  # if VG has 100G total
+```
+
+#### Monitor Usage
+```bash
+# Check volume group space
+sudo vgs
+
+# Check logical volume usage
+sudo lvs
+
+# Check filesystem usage
+df -h
+```
+
+### Simple LVM Monitoring Script
 ```bash
 #!/bin/bash
-# advanced-partitioning.sh - Enterprise disk partitioning script
+# lvm-check.sh - Basic LVM space monitoring
 
-DISK="/dev/sdb"
-LOG_FILE="/var/log/partition-setup.log"
+echo "=== LVM Space Report ==="
+echo ""
 
-log_message() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
-}
+echo "Volume Groups:"
+sudo vgs
 
-create_gpt_layout() {
-    local disk="$1"
-    
-    log_message "Starting GPT partitioning on $disk"
-    
-    # Backup existing partition table
-    sudo sgdisk --backup="/tmp/$(basename $disk).backup" "$disk"
-    
-    # Create new GPT partition table
-    sudo sgdisk --zap-all "$disk"
-    
-    # Create partitions with optimal alignment
-    sudo sgdisk --new=1:2048:+512M --typecode=1:ef00 --change-name=1:"EFI System" "$disk"
-    sudo sgdisk --new=2:0:+1G --typecode=2:8300 --change-name=2:"Boot" "$disk"
-    sudo sgdisk --new=3:0:+2G --typecode=3:8200 --change-name=3:"Swap" "$disk"
-    sudo sgdisk --new=4:0:0 --typecode=4:8e00 --change-name=4:"LVM" "$disk"
-    
-    # Verify partition alignment
-    sudo sgdisk --verify "$disk"
-    
-    # Display final layout
-    sudo sgdisk --print "$disk"
-    
-    log_message "GPT partitioning completed successfully"
-}
+echo ""
+echo "Logical Volumes:"
+sudo lvs
 
-# Partition alignment verification
-check_alignment() {
-    local disk="$1"
-    
-    log_message "Checking partition alignment for $disk"
-    
-    for partition in ${disk}[1-9]; do
-        if [[ -e "$partition" ]]; then
-            start_sector=$(sudo sgdisk --info=1 "$disk" | grep "First sector" | awk '{print $3}')
-            if (( start_sector % 2048 == 0 )); then
-                log_message "Partition $partition: Properly aligned (start: $start_sector)"
-            else
-                log_message "WARNING: Partition $partition: Misaligned (start: $start_sector)"
-            fi
-        fi
-    done
-}
+echo ""
+echo "Filesystem Usage:"
+df -h | grep "/dev/mapper"
 
-# Performance optimization setup
-optimize_partitions() {
-    local disk="$1"
-    
-    log_message "Applying performance optimizations"
-    
-    # Set optimal I/O scheduler for SSDs
-    if sudo smartctl -a "$disk" | grep -q "Solid State"; then
-        echo "none" | sudo tee "/sys/block/$(basename $disk)/queue/scheduler"
-        log_message "Set 'none' scheduler for SSD $disk"
-    else
-        echo "mq-deadline" | sudo tee "/sys/block/$(basename $disk)/queue/scheduler"
-        log_message "Set 'mq-deadline' scheduler for HDD $disk"
-    fi
-    
-    # Optimize read-ahead settings
-    sudo blockdev --setra 256 "$disk"
-    log_message "Set read-ahead to 256 sectors for $disk"
-}
+# Alert if any filesystem > 80% full
+echo ""
+echo "Storage Alerts:"
+df -h | grep "/dev/mapper" | awk '{
+    usage = int($5)
+    if (usage > 80) {
+        print "WARNING: " $6 " is " $5 " full"
+    }
+}'
+```
 
-# Execute partitioning workflow
-if [[ -b "$DISK" ]]; then
-    create_gpt_layout "$DISK"
-    check_alignment "$DISK"
-    optimize_partitions "$DISK"
+---
+
+## 10.4 Storage Security and Backup Basics
+
+### Essential Storage Security
+
+#### File Permissions and Ownership
+```bash
+# Set secure permissions for sensitive data
+sudo chmod 700 /data/private     # Owner only
+sudo chmod 750 /data/shared      # Owner + group
+sudo chmod 755 /data/public      # Everyone can read
+
+# Set proper ownership
+sudo chown alice:developers /data/shared
+sudo chown -R www-data:www-data /var/www
+
+# Find and fix problematic permissions
+find /data -type f -perm 777 -exec chmod 644 {} \;
+find /data -type d -perm 777 -exec chmod 755 {} \;
+```
+
+#### Basic Access Control Lists (ACLs)
+```bash
+# Install ACL support
+sudo apt update && sudo apt install acl
+
+# Enable ACL on filesystem (if not already enabled)
+sudo mount -o remount,acl /data
+
+# Set specific user permissions
+sudo setfacl -m u:alice:rw /data/project-files
+sudo setfacl -m g:developers:rx /data/source-code
+
+# View ACL permissions
+getfacl /data/project-files
+
+# Remove ACL entry
+sudo setfacl -x u:alice /data/project-files
+```
+
+#### Basic Filesystem Quotas
+```bash
+# Enable quotas in /etc/fstab (add usrquota,grpquota)
+UUID=... /data ext4 defaults,usrquota,grpquota 0 2
+
+# Remount filesystem
+sudo mount -o remount /data
+
+# Initialize quota database
+sudo quotacheck -cum /data
+sudo quotaon /data
+
+# Set user quotas (soft limit: 1GB, hard limit: 1.2GB)
+sudo setquota -u alice 1000000 1200000 0 0 /data
+
+# Check quota usage
+quota -u alice
+sudo repquota /data
+```
+
+### Simple Backup Strategies
+
+#### Basic File-Level Backups
+```bash
+# Simple tar backup
+sudo tar -czf /backup/data-$(date +%Y%m%d).tar.gz /data
+
+# Incremental backup using rsync
+sudo rsync -av --delete /data/ /backup/data/
+
+# Backup with exclusions
+sudo rsync -av --delete --exclude='*.tmp' --exclude='*.log' /data/ /backup/data/
+```
+
+#### LVM Snapshots for Backups
+```bash
+# Create snapshot before backup
+sudo lvcreate -L 10G -s -n data-backup /dev/data-vg/data
+
+# Mount snapshot
+sudo mkdir /mnt/backup
+sudo mount /dev/data-vg/data-backup /mnt/backup
+
+# Backup from snapshot (consistent point-in-time)
+sudo tar -czf /backup/data-snapshot-$(date +%Y%m%d).tar.gz -C /mnt/backup .
+
+# Cleanup
+sudo umount /mnt/backup
+sudo lvremove /dev/data-vg/data-backup
+```
+
+#### Simple Backup Script
+```bash
+#!/bin/bash
+# simple-backup.sh - Basic backup script
+
+BACKUP_SOURCE="/data"
+BACKUP_DEST="/backup"
+DATE=$(date +%Y%m%d_%H%M%S)
+
+# Create backup directory
+mkdir -p "$BACKUP_DEST"
+
+# Perform backup
+echo "Starting backup at $(date)"
+tar -czf "$BACKUP_DEST/backup_$DATE.tar.gz" "$BACKUP_SOURCE"
+
+if [ $? -eq 0 ]; then
+    echo "Backup completed successfully: backup_$DATE.tar.gz"
     
-    # Update kernel partition table
-    sudo partprobe "$DISK"
-    sleep 2
-    
-    log_message "Partition setup workflow completed"
+    # Keep only last 7 backups
+    cd "$BACKUP_DEST"
+    ls -t backup_*.tar.gz | tail -n +8 | xargs rm -f
+    echo "Old backups cleaned up"
 else
-    log_message "ERROR: Disk $DISK not found or not a block device"
+    echo "Backup failed!"
     exit 1
 fi
 ```
 
-#### MBR to GPT Conversion
+### Storage Monitoring
+
+#### Basic Disk Space Monitoring
 ```bash
+# Check disk usage
+df -h
+
+# Check for large files
+find /data -type f -size +100M -exec ls -lh {} \;
+
+# Monitor disk usage script
 #!/bin/bash
-# mbr-to-gpt-conversion.sh - Safe MBR to GPT conversion
+# disk-monitor.sh
+THRESHOLD=80
 
-DISK="/dev/sdc"
-BACKUP_DIR="/backup/partition-tables"
-
-perform_conversion() {
-    local disk="$1"
+df -h | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }' | while read output;
+do
+    usage=$(echo $output | awk '{ print $1}' | cut -d'%' -f1)
+    partition=$(echo $output | awk '{ print $2 }')
     
-    # Create backup directory
-    sudo mkdir -p "$BACKUP_DIR"
-    
-    # Backup MBR and partition table
-    sudo dd if="$disk" of="$BACKUP_DIR/$(basename $disk)-mbr.backup" bs=512 count=1
-    sudo sfdisk -d "$disk" > "$BACKUP_DIR/$(basename $disk)-layout.backup"
-    
-    echo "Backing up current MBR and partition layout..."
-    
-    # Check if conversion is safe
-    if sudo sgdisk --verify "$disk" 2>/dev/null; then
-        echo "Disk already has GPT partition table"
-        exit 0
+    if [ $usage -ge $THRESHOLD ]; then
+        echo "WARNING: $partition is ${usage}% full"
     fi
-    
-    # Perform conversion
-    echo "Converting MBR to GPT..."
-    sudo sgdisk --mbrtogpt "$disk"
-    
-    # Verify conversion
-    if sudo sgdisk --verify "$disk"; then
-        echo "Conversion successful!"
-        sudo sgdisk --print "$disk"
-    else
-        echo "Conversion failed! Restoring from backup..."
-        sudo dd if="$BACKUP_DIR/$(basename $disk)-mbr.backup" of="$disk" bs=512 count=1
-        exit 1
-    fi
-}
-
-perform_conversion "$DISK"
+done
 ```
 
-### Filesystem Operations
-
-#### Advanced Filesystem Creation and Tuning
+#### Simple SMART Monitoring
 ```bash
-#!/bin/bash
-# filesystem-optimization.sh - Optimized filesystem creation
+# Install smartmontools
+sudo apt install smartmontools
 
-create_optimized_ext4() {
-    local device="$1"
-    local mount_point="$2"
-    local workload="$3"  # database, web, general
-    
-    case "$workload" in
-        "database")
-            # Database optimizations: larger block size, fewer inodes
-            sudo mkfs.ext4 -b 4096 -i 16384 -E stride=32,stripe-width=64 \
-                          -O ^has_journal,extent,flex_bg \
-                          -L "database" "$device"
-            mount_opts="noatime,nodev,data=writeback,barrier=0,nobh"
-            ;;
-        "web")
-            # Web server optimizations: balanced performance
-            sudo mkfs.ext4 -b 4096 -i 8192 -E stride=16,stripe-width=32 \
-                          -O extent,flex_bg \
-                          -L "webserver" "$device"
-            mount_opts="noatime,nodev,data=ordered,barrier=1"
-            ;;
-        "general"|*)
-            # General purpose optimizations
-            sudo mkfs.ext4 -b 4096 -i 4096 -E stride=8,stripe-width=16 \
-                          -O extent,flex_bg,dir_index \
-                          -L "general" "$device"
-            mount_opts="noatime,data=ordered,barrier=1"
-            ;;
-    esac
-    
-    # Create mount point and mount with optimized options
-    sudo mkdir -p "$mount_point"
-    echo "$device $mount_point ext4 $mount_opts 0 2" | sudo tee -a /etc/fstab
-    sudo mount "$mount_point"
-    
-    echo "Created optimized ext4 filesystem for $workload workload"
-    sudo tune2fs -l "$device" | grep -E "(Block size|Inode size|Journal|Features)"
-}
+# Check disk health
+sudo smartctl -H /dev/sda
 
-create_optimized_xfs() {
-    local device="$1"
-    local mount_point="$2"
-    local raid_setup="$3"  # none, raid0, raid10
-    
-    case "$raid_setup" in
-        "raid0")
-            # RAID 0 optimizations
-            sudo mkfs.xfs -f -d agcount=8,sunit=64,swidth=128 \
-                         -l size=128m -n size=64k \
-                         -L "xfs_raid0" "$device"
-            mount_opts="noatime,largeio,swalloc,allocsize=16m"
-            ;;
-        "raid10")
-            # RAID 10 optimizations  
-            sudo mkfs.xfs -f -d agcount=16,sunit=64,swidth=256 \
-                         -l size=256m -n size=64k \
-                         -L "xfs_raid10" "$device"
-            mount_opts="noatime,largeio,swalloc,allocsize=32m"
-            ;;
-        "none"|*)
-            # Single disk optimizations
-            sudo mkfs.xfs -f -d agcount=4 -l size=64m -n size=64k \
-                         -L "xfs_single" "$device"
-            mount_opts="noatime,largeio"
-            ;;
-    esac
-    
-    # Mount with optimized options
-    sudo mkdir -p "$mount_point"
-    echo "$device $mount_point xfs $mount_opts 0 2" | sudo tee -a /etc/fstab
-    sudo mount "$mount_point"
-    
-    echo "Created optimized XFS filesystem for $raid_setup configuration"
-    sudo xfs_info "$mount_point"
-}
+# View SMART attributes
+sudo smartctl -A /dev/sda
 
-# Example usage
-create_optimized_ext4 "/dev/sdb1" "/var/lib/mysql" "database"
-create_optimized_xfs "/dev/md0" "/data" "raid10"
+# Run short self-test
+sudo smartctl -t short /dev/sda
+
+# Check test results
+sudo smartctl -l selftest /dev/sda
 ```
 
-#### Filesystem Performance Analysis
-```bash
-#!/bin/bash
-# filesystem-benchmark.sh - Comprehensive filesystem performance testing
+---
 
-MOUNT_POINT="/data"
-TEST_SIZE="1G"
-RESULTS_DIR="/tmp/benchmark-results"
+## 10.5 Looking Ahead: ZFS Overview
 
-run_filesystem_benchmark() {
-    local mount_point="$1"
-    local test_size="$2"
-    
-    mkdir -p "$RESULTS_DIR"
-    local timestamp=$(date +%Y%m%d_%H%M%S)
-    local results_file="$RESULTS_DIR/benchmark_${timestamp}.txt"
-    
-    echo "=== Filesystem Benchmark Results ===" > "$results_file"
-    echo "Mount Point: $mount_point" >> "$results_file"
-    echo "Test Size: $test_size" >> "$results_file"
-    echo "Date: $(date)" >> "$results_file"
-    echo "" >> "$results_file"
-    
-    # Sequential read/write performance
-    echo "Running sequential I/O tests..." | tee -a "$results_file"
-    
-    # Sequential write
-    echo "Sequential Write Test:" >> "$results_file"
-    dd if=/dev/zero of="$mount_point/test_seq_write" bs=1M count=1024 conv=fsync 2>&1 | \
-        grep -E "(copied|MB/s)" >> "$results_file"
-    
-    # Sequential read
-    echo "Sequential Read Test:" >> "$results_file"
-    dd if="$mount_point/test_seq_write" of=/dev/null bs=1M 2>&1 | \
-        grep -E "(copied|MB/s)" >> "$results_file"
-    
-    # Random I/O performance with fio
-    echo "Running random I/O tests..." | tee -a "$results_file"
-    
-    # Random read
-    fio --name=random_read --directory="$mount_point" --rw=randread \
-        --bs=4k --size="$test_size" --numjobs=4 --runtime=60 \
-        --group_reporting --output-format=normal >> "$results_file"
-    
-    # Random write
-    fio --name=random_write --directory="$mount_point" --rw=randwrite \
-        --bs=4k --size="$test_size" --numjobs=4 --runtime=60 \
-        --group_reporting --output-format=normal >> "$results_file"
-    
-    # Mixed workload
-    fio --name=mixed_workload --directory="$mount_point" --rw=randrw \
-        --bs=4k --size="$test_size" --numjobs=4 --runtime=60 \
-        --rwmixread=70 --group_reporting --output-format=normal >> "$results_file"
-    
-    # Cleanup test files
-    rm -f "$mount_point"/test_*
-    rm -f "$mount_point"/*.fio.*
-    
-    echo "Benchmark completed. Results saved to: $results_file"
-    
-    # Display summary
-    echo ""
-    echo "=== Performance Summary ==="
-    grep -E "(WRITE:|READ:|mixed)" "$results_file" | tail -10
-}
+### What is ZFS?
 
-# Filesystem-specific optimizations analysis
-analyze_filesystem_performance() {
-    local mount_point="$1"
-    
-    echo "=== Filesystem Analysis ==="
-    
-    # Get filesystem type and mount options
-    local fs_info=$(findmnt -n -o FSTYPE,OPTIONS "$mount_point")
-    echo "Filesystem: $fs_info"
-    
-    # Check for performance-impacting mount options
-    if echo "$fs_info" | grep -q "noatime"; then
-        echo "✓ noatime option detected (good for performance)"
-    else
-        echo "⚠ atime updates enabled (may impact performance)"
-    fi
-    
-    if echo "$fs_info" | grep -q "barrier=0"; then
-        echo "⚠ Write barriers disabled (performance gain but data risk)"
-    else
-        echo "✓ Write barriers enabled (safer but slower)"
-    fi
-    
-    # Check I/O scheduler
-    local device=$(findmnt -n -o SOURCE "$mount_point" | sed 's/[0-9]*$//')
-    local scheduler=$(cat "/sys/block/$(basename $device)/queue/scheduler" 2>/dev/null)
-    echo "I/O Scheduler: $scheduler"
-    
-    # Check read-ahead settings
-    local readahead=$(blockdev --getra "$device" 2>/dev/null)
-    echo "Read-ahead: $readahead sectors"
-}
+ZFS (Zettabyte File System) is an advanced filesystem that will be covered in detail in Module 11. Here's a brief overview of why it's worth learning:
 
-# Execute comprehensive benchmark
-run_filesystem_benchmark "$MOUNT_POINT" "$TEST_SIZE"
-analyze_filesystem_performance "$MOUNT_POINT"
+#### ZFS Key Features
+- **Built-in RAID**: No need for separate RAID controllers
+- **Snapshots and Clones**: Instant, space-efficient snapshots
+- **Data Integrity**: Checksums and self-healing
+- **Compression**: Transparent data compression
+- **Deduplication**: Eliminates duplicate data blocks
+
+#### How ZFS Differs from Traditional Storage
+```
+Traditional Approach:
+[Disk] → [RAID Controller] → [Partition] → [Filesystem] → [Application]
+
+ZFS Approach:
+[Disk] → [ZFS Pool] → [ZFS Dataset] → [Application]
 ```
 
-### LVM Administration
+### ZFS Use Cases
 
-#### Advanced LVM Operations
+#### When ZFS Excels:
+- **Data integrity is critical** (databases, file servers)
+- **Need frequent snapshots** (development, testing)
+- **Large storage pools** (multiple TB/PB of data)
+- **Virtual machine storage** (Proxmox, VMware)
+- **NAS and file sharing** environments
+
+#### Simple ZFS Example (Preview)
 ```bash
-#!/bin/bash
-# advanced-lvm-operations.sh - Enterprise LVM management
+# Create ZFS pool (covered in Module 11)
+sudo zpool create datapool /dev/sdb /dev/sdc
 
-VG_NAME="vg_data"
-SNAPSHOT_SIZE="10G"
-LOG_FILE="/var/log/lvm-operations.log"
+# Create dataset
+sudo zfs create datapool/documents
 
-log_operation() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
-}
+# Take snapshot
+sudo zfs snapshot datapool/documents@backup-2024-01-15
 
-# Create comprehensive LVM setup
-create_lvm_infrastructure() {
-    local disks=("$@")
-    
-    log_operation "Starting LVM infrastructure creation"
-    
-    # Create physical volumes with optimal alignment
-    for disk in "${disks[@]}"; do
-        log_operation "Creating PV on $disk"
-        sudo pvcreate --dataalignment 1M "$disk"
-        
-        # Verify PV creation
-        if sudo pvdisplay "$disk" &>/dev/null; then
-            log_operation "PV created successfully on $disk"
-        else
-            log_operation "ERROR: Failed to create PV on $disk"
-            exit 1
-        fi
-    done
-    
-    # Create volume group with optimal extent size
-    log_operation "Creating volume group $VG_NAME"
-    sudo vgcreate -s 32M "$VG_NAME" "${disks[@]}"
-    
-    # Display VG information
-    sudo vgdisplay "$VG_NAME"
-    log_operation "Volume group $VG_NAME created successfully"
-}
-
-# Advanced logical volume creation with thin provisioning
-create_thin_provisioned_volumes() {
-    local vg_name="$1"
-    local pool_size="$2"
-    
-    log_operation "Creating thin provisioning setup"
-    
-    # Create thin pool
-    sudo lvcreate -L "$pool_size" --thinpool thinpool01 "$vg_name"
-    
-    # Create thin volumes (overprovisioned)
-    sudo lvcreate -V 50G --thin "$vg_name/thinpool01" -n web01
-    sudo lvcreate -V 50G --thin "$vg_name/thinpool01" -n web02
-    sudo lvcreate -V 100G --thin "$vg_name/thinpool01" -n database01
-    
-    # Monitor thin pool usage
-    sudo lvs -o +thin_count,pool_lv,data_percent,metadata_percent "$vg_name"
-    
-    log_operation "Thin provisioning setup completed"
-}
-
-# Live filesystem extension without downtime
-extend_filesystem_online() {
-    local lv_path="$1"
-    local extend_size="$2"
-    local mount_point="$3"
-    
-    log_operation "Starting online filesystem extension for $lv_path"
-    
-    # Check current sizes
-    local current_lv_size=$(sudo lvdisplay "$lv_path" | grep "LV Size" | awk '{print $3 $4}')
-    local current_fs_size=$(df -h "$mount_point" | tail -1 | awk '{print $2}')
-    
-    log_operation "Current LV size: $current_lv_size, FS size: $current_fs_size"
-    
-    # Extend logical volume
-    sudo lvextend -L "+$extend_size" "$lv_path"
-    
-    # Extend filesystem based on type
-    local fs_type=$(findmnt -n -o FSTYPE "$mount_point")
-    
-    case "$fs_type" in
-        "ext4"|"ext3"|"ext2")
-            sudo resize2fs "$lv_path"
-            ;;
-        "xfs")
-            sudo xfs_growfs "$mount_point"
-            ;;
-        "btrfs")
-            sudo btrfs filesystem resize max "$mount_point"
-            ;;
-        *)
-            log_operation "ERROR: Unsupported filesystem type: $fs_type"
-            exit 1
-            ;;
-    esac
-    
-    # Verify extension
-    local new_lv_size=$(sudo lvdisplay "$lv_path" | grep "LV Size" | awk '{print $3 $4}')
-    local new_fs_size=$(df -h "$mount_point" | tail -1 | awk '{print $2}')
-    
-    log_operation "New LV size: $new_lv_size, FS size: $new_fs_size"
-    log_operation "Online filesystem extension completed successfully"
-}
-
-# Automated snapshot management with rotation
-manage_lvm_snapshots() {
-    local lv_path="$1"
-    local retention_days="$2"
-    
-    local lv_name=$(basename "$lv_path")
-    local vg_name=$(dirname "$lv_path" | xargs basename)
-    local timestamp=$(date +%Y%m%d_%H%M%S)
-    local snapshot_name="${lv_name}_snap_${timestamp}"
-    
-    log_operation "Creating snapshot $snapshot_name for $lv_path"
-    
-    # Create snapshot
-    sudo lvcreate -L "$SNAPSHOT_SIZE" -s -n "$snapshot_name" "$lv_path"
-    
-    # Verify snapshot creation
-    if sudo lvdisplay "/dev/$vg_name/$snapshot_name" &>/dev/null; then
-        log_operation "Snapshot $snapshot_name created successfully"
-        
-        # Mount snapshot for backup access
-        local snap_mount="/mnt/snapshots/$snapshot_name"
-        sudo mkdir -p "$snap_mount"
-        sudo mount "/dev/$vg_name/$snapshot_name" "$snap_mount" -o ro,nouuid 2>/dev/null
-        
-        log_operation "Snapshot mounted at $snap_mount for backup access"
-    else
-        log_operation "ERROR: Failed to create snapshot $snapshot_name"
-        exit 1
-    fi
-    
-    # Cleanup old snapshots
-    log_operation "Cleaning up snapshots older than $retention_days days"
-    
-    while IFS= read -r old_snapshot; do
-        local snap_date=$(echo "$old_snapshot" | grep -o '[0-9]\{8\}_[0-9]\{6\}')
-        local snap_epoch=$(date -d "${snap_date:0:8} ${snap_date:9:2}:${snap_date:11:2}:${snap_date:13:2}" +%s)
-        local cutoff_epoch=$(date -d "$retention_days days ago" +%s)
-        
-        if [[ $snap_epoch -lt $cutoff_epoch ]]; then
-            log_operation "Removing old snapshot: $old_snapshot"
-            
-            # Unmount if mounted
-            local old_snap_mount="/mnt/snapshots/$old_snapshot"
-            if mountpoint -q "$old_snap_mount" 2>/dev/null; then
-                sudo umount "$old_snap_mount"
-                sudo rmdir "$old_snap_mount"
-            fi
-            
-            # Remove snapshot
-            sudo lvremove -f "/dev/$vg_name/$old_snapshot"
-        fi
-    done <<< "$(sudo lvs --noheadings -o lv_name "$vg_name" | grep "${lv_name}_snap_" | tr -d ' ')"
-}
-
-# Performance monitoring and optimization
-monitor_lvm_performance() {
-    local vg_name="$1"
-    
-    echo "=== LVM Performance Analysis ==="
-    
-    # VG performance metrics
-    echo "Volume Group Statistics:"
-    sudo vgdisplay "$vg_name" | grep -E "(VG Size|PE Size|Alloc PE|Free PE)"
-    
-    # LV performance metrics
-    echo ""
-    echo "Logical Volume Statistics:"
-    sudo lvs -o +stripes,stripesize,chunksize "$vg_name"
-    
-    # Physical volume performance
-    echo ""
-    echo "Physical Volume Performance:"
-    for pv in $(sudo vgdisplay "$vg_name" | grep "PV Name" | awk '{print $3}'); do
-        echo "PV: $pv"
-        sudo pvs -o +pv_used,pv_free "$pv"
-        
-        # Check underlying device performance
-        local device=$(echo "$pv" | sed 's/[0-9]*$//')
-        iostat -x 1 1 "$device" | tail -1
-    done
-    
-    # Thin pool monitoring (if exists)
-    if sudo lvs --noheadings -o pool_lv "$vg_name" | grep -q "thinpool"; then
-        echo ""
-        echo "Thin Pool Statistics:"
-        sudo lvs -o +data_percent,metadata_percent,pool_lv "$vg_name" | grep thinpool
-    fi
-}
-
-# Example usage
-DISKS=("/dev/sdb" "/dev/sdc" "/dev/sdd")
-create_lvm_infrastructure "${DISKS[@]}"
-create_thin_provisioned_volumes "$VG_NAME" "200G"
-extend_filesystem_online "/dev/$VG_NAME/web01" "10G" "/var/www"
-manage_lvm_snapshots "/dev/$VG_NAME/database01" "7"
-monitor_lvm_performance "$VG_NAME"
+# List snapshots
+sudo zfs list -t snapshot
 ```
 
-### RAID Configuration
+### Preparing for Module 11
 
-#### Comprehensive RAID Management System
+To get ready for ZFS training:
+
+1. **Understand RAID concepts** from this module
+2. **Practice with LVM** to understand storage abstraction
+3. **Learn basic pool and volume concepts**
+4. **Familiarize yourself with snapshot concepts**
+
+### EXT4/XFS vs ZFS Comparison
+
+| Feature | EXT4 | XFS | ZFS |
+|---------|------|-----|-----|
+| Maturity | Very High | High | High |
+| Max File Size | 16TB | 8EB | 16EB |
+| Snapshots | No | No | Yes |
+| Compression | No | No | Yes |
+| Checksums | No | No | Yes |
+| RAID Support | External | External | Built-in |
+| Complexity | Low | Low | Medium |
+
+### When to Use Each Filesystem
+
+#### Choose EXT4 when:
+- Simple, single-disk setups
+- Maximum compatibility needed
+- Learning Linux fundamentals
+- Limited system resources
+
+#### Choose XFS when:
+- Large files (video, databases)
+- High-performance requirements
+- Growing filesystems
+- Enterprise environments
+
+#### Choose ZFS when:
+- Data integrity is paramount
+- Need snapshots and clones
+- Managing large storage pools
+- Advanced features required
+
+---
+
+## Simple Practical Labs
+
+### Lab 1: Basic Partitioning and Filesystem Management
+
+**Objective**: Practice fundamental storage operations with EXT4 and XFS
+
+**Prerequisites**: Virtual machine with at least one additional virtual disk
+
+#### Exercise 1: Create and Use EXT4 Filesystem
+```bash
+# 1. Check available disks
+lsblk
+
+# 2. Create partition on second disk
+sudo fdisk /dev/sdb
+# - Press 'n' for new partition
+# - Accept defaults for primary partition
+# - Press 'w' to write changes
+
+# 3. Create EXT4 filesystem
+sudo mkfs.ext4 -L "lab-data" /dev/sdb1
+
+# 4. Create mount point and mount
+sudo mkdir /mnt/lab-data
+sudo mount /dev/sdb1 /mnt/lab-data
+
+# 5. Test filesystem
+echo "Hello from EXT4!" | sudo tee /mnt/lab-data/test.txt
+cat /mnt/lab-data/test.txt
+
+# 6. Check filesystem information
+sudo tune2fs -l /dev/sdb1 | head -20
+```
+
+#### Exercise 2: Add to fstab and Test
+```bash
+# 1. Get UUID of the filesystem
+sudo blkid /dev/sdb1
+
+# 2. Add to fstab (replace UUID with actual value)
+echo "UUID=your-uuid-here /mnt/lab-data ext4 defaults,noatime 0 2" | sudo tee -a /etc/fstab
+
+# 3. Test fstab entry
+sudo umount /mnt/lab-data
+sudo mount -a
+df -h | grep lab-data
+```
+
+#### Exercise 3: Compare with XFS
+```bash
+# 1. Create another partition for XFS
+sudo fdisk /dev/sdb
+# - Create second partition
+
+# 2. Create XFS filesystem
+sudo mkfs.xfs -L "lab-xfs" /dev/sdb2
+
+# 3. Mount and test
+sudo mkdir /mnt/lab-xfs
+sudo mount /dev/sdb2 /mnt/lab-xfs
+echo "Hello from XFS!" | sudo tee /mnt/lab-xfs/test.txt
+
+# 4. Compare filesystem info
+sudo xfs_info /mnt/lab-xfs
+```
+
+### Lab 2: LVM Basics
+
+**Objective**: Create and manage LVM logical volumes
+
+#### Exercise 1: Create LVM Setup
+```bash
+# 1. Create physical volume
+sudo pvcreate /dev/sdb3
+
+# 2. Create volume group
+sudo vgcreate lab-vg /dev/sdb3
+
+# 3. Create logical volumes
+sudo lvcreate -L 1G -n web-data lab-vg
+sudo lvcreate -L 500M -n logs lab-vg
+
+# 4. Check what we created
+sudo pvs
+sudo vgs
+sudo lvs
+```
+
+#### Exercise 2: Create Filesystems and Mount
+```bash
+# 1. Create filesystems
+sudo mkfs.ext4 /dev/lab-vg/web-data
+sudo mkfs.ext4 /dev/lab-vg/logs
+
+# 2. Create mount points
+sudo mkdir -p /srv/web /var/log/app
+
+# 3. Mount logical volumes
+sudo mount /dev/lab-vg/web-data /srv/web
+sudo mount /dev/lab-vg/logs /var/log/app
+
+# 4. Test
+echo "Web content" | sudo tee /srv/web/index.html
+echo "Application logs" | sudo tee /var/log/app/app.log
+```
+
+#### Exercise 3: Extend Logical Volume
+```bash
+# 1. Add more space to web-data
+sudo lvextend -L +500M /dev/lab-vg/web-data
+
+# 2. Extend the filesystem
+sudo resize2fs /dev/lab-vg/web-data
+
+# 3. Verify the change
+df -h | grep web-data
+```
+
+### Lab 3: Basic Storage Security
+
+**Objective**: Practice file permissions, ACLs, and basic quotas
+
+#### Exercise 1: File Permissions
+```bash
+# 1. Create test directories
+sudo mkdir -p /data/{public,private,shared}
+
+# 2. Set different permission levels
+sudo chmod 755 /data/public    # Everyone can read
+sudo chmod 700 /data/private   # Owner only
+sudo chmod 750 /data/shared    # Owner and group
+
+# 3. Test permissions
+ls -la /data/
+```
+
+#### Exercise 2: Basic ACLs
+```bash
+# 1. Install ACL tools
+sudo apt update && sudo apt install acl
+
+# 2. Enable ACLs on filesystem
+sudo mount -o remount,acl /data
+
+# 3. Set specific user permissions
+sudo setfacl -m u:$(whoami):rw /data/shared/
+sudo setfacl -m g:users:r /data/shared/
+
+# 4. View ACL settings
+getfacl /data/shared/
+```
+
+#### Exercise 3: Simple Backup
+```bash
+# 1. Create backup script
+cat > ~/simple-backup.sh << 'EOF'
+#!/bin/bash
+DATE=$(date +%Y%m%d_%H%M%S)
+sudo tar -czf /tmp/data-backup-$DATE.tar.gz /data
+echo "Backup created: /tmp/data-backup-$DATE.tar.gz"
+EOF
+
+# 2. Make it executable and run
+chmod +x ~/simple-backup.sh
+~/simple-backup.sh
+
+# 3. Verify backup
+ls -la /tmp/data-backup-*
+```
+
+### Lab 4: Storage Monitoring
+
+**Objective**: Monitor storage usage and health
+
+#### Exercise 1: Disk Usage Monitoring
+```bash
+# 1. Check current disk usage
+df -h
+
+# 2. Find large files
+find /data -type f -size +1M -exec ls -lh {} \; 2>/dev/null
+
+# 3. Create usage monitoring script
+cat > ~/disk-check.sh << 'EOF'
+#!/bin/bash
+THRESHOLD=80
+
+echo "=== Disk Usage Report ==="
+date
+echo ""
+
+df -h | grep -vE '^Filesystem|tmpfs|cdrom' | while read output; do
+    usage=$(echo $output | awk '{ print $5}' | cut -d'%' -f1)
+    partition=$(echo $output | awk '{ print $6 }')
+    
+    if [ $usage -ge $THRESHOLD ]; then
+        echo "WARNING: $partition is ${usage}% full"
+    else
+        echo "OK: $partition is ${usage}% full"
+    fi
+done
+EOF
+
+chmod +x ~/disk-check.sh
+~/disk-check.sh
+```
+
+#### Exercise 2: SMART Monitoring
+```bash
+# 1. Install SMART tools
+sudo apt install smartmontools
+
+# 2. Check disk health
+sudo smartctl -H /dev/sda
+
+# 3. View SMART attributes
+sudo smartctl -A /dev/sda | grep -E "(Raw_Read_Error_Rate|Reallocated_Sector|Power_On_Hours)"
+```
+
+### Lab Solutions and Expected Outcomes
+
+After completing these labs, you should have:
+
+1. **Partitioned disks** and created both EXT4 and XFS filesystems
+2. **Working LVM setup** with logical volumes and filesystems
+3. **Basic security** with permissions and ACLs configured
+4. **Monitoring scripts** for disk usage and health checks
+5. **Simple backup** procedures in place
+
+These hands-on exercises provide practical experience with the storage management concepts covered in this module and prepare you for the advanced ZFS topics in Module 11.
+
+---
+
+*This concludes Module 10: Storage and Filesystem Management. You now have the foundational knowledge needed to manage Linux storage systems effectively, from basic partitioning through LVM and security considerations. In Module 11, we'll explore ZFS as an advanced storage solution with built-in features that simplify many of the tasks covered here.*
 ```bash
 #!/bin/bash
 # enterprise-raid-manager.sh - Complete RAID management solution
