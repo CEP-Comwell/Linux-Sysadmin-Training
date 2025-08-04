@@ -39,12 +39,20 @@ This comprehensive repository guides experienced Windows sysadmins through a str
    - [4.6 Package Building and Custom Repositories](Module4_Package_Management.md#46-package-building-and-custom-repositories)
 
 5. **[Module 5: Processes & Services](Module5_Processes_and_Services.md)**
-   - [5.1 Process Management and Control](Module5_Processes_and_Services.md#51-process-management-and-control)
-   - [5.2 systemd Service Management](Module5_Processes_and_Services.md#52-systemd-service-management)
-   - [5.3 System Initialization and Boot Process](Module5_Processes_and_Services.md#53-system-initialization-and-boot-process)
-   - [5.4 Advanced Process Control](Module5_Processes_and_Services.md#54-advanced-process-control)
-   - [5.5 Resource Management and Limits](Module5_Processes_and_Services.md#55-resource-management-and-limits)
-   - [5.6 Service Dependencies and Ordering](Module5_Processes_and_Services.md#56-service-dependencies-and-ordering)
+   - [5.1 Process Basics (Beginner)](Module5_Processes_and_Services.md#51-process-basics-beginner)
+   - [5.2 Process Monitoring (Intermediate)](Module5_Processes_and_Services.md#52-process-monitoring-intermediate)
+   - [5.3 Process Control (Intermediate)](Module5_Processes_and_Services.md#53-process-control-intermediate)
+   - [5.4 Basic Service Management (Intermediate)](Module5_Processes_and_Services.md#54-basic-service-management-intermediate)
+   - [5.5 Essential Systemd Operations (Advanced)](Module5_Processes_and_Services.md#55-essential-systemd-operations-advanced)
+   - [Essential Command Reference](Module5_Processes_and_Services.md#essential-command-reference)
+   - [Quick Start Commands](Module5_Processes_and_Services.md#quick-start-commands)
+   - [Understanding Linux Service Management Evolution](Module5_Processes_and_Services.md#understanding-linux-service-management-evolution)
+   - [Practical Examples](Module5_Processes_and_Services.md#practical-examples)
+   - [Lab Exercises](Module5_Processes_and_Services.md#lab-exercises-45-minutes-total)
+   - [Best Practices](Module5_Processes_and_Services.md#best-practices)
+   - [Troubleshooting](Module5_Processes_and_Services.md#troubleshooting)
+   - [Summary](Module5_Processes_and_Services.md#summary)
+   - [Next Steps](Module5_Processes_and_Services.md#next-steps)
 
 6. **[Module 6: Users, Groups & Authentication](Module6_Users_Groups_and_Authentication.md)**
    - [6.1 User and Group Management](Module6_Users_Groups_and_Authentication.md#61-user-and-group-management)
