@@ -11,7 +11,7 @@
   - [7.5 Basic Network Troubleshooting](#75-basic-network-troubleshooting)
   - [7.6 Firewall Basics](#76-firewall-basics)
   - [7.7 SSH Configuration](#77-ssh-configuration)
-  - [7.8 VPN Setup (WireGuard & IPSec)](#78-vpn-setup-wireguard--ipsec)
+  - [7.8 VPN Setup (WireGuard)](#78-vpn-setup-wireguard)
 - [Essential Commands](#essential-commands)
 - [Practical Examples](#practical-examples)
 - [Lab Exercises](#lab-exercises)
@@ -28,7 +28,7 @@ This module covers practical Linux networking fundamentals for daily system admi
 - Essential network troubleshooting techniques
 - Firewall configuration with `ufw` and `firewalld`
 - SSH server configuration and security
-- WireGuard and IPSec VPN basics
+- WireGuard VPN basics
 
 ## Learning Objectives
 
@@ -40,7 +40,7 @@ By the end of this module, you will be able to:
 4. **Diagnose Network Issues**: Use essential tools like `ping`, `traceroute`, and `ss` for troubleshooting
 5. **Configure Basic Firewalls**: Set up host-based firewalls with `ufw` and `firewalld`
 6. **Secure SSH**: Configure SSH server for secure remote access
-7. **Set Up Basic VPNs**: Configure WireGuard and IPSec for secure connections
+7. **Set Up Basic VPNs**: Configure WireGuard for secure connections
 
 ## Topics Covered
 
@@ -86,7 +86,7 @@ By the end of this module, you will be able to:
 - Disabling password authentication
 - Basic SSH security practices
 
-### 7.8 VPN Setup (WireGuard & IPSec)
+### 7.8 VPN Setup (WireGuard)
 - WireGuard installation and basic configuration
 - Creating WireGuard peer connections
 
@@ -560,53 +560,6 @@ Endpoint = server.example.com:51820
 AllowedIPs = 0.0.0.0/0
 ```
 
-#### Basic IPSec with strongSwan
-```bash
-# Install strongSwan
-sudo apt install strongswan
-
-# Basic configuration
-sudo nano /etc/ipsec.conf
-
-config setup
-    charondebug="ike 1, knl 1, cfg 0"
-    uniqueids=no
-
-conn ikev2-vpn
-    auto=add
-    compress=no
-    type=tunnel
-    keyexchange=ikev2
-    fragmentation=yes
-    forceencaps=yes
-    dpdaction=clear
-    dpddelay=300s
-    rekey=no
-    left=%any
-    leftid=server.example.com
-    leftcert=server-cert.pem
-    leftsendcert=always
-    leftsubnet=0.0.0.0/0
-    right=%any
-    rightid=%any
-    rightauth=eap-mschapv2
-    rightsourceip=10.10.10.0/24
-    rightdns=8.8.8.8,8.8.4.4
-    rightsendcert=never
-    eap_identity=%identity
-
-# Secrets configuration
-sudo nano /etc/ipsec.secrets
-
-# RSA private key
-: RSA "server-key.pem"
-
-# EAP user credentials
-username : EAP "password"
-
-# Start strongSwan
-sudo systemctl start strongswan
-sudo systemctl enable strongswan
 ## Lab Exercises
 
 ### Lab 1: Basic Network Configuration
@@ -716,23 +669,23 @@ sudo systemctl enable strongswan
 
 ### Lab 5: VPN Setup (Optional Advanced Lab)
 
-**Objective**: Set up basic VPN connections
+**Objective**: Set up basic WireGuard VPN
 
 **Tasks**:
 1. **WireGuard Configuration**:
    - Install WireGuard
-   - Generate keys
+   - Generate keys for server and client
    - Configure server and client
    - Test VPN connection
 
-2. **IPSec with strongSwan**:
-   - Install strongSwan
-   - Basic IPSec configuration
-   - Test site-to-site connection
+2. **WireGuard Management**:
+   - Start and stop WireGuard connections
+   - Monitor VPN status
+   - Troubleshoot connection issues
 
 **Expected Results**:
 - Understand VPN concepts
-- Configure basic VPN connectivity
+- Configure basic WireGuard VPN connectivity
 - Test secure tunneled connections
 
 ## Next Steps
