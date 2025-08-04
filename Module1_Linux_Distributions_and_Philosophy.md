@@ -502,15 +502,19 @@ After mastering Linux distributions and philosophy, proceed to:
 
 The foundation established in this module directly influences decisions throughout your Linux administration journey, from filesystem choices to security implementations and automation strategies.
 
-## Further Learning & Classic Resources
+## Further Learning & Expert Perspectives
 
-Explore these classic and expert resources for deeper historical context and practical Linux/Unix fundamentals:
+Explore these expert-driven resources for deeper insight into Linux distributions, philosophy, and decision-making:
 
-- [DJ Ware YouTube Channel (Linux/Unix History & Deep Dives)](https://www.youtube.com/c/djware)
-- [LearnLinuxTV (Linux Tutorials & Reviews)](https://www.youtube.com/c/LearnLinuxtv)
-- [UNIX: The Original Documentation (Unix Heritage Society)](https://www.tuhs.org/)
-- [Linux Documentation Project (Classic Guides & HOWTOs)](https://tldp.org/)
-- [The Art of Unix Programming (Eric S. Raymond, online book)](http://catb.org/~esr/writings/taoup/html/)
-- [Linux From Scratch (Build Your Own Linux, Step by Step)](https://www.linuxfromscratch.org/)
+- [Linux Distro Decision Tree (Chris Titus Tech)](https://christitus.com/linux-distro-picker/)  
+  A practical, interactive guide to choosing the right Linux distribution, with expert commentary and rationale.
+- [Linux Distribution Families Explained (LearnLinuxTV)](https://www.youtube.com/watch?v=ZtqBQ68cfJc)  
+  A clear video breakdown of major Linux families, their philosophies, and use cases.
+- [Why Are There So Many Linux Distros? (The Linux Experiment)](https://www.youtube.com/watch?v=ZL6gG1U6r6w)  
+  Explores the historical and philosophical reasons behind the diversity of Linux distributions.
+- [Unix Philosophy: Do One Thing Well (Brodie Robertson)](https://www.youtube.com/watch?v=1y8QhRZQ2vA)  
+  A modern take on the Unix philosophy and how it shapes Linux development and distribution.
+- [How to Choose a Linux Distro (DistroTube)](https://www.youtube.com/watch?v=Zk6a3j3zOaQ)  
+  A deep-dive video on evaluating distributions for different needs, with a focus on philosophy and practical criteria.
 
-> 💡 These resources provide both historical perspective and hands-on training, bridging the gap between classic Unix philosophy and modern Linux administration.
+> 💡 These resources are curated for their direct relevance to Linux distribution selection, philosophy, and foundational decision-making.
