@@ -10,11 +10,33 @@
   - [5.4 Basic Service Management](#54-basic-service-management)
   - [5.5 Essential Systemd Operations](#55-essential-systemd-operations)
 - [Essential Command Reference](#essential-command-reference)
+  - [Process Monitoring Commands](#process-monitoring-commands)
+  - [Process Control Commands](#process-control-commands)
+  - [Service Management Commands](#service-management-commands)
+  - [System Monitoring Commands](#system-monitoring-commands)
+- [Understanding Linux Service Management Evolution](#understanding-linux-service-management-evolution)
+  - [From init.d to systemd: A Brief History](#from-initd-to-systemd-a-brief-history)
+  - [Understanding systemd Service States](#understanding-systemd-service-states)
 - [Practical Examples](#practical-examples)
+  - [Basic Process Monitoring Examples](#basic-process-monitoring-examples)
+  - [Understanding Background Processes and SSH](#understanding-background-processes-and-ssh)
+  - [Service Management Examples](#service-management-examples)
 - [Lab Exercises](#lab-exercises)
+  - [Lab 1: Basic Process Monitoring](#lab-1-basic-process-monitoring)
+  - [Lab 2: Process Control and SSH Management](#lab-2-process-control-and-ssh-management)
+  - [Lab 3: Mastering Systemd Service Management](#lab-3-mastering-systemd-service-management)
 - [Best Practices](#best-practices)
+  - [Process Management Best Practices](#process-management-best-practices)
+  - [SSH and Remote Process Management](#ssh-and-remote-process-management)
+  - [Service Management Best Practices](#service-management-best-practices)
 - [Troubleshooting](#troubleshooting)
+  - [Understanding Error Codes and Exit Status](#understanding-error-codes-and-exit-status)
+  - [Common Process Problems](#common-process-problems)
+  - [SSH-Related Process Issues](#ssh-related-process-issues)
+  - [Common Service Problems](#common-service-problems)
+  - [General Troubleshooting Steps](#general-troubleshooting-steps)
 - [Summary](#summary)
+- [Next Steps](#next-steps)
 
 ## Overview
 Learn the essential skills for managing processes and services in Linux systems. This module covers the fundamental commands and concepts needed to monitor running processes, control system services, and troubleshoot basic performance issues.
@@ -26,6 +48,8 @@ Learn the essential skills for managing processes and services in Linux systems.
 - Common troubleshooting techniques
 - Essential command-line tools for system monitoring
 
+[↑ Back to Top](#table-of-contents)
+
 ## Learning Objectives
 By the end of this module, you will be able to:
 
@@ -35,6 +59,8 @@ By the end of this module, you will be able to:
 4. **Manage Services**: Start, stop, and check the status of system services
 5. **Use Systemd Basics**: Understand and use basic systemd commands
 6. **Troubleshoot Issues**: Find and fix common process and service problems
+
+[↑ Back to Top](#table-of-contents)
 
 ## Topics
 
@@ -80,6 +106,8 @@ By the end of this module, you will be able to:
 - **Common systemctl troubleshooting commands**
 - Basic troubleshooting with `journalctl`
 - **Reading and interpreting service status output**
+
+[↑ Back to Top](#table-of-contents)
 
 ## Essential Command Reference
 
@@ -127,6 +155,8 @@ By the end of this module, you will be able to:
 | `free` | Memory usage | `free -h` |
 | `df` | Disk usage | `df -h` |
 | `who` | Who is logged in | `who`, `w` |
+
+[↑ Back to Top](#table-of-contents)
 
 ## Understanding Linux Service Management Evolution
 
@@ -234,6 +264,8 @@ systemctl status nginx
 - **Main PID**: Primary process ID
 - **Tasks**: Number of processes/threads
 - **Memory**: Current memory usage
+
+[↑ Back to Top](#table-of-contents)
 
 ## Practical Examples
 
@@ -510,6 +542,8 @@ systemctl list-unit-files --type=service --state=enabled
 # Restart a service safely
 sudo systemctl restart ssh
 ```
+
+[↑ Back to Top](#table-of-contents)
 
 ## Lab Exercises
 
@@ -804,6 +838,8 @@ systemctl status nginx
 
 </details>
 
+[↑ Back to Top](#table-of-contents)
+
 ## Best Practices
 
 ### Process Management Best Practices
@@ -920,6 +956,8 @@ systemctl status nginx
    - Keep services updated
    - Monitor service logs for unusual activity
    - Use `systemctl mask` to completely prevent a service from starting
+
+[↑ Back to Top](#table-of-contents)
 
 ## Troubleshooting
 
@@ -1355,6 +1393,8 @@ systemctl status nginx
    - Keep track of common problems
    - Remember solutions for next time
 
+[↑ Back to Top](#table-of-contents)
+
 ## Summary
 
 This module covered the essential skills for managing processes and services in Linux systems. You learned:
@@ -1389,3 +1429,5 @@ Continue building your Linux administration skills with:
 - **Module 8: Logging and Monitoring** - Advanced system monitoring and log analysis
 
 The process and service management skills from this module are fundamental for maintaining stable Linux systems and will be used throughout your system administration career.
+
+[↑ Back to Top](#table-of-contents)
