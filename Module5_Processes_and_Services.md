@@ -78,7 +78,7 @@ By the end of this module, you will be able to:
 - Foreground vs background processes
 - Understanding process hierarchy
 
-**📖 Related Commands:** [Process Monitoring Commands](#process-monitoring-commands)
+# Related Commands: [Process Monitoring Commands](#process-monitoring-commands) 🟢
 #
 ### 5.2 Process Monitoring (Intermediate) 🟡
 - Using `ps` command to list processes
@@ -87,7 +87,7 @@ By the end of this module, you will be able to:
 - Checking process resource usage
 - Basic performance monitoring
 
-**📖 Related Commands:** [Process Monitoring Commands](#process-monitoring-commands) | [System Monitoring Commands](#system-monitoring-commands)
+# Related Commands: [Process Monitoring Commands](#process-monitoring-commands) | [System Monitoring Commands](#system-monitoring-commands) 🟡
 
 ### 5.3 Process Control (Intermediate) 🟡
 - Starting and stopping processes
@@ -98,7 +98,7 @@ By the end of this module, you will be able to:
 - **Critical importance of background processes for SSH sessions**
 - **Preventing process termination when SSH disconnects**
 
-**📖 Related Commands:** [Process Control Commands](#process-control-commands) | [Quick Start Commands](#quick-start-commands)
+# Related Commands: [Process Control Commands](#process-control-commands) | [Quick Start Commands](#quick-start-commands) 🟡
 
 ### 5.4 Basic Service Management (Intermediate) 🟡
 - **Historical context: From init.d to systemd evolution**
@@ -109,7 +109,7 @@ By the end of this module, you will be able to:
 - Common system services (web servers, databases, etc.)
 - **Service state management vs boot configuration**
 
-**📖 Related Commands:** [Service Management Commands](#service-management-commands) | [Quick Start Commands](#quick-start-commands)
+# Related Commands: [Service Management Commands](#service-management-commands) | [Quick Start Commands](#quick-start-commands) 🟡
 
 ### 5.5 Essential Systemd Operations (Advanced) 🔴
 - **Understanding systemd service states in detail**
@@ -122,14 +122,14 @@ By the end of this module, you will be able to:
 - Basic troubleshooting with `journalctl`
 - **Reading and interpreting service status output**
 
-**📖 Related Commands:** [Service Management Commands](#service-management-commands) | [System Monitoring Commands](#system-monitoring-commands)
+# Related Commands: [Service Management Commands](#service-management-commands) | [System Monitoring Commands](#system-monitoring-commands) 🔴
 
 [↑ Back to Top](#table-of-contents)
 
 ## Essential Command Reference
 
 ### Process Monitoring Commands
-**📚 Related Topics:** [5.1 Process Basics](#51-process-basics-beginner) | [5.2 Process Monitoring](#52-process-monitoring-intermediate)
+# Related Topics: [5.1 Process Basics](#51-process-basics-beginner) | [5.2 Process Monitoring](#52-process-monitoring-intermediate)
 
 | Command | Purpose | Common Examples |
 |---------|---------|-----------------|
@@ -140,7 +140,7 @@ By the end of this module, you will be able to:
 | `pidof` | Get PID of process | `pidof nginx` |
 
 ### Process Control Commands
-**📚 Related Topics:** [5.3 Process Control](#53-process-control-intermediate)
+# Related Topics: [5.3 Process Control](#53-process-control-intermediate)
 
 | Command | Purpose | Common Examples | SSH Usage Notes |
 |---------|---------|-----------------|-----------------|
@@ -155,7 +155,7 @@ By the end of this module, you will be able to:
 | `tmux` | Terminal multiplexer | `tmux new -s name` | **Alternative to screen** |
 
 ### Service Management Commands
-**📚 Related Topics:** [5.4 Basic Service Management](#54-basic-service-management-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
+# Related Topics: [5.4 Basic Service Management](#54-basic-service-management-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
 
 | Command | Purpose | Common Examples |
 |---------|---------|-----------------|
@@ -168,7 +168,7 @@ By the end of this module, you will be able to:
 | `journalctl` | View service logs | `journalctl -u nginx`, `journalctl -f` |
 
 ### System Monitoring Commands
-**📚 Related Topics:** [5.2 Process Monitoring](#52-process-monitoring-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
+# Related Topics: [5.2 Process Monitoring](#52-process-monitoring-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
 
 | Command | Purpose | Common Examples |
 |---------|---------|-----------------|
