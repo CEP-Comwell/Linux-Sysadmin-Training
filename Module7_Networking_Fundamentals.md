@@ -17,7 +17,9 @@
 - [Lab Exercises](#lab-exercises)
 - [Next Steps](#next-steps)
 
+
 ## Overview
+[⬆️ Back to Top](#table-of-contents)
 
 This module covers practical Linux networking fundamentals for daily system administration. You'll learn to configure network interfaces, manage IP addressing, troubleshoot connectivity issues, and implement basic security measures using modern tools and best practices.
 
@@ -30,7 +32,9 @@ This module covers practical Linux networking fundamentals for daily system admi
 - SSH server configuration and security
 - WireGuard VPN basics
 
+
 ## Learning Objectives
+[⬆️ Back to Top](#table-of-contents)
 
 By the end of this module, you will be able to:
 
@@ -42,7 +46,9 @@ By the end of this module, you will be able to:
 6. **Secure SSH**: Configure SSH server for secure remote access
 7. **Set Up Basic VPNs**: Configure WireGuard for secure connections
 
+
 ## Topics Covered
+[⬆️ Back to Top](#table-of-contents)
 
 ### 7.1 Network Interface Management
 - Modern interface naming conventions (eth0, enp0s3, etc.)
@@ -90,7 +96,9 @@ By the end of this module, you will be able to:
 - WireGuard installation and basic configuration
 - Creating WireGuard peer connections
 
+
 ## Essential Commands
+[⬆️ Back to Top](#table-of-contents)
 
 ### Network Interface Management
 | Command | Description | Example |
@@ -143,11 +151,15 @@ By the end of this module, you will be able to:
 | `iotop` | I/O monitor | `iotop -o` |
 | `lsof` | List open files/network connections | `lsof -i :80` |
 
+
 ## Practical Examples
+[⬆️ Back to Top](#table-of-contents)
 
 ### 7.1 Network Interface Management
+[Related Commands/Topics: ip, nmcli, ip link, ip addr, ip route] 🟢
 
 #### View Interface Information
+[Related Commands/Topics: ip a, ip link, nmcli device, nmcli device show] 🟢
 ```bash
 # Show all network interfaces
 ip a
@@ -166,6 +178,7 @@ nmcli device show eth0
 ```
 
 #### Basic Interface Management
+[Related Commands/Topics: ip link set, ip addr add, ip addr del, ip route show] 🟢
 ```bash
 # Bring interface up/down
 sudo ip link set eth0 up
@@ -181,6 +194,7 @@ sudo ip addr del 192.168.1.100/24 dev eth0
 ip route show
 ```
 ### 7.2 Netplan Configuration
+[Related Commands/Topics: netplan, netplan apply, netplan try, netplan --debug] 🟡
 
 #### Static IP Configuration
 Create `/etc/netplan/01-static.yaml`:
@@ -243,6 +257,7 @@ sudo netplan --debug apply
 ```
 
 ### 7.3 Legacy Network Configuration
+[Related Commands/Topics: /etc/network/interfaces, interfaces.d, systemd-networkd, nmcli] 🟡
 
 #### Using /etc/network/interfaces (Debian/Ubuntu)
 ```bash
@@ -300,6 +315,7 @@ nmcli con show
 ```
 
 ### 7.4 DNS Configuration
+[Related Commands/Topics: resolv.conf, systemd-resolved, dig, nslookup, host] 🟡
 
 #### Basic DNS Setup
 ```bash
@@ -348,6 +364,7 @@ sudo nano /etc/hosts
 ```
 
 ### 7.5 Network Troubleshooting
+[Related Commands/Topics: ping, traceroute, mtr, nc, telnet, ss, netstat, tcpdump] 🟡
 
 #### Connectivity Testing
 ```bash
@@ -400,6 +417,7 @@ tcpdump -r capture.pcap
 ```
 
 ### 7.6 Firewall Configuration
+[Related Commands/Topics: ufw, firewalld, firewall-cmd, iptables, iptables-save] 🟡
 
 #### UFW (Ubuntu Firewall)
 ```bash
@@ -467,6 +485,7 @@ sudo iptables-save > /etc/iptables/rules.v4
 ```
 
 ### 7.7 SSH Configuration
+[Related Commands/Topics: sshd_config, ssh, ssh-keygen, ssh-copy-id, systemctl restart sshd] 🟡
 
 #### Basic SSH Server Setup
 ```bash
@@ -522,6 +541,7 @@ sudo systemctl restart sshd
 ```
 
 ### 7.8 VPN Configuration
+[Related Commands/Topics: wireguard, wg, wg-quick, wg0.conf, systemctl enable wg-quick@wg0] 🟡
 
 #### WireGuard Setup
 ```bash
@@ -560,7 +580,9 @@ Endpoint = server.example.com:51820
 AllowedIPs = 0.0.0.0/0
 ```
 
+
 ## Lab Exercises
+[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: Basic Network Configuration
 
@@ -688,7 +710,9 @@ AllowedIPs = 0.0.0.0/0
 - Configure basic WireGuard VPN connectivity
 - Test secure tunneled connections
 
+
 ## Next Steps
+[⬆️ Back to Top](#table-of-contents)
 
 **Continue Learning**:
 - **Advanced Networking**: Explore VLAN, bonding, and advanced routing
