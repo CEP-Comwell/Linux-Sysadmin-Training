@@ -504,17 +504,18 @@ The foundation established in this module directly influences decisions througho
 
 ## Further Learning & Expert Perspectives
 
+
 Explore these expert-driven resources for deeper insight into Linux distributions, philosophy, and decision-making:
 
-- [Linux Distro Decision Tree (Chris Titus Tech)](https://christitus.com/linux-distro-picker/)  
-  A practical, interactive guide to choosing the right Linux distribution, with expert commentary and rationale.
-- [Linux Distribution Families Explained (LearnLinuxTV)](https://www.youtube.com/watch?v=ZtqBQ68cfJc)  
-  A clear video breakdown of major Linux families, their philosophies, and use cases.
-- [Why Are There So Many Linux Distros? (The Linux Experiment)](https://www.youtube.com/watch?v=ZL6gG1U6r6w)  
+- [Linux Distro Picker (Chris Titus Tech)](https://christitus.com/linux-distro-picker/)  
+  Interactive tool and guide for choosing a Linux distribution, with expert commentary.
+- [Linux Distro Families & Philosophy (The Linux Experiment)](https://www.youtube.com/watch?v=ZtqBQ68cfJc)  
+  Video breakdown of major Linux families, their philosophies, and use cases.
+- [Why Are There So Many Linux Distros? (DistroTube)](https://www.youtube.com/watch?v=ZL6gG1U6r6w)  
   Explores the historical and philosophical reasons behind the diversity of Linux distributions.
 - [Unix Philosophy: Do One Thing Well (Brodie Robertson)](https://www.youtube.com/watch?v=1y8QhRZQ2vA)  
-  A modern take on the Unix philosophy and how it shapes Linux development and distribution.
-- [How to Choose a Linux Distro (DistroTube)](https://www.youtube.com/watch?v=Zk6a3j3zOaQ)  
-  A deep-dive video on evaluating distributions for different needs, with a focus on philosophy and practical criteria.
+  Modern take on the Unix philosophy and its impact on Linux development.
+- [How to Choose a Linux Distro (LearnLinuxTV)](https://www.youtube.com/watch?v=Zk6a3j3zOaQ)  
+  A practical video guide to evaluating and selecting Linux distributions for different needs.
 
 > 💡 These resources are curated for their direct relevance to Linux distribution selection, philosophy, and foundational decision-making.
