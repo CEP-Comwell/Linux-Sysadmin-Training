@@ -256,7 +256,7 @@ By the end of this module, you will be able to:
 [⬆️ Back to Top](#table-of-contents)
 
 ### System Logging Configuration
-[Related Commands/Topics: Log Management Commands](#log-management-commands) 🟢
+[Related Commands/Topics: ](#log-management-commands)Log Management Commands 🟢
 
 #### Advanced rsyslog Configuration
 ```bash
@@ -550,7 +550,7 @@ create_journal_analysis
 echo "systemd journal configuration completed"
 ```
 ### Log Analysis and Processing
-[Related Commands/Topics: Log Analysis Commands](#log-analysis-commands) 🟢
+[Related Commands/Topics: ](#log-analysis-commands)Log Analysis Commands 🟢
 
 #### Advanced Log Analysis Toolkit
 ```bash
@@ -743,7 +743,7 @@ esac
 ```
 
 ### Performance Monitoring Tools
-[Related Commands/Topics: System Monitoring Commands](#system-monitoring-commands) 🟢
+[Related Commands/Topics: ](#system-monitoring-commands)System Monitoring Commands 🟢
 
 #### Comprehensive System Performance Monitor
 ```bash
@@ -1014,7 +1014,7 @@ esac
 ```
 
 ### Centralized Logging Implementation
-[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
+[Related Commands/Topics: ](#monitoring-infrastructure-commands)Monitoring Infrastructure Commands 🟡
 
 #### ELK Stack Deployment
 ```bash
@@ -1216,7 +1216,7 @@ echo "Elasticsearch API: http://localhost:9200"
 ```
 
 ### Monitoring Infrastructure Deployment
-[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
+[Related Commands/Topics: ](#monitoring-infrastructure-commands)Monitoring Infrastructure Commands 🟡
 
 #### Complete Prometheus and Grafana Setup
 ```bash
@@ -1473,7 +1473,7 @@ echo "Grafana: http://localhost:3000 (admin/admin123)"
 ```
 
 ### Alerting and Notification Systems
-[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
+[Related Commands/Topics: ](#monitoring-infrastructure-commands)Monitoring Infrastructure Commands 🟡
 
 #### Setting up Grafana Alerts
 ```bash
@@ -1497,7 +1497,7 @@ sudo systemctl restart grafana-server
 ```
 
 ### Security Monitoring and SIEM
-[Related Commands/Topics: Log Management Commands](#log-management-commands) 🟡
+[Related Commands/Topics: ](#log-management-commands)Log Management Commands 🟡
 
 #### Elasticsearch Setup
 ```yaml
