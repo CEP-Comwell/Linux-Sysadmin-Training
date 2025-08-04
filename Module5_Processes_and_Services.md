@@ -71,7 +71,9 @@ By the end of this module, you will be able to:
 
 ## Topics
 
-### 🟢 5.1 Process Basics (Beginner)
+### 5.1 Process Basics (Beginner)
+
+🟢
 - What is a process and how it works
 - Process identification (PID) and process states
 - Parent and child processes
@@ -80,7 +82,9 @@ By the end of this module, you will be able to:
 
 **📖 Related Commands:** [Process Monitoring Commands](#process-monitoring-commands)
 #
-### 🟡 5.2 Process Monitoring (Intermediate)
+### 5.2 Process Monitoring (Intermediate)
+
+🟡
 - Using `ps` command to list processes
 - Real-time monitoring with `top` and `htop`
 - Finding processes with `pgrep` and `pidof`
@@ -89,7 +93,9 @@ By the end of this module, you will be able to:
 
 **📖 Related Commands:** [Process Monitoring Commands](#process-monitoring-commands) | [System Monitoring Commands](#system-monitoring-commands)
 
-### 🟡 5.3 Process Control (Intermediate)
+### 5.3 Process Control (Intermediate)
+
+🟡
 - Starting and stopping processes
 - Using signals to control processes (`kill`, `killall`)
 - Background job control (`&`, `jobs`, `fg`, `bg`)
@@ -100,7 +106,9 @@ By the end of this module, you will be able to:
 
 **📖 Related Commands:** [Process Control Commands](#process-control-commands) | [Quick Start Commands](#quick-start-commands)
 
-### 🟡 5.4 Basic Service Management (Intermediate)
+### 5.4 Basic Service Management (Intermediate)
+
+🟡
 - **Historical context: From init.d to systemd evolution**
 - **Understanding why systemd replaced traditional init systems**
 - Understanding Linux services and daemons
@@ -111,7 +119,9 @@ By the end of this module, you will be able to:
 
 **📖 Related Commands:** [Service Management Commands](#service-management-commands) | [Quick Start Commands](#quick-start-commands)
 
-### 🔴 5.5 Essential Systemd Operations (Advanced)
+### 5.5 Essential Systemd Operations (Advanced)
+
+🔴
 - **Understanding systemd service states in detail**
 - Starting and stopping services with `systemctl`
 - **The difference between start/stop and enable/disable**
