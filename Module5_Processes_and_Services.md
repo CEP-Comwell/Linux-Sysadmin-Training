@@ -357,7 +357,32 @@ kill %1
 
 #### Why Background Processes Matter for Remote Systems
 
+
 When you connect to a remote system via SSH, all processes you start are tied to your SSH session by default. If your SSH connection drops (network issues, laptop sleep, etc.), all running processes will be terminated. This is where background process management becomes critical.
+
+> 💡 **Pro Tip: Recovering from Unexpected SSH Disconnects**
+> 
+> If you started a process in the background (with `&`) and your SSH session was disconnected before you could use `nohup`, `screen`, or `tmux`, you can often recover control of the process:
+> 
+> 1. **Reconnect via SSH.**
+> 2. **Find the process:**
+>    ```bash
+>    ps aux | grep your_command
+>    ```
+> 3. **(Optional) Disown the process:**
+>    If the process is still attached to your old shell (now orphaned), you can use `kill -HUP <old_shell_pid>` to send a hangup, or simply start a new shell.
+> 4. **Bring the process under control:**
+>    - If you need to reattach to interactive output, use `screen` or `tmux` next time.
+>    - For non-interactive jobs, you can redirect output to a file:
+>      ```bash
+>      tail -f /path/to/output.log
+>      ```
+>    - If you know the PID, you can send signals or kill it as needed:
+>      ```bash
+>      kill <pid>
+>      ```
+> 5. **For future sessions:** Always use `nohup`, `screen`, or `tmux` for important long-running jobs to avoid losing control if disconnected.
+
 
 > ⚠️ **SSH Safety Warning**: Always use `nohup` for long-running processes over SSH connections to prevent termination when your session disconnects.
 
