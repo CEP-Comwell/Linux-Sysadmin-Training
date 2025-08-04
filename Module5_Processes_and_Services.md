@@ -45,7 +45,7 @@
 - [Summary](#summary)
 - [Next Steps](#next-steps)
 
-## 🔍 Overview
+## Overview
 Learn the essential skills for managing processes and services in Linux systems. This module covers the fundamental commands and concepts needed to monitor running processes, control system services, and troubleshoot basic performance issues.
 #
 **What You'll Learn:**
@@ -57,7 +57,7 @@ Learn the essential skills for managing processes and services in Linux systems.
 
 [↑ Back to Top](#table-of-contents)
 
-## 🎯 Learning Objectives
+## Learning Objectives
 By the end of this module, you will be able to:
 
 1. **View Running Processes**: Use `ps`, `top`, and `htop` to see what's running on your system
@@ -69,7 +69,7 @@ By the end of this module, you will be able to:
 
 [↑ Back to Top](#table-of-contents)
 
-## 📚 Topics
+## Topics
 
 ### 🟢 5.1 Process Basics (Beginner)
 - What is a process and how it works
@@ -126,9 +126,9 @@ By the end of this module, you will be able to:
 
 [↑ Back to Top](#table-of-contents)
 
-## ⚡ Essential Command Reference
+## Essential Command Reference
 
-### 🔹 Process Monitoring Commands
+### Process Monitoring Commands
 **📚 Related Topics:** [5.1 Process Basics](#51-process-basics-beginner) | [5.2 Process Monitoring](#52-process-monitoring-intermediate)
 
 | Command | Purpose | Common Examples |
@@ -139,7 +139,7 @@ By the end of this module, you will be able to:
 | `pgrep` | Find process by name | `pgrep nginx`, `pgrep -u user` |
 | `pidof` | Get PID of process | `pidof nginx` |
 
-### 🔹 Process Control Commands
+### Process Control Commands
 **📚 Related Topics:** [5.3 Process Control](#53-process-control-intermediate)
 
 | Command | Purpose | Common Examples | SSH Usage Notes |
@@ -154,7 +154,7 @@ By the end of this module, you will be able to:
 | `screen` | Create persistent sessions | `screen -S name` | **Best for long SSH tasks** |
 | `tmux` | Terminal multiplexer | `tmux new -s name` | **Alternative to screen** |
 
-### 🔹 Service Management Commands
+### Service Management Commands
 **📚 Related Topics:** [5.4 Basic Service Management](#54-basic-service-management-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
 
 | Command | Purpose | Common Examples |
@@ -167,7 +167,7 @@ By the end of this module, you will be able to:
 | `systemctl disable` | Disable service at boot | `systemctl disable apache2` |
 | `journalctl` | View service logs | `journalctl -u nginx`, `journalctl -f` |
 
-### 🔹 System Monitoring Commands
+### System Monitoring Commands
 **📚 Related Topics:** [5.2 Process Monitoring](#52-process-monitoring-intermediate) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
 
 | Command | Purpose | Common Examples |
@@ -177,7 +177,7 @@ By the end of this module, you will be able to:
 | `df` | Disk usage | `df -h` |
 | `who` | Who is logged in | `who`, `w` |
 
-## 🚀 Quick Start Commands
+## Quick Start Commands
 **📚 Related Topics:** [5.3 Process Control](#53-process-control-intermediate) | [5.4 Basic Service Management](#54-basic-service-management-intermediate)
 
 | Task | Command | Example |
@@ -190,7 +190,7 @@ By the end of this module, you will be able to:
 
 [↑ Back to Top](#table-of-contents)
 
-## 🔄 Understanding Linux Service Management Evolution
+## Understanding Linux Service Management Evolution
 
 ### From init.d to systemd: A Brief History
 
@@ -299,7 +299,7 @@ systemctl status nginx
 
 [↑ Back to Top](#table-of-contents)
 
-## 🛠️ Practical Examples
+## Practical Examples
 
 ### Basic Process Monitoring Examples
 
@@ -581,9 +581,9 @@ sudo systemctl restart ssh
 
 [↑ Back to Top](#table-of-contents)
 
-## 🧪 Lab Exercises **(~45 minutes total)**
+## Lab Exercises (~45 minutes total)
 
-### Lab 1: Basic Process Monitoring **(~15 minutes)**
+### Lab 1: Basic Process Monitoring (~15 minutes)
 **🎯 Objective:** Learn to monitor and understand running processes.
 
 **📝 Practice Checklist:**
@@ -641,7 +641,7 @@ ps aux --sort=-%mem | head -10  # Top memory consumers
 
 </details>
 
-### Lab 2: Process Control and SSH Management **(~20 minutes)**
+### Lab 2: Process Control and SSH Management (~20 minutes)
 **🎯 Objective:** Learn to control processes safely, especially in SSH environments.
 
 > ⚠️ **SSH Safety Warning**: This lab teaches critical skills for managing processes over SSH connections safely.
@@ -738,7 +738,7 @@ ping google.com
 
 </details>
 
-### Lab 3: Mastering Systemd Service Management **(~10 minutes)**
+### Lab 3: Mastering Systemd Service Management (~10 minutes)
 **🎯 Objective:** Understand systemd service states, troubleshooting, and the difference between current state and boot configuration.
 
 **📝 Practice Checklist:**
@@ -893,7 +893,7 @@ systemctl status nginx
 
 [↑ Back to Top](#table-of-contents)
 
-## ✅ Best Practices
+## Best Practices
 
 ### Process Management Best Practices
 
@@ -1014,7 +1014,7 @@ systemctl status nginx
 
 [↑ Back to Top](#table-of-contents)
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Understanding Error Codes and Exit Status
 
@@ -1450,7 +1450,7 @@ systemctl status nginx
 
 [↑ Back to Top](#table-of-contents)
 
-## 📋 Summary
+## Summary
 
 This module covered the essential skills for managing processes and services in Linux systems. You learned:
 
@@ -1486,7 +1486,7 @@ After completing this module, you should be able to:
 - Use proper commands for service management
 - Document changes and solutions
 
-## ➡️ Next Steps
+## Next Steps
 
 Continue building your Linux administration skills with:
 
