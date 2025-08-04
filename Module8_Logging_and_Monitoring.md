@@ -256,6 +256,7 @@ By the end of this module, you will be able to:
 [⬆️ Back to Top](#table-of-contents)
 
 ### System Logging Configuration
+[Related Commands/Topics: Log Management Commands](#log-management-commands) 🟢
 
 #### Advanced rsyslog Configuration
 ```bash
@@ -549,6 +550,7 @@ create_journal_analysis
 echo "systemd journal configuration completed"
 ```
 ### Log Analysis and Processing
+[Related Commands/Topics: Log Analysis Commands](#log-analysis-commands) 🟢
 
 #### Advanced Log Analysis Toolkit
 ```bash
@@ -741,6 +743,7 @@ esac
 ```
 
 ### Performance Monitoring Tools
+[Related Commands/Topics: System Monitoring Commands](#system-monitoring-commands) 🟢
 
 #### Comprehensive System Performance Monitor
 ```bash
@@ -1009,65 +1012,39 @@ case "${1:-help}" in
         ;;
 esac
 ```
-        "title": "Disk Usage",
-        "type": "bargauge",
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
-        "targets": [
-          {
-            "expr": "(node_filesystem_size_bytes - node_filesystem_free_bytes) / node_filesystem_size_bytes * 100",
-            "legendFormat": "{{ mountpoint }}"
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "title": "Network Traffic",
-        "type": "graph",
-        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8},
-        "targets": [
-          {
-            "expr": "irate(node_network_receive_bytes_total{device!=\"lo\"}[5m])",
-            "legendFormat": "{{ device }} - Inbound"
-          },
-          {
-            "expr": "irate(node_network_transmit_bytes_total{device!=\"lo\"}[5m])",
-            "legendFormat": "{{ device }} - Outbound"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
 
-### Grafana Alerting
+### Centralized Logging Implementation
+[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
 
-#### Setting up Grafana Alerts
+#### ELK Stack Deployment
 ```bash
-# Install Grafana
-wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
-echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
-sudo apt update
-sudo apt install grafana
+#!/bin/bash
+# Complete ELK Stack deployment script
 
-# Configure Grafana
-sudo systemctl enable grafana-server
-sudo systemctl start grafana-server
+# Install Java (required for Elasticsearch and Logstash)
+install_java() {
+    echo "Installing OpenJDK 11..."
+    apt-get update
+    apt-get install -y openjdk-11-jdk
+    
+    # Set JAVA_HOME
+    echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> /etc/environment
+    source /etc/environment
+}
 
-# Install plugins
-sudo grafana-cli plugins install grafana-piechart-panel
-sudo grafana-cli plugins install grafana-worldmap-panel
-sudo systemctl restart grafana-server
-
-# Grafana notification channels configuration
-# Access Grafana at http://localhost:3000 (admin/admin)
-```
-
-### ELK Stack Configuration
-
-#### Elasticsearch Setup
-```yaml
-# /etc/elasticsearch/elasticsearch.yml
+# Install and configure Elasticsearch
+install_elasticsearch() {
+    echo "Installing Elasticsearch..."
+    
+    # Add Elastic repository
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+    echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" > /etc/apt/sources.list.d/elastic-8.x.list
+    
+    apt-get update
+    apt-get install -y elasticsearch
+    
+    # Configure Elasticsearch
+    cat > /etc/elasticsearch/elasticsearch.yml << 'EOF'
 cluster.name: logging-cluster
 node.name: node-1
 path.data: /var/lib/elasticsearch
@@ -1079,11 +1056,28 @@ discovery.type: single-node
 # Security settings
 xpack.security.enabled: false
 xpack.monitoring.collection.enabled: true
-```
+EOF
 
-#### Logstash Configuration
-```ruby
-# /etc/logstash/conf.d/syslog.conf
+    # Enable and start Elasticsearch
+    systemctl daemon-reload
+    systemctl enable elasticsearch
+    systemctl start elasticsearch
+    
+    # Wait for Elasticsearch to start
+    sleep 30
+    
+    # Test Elasticsearch
+    curl -X GET "localhost:9200/"
+}
+
+# Install and configure Logstash
+install_logstash() {
+    echo "Installing Logstash..."
+    
+    apt-get install -y logstash
+    
+    # Create Logstash configuration
+    cat > /etc/logstash/conf.d/syslog.conf << 'EOF'
 input {
   beats {
     port => 5044
@@ -1119,186 +1113,6 @@ output {
   }
   
   stdout { codec => rubydebug }
-}
-```
-
-### Secure Log Transport
-
-#### TLS Configuration for rsyslog
-```bash
-# Generate certificates for secure logging
-sudo mkdir -p /etc/ssl/rsyslog
-cd /etc/ssl/rsyslog
-
-# Create CA certificate
-sudo openssl genrsa -out ca-key.pem 2048
-sudo openssl req -new -x509 -key ca-key.pem -out ca-cert.pem -days 365
-
-# Create server certificate
-sudo openssl genrsa -out server-key.pem 2048
-sudo openssl req -new -key server-key.pem -out server-req.pem
-sudo openssl x509 -req -in server-req.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -days 365
-
-# Create client certificate
-sudo openssl genrsa -out client-key.pem 2048
-sudo openssl req -new -key client-key.pem -out client-req.pem
-sudo openssl x509 -req -in client-req.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out client-cert.pem -days 365
-
-# Set permissions
-sudo chown syslog:syslog /etc/ssl/rsyslog/*
-sudo chmod 600 /etc/ssl/rsyslog/*-key.pem
-sudo chmod 644 /etc/ssl/rsyslog/*-cert.pem
-
-# Configure rsyslog server for TLS
-sudo tee /etc/rsyslog.d/gtls.conf << EOF
-# TLS Configuration
-\$ModLoad imtcp
-\$DefaultNetstreamDriver gtls
-\$DefaultNetstreamDriverCAFile /etc/ssl/rsyslog/ca-cert.pem
-\$DefaultNetstreamDriverCertFile /etc/ssl/rsyslog/server-cert.pem
-\$DefaultNetstreamDriverKeyFile /etc/ssl/rsyslog/server-key.pem
-\$InputTCPServerStreamDriverMode 1
-\$InputTCPServerStreamDriverAuthMode x509/name
-\$InputTCPServerStreamDriverPermittedPeer *.example.com
-\$InputTCPServerRun 6514
-EOF
-```
-
-## Custom Monitoring Scripts
-
-### Disk Space Alert Script
-```bash
-#!/bin/bash
-# disk-alert.sh
-
-THRESHOLD=85
-EMAIL="admin@example.com"
-
-df -h | awk 'NR>1 {print $5 " " $6}' | while read line; do
-    usage=$(echo $line | awk '{print $1}' | sed 's/%//g')
-    partition=$(echo $line | awk '{print $2}')
-    
-    if [ $usage -ge $THRESHOLD ]; then
-        echo "WARNING: Disk usage on $partition is ${usage}%" | \
-            mail -s "Disk Space Alert" $EMAIL
-    fi
-done
-```
-
-### Process Monitoring Script
-```bash
-#!/bin/bash
-# process-monitor.sh
-
-PROCESS="nginx"
-RESTART_CMD="systemctl start nginx"
-EMAIL="admin@example.com"
-
-if ! pgrep $PROCESS > /dev/null; then
-    echo "Process $PROCESS not running. Attempting restart..."
-    $RESTART_CMD
-    
-    if pgrep $PROCESS > /dev/null; then
-        echo "Process $PROCESS restarted successfully" | \
-            mail -s "Process Restart Success" $EMAIL
-    else
-        echo "Failed to restart $PROCESS" | \
-            mail -s "Process Restart Failed" $EMAIL
-    fi
-fi
-```
-### Centralized Logging Implementation
-
-#### ELK Stack Deployment
-```bash
-#!/bin/bash
-# Complete ELK Stack deployment script
-
-# Install Java (required for Elasticsearch and Logstash)
-install_java() {
-    echo "Installing OpenJDK 11..."
-    apt-get update
-    apt-get install -y openjdk-11-jdk
-    
-    # Set JAVA_HOME
-    echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> /etc/environment
-    source /etc/environment
-}
-
-# Install and configure Elasticsearch
-install_elasticsearch() {
-    echo "Installing Elasticsearch..."
-    
-    # Add Elastic repository
-    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
-    echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" > /etc/apt/sources.list.d/elastic-8.x.list
-    
-    apt-get update
-    apt-get install -y elasticsearch
-    
-    # Configure Elasticsearch
-    cat > /etc/elasticsearch/elasticsearch.yml << 'EOF'
-cluster.name: production-cluster
-node.name: node-1
-path.data: /var/lib/elasticsearch
-path.logs: /var/log/elasticsearch
-network.host: localhost
-http.port: 9200
-discovery.type: single-node
-
-# Security settings
-xpack.security.enabled: true
-xpack.security.enrollment.enabled: true
-EOF
-
-    # Enable and start Elasticsearch
-    systemctl daemon-reload
-    systemctl enable elasticsearch
-    systemctl start elasticsearch
-    
-    # Wait for Elasticsearch to start
-    sleep 30
-    
-    # Test Elasticsearch
-    curl -X GET "localhost:9200/"
-}
-
-# Install and configure Logstash
-install_logstash() {
-    echo "Installing Logstash..."
-    
-    apt-get install -y logstash
-    
-    # Create Logstash configuration
-    cat > /etc/logstash/conf.d/syslog.conf << 'EOF'
-input {
-  beats {
-    port => 5044
-  }
-  syslog {
-    port => 514
-  }
-}
-
-filter {
-  if [type] == "syslog" {
-    grok {
-      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{IPORHOST:syslog_server} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
-      add_field => [ "received_at", "%{@timestamp}" ]
-      add_field => [ "received_from", "%{host}" ]
-    }
-    
-    date {
-      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
-    }
-  }
-}
-
-output {
-  elasticsearch {
-    hosts => ["localhost:9200"]
-    index => "logstash-%{+YYYY.MM.dd}"
-  }
 }
 EOF
 
@@ -1402,6 +1216,7 @@ echo "Elasticsearch API: http://localhost:9200"
 ```
 
 ### Monitoring Infrastructure Deployment
+[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
 
 #### Complete Prometheus and Grafana Setup
 ```bash
@@ -1658,6 +1473,632 @@ echo "Grafana: http://localhost:3000 (admin/admin123)"
 ```
 
 ### Alerting and Notification Systems
+[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
+
+#### Setting up Grafana Alerts
+```bash
+# Install Grafana
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
+sudo apt update
+sudo apt install grafana
+
+# Configure Grafana
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
+
+# Install plugins
+sudo grafana-cli plugins install grafana-piechart-panel
+sudo grafana-cli plugins install grafana-worldmap-panel
+sudo systemctl restart grafana-server
+
+# Grafana notification channels configuration
+# Access Grafana at http://localhost:3000 (admin/admin)
+```
+
+### Security Monitoring and SIEM
+[Related Commands/Topics: Log Management Commands](#log-management-commands) 🟡
+
+#### Elasticsearch Setup
+```yaml
+# /etc/elasticsearch/elasticsearch.yml
+cluster.name: logging-cluster
+node.name: node-1
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+network.host: localhost
+http.port: 9200
+discovery.type: single-node
+
+# Security settings
+xpack.security.enabled: false
+xpack.monitoring.collection.enabled: true
+```
+
+#### Logstash Configuration
+```ruby
+# /etc/logstash/conf.d/syslog.conf
+input {
+  beats {
+    port => 5044
+  }
+  
+  syslog {
+    port => 5514
+  }
+}
+
+filter {
+  if [fields][log_type] == "syslog" {
+    grok {
+      match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{IPORHOST:host} %{DATA:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:message}" }
+    }
+    
+    date {
+      match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+  
+  if [fields][log_type] == "nginx" {
+    grok {
+      match => { "message" => "%{NGINXACCESS}" }
+    }
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["localhost:9200"]
+    index => "logs-%{+YYYY.MM.dd}"
+  }
+  
+  stdout { codec => rubydebug }
+}
+```
+
+#### TLS Configuration for rsyslog
+```bash
+# Generate certificates for secure logging
+sudo mkdir -p /etc/ssl/rsyslog
+cd /etc/ssl/rsyslog
+
+# Create CA certificate
+sudo openssl genrsa -out ca-key.pem 2048
+sudo openssl req -new -x509 -key ca-key.pem -out ca-cert.pem -days 365
+
+# Create server certificate
+sudo openssl genrsa -out server-key.pem 2048
+sudo openssl req -new -key server-key.pem -out server-req.pem
+sudo openssl x509 -req -in server-req.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -days 365
+
+# Create client certificate
+sudo openssl genrsa -out client-key.pem 2048
+sudo openssl req -new -key client-key.pem -out client-req.pem
+sudo openssl x509 -req -in client-req.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out client-cert.pem -days 365
+
+# Set permissions
+sudo chown syslog:syslog /etc/ssl/rsyslog/*
+sudo chmod 600 /etc/ssl/rsyslog/*-key.pem
+sudo chmod 644 /etc/ssl/rsyslog/*-cert.pem
+
+# Configure rsyslog server for TLS
+sudo tee /etc/rsyslog.d/gtls.conf << EOF
+# TLS Configuration
+\$ModLoad imtcp
+\$DefaultNetstreamDriver gtls
+\$DefaultNetstreamDriverCAFile /etc/ssl/rsyslog/ca-cert.pem
+\$DefaultNetstreamDriverCertFile /etc/ssl/rsyslog/server-cert.pem
+\$DefaultNetstreamDriverKeyFile /etc/ssl/rsyslog/server-key.pem
+\$InputTCPServerStreamDriverMode 1
+\$InputTCPServerStreamDriverAuthMode x509/name
+\$InputTCPServerStreamDriverPermittedPeer *.example.com
+\$InputTCPServerRun 6514
+EOF
+```
+
+## Custom Monitoring Scripts
+
+### Disk Space Alert Script
+```bash
+#!/bin/bash
+# disk-alert.sh
+
+THRESHOLD=85
+EMAIL="admin@example.com"
+
+df -h | awk 'NR>1 {print $5 " " $6}' | while read line; do
+    usage=$(echo $line | awk '{print $1}' | sed 's/%//g')
+    partition=$(echo $line | awk '{print $2}')
+    
+    if [ $usage -ge $THRESHOLD ]; then
+        echo "WARNING: Disk usage on $partition is ${usage}%" | \
+            mail -s "Disk Space Alert" $EMAIL
+    fi
+done
+```
+
+### Process Monitoring Script
+```bash
+#!/bin/bash
+# process-monitor.sh
+
+PROCESS="nginx"
+RESTART_CMD="systemctl start nginx"
+EMAIL="admin@example.com"
+
+if ! pgrep $PROCESS > /dev/null; then
+    echo "Process $PROCESS not running. Attempting restart..."
+    $RESTART_CMD
+    
+    if pgrep $PROCESS > /dev/null; then
+        echo "Process $PROCESS restarted successfully" | \
+            mail -s "Process Restart Success" $EMAIL
+    else
+        echo "Failed to restart $PROCESS" | \
+            mail -s "Process Restart Failed" $EMAIL
+    fi
+fi
+```
+### Centralized Logging Implementation
+
+#### ELK Stack Deployment
+```bash
+#!/bin/bash
+# Complete ELK Stack deployment script
+
+# Install Java (required for Elasticsearch and Logstash)
+install_java() {
+    echo "Installing OpenJDK 11..."
+    apt-get update
+    apt-get install -y openjdk-11-jdk
+    
+    # Set JAVA_HOME
+    echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> /etc/environment
+    source /etc/environment
+}
+
+# Install and configure Elasticsearch
+install_elasticsearch() {
+    echo "Installing Elasticsearch..."
+    
+    # Add Elastic repository
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+    echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" > /etc/apt/sources.list.d/elastic-8.x.list
+    
+    apt-get update
+    apt-get install -y elasticsearch
+    
+    # Configure Elasticsearch
+    cat > /etc/elasticsearch/elasticsearch.yml << 'EOF'
+cluster.name: logging-cluster
+node.name: node-1
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+network.host: localhost
+http.port: 9200
+discovery.type: single-node
+
+# Security settings
+xpack.security.enabled: false
+xpack.monitoring.collection.enabled: true
+EOF
+
+    # Enable and start Elasticsearch
+    systemctl daemon-reload
+    systemctl enable elasticsearch
+    systemctl start elasticsearch
+    
+    # Wait for Elasticsearch to start
+    sleep 30
+    
+    # Test Elasticsearch
+    curl -X GET "localhost:9200/"
+}
+
+# Install and configure Logstash
+install_logstash() {
+    echo "Installing Logstash..."
+    
+    apt-get install -y logstash
+    
+    # Create Logstash configuration
+    cat > /etc/logstash/conf.d/syslog.conf << 'EOF'
+input {
+  beats {
+    port => 5044
+  }
+  
+  syslog {
+    port => 5514
+  }
+}
+
+filter {
+  if [fields][log_type] == "syslog" {
+    grok {
+      match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{IPORHOST:host} %{DATA:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:message}" }
+    }
+    
+    date {
+      match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+  
+  if [fields][log_type] == "nginx" {
+    grok {
+      match => { "message" => "%{NGINXACCESS}" }
+    }
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["localhost:9200"]
+    index => "logs-%{+YYYY.MM.dd}"
+  }
+  
+  stdout { codec => rubydebug }
+}
+EOF
+
+    # Enable and start Logstash
+    systemctl enable logstash
+    systemctl start logstash
+}
+
+# Install and configure Kibana
+install_kibana() {
+    echo "Installing Kibana..."
+    
+    apt-get install -y kibana
+    
+    # Configure Kibana
+    cat > /etc/kibana/kibana.yml << 'EOF'
+server.port: 5601
+server.host: "localhost"
+elasticsearch.hosts: ["http://localhost:9200"]
+logging.dest: /var/log/kibana/kibana.log
+EOF
+
+    # Create log directory
+    mkdir -p /var/log/kibana
+    chown kibana:kibana /var/log/kibana
+    
+    # Enable and start Kibana
+    systemctl enable kibana
+    systemctl start kibana
+}
+
+# Configure Filebeat for log shipping
+install_filebeat() {
+    echo "Installing Filebeat..."
+    
+    apt-get install -y filebeat
+    
+    # Configure Filebeat
+    cat > /etc/filebeat/filebeat.yml << 'EOF'
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+    - /var/log/syslog
+    - /var/log/auth.log
+  fields:
+    logtype: system
+  fields_under_root: true
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/*.log
+  fields:
+    logtype: nginx
+  fields_under_root: true
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/apache2/*.log
+  fields:
+    logtype: apache
+  fields_under_root: true
+
+output.logstash:
+  hosts: ["localhost:5044"]
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
+EOF
+
+    # Enable and start Filebeat
+    systemctl enable filebeat
+    systemctl start filebeat
+}
+
+# Main installation
+echo "Starting ELK Stack installation..."
+install_java
+install_elasticsearch
+install_logstash
+install_kibana
+install_filebeat
+
+echo "ELK Stack installation completed!"
+echo "Access Kibana at: http://localhost:5601"
+echo "Elasticsearch API: http://localhost:9200"
+```
+
+### Monitoring Infrastructure Deployment
+[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
+
+#### Complete Prometheus and Grafana Setup
+```bash
+#!/bin/bash
+# Complete monitoring infrastructure deployment
+
+# Install Prometheus
+install_prometheus() {
+    echo "Installing Prometheus..."
+    
+    # Create prometheus user
+    useradd --no-create-home --shell /bin/false prometheus
+    
+    # Create directories
+    mkdir -p /etc/prometheus /var/lib/prometheus
+    chown prometheus:prometheus /etc/prometheus /var/lib/prometheus
+    
+    # Download and install Prometheus
+    cd /tmp
+    wget https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
+    tar xzf prometheus-2.45.0.linux-amd64.tar.gz
+    
+    cp prometheus-2.45.0.linux-amd64/prometheus /usr/local/bin/
+    cp prometheus-2.45.0.linux-amd64/promtool /usr/local/bin/
+    cp -r prometheus-2.45.0.linux-amd64/consoles /etc/prometheus/
+    cp -r prometheus-2.45.0.linux-amd64/console_libraries /etc/prometheus/
+    
+    chown -R prometheus:prometheus /etc/prometheus/consoles /etc/prometheus/console_libraries
+    chown prometheus:prometheus /usr/local/bin/prometheus /usr/local/bin/promtool
+    
+    # Create Prometheus configuration
+    cat > /etc/prometheus/prometheus.yml << 'EOF'
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'production'
+
+rule_files:
+  - "/etc/prometheus/alert_rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+
+  - job_name: 'alertmanager'
+    static_configs:
+      - targets: ['localhost:9093']
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - localhost:9093
+EOF
+
+    # Create alert rules
+    cat > /etc/prometheus/alert_rules.yml << 'EOF'
+groups:
+  - name: system_alerts
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} down"
+          description: "{{ $labels.instance }} has been down for more than 5 minutes."
+
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is above 80% for more than 5 minutes."
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 85
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High memory usage on {{ $labels.instance }}"
+          description: "Memory usage is above 85% for more than 5 minutes."
+EOF
+
+    chown prometheus:prometheus /etc/prometheus/prometheus.yml /etc/prometheus/alert_rules.yml
+    
+    # Create systemd service
+    cat > /etc/systemd/system/prometheus.service << 'EOF'
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus \
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries \
+    --web.listen-address=0.0.0.0:9090 \
+    --web.external-url=
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    systemctl daemon-reload
+    systemctl enable prometheus
+    systemctl start prometheus
+}
+
+# Install Alertmanager
+install_alertmanager() {
+    echo "Installing Alertmanager..."
+    
+    # Create alertmanager user
+    useradd --no-create-home --shell /bin/false alertmanager
+    
+    # Create directories
+    mkdir -p /etc/alertmanager /var/lib/alertmanager
+    chown alertmanager:alertmanager /etc/alertmanager /var/lib/alertmanager
+    
+    # Download and install Alertmanager
+    cd /tmp
+    wget https://github.com/prometheus/alertmanager/releases/download/v0.25.0/alertmanager-0.25.0.linux-amd64.tar.gz
+    tar xzf alertmanager-0.25.0.linux-amd64.tar.gz
+    
+    cp alertmanager-0.25.0.linux-amd64/alertmanager /usr/local/bin/
+    cp alertmanager-0.25.0.linux-amd64/amtool /usr/local/bin/
+    
+    chown alertmanager:alertmanager /usr/local/bin/alertmanager /usr/local/bin/amtool
+    
+    # Create Alertmanager configuration
+    cat > /etc/alertmanager/alertmanager.yml << 'EOF'
+global:
+  smtp_smarthost: 'localhost:587'
+  smtp_from: 'alertmanager@example.com'
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'web.hook'
+
+receivers:
+- name: 'web.hook'
+  email_configs:
+  - to: 'admin@example.com'
+    subject: 'Alert: {{ .GroupLabels.alertname }}'
+    body: |
+      {{ range .Alerts }}
+      Alert: {{ .Annotations.summary }}
+      Description: {{ .Annotations.description }}
+      {{ end }}
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'instance']
+EOF
+
+    chown alertmanager:alertmanager /etc/alertmanager/alertmanager.yml
+    
+    # Create systemd service
+    cat > /etc/systemd/system/alertmanager.service << 'EOF'
+[Unit]
+Description=Alertmanager
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=alertmanager
+Group=alertmanager
+Type=simple
+ExecStart=/usr/local/bin/alertmanager \
+    --config.file=/etc/alertmanager/alertmanager.yml \
+    --storage.path=/var/lib/alertmanager/
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    systemctl daemon-reload
+    systemctl enable alertmanager
+    systemctl start alertmanager
+}
+
+# Install Grafana
+install_grafana() {
+    echo "Installing Grafana..."
+    
+    # Add Grafana repository
+    apt-get install -y software-properties-common
+    wget -q -O - https://packages.grafana.com/gpg.key | apt-key add -
+    echo "deb https://packages.grafana.com/oss/deb stable main" > /etc/apt/sources.list.d/grafana.list
+    
+    apt-get update
+    apt-get install -y grafana
+    
+    # Configure Grafana
+    cat > /etc/grafana/grafana.ini << 'EOF'
+[server]
+http_port = 3000
+domain = localhost
+
+[security]
+admin_user = admin
+admin_password = admin123
+
+[users]
+allow_sign_up = false
+
+[auth.anonymous]
+enabled = false
+
+[alerting]
+enabled = true
+
+[log]
+mode = file
+level = info
+EOF
+
+    systemctl daemon-reload
+    systemctl enable grafana-server
+    systemctl start grafana-server
+}
+
+# Main installation
+install_prometheus
+install_alertmanager
+install_grafana
+
+echo "Monitoring infrastructure installation completed!"
+echo "Prometheus: http://localhost:9090"
+echo "Alertmanager: http://localhost:9093"
+echo "Grafana: http://localhost:3000 (admin/admin123)"
+```
+
+### Alerting and Notification Systems
+[Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
 
 #### Advanced Alerting Configuration
 ```bash
@@ -2152,225 +2593,6 @@ telnet prometheus-server 9090
 - **Custom Solutions**: Development of custom monitoring scripts and tools
 - **Continuous Improvement**: Ongoing optimization and enhancement of monitoring systems
 - **Future Planning**: Consideration of scalability and future requirements
-
-## Next Steps
-
-### Advanced Topics
-- **Container Monitoring**: Kubernetes and Docker monitoring strategies
-- **Cloud Monitoring**: Multi-cloud monitoring and observability
-- **Application Performance Monitoring**: APM implementation and optimization
-- **Distributed Tracing**: Microservices monitoring and tracing
-- **Machine Learning**: AI-powered anomaly detection and predictive monitoring
-
-### Professional Development
-- **Certifications**: Pursue monitoring and observability certifications
-- **Community Engagement**: Participate in monitoring and logging communities
-- **Tool Mastery**: Deepen expertise in specific monitoring tools and platforms
-- **Architecture Design**: Learn monitoring architecture design patterns
-
-### Integration with Module 9
-The next module covers Shell Scripting Fundamentals, which will build upon the automation concepts introduced in this logging and monitoring module, providing advanced scripting capabilities for monitoring automation and system administration tasks.
-
----
-
-**Module 8 Complete**: You have successfully mastered Linux logging and monitoring, from basic log management to enterprise-grade observability platforms. These skills form the foundation for proactive system administration and reliable infrastructure management.
-| **Proactive Alerting** | Detect issues before they become critical | Set meaningful thresholds and escalation |
-| **Visualization** | Make data easy to understand | Use dashboards and graphs effectively |
-| **Automation** | Reduce manual monitoring overhead | Implement automated responses where appropriate |
-| **Documentation** | Maintain monitoring procedures | Document alert meanings and response procedures |
-| **Regular Review** | Continuously improve monitoring | Regularly review and update thresholds |
-| **Redundancy** | Ensure monitoring system reliability | Monitor the monitoring systems |
-
-### Security Monitoring Checklist
-- [ ] Failed authentication attempts monitoring
-- [ ] Privilege escalation detection
-- [ ] File integrity monitoring
-- [ ] Network intrusion detection
-- [ ] Log tampering protection
-- [ ] Automated incident response
-- [ ] Regular security audit log review
-- [ ] Compliance reporting capabilities
-
-### Performance Monitoring Metrics
-
-#### System Level Metrics
-| Category | Key Metrics | Normal Ranges | Alert Thresholds |
-|----------|-------------|---------------|------------------|
-| **CPU** | Load average, utilization, wait time | Load < cores, util < 70% | Load > cores*1.5, util > 85% |
-| **Memory** | Usage, available, swap usage | Usage < 80%, minimal swap | Usage > 90%, active swap |
-| **Disk** | Space usage, I/O rates, queue depth | Usage < 85%, low queue | Usage > 95%, high I/O wait |
-| **Network** | Bandwidth, packet loss, connections | Normal baseline patterns | High loss, unusual traffic |
-
-#### Application Level Metrics
-| Category | Key Metrics | Monitoring Tools |
-|----------|-------------|------------------|
-| **Services** | Availability, response time, error rates | systemctl, custom checks |
-| **Databases** | Connection count, query performance, locks | Database-specific exporters |
-| **Web Servers** | Request rate, response codes, latency | nginx/apache exporters |
-| **Custom Apps** | Business metrics, transaction rates | Application-specific metrics |
-
-## Lab Exercises
-
-### Lab 1: Centralized Logging with rsyslog
-**Objective**: Set up centralized logging infrastructure with secure transport.
-
-**Tasks**:
-1. Configure rsyslog server to receive logs from multiple clients
-2. Set up TLS encryption for secure log transport
-3. Implement log filtering and routing based on sources
-4. Configure log rotation and retention policies
-5. Create custom log analysis scripts
-6. Test failover scenarios and log integrity
-
-**Deliverables**:
-- Working centralized logging infrastructure
-- TLS-secured log transport configuration
-- Automated log rotation and cleanup procedures
-- Log analysis and reporting scripts
-- Documentation of troubleshooting procedures
-
-### Lab 2: Prometheus and Grafana Monitoring Stack
-**Objective**: Deploy comprehensive monitoring solution with visualization and alerting.
-
-**Tasks**:
-1. Install and configure Prometheus server
-2. Deploy node_exporter on multiple systems
-3. Create custom exporters for specific applications
-4. Build comprehensive Grafana dashboards
-5. Configure alerting rules and notification channels
-6. Implement alert escalation and on-call procedures
-
-**Deliverables**:
-- Complete Prometheus monitoring infrastructure
-- Professional Grafana dashboards with alerting
-- Custom exporter for specific use case
-- Alert rule documentation and response procedures
-- Monitoring strategy documentation
-
-### Lab 3: Log Analysis and Security Monitoring
-**Objective**: Implement advanced log analysis for security and troubleshooting.
-
-**Tasks**:
-1. Set up automated log parsing and correlation
-2. Create security event detection rules
-3. Implement real-time alerting for security incidents
-4. Build log analysis dashboard with key metrics
-5. Create automated reporting for compliance
-6. Test incident response procedures
-
-**Deliverables**:
-- Automated security monitoring system
-- Custom log analysis tools and scripts
-- Security incident detection and alerting
-- Compliance reporting automation
-- Incident response playbook
-
-### Lab 4: Custom Monitoring Solution
-**Objective**: Design and implement monitoring for specific business requirements.
-
-**Tasks**:
-1. Assess monitoring requirements for given scenario
-2. Design monitoring architecture and data flow
-3. Implement custom monitoring scripts and collectors
-4. Create automated alerting and response systems
-5. Build executive dashboard for business metrics
-6. Document monitoring procedures and maintenance
-
-**Deliverables**:
-- Custom monitoring architecture design
-- Implemented monitoring solution with automation
-- Business metrics dashboard
-- Comprehensive documentation
-- Training materials for operators
-
-### Lab 5: High Availability Monitoring Infrastructure
-**Objective**: Design resilient monitoring infrastructure for production environments.
-
-**Tasks**:
-1. Design highly available logging and monitoring architecture
-2. Implement redundancy and failover mechanisms
-3. Set up monitoring for the monitoring infrastructure
-4. Create backup and disaster recovery procedures
-5. Test failure scenarios and recovery procedures
-6. Optimize performance for large-scale environments
-
-**Deliverables**:
-- High availability architecture design
-- Implemented redundant monitoring infrastructure
-- Disaster recovery procedures and testing results
-- Performance optimization documentation
-- Operational runbooks for maintenance
-
-## Troubleshooting Common Issues
-
-### Logging Issues
-```bash
-# Check log file permissions and ownership
-ls -la /var/log/
-sudo find /var/log -type f ! -readable -ls
-
-# Verify rsyslog configuration
-sudo rsyslog -N1                              # Test configuration
-sudo systemctl status rsyslog                 # Check service status
-sudo journalctl -u rsyslog                    # Check service logs
-
-# Test log generation
-logger "Test message from $(whoami)"
-tail -f /var/log/syslog | grep "Test message"
-
-# Check journal status and integrity
-sudo systemctl status systemd-journald
-sudo journalctl --verify                      # Verify journal integrity
-sudo journalctl --disk-usage                  # Check disk usage
-
-# Monitor log rotation
-sudo logrotate -d /etc/logrotate.conf         # Debug logrotate
-sudo cat /var/lib/logrotate/status            # Check rotation status
-```
-
-### Monitoring Issues
-```bash
-# Check Prometheus targets
-curl http://localhost:9090/api/v1/targets
-
-# Verify node_exporter metrics
-curl http://localhost:9100/metrics | grep node_cpu
-
-# Check Grafana connectivity
-sudo systemctl status grafana-server
-sudo journalctl -u grafana-server
-
-# Monitor system performance
-top -b -n 1 | head -20                        # System snapshot
-vmstat 1 5                                    # System activity
-iostat -x 1 5                                 # Disk I/O
-free -h                                       # Memory usage
-
-# Check disk space and inodes
-df -h                                          # Disk space
-df -i                                          # Inode usage
-```
-
-### Performance Optimization
-```bash
-# Optimize journal performance
-sudo tee -a /etc/systemd/journald.conf << EOF
-RateLimitInterval=0
-SyncIntervalSec=1s
-EOF
-
-# Optimize rsyslog performance
-sudo tee -a /etc/rsyslog.conf << EOF
-\$MainMsgQueueSize 50000
-\$MainMsgQueueTimeoutEnqueue 0
-\$MainMsgQueueType LinkedList
-\$MainMsgQueueSaveOnShutdown on
-EOF
-
-# Monitor monitoring overhead
-top -p $(pgrep -d',' prometheus)              # Prometheus CPU usage
-iotop -p $(pgrep prometheus)                  # Prometheus I/O usage
-```
 
 ## Next Steps
 With comprehensive logging and monitoring mastered, you're ready to explore Shell Scripting Fundamentals in Module 9, where you'll automate system administration tasks with powerful shell scripts that integrate with the monitoring and logging infrastructure you've built.
