@@ -188,7 +188,7 @@ By the end of this module, you will be able to:
 - Data source integration and query optimization
 - Dashboard sharing and template management
 
-**🔗 Practical Examples**: [Grafana Dashboard Configuration](#grafana-dashboard-configuration) | [Alert Setup](#grafana-alerting)
+**🔗 Practical Examples**: [Grafana Dashboard Configuration](#monitoring-infrastructure-deployment) | [Alert Setup](#monitoring-infrastructure-deployment) 🟡
 
 ### 8.8 Centralized Logging Solutions
 - ELK stack (Elasticsearch, Logstash, Kibana) architecture
@@ -197,7 +197,7 @@ By the end of this module, you will be able to:
 - Log aggregation and correlation strategies
 - Scalability and high availability considerations
 
-**🔗 Practical Examples**: [ELK Stack Setup](#elk-stack-configuration) | [Secure Log Forwarding](#secure-log-transport)
+**🔗 Practical Examples**: [ELK Stack Setup](#centralized-logging-implementation) | [Secure Log Forwarding](#centralized-logging-implementation) 🟡
 
 
 ## Essential Command Reference
