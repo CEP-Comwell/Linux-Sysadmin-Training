@@ -551,6 +551,13 @@ ps aux --sort=-%mem | head -10
 - List of the top 5 CPU and memory consuming processes
 - Documentation of what each process does
 
+**Common Error Codes to Research:**
+- **Exit Code 1**: General process errors (command not found, permission denied)
+- **Exit Code 127**: Command not found in PATH
+- **Exit Code 130**: Process terminated by Ctrl+C (SIGINT)
+- **ENOENT**: No such file or directory when looking for processes
+- **Permission denied**: Trying to view processes you don't own without sudo
+
 ### Lab 2: Process Control and SSH Management
 **Objective:** Learn to control processes safely, especially in SSH environments.
 
@@ -612,6 +619,17 @@ ping google.com
 - **Demonstration of nohup usage for SSH scenarios**
 - **Examples of finding and managing detached processes**
 - **Screen/tmux session management examples**
+
+**Common Error Codes to Research:**
+- **SIGHUP (Signal 1)**: Process terminated when SSH connection drops (without nohup)
+- **Exit Code 129**: Process terminated by SIGHUP signal
+- **"Broken pipe"**: Output redirected to a terminal that closed
+- **"No such process" (ESRCH)**: Trying to kill a PID that doesn't exist
+- **Exit Code 143**: Process terminated by SIGTERM (graceful kill)
+- **Exit Code 137**: Process terminated by SIGKILL (kill -9)
+- **"Operation not permitted"**: Trying to kill processes you don't own
+- **"screen: command not found"**: Screen not installed (apt install screen)
+- **"There is no screen to be resumed"**: No detached screen sessions exist
 
 ### Lab 3: Mastering Systemd Service Management
 **Objective:** Understand systemd service states, troubleshooting, and the difference between current state and boot configuration.
@@ -724,6 +742,21 @@ systemctl status nginx
 - **Log analysis showing how to find and interpret errors**
 - **Documentation of a complete troubleshooting scenario**
 - Summary of when to use start/stop vs enable/disable
+
+**Common Error Codes to Research:**
+- **Exit Code 1 (systemctl)**: General service start failure
+- **Exit Code 2**: Invalid service name or command syntax
+- **Exit Code 3**: Service not found (unit file doesn't exist)
+- **Exit Code 4**: Service operation not supported
+- **Exit Code 5**: Service not loaded or failed to load
+- **"Job failed" (systemd)**: Service failed to start, check journalctl
+- **"Unit not found"**: Service name misspelled or not installed
+- **"Permission denied"**: Need sudo for start/stop/enable/disable operations
+- **"Address already in use"**: Port conflict (common with web servers)
+- **"Failed to start" + exit status 127**: Service binary not found
+- **"Dependency failed"**: Required service dependencies aren't running
+- **"Connection refused"**: Service running but not accepting connections
+- **"masked" status**: Service is completely disabled (systemctl unmask needed)
 
 ## Best Practices
 
@@ -843,6 +876,108 @@ systemctl status nginx
    - Use `systemctl mask` to completely prevent a service from starting
 
 ## Troubleshooting
+
+### Understanding Error Codes and Exit Status
+
+Before diving into specific problems, it's important to understand how Linux communicates errors:
+
+#### Process Exit Codes
+```bash
+# Check the exit code of the last command
+echo $?
+
+# Common exit codes:
+# 0 = Success
+# 1 = General error
+# 2 = Misuse of shell command
+# 126 = Command cannot execute
+# 127 = Command not found
+# 128 = Invalid argument to exit
+# 130 = Script terminated by Ctrl+C
+# 137 = Process killed by SIGKILL (kill -9)
+# 143 = Process killed by SIGTERM (kill)
+```
+
+#### Signal Numbers (for kill commands)
+```bash
+# Common signals you'll encounter:
+# SIGHUP (1) = Hangup, often when SSH disconnects
+# SIGINT (2) = Interrupt (Ctrl+C)
+# SIGKILL (9) = Force kill (cannot be caught)
+# SIGTERM (15) = Graceful termination request (default kill)
+
+# Check what signal killed a process
+journalctl -u service-name | grep -i signal
+```
+
+#### SSH-Related Error Patterns
+```bash
+# These indicate processes died from SSH disconnect:
+"Broken pipe"
+"Connection reset by peer"  
+"SIGHUP received"
+"Process terminated with signal 1"
+
+# Prevention research topics:
+# - nohup command usage
+# - screen/tmux persistent sessions
+# - systemd user services
+# - disown built-in command
+```
+
+#### Service Error Categories
+```bash
+# Configuration errors (fix config files):
+"Unit not found"
+"Failed to parse"
+"Invalid configuration"
+
+# Permission errors (check sudo/ownership):
+"Permission denied"
+"Operation not permitted"
+"Access denied"
+
+# Resource conflicts (check ports/files):
+"Address already in use"
+"Resource busy"
+"File exists"
+
+# Dependency errors (check required services):
+"Dependency failed"
+"Job dependency failed"
+"Unit xxx is not loaded"
+```
+
+#### How to Research Error Codes
+```bash
+# 1. Check the exact error message
+systemctl status service-name -l --no-pager
+
+# 2. Look up exit codes
+man systemd.exec  # For systemd service exit codes
+man bash          # For shell exit codes
+
+# 3. Search logs for patterns
+journalctl -u service-name | grep -i "error\|failed\|exit"
+
+# 4. Use online resources
+# - Search: "linux exit code 127"
+# - Search: "systemd unit not found"
+# - Search: "SIGHUP ssh disconnect"
+
+# 5. Check system documentation
+man kill          # For signal numbers
+man systemctl     # For systemctl exit codes
+```
+
+#### Practice Error Research
+When you encounter an error code in the labs, research it using these steps:
+1. **Note the exact error message and code**
+2. **Use `man` pages to understand what it means**
+3. **Search online for "linux [error message]"**
+4. **Look for solutions in forums like Stack Overflow**
+5. **Test the solution in a safe environment**
+6. **Document what worked for future reference**
 
 ### Common Process Problems
 
