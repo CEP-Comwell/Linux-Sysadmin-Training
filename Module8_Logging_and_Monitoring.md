@@ -134,7 +134,7 @@ By the end of this module, you will be able to:
 - Log file locations and naming conventions
 - Security and audit logging considerations
 
-**🔗 Practical Examples**: [Basic rsyslog Configuration](#basic-rsyslog-configuration) | [Log File Analysis](#log-analysis-tools)
+**🔗 Practical Examples**: [Basic rsyslog Configuration](#system-logging-configuration) | [Log File Analysis](#log-analysis-and-processing) 🟢
 
 ### 8.2 rsyslog Configuration
 - rsyslog.conf structure and advanced syntax
@@ -143,7 +143,7 @@ By the end of this module, you will be able to:
 - Custom log formats and templates
 - Performance tuning and troubleshooting
 
-**🔗 Practical Examples**: [Advanced rsyslog Configuration](#advanced-rsyslog-configuration) | [Remote Logging Setup](#remote-logging-configuration)
+**🔗 Practical Examples**: [Advanced rsyslog Configuration](#system-logging-configuration) | [Remote Logging Setup](#system-logging-configuration) 🟢
 
 ### 8.3 systemd Journal (journald)
 - Journal storage mechanisms and configuration options
@@ -152,7 +152,7 @@ By the end of this module, you will be able to:
 - Journal forwarding to traditional syslog
 - Journal maintenance and integrity verification
 
-**🔗 Practical Examples**: [journald Configuration](#journald-configuration) | [journalctl Usage Examples](#journalctl-usage-examples)
+**🔗 Practical Examples**: [journald Configuration](#system-logging-configuration) | [journalctl Usage Examples](#system-logging-configuration) 🟢
 
 ### 8.4 Log Rotation and Management
 - logrotate configuration files in `/etc/logrotate.d/`
@@ -161,7 +161,7 @@ By the end of this module, you will be able to:
 - Custom post-rotation scripts and hooks
 - Automated log cleanup and maintenance
 
-**🔗 Practical Examples**: [Log Rotation Configuration](#log-rotation-configuration) | [Custom Rotation Scripts](#custom-log-management)
+**🔗 Practical Examples**: [Log Rotation Configuration](#system-logging-configuration) | [Custom Rotation Scripts](#system-logging-configuration) 🟢
 
 ### 8.5 Resource Monitoring Fundamentals
 - Core monitoring tools: `top`/`htop`, `vmstat`, `iostat`, `free`, `df`, `du`
@@ -170,7 +170,7 @@ By the end of this module, you will be able to:
 - Real-time monitoring and historical analysis
 - Performance baseline establishment
 
-**🔗 Practical Examples**: [Performance Monitoring Commands](#performance-monitoring-commands) | [System Resource Scripts](#system-resource-scripts)
+**🔗 Practical Examples**: [Performance Monitoring Commands](#performance-monitoring-tools) | [System Resource Scripts](#performance-monitoring-tools) 🟢
 
 ### 8.6 Prometheus and Node Exporter
 - Prometheus architecture and data model
@@ -179,7 +179,7 @@ By the end of this module, you will be able to:
 - Custom exporters and metric creation
 - Time-series data collection and storage
 
-**🔗 Practical Examples**: [Prometheus Configuration](#prometheus-configuration) | [Node Exporter Setup](#node-exporter-deployment)
+**🔗 Practical Examples**: [Prometheus Configuration](#monitoring-infrastructure-deployment) | [Node Exporter Setup](#monitoring-infrastructure-deployment) 🟡
 
 ### 8.7 Grafana Visualization
 - Grafana installation and initial configuration
