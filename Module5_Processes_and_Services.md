@@ -166,6 +166,7 @@ By the end of this module, you will be able to:
 | `journalctl` | View service logs | `journalctl -u nginx`, `journalctl -f` |
 
 ### 🔹 System Monitoring Commands
+**📚 Related Topics:** [5.2 Process Monitoring](#52-process-monitoring) | [5.5 Essential Systemd Operations](#55-essential-systemd-operations)
 
 | Command | Purpose | Common Examples |
 |---------|---------|-----------------|
@@ -175,6 +176,8 @@ By the end of this module, you will be able to:
 | `who` | Who is logged in | `who`, `w` |
 
 ## 🚀 Quick Start Commands
+**📚 Related Topics:** [5.3 Process Control](#53-process-control) | [5.4 Basic Service Management](#54-basic-service-management)
+
 | Task | Command | Example |
 |------|---------|---------|
 | List processes | `ps aux` | `ps aux \| grep nginx` |
