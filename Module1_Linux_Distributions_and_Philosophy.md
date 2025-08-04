@@ -499,4 +499,18 @@ After mastering Linux distributions and philosophy, proceed to:
 - **Module 4: Package Management** - Deep dive into package management systems and repository management
 - **Module 6: Users, Groups & Authentication** - Learn how distribution choices affect user management and security models
 
+
 The foundation established in this module directly influences decisions throughout your Linux administration journey, from filesystem choices to security implementations and automation strategies.
+
+## Further Learning & Classic Resources
+
+Explore these classic and expert resources for deeper historical context and practical Linux/Unix fundamentals:
+
+- [DJ Ware YouTube Channel (Linux/Unix History & Deep Dives)](https://www.youtube.com/c/djware)
+- [LearnLinuxTV (Linux Tutorials & Reviews)](https://www.youtube.com/c/LearnLinuxtv)
+- [UNIX: The Original Documentation (Unix Heritage Society)](https://www.tuhs.org/)
+- [Linux Documentation Project (Classic Guides & HOWTOs)](https://tldp.org/)
+- [The Art of Unix Programming (Eric S. Raymond, online book)](http://catb.org/~esr/writings/taoup/html/)
+- [Linux From Scratch (Build Your Own Linux, Step by Step)](https://www.linuxfromscratch.org/)
+
+> 💡 These resources provide both historical perspective and hands-on training, bridging the gap between classic Unix philosophy and modern Linux administration.
