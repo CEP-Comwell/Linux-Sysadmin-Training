@@ -31,101 +31,76 @@
 - [Next Steps](#next-steps)
 
 ## Overview
-Master comprehensive user and group management, authentication systems, and access control mechanisms essential for enterprise Linux environments. This module covers everything from basic user administration to advanced authentication integration, security policies, and compliance frameworks.
+Master essential user and group management, basic authentication, and access control for Linux systems. This module provides practical, hands-on experience with fundamental user administration tasks that every Linux administrator needs to know.
 
 **Key Learning Outcomes:**
-- Implement enterprise-grade user and group management with automated provisioning
-- Configure advanced authentication systems including LDAP, Kerberos, and multi-factor authentication
-- Design and deploy comprehensive access control policies with role-based permissions
-- Integrate Linux systems with enterprise directory services and identity management platforms
-- Implement security auditing, compliance monitoring, and automated threat detection
-- Deploy and manage SSH infrastructure with advanced security configurations
+- Create, modify, and delete user accounts with proper configuration
+- Manage groups and group memberships effectively
+- Configure sudo access for administrative users
+- Implement basic password policies and account security
+- Understand SSH key-based authentication basics
+- Perform routine user administration tasks safely and efficiently
 
 ## Learning Objectives
 By the end of this module, you will be able to:
 
-1. **Master User Administration**: Implement comprehensive user lifecycle management with automated provisioning and deprovisioning
-2. **Configure Authentication Systems**: Deploy and integrate multiple authentication methods including PAM, LDAP, and Kerberos
-3. **Implement Access Control**: Design role-based access control systems with fine-grained permissions and privilege escalation
-4. **Manage SSH Infrastructure**: Configure secure SSH environments with advanced key management and access controls
-5. **Integrate Enterprise Systems**: Connect Linux systems with Active Directory, LDAP, and other enterprise identity providers
-6. **Ensure Security Compliance**: Implement security auditing, monitoring, and compliance frameworks for enterprise environments
-7. **Automate Identity Management**: Create automated systems for user provisioning, access reviews, and security monitoring
-8. **Troubleshoot Authentication Issues**: Diagnose and resolve complex authentication and authorization problems
+1. **Master Basic User Administration**: Create, modify, and manage user accounts with appropriate settings
+2. **Manage Groups Effectively**: Create groups, assign users, and understand group-based permissions
+3. **Configure Sudo Access**: Set up sudoers file for safe administrative access
+4. **Implement Account Security**: Configure password policies and account lockout basics
+5. **Use SSH Keys**: Generate, install, and manage SSH key pairs for secure access
+6. **Perform Daily Tasks**: Handle routine user administration tasks confidently and safely
+7. **Troubleshoot Common Issues**: Identify and resolve typical user and authentication problems
 
 ## Topics
 
 ### 6.1 User Account Fundamentals
-- User account types: system users, service accounts, regular users, and administrative accounts
-- User identification systems: UID/GID management, namespace considerations, and enterprise scaling
-- Core account files: `/etc/passwd`, `/etc/shadow`, `/etc/group`, and `/etc/gshadow` deep dive
-- Home directory management: templates, quotas, and automated provisioning
-- User environment configuration: shells, profiles, and environment variables
-- Account lifecycle management: creation, modification, suspension, and deletion procedures
+- User account types: regular users, service accounts, and administrative accounts
+- User identification: UID/GID basics and numbering conventions
+- Key account files: `/etc/passwd`, `/etc/shadow`, `/etc/group` overview
+- Home directory management and user environment setup
+- Default shell configuration and user profiles
+- Account creation, modification, and deletion procedures
 
-### 6.2 Advanced User Management
-- Automated user provisioning and deprovisioning workflows
-- Bulk user operations and template-based account creation
-- User account security hardening and compliance requirements
-- Home directory encryption and data protection policies
-- User resource quotas and limits enforcement
-- Account delegation and administrative role separation
+### 6.2 Basic User Management
+- Creating user accounts with `useradd` command
+- Modifying existing users with `usermod`
+- Setting and changing passwords with `passwd`
+- Managing account expiration and password aging
+- Deleting user accounts safely with `userdel`
+- Understanding user account status and information
 
-### 6.3 Group Management and Access Control
-- Group hierarchy design and nested group management
-- Role-based access control (RBAC) implementation strategies
-- Dynamic group membership and automated group assignment
-- Group-based file permissions and access control lists (ACLs)
-- Service account management and application-specific groups
-- Cross-system group synchronization and consistency
+### 6.3 Group Management Basics
+- Creating and deleting groups with `groupadd` and `groupdel`
+- Adding and removing users from groups
+- Understanding primary vs supplementary groups
+- Using groups for file permissions and access control
+- Managing group passwords and group administrators
+- Common system groups and their purposes
 
-### 6.4 Sudo and Privilege Escalation
-- Advanced sudoers configuration with complex rule sets
-- Least privilege principle implementation and enforcement
-- Sudo logging, auditing, and security monitoring
-- Alternative privilege escalation methods and tools
-- Session recording and command auditing for compliance
-- Automated sudo rule management and deployment
+### 6.4 Sudo Configuration and Usage
+- Understanding sudo vs su for privilege escalation
+- Basic sudoers file configuration and syntax
+- Granting administrative access to users and groups
+- Common sudo rules and best practices
+- Using `visudo` to safely edit sudoers file
+- Sudo logging and security considerations
 
-### 6.5 Authentication Systems
-- PAM (Pluggable Authentication Modules) architecture and advanced configuration
-- Multi-factor authentication implementation and integration
-- Single sign-on (SSO) solutions and federation protocols
-- Password policies, complexity requirements, and rotation strategies
-- Account lockout mechanisms and intrusion detection
-- Authentication logging and security event correlation
+### 6.5 Basic Authentication and Security
+- Password policies and complexity requirements
+- Account lockout mechanisms for security
+- Understanding authentication logs and monitoring
+- Basic SSH configuration and security
+- SSH key generation and management basics
+- User session monitoring and last login tracking
 
-### 6.6 SSH and Key Management
-- SSH server hardening and advanced security configurations
-- Public key infrastructure (PKI) for SSH key management
-- Certificate-based SSH authentication and certificate authorities
-- SSH key rotation, lifecycle management, and compliance
-- Jump hosts, bastion servers, and secure access patterns
-- SSH tunneling, port forwarding, and secure remote access
-
-### 6.7 PAM and Security Policies
-- Custom PAM module development and integration
-- Advanced password quality enforcement and policy management
-- Session security controls and resource limitations
-- Integration with external authentication providers and APIs
-- Security policy automation and enforcement mechanisms
-- Compliance framework integration and reporting
-
-### 6.8 Enterprise Authentication Integration
-- Active Directory integration with Samba and SSSD
-- LDAP directory services configuration and management
-- Kerberos authentication and single sign-on implementation
-- RADIUS authentication for network access control
-- SAML and OAuth integration for web-based authentication
-- Identity provider federation and trust relationships
-
-### 6.9 Security Auditing and Compliance
-- User activity monitoring and behavioral analysis
-- Access review automation and compliance reporting
-- Security event correlation and threat detection
-- Privileged access monitoring and session recording
-- Compliance framework implementation (SOX, HIPAA, PCI-DSS)
-- Automated security assessments and vulnerability management
+### 6.6 Practical User Administration
+- Daily user management tasks and workflows
+- Bulk user operations and template accounts
+- Home directory backups and user data management
+- Troubleshooting common user account issues
+- User account auditing and reporting
+- Security best practices for user management
 
 ## Essential Command Reference
 
@@ -175,24 +150,145 @@ By the end of this module, you will be able to:
 
 ## Practical Examples
 
-### User and Group Management
+### Basic User and Group Management
 
-#### Comprehensive User Management Script
+#### Creating and Managing Users
+```bash
+# Create a new user with home directory
+sudo useradd -m -s /bin/bash john
+sudo passwd john
+
+# Create user with specific UID and groups
+sudo useradd -m -u 1500 -G sudo,developers -c "John Doe" john
+
+# Modify existing user - add to group
+sudo usermod -aG sudo john
+
+# Lock and unlock user accounts
+sudo usermod -L john    # Lock account
+sudo usermod -U john    # Unlock account
+
+# Set account expiration
+sudo chage -E 2025-12-31 john
+
+# View user information
+id john
+getent passwd john
+groups john
+finger john    # If finger package is installed
+
+# Delete user (with or without home directory)
+sudo userdel john           # Keep home directory
+sudo userdel -r john        # Remove home directory
+```
+
+#### Basic Group Management
+```bash
+# Create new groups
+sudo groupadd developers
+sudo groupadd -g 2000 webadmins    # With specific GID
+
+# Add users to groups
+sudo gpasswd -a john developers
+sudo usermod -aG webadmins john
+
+# Remove user from group
+sudo gpasswd -d john developers
+
+# List group members
+getent group developers
+grep developers /etc/group
+
+# Delete group
+sudo groupdel developers
+```
+
+#### Simple User Management Script
 ```bash
 #!/bin/bash
-# user-manager.sh - Enterprise user management automation
+# simple-user-manager.sh - Basic user management
 
-# Configuration
-USER_HOME_BASE="/home"
-USER_SHELL_DEFAULT="/bin/bash"
-USER_GROUPS_DEFAULT="users"
-USER_SKEL_DIR="/etc/skel"
-AUDIT_LOG="/var/log/user-management.log"
+create_user() {
+    local username="$1"
+    local fullname="$2"
+    
+    if [[ -z "$username" ]]; then
+        echo "Usage: create_user <username> [fullname]"
+        return 1
+    fi
+    
+    # Check if user exists
+    if id "$username" &>/dev/null; then
+        echo "User $username already exists"
+        return 1
+    fi
+    
+    # Create user
+    echo "Creating user: $username"
+    sudo useradd -m -s /bin/bash "$username"
+    
+    # Set full name if provided
+    if [[ -n "$fullname" ]]; then
+        sudo usermod -c "$fullname" "$username"
+    fi
+    
+    # Set password
+    echo "Setting password for $username:"
+    sudo passwd "$username"
+    
+    echo "User $username created successfully"
+}
 
-# Logging function
-log_action() {
-    local action="$1"
-    local user="$2"
+delete_user() {
+    local username="$1"
+    local keep_home="${2:-no}"
+    
+    if [[ -z "$username" ]]; then
+        echo "Usage: delete_user <username> [keep_home:yes/no]"
+        return 1
+    fi
+    
+    # Check if user exists
+    if ! id "$username" &>/dev/null; then
+        echo "User $username does not exist"
+        return 1
+    fi
+    
+    echo "Deleting user: $username"
+    
+    if [[ "$keep_home" == "yes" ]]; then
+        sudo userdel "$username"
+        echo "User deleted, home directory preserved"
+    else
+        sudo userdel -r "$username"
+        echo "User and home directory deleted"
+    fi
+}
+
+list_users() {
+    echo "Regular users (UID >= 1000):"
+    getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 {printf "%-15s %-20s %s\n", $1, $5, $6}'
+}
+
+# Main menu
+case "${1:-help}" in
+    "create")
+        create_user "$2" "$3"
+        ;;
+    "delete")
+        delete_user "$2" "$3"
+        ;;
+    "list")
+        list_users
+        ;;
+    "help")
+        echo "Usage: $0 {create|delete|list} [arguments]"
+        echo "  create <username> [fullname] - Create new user"
+        echo "  delete <username> [keep_home] - Delete user"
+        echo "  list - List all regular users"
+        ;;
+esac
+```
     local details="$3"
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
     echo "$timestamp - $action - User: $user - Details: $details" >> "$AUDIT_LOG"
@@ -597,7 +693,348 @@ case "${1:-help}" in
 esac
 ```
 
-#### Advanced Group Management
+### Basic Sudo Configuration
+
+#### Understanding Sudoers File
+```bash
+# Edit sudoers file safely
+sudo visudo
+
+# Basic sudoers syntax examples:
+# user    host=(runasuser) commands
+# %group  host=(runasuser) commands
+
+# Grant full sudo access to user
+john    ALL=(ALL:ALL) ALL
+
+# Grant sudo access to group
+%sudo   ALL=(ALL:ALL) ALL
+
+# Allow specific commands without password
+john    ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
+
+# Allow user to run commands as specific user
+john    ALL=(www-data) /usr/bin/php
+
+# Allow group to manage services
+%webadmins ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart apache2, /usr/bin/systemctl reload nginx
+```
+
+#### Basic Sudoers Configuration Examples
+```bash
+#!/bin/bash
+# basic-sudo-setup.sh - Simple sudo configuration
+
+setup_sudo_user() {
+    local username="$1"
+    
+    if [[ -z "$username" ]]; then
+        echo "Usage: setup_sudo_user <username>"
+        return 1
+    fi
+    
+    # Check if user exists
+    if ! id "$username" &>/dev/null; then
+        echo "User $username does not exist"
+        return 1
+    fi
+    
+    # Add user to sudo group
+    echo "Adding $username to sudo group..."
+    sudo usermod -aG sudo "$username"
+    
+    echo "User $username now has sudo access"
+    echo "Test with: sudo -l -U $username"
+}
+
+create_custom_sudo_rule() {
+    local username="$1"
+    local commands="$2"
+    
+    if [[ -z "$username" || -z "$commands" ]]; then
+        echo "Usage: create_custom_sudo_rule <username> <commands>"
+        echo "Example: create_custom_sudo_rule john '/usr/bin/systemctl restart nginx'"
+        return 1
+    fi
+    
+    local rule_file="/etc/sudoers.d/$username"
+    
+    echo "Creating custom sudo rule for $username..."
+    echo "$username ALL=(ALL) NOPASSWD: $commands" | sudo tee "$rule_file"
+    sudo chmod 440 "$rule_file"
+    
+    echo "Custom sudo rule created in $rule_file"
+    echo "Test with: sudo -l -U $username"
+}
+
+list_sudo_users() {
+    echo "Users with sudo access:"
+    echo "======================"
+    
+    # Check sudo group members
+    echo "Sudo group members:"
+    getent group sudo | cut -d: -f4 | tr ',' '\n'
+    
+    echo ""
+    echo "Custom sudo rules:"
+    for file in /etc/sudoers.d/*; do
+        if [[ -f "$file" ]]; then
+            echo "File: $(basename "$file")"
+            cat "$file"
+            echo ""
+        fi
+    done
+}
+
+# Usage
+case "${1:-help}" in
+    "add-user")
+        setup_sudo_user "$2"
+        ;;
+    "custom-rule")
+        create_custom_sudo_rule "$2" "$3"
+        ;;
+    "list")
+        list_sudo_users
+        ;;
+    "help")
+        echo "Usage: $0 {add-user|custom-rule|list} [arguments]"
+        echo "  add-user <username>           - Add user to sudo group"
+        echo "  custom-rule <user> <commands> - Create custom sudo rule"
+        echo "  list                          - List users with sudo access"
+        ;;
+esac
+```
+
+### Basic SSH Key Management
+
+#### Generating and Using SSH Keys
+```bash
+# Generate SSH key pair
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Generate RSA key (if ed25519 not supported)
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+# Copy public key to remote server
+ssh-copy-id user@hostname
+
+# Manual key installation
+cat ~/.ssh/id_ed25519.pub | ssh user@hostname 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
+
+# List SSH keys
+ls -la ~/.ssh/
+
+# View public key
+cat ~/.ssh/id_ed25519.pub
+```
+
+#### Simple SSH Key Management Script
+```bash
+#!/bin/bash
+# ssh-key-helper.sh - Basic SSH key management
+
+generate_key() {
+    local username="$1"
+    local key_type="${2:-ed25519}"
+    
+    if [[ -z "$username" ]]; then
+        echo "Usage: generate_key <username> [key_type]"
+        return 1
+    fi
+    
+    echo "Generating $key_type SSH key for $username..."
+    ssh-keygen -t "$key_type" -C "${username}@$(hostname)" -f "/tmp/${username}_${key_type}_key"
+    
+    echo "Key generated:"
+    echo "Private key: /tmp/${username}_${key_type}_key"
+    echo "Public key: /tmp/${username}_${key_type}_key.pub"
+    echo ""
+    echo "Public key content:"
+    cat "/tmp/${username}_${key_type}_key.pub"
+}
+
+install_key() {
+    local username="$1"
+    local keyfile="$2"
+    
+    if [[ -z "$username" || -z "$keyfile" ]]; then
+        echo "Usage: install_key <username> <public_key_file>"
+        return 1
+    fi
+    
+    if [[ ! -f "$keyfile" ]]; then
+        echo "Key file not found: $keyfile"
+        return 1
+    fi
+    
+    local user_home=$(getent passwd "$username" | cut -d: -f6)
+    if [[ -z "$user_home" ]]; then
+        echo "User $username not found"
+        return 1
+    fi
+    
+    echo "Installing SSH key for $username..."
+    sudo -u "$username" mkdir -p "$user_home/.ssh"
+    sudo -u "$username" chmod 700 "$user_home/.ssh"
+    sudo -u "$username" cat "$keyfile" >> "$user_home/.ssh/authorized_keys"
+    sudo -u "$username" chmod 600 "$user_home/.ssh/authorized_keys"
+    
+    echo "SSH key installed successfully"
+}
+
+list_keys() {
+    local username="$1"
+    
+    if [[ -z "$username" ]]; then
+        echo "Usage: list_keys <username>"
+        return 1
+    fi
+    
+    local user_home=$(getent passwd "$username" | cut -d: -f6)
+    local auth_keys="$user_home/.ssh/authorized_keys"
+    
+    if [[ ! -f "$auth_keys" ]]; then
+        echo "No SSH keys found for $username"
+        return 1
+    fi
+    
+    echo "SSH keys for $username:"
+    echo "======================"
+    cat "$auth_keys"
+}
+
+# Usage
+case "${1:-help}" in
+    "generate")
+        generate_key "$2" "$3"
+        ;;
+    "install")
+        install_key "$2" "$3"
+        ;;
+    "list")
+        list_keys "$2"
+        ;;
+    "help")
+        echo "Usage: $0 {generate|install|list} [arguments]"
+        echo "  generate <username> [key_type] - Generate SSH key pair"
+        echo "  install <username> <keyfile>   - Install public key"
+        echo "  list <username>                - List user's SSH keys"
+        ;;
+esac
+```
+
+### Basic Security and Monitoring
+
+#### Password Management
+```bash
+# Set password policy (edit /etc/login.defs)
+sudo nano /etc/login.defs
+
+# Key settings:
+PASS_MAX_DAYS   90    # Maximum password age
+PASS_MIN_DAYS   1     # Minimum password age  
+PASS_WARN_AGE   7     # Warning days before expiration
+
+# Force password change on next login
+sudo chage -d 0 username
+
+# Set account expiration
+sudo chage -E 2025-12-31 username
+
+# View password aging information
+chage -l username
+```
+
+#### Basic User Monitoring
+```bash
+#!/bin/bash
+# user-monitor.sh - Basic user monitoring
+
+check_failed_logins() {
+    echo "Recent failed login attempts:"
+    echo "============================"
+    sudo lastb -n 20 | head -20
+}
+
+check_current_users() {
+    echo "Currently logged in users:"
+    echo "========================="
+    who
+    echo ""
+    echo "Detailed user activity:"
+    w
+}
+
+check_sudo_usage() {
+    echo "Recent sudo usage:"
+    echo "=================="
+    sudo grep sudo /var/log/auth.log | tail -20
+}
+
+generate_user_report() {
+    local output_file="/tmp/user_report_$(date +%Y%m%d_%H%M%S).txt"
+    
+    echo "Generating user report: $output_file"
+    
+    {
+        echo "User Security Report - $(date)"
+        echo "==============================="
+        echo ""
+        
+        echo "System Information:"
+        echo "- Hostname: $(hostname)"
+        echo "- Users with UID >= 1000: $(getent passwd | awk -F: '$3 >= 1000 && $3 < 65534' | wc -l)"
+        echo "- Users with shell access: $(getent passwd | grep -E '(bash|zsh)$' | wc -l)"
+        echo ""
+        
+        echo "Users with sudo access:"
+        getent group sudo | cut -d: -f4 | tr ',' '\n'
+        echo ""
+        
+        echo "Recent logins:"
+        last -n 10
+        echo ""
+        
+        echo "Failed login attempts (last 10):"
+        sudo lastb -n 10
+        
+    } > "$output_file"
+    
+    echo "Report saved to: $output_file"
+}
+
+# Usage
+case "${1:-help}" in
+    "failed-logins")
+        check_failed_logins
+        ;;
+    "current-users")
+        check_current_users
+        ;;
+    "sudo-usage")
+        check_sudo_usage
+        ;;
+    "report")
+        generate_user_report
+        ;;
+    "all")
+        check_failed_logins
+        echo ""
+        check_current_users
+        echo ""
+        check_sudo_usage
+        ;;
+    "help")
+        echo "Usage: $0 {failed-logins|current-users|sudo-usage|report|all}"
+        echo "  failed-logins  - Show recent failed login attempts"
+        echo "  current-users  - Show currently logged in users"
+        echo "  sudo-usage     - Show recent sudo usage"
+        echo "  report         - Generate comprehensive user report"
+        echo "  all            - Show all monitoring information"
+        ;;
+esac
+```
 ```bash
 #!/bin/bash
 # group-manager.sh - Advanced group management and access control
@@ -2148,6 +2585,124 @@ esac
 
 ## Lab Exercises
 
+### Lab 1: Basic User Management
+**Objective:** Practice fundamental user account operations and group management.
+
+**Tasks:**
+1. Create three user accounts: alice, bob, and charlie
+2. Set up a `developers` group and add alice and bob to it
+3. Create a `managers` group and add charlie to it
+4. Configure password aging for all users (90-day maximum age)
+5. Practice modifying user accounts (changing shells, adding groups)
+6. Safely delete a test user account
+
+**Commands to Practice:**
+```bash
+# User creation and management
+sudo useradd -m -s /bin/bash alice
+sudo passwd alice
+sudo usermod -aG developers alice
+sudo chage -M 90 alice
+
+# Group management
+sudo groupadd developers
+sudo gpasswd -a alice developers
+
+# User information
+id alice
+groups alice
+getent passwd alice
+```
+
+**Deliverables:**
+- Documentation of all commands used
+- Screenshot showing user and group information
+- Notes on any issues encountered and how they were resolved
+
+### Lab 2: Sudo Configuration and Access Control
+**Objective:** Configure sudo access for administrative tasks.
+
+**Tasks:**
+1. Grant alice full sudo access
+2. Allow bob to restart web services without a password
+3. Create a custom sudo rule for charlie to manage user accounts
+4. Test all sudo configurations
+5. Monitor sudo usage in logs
+
+**Example Configurations:**
+```bash
+# Add alice to sudo group
+sudo usermod -aG sudo alice
+
+# Create custom rule for bob (in /etc/sudoers.d/bob)
+bob ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart apache2, /usr/bin/systemctl restart nginx
+
+# Create custom rule for charlie (in /etc/sudoers.d/charlie)
+charlie ALL=(ALL) /usr/sbin/useradd, /usr/sbin/usermod, /usr/sbin/userdel
+```
+
+**Deliverables:**
+- Working sudo configurations
+- Test results showing proper access control
+- Log entries showing sudo usage
+
+### Lab 3: SSH Key Authentication
+**Objective:** Set up SSH key-based authentication for secure access.
+
+**Tasks:**
+1. Generate SSH key pairs for each user
+2. Configure SSH key-based authentication
+3. Disable password authentication for SSH (optional)
+4. Test remote access using SSH keys
+5. Manage multiple SSH keys per user
+
+**SSH Key Commands:**
+```bash
+# Generate SSH key
+ssh-keygen -t ed25519 -C "alice@hostname"
+
+# Copy key to remote server
+ssh-copy-id alice@hostname
+
+# Test SSH connection
+ssh alice@hostname
+```
+
+**Deliverables:**
+- Working SSH key authentication
+- Documentation of SSH configuration changes
+- Demonstration of secure remote access
+
+### Lab 4: User Security and Monitoring
+**Objective:** Implement basic security measures and monitoring for user accounts.
+
+**Tasks:**
+1. Configure password complexity requirements
+2. Set up account lockout after failed attempts
+3. Monitor user login activity
+4. Generate user activity reports
+5. Implement basic security best practices
+
+**Security Commands:**
+```bash
+# Monitor user activity
+who
+w
+last -n 20
+lastb -n 10
+
+# Check password aging
+chage -l username
+
+# View sudo logs
+sudo grep sudo /var/log/auth.log
+```
+
+**Deliverables:**
+- Configured security policies
+- User activity monitoring reports
+- Documentation of security measures implemented
+
 ### Lab 1: User Management Automation
 **Objective**: Create a comprehensive user management system with automation and audit trails.
 
@@ -2286,43 +2841,78 @@ esac
 - Monitoring detects security events
 - Reports are generated automatically
 
-## Best Practices
+## Best Practices Summary
 
-### Security Best Practices
+### User Management Best Practices
 
-#### Account Management
-- **Regular Account Reviews**: Conduct quarterly reviews of all user accounts
-- **Automated Provisioning**: Use automated tools for consistent user creation
-- **Principle of Least Privilege**: Grant minimum necessary permissions
-- **Account Lifecycle Management**: Implement proper onboarding/offboarding processes
-- **Shared Account Prohibition**: Avoid shared accounts except for specific system accounts
+#### Account Creation and Management
+- **Use consistent naming conventions**: Establish clear username standards (e.g., firstname.lastname)
+- **Create with proper groups**: Add users to appropriate groups during creation
+- **Set password aging**: Configure reasonable password expiration policies
+- **Use home directory templates**: Maintain consistent user environments with /etc/skel
+- **Document account purposes**: Keep records of why each account exists
 
 #### Password Security
-- **Strong Password Policies**: Enforce complexity, length, and rotation requirements
-- **Multi-Factor Authentication**: Implement MFA for all privileged accounts
-- **Password Managers**: Encourage use of enterprise password management tools
-- **Secure Storage**: Never store passwords in plain text
-- **Regular Audits**: Periodically check for weak or compromised passwords
-
-#### SSH Security
-- **Key-Based Authentication**: Disable password authentication for SSH
-- **Key Rotation**: Regularly rotate SSH keys
-- **Host Key Verification**: Always verify host keys
-- **Session Management**: Implement proper session timeouts
-- **Connection Monitoring**: Log and monitor all SSH connections
+- **Enforce strong passwords**: Minimum 8-12 characters with complexity requirements
+- **Set reasonable expiration**: 90-180 days maximum password age
+- **Force initial password change**: Use `chage -d 0` for new accounts
+- **Monitor failed logins**: Regularly check `lastb` for suspicious activity
+- **Lock inactive accounts**: Disable accounts that haven't been used recently
 
 #### Group Management
-- **Role-Based Groups**: Create groups based on job functions
-- **Nested Groups**: Use group hierarchies for complex organizations
-- **Regular Cleanup**: Remove unused groups periodically
-- **Documentation**: Maintain clear group purpose documentation
-- **Access Reviews**: Regularly review group memberships
+- **Use meaningful group names**: Choose descriptive names that reflect purpose
+- **Follow the principle of least privilege**: Only grant necessary access
+- **Regular group audits**: Review group memberships quarterly
+- **Remove unused groups**: Clean up empty or obsolete groups
+- **Document group purposes**: Maintain clear descriptions of what each group does
 
-### Operational Best Practices
+### Sudo Configuration Best Practices
 
-#### Documentation
-- **User Procedures**: Document all user management procedures
-- **Security Policies**: Maintain up-to-date security policy documentation
+#### Sudoers File Management
+- **Always use visudo**: Never edit /etc/sudoers directly
+- **Use /etc/sudoers.d/**: Create separate files for different users/purposes
+- **Test configurations**: Verify sudo rules work as expected
+- **Limit sudo scope**: Grant specific commands rather than ALL when possible
+- **Monitor sudo usage**: Regularly review sudo logs in /var/log/auth.log
+
+#### Access Control
+- **Group-based sudo**: Use groups rather than individual users when possible
+- **NOPASSWD sparingly**: Only use for specific, safe commands
+- **Command paths**: Use full paths in sudo rules for security
+- **Regular reviews**: Audit sudo permissions monthly
+- **Emergency access**: Maintain a way to regain access if sudo breaks
+
+### SSH Security Best Practices
+
+#### SSH Configuration
+- **Disable root login**: Set `PermitRootLogin no` in sshd_config
+- **Use key authentication**: Prefer SSH keys over passwords
+- **Change default port**: Consider using non-standard port (if needed)
+- **Limit user access**: Use AllowUsers or AllowGroups directives
+- **Enable logging**: Set appropriate LogLevel in SSH configuration
+
+#### SSH Key Management
+- **Use strong key types**: Prefer ed25519 or RSA 4096-bit keys
+- **Protect private keys**: Never share private keys, use passphrases
+- **Regular key rotation**: Replace keys periodically
+- **Remove old keys**: Clean up authorized_keys files regularly
+- **Monitor key usage**: Track which keys are actually being used
+
+### Daily Operations Best Practices
+
+#### Routine Maintenance
+- **Regular user audits**: Review user accounts monthly
+- **Monitor login activity**: Check who, w, and last commands regularly
+- **Update documentation**: Keep user/group documentation current
+- **Backup configurations**: Regularly backup /etc/passwd, /etc/group, etc.
+- **Security patching**: Keep authentication systems updated
+
+#### Troubleshooting
+- **Check logs first**: Start with /var/log/auth.log for authentication issues
+- **Verify file permissions**: Ensure proper ownership and permissions on home directories
+- **Test incrementally**: Make one change at a time when troubleshooting
+- **Have rollback plans**: Always know how to undo changes
+- **Document solutions**: Keep notes on problems and their solutions
 - **Incident Response**: Create clear incident response procedures
 - **Change Management**: Document all account and permission changes
 - **Compliance Records**: Maintain audit trails for compliance requirements
@@ -2341,43 +2931,227 @@ esac
 - **Privilege Escalation Detection**: Monitor for unauthorized privilege changes
 - **Compliance Monitoring**: Continuously monitor compliance with security policies
 
-## Troubleshooting
+## Troubleshooting Common Issues
 
-### Common Authentication Issues
+### User Account Problems
 
 #### User Cannot Login
-**Symptoms**: User reports inability to log in via SSH or console
+**Symptoms:** User cannot log in via SSH or console
 
-**Diagnostic Steps**:
-1. Check account status:
-   ```bash
-   sudo passwd -S username
-   sudo chage -l username
-   ```
+**Diagnostic Steps:**
+```bash
+# Check if account exists and status
+id username
+sudo passwd -S username
 
-2. Verify account isn't locked:
-   ```bash
-   sudo pam_tally2 --user=username
-   sudo faillock --user=username
-   ```
+# Check account expiration
+sudo chage -l username
 
-3. Check SSH configuration:
-   ```bash
-   sudo sshd -T | grep -i allowusers
-   sudo sshd -T | grep -i denyusers
-   ```
+# Check for locked account
+sudo passwd -S username | grep -i locked
 
-4. Verify file permissions:
-   ```bash
-   ls -la /home/username/.ssh/
-   ls -la /home/username/.ssh/authorized_keys
-   ```
+# Check recent login attempts
+last username
+lastb username
+```
 
-**Solutions**:
-- Unlock account: `sudo passwd -u username`
-- Reset failed attempts: `sudo pam_tally2 --user=username --reset`
-- Fix permissions: `chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys`
-- Check SSH server configuration for user restrictions
+**Common Solutions:**
+- **Account locked:** `sudo passwd -u username`
+- **Password expired:** `sudo chage -d 0 username` (force password change)
+- **Account expired:** `sudo chage -E -1 username` (remove expiration)
+
+#### SSH Key Authentication Not Working
+**Symptoms:** SSH password prompts despite having keys
+
+**Diagnostic Steps:**
+```bash
+# Check SSH key permissions
+ls -la ~/.ssh/
+ls -la ~/.ssh/authorized_keys
+
+# Test SSH connection with verbose output
+ssh -v username@hostname
+
+# Check SSH server configuration
+sudo sshd -T | grep -i pubkey
+sudo sshd -T | grep -i passwordauth
+```
+
+**Common Solutions:**
+- **Fix permissions:**
+  ```bash
+  chmod 700 ~/.ssh
+  chmod 600 ~/.ssh/authorized_keys
+  chmod 600 ~/.ssh/id_rsa
+  chmod 644 ~/.ssh/id_rsa.pub
+  ```
+- **Check key format:** Ensure public key is properly formatted
+- **Verify SSH server allows key auth:** Check `PubkeyAuthentication yes` in sshd_config
+
+#### Sudo Not Working
+**Symptoms:** User gets "not in sudoers file" error
+
+**Diagnostic Steps:**
+```bash
+# Check if user is in sudo group
+groups username
+getent group sudo
+
+# Check sudoers file for user
+sudo grep username /etc/sudoers
+sudo ls /etc/sudoers.d/
+
+# Test sudo configuration
+sudo visudo -c
+```
+
+**Common Solutions:**
+- **Add to sudo group:** `sudo usermod -aG sudo username`
+- **Fix sudoers syntax:** Use `sudo visudo` to edit safely
+- **Check sudoers.d files:** Ensure proper syntax in custom rules
+
+### Group Management Issues
+
+#### User Not Getting Group Permissions
+**Symptoms:** User cannot access files despite being in correct group
+
+**Diagnostic Steps:**
+```bash
+# Check user's current groups
+groups username
+id username
+
+# Check file/directory permissions
+ls -la /path/to/file
+ls -ld /path/to/directory
+
+# Check if user needs to log out/in
+# Groups are assigned at login time
+```
+
+**Common Solutions:**
+- **User needs new login:** Group changes require logout/login
+- **Fix file permissions:** `chgrp groupname /path/to/file`
+- **Verify group membership:** `sudo gpasswd -a username groupname`
+
+#### Cannot Create or Delete Groups
+**Symptoms:** Error messages when managing groups
+
+**Diagnostic Steps:**
+```bash
+# Check if group exists
+getent group groupname
+
+# Check if group has members
+getent group groupname | cut -d: -f4
+
+# Check for files owned by group
+find / -group groupname 2>/dev/null | head -5
+```
+
+**Common Solutions:**
+- **Remove users from group first:** `sudo gpasswd -d username groupname`
+- **Change file ownership:** `sudo chgrp newgroup /path/to/files`
+- **Use correct syntax:** `sudo groupdel groupname`
+
+### Password and Authentication Issues
+
+#### Password Policy Not Enforced
+**Symptoms:** Users can set weak passwords
+
+**Diagnostic Steps:**
+```bash
+# Check password policy settings
+sudo cat /etc/login.defs | grep PASS_
+sudo cat /etc/security/pwquality.conf
+
+# Test password setting
+echo "username:weakpass" | sudo chpasswd
+```
+
+**Common Solutions:**
+- **Configure pwquality:** Edit `/etc/security/pwquality.conf`
+- **Update login.defs:** Set proper values in `/etc/login.defs`
+- **Install required packages:** `sudo apt install libpam-pwquality`
+
+### File Permission Issues
+
+#### Home Directory Problems
+**Symptoms:** User cannot access their own home directory
+
+**Diagnostic Steps:**
+```bash
+# Check home directory ownership and permissions
+ls -ld /home/username
+ls -la /home/username
+
+# Check if home directory exists
+getent passwd username | cut -d: -f6
+```
+
+**Common Solutions:**
+```bash
+# Fix ownership
+sudo chown username:username /home/username
+
+# Fix permissions
+sudo chmod 755 /home/username
+
+# Create missing home directory
+sudo mkdir /home/username
+sudo cp -r /etc/skel/. /home/username/
+sudo chown -R username:username /home/username
+```
+
+### Quick Reference Commands
+
+#### Essential Troubleshooting Commands
+```bash
+# User information
+id username
+getent passwd username
+groups username
+
+# Account status
+sudo passwd -S username
+sudo chage -l username
+
+# Login history
+last username
+lastb username
+
+# File permissions
+ls -la /home/username
+ls -la /home/username/.ssh
+
+# System logs
+sudo tail -f /var/log/auth.log
+sudo grep username /var/log/auth.log
+
+# SSH debugging
+ssh -v username@hostname
+sudo systemctl status ssh
+```
+
+#### Recovery Procedures
+```bash
+# Reset user password
+sudo passwd username
+
+# Unlock account
+sudo passwd -u username
+
+# Fix common SSH permissions
+sudo chmod 700 /home/username/.ssh
+sudo chmod 600 /home/username/.ssh/authorized_keys
+sudo chown -R username:username /home/username/.ssh
+
+# Add user to sudo group
+sudo usermod -aG sudo username
+
+# Create missing home directory
+sudo mkhomedir_helper username
+```
 
 #### SSH Key Authentication Fails
 **Symptoms**: SSH key authentication not working, falls back to password
@@ -2537,63 +3311,90 @@ esac
 
 ## Assessment Criteria
 
-### Knowledge Assessment
+Students will be evaluated on their practical skills and theoretical understanding of user and group management.
 
-#### Theoretical Understanding (25 points)
-- **User Management Concepts** (5 points): Understanding of user lifecycle, permissions, and security principles
-- **Authentication Mechanisms** (5 points): Knowledge of various authentication methods and their security implications
-- **Group Management** (5 points): Understanding of role-based access control and group hierarchies
-- **SSH Security** (5 points): Knowledge of SSH configuration, key management, and security best practices
-- **PAM Configuration** (5 points): Understanding of PAM modules and authentication policies
+### Assessment Components
 
-#### Practical Implementation (50 points)
-- **User Creation and Management** (15 points):
-  - Create users with appropriate settings
-  - Implement password policies
-  - Configure account expiration and aging
-  - Demonstrate bulk user operations
+| Component | Weight | Description |
+|-----------|---------|-------------|
+| **Practical Skills** | 60% | Hands-on user and group management tasks |
+| **Security Configuration** | 25% | Sudo and SSH security setup |
+| **Troubleshooting** | 10% | Problem identification and resolution |
+| **Documentation** | 5% | Clear documentation of procedures |
 
-- **Group and Permission Management** (10 points):
-  - Create and manage groups
-  - Configure role-based access
-  - Implement file permissions correctly
-  - Use ACLs where appropriate
+### Skill Assessment Rubric
 
-- **SSH Configuration** (15 points):
-  - Configure SSH server securely
-  - Set up key-based authentication
-  - Implement SSH client configurations
-  - Demonstrate key management
+| Criteria | Excellent (4) | Proficient (3) | Developing (2) | Beginning (1) |
+|----------|---------------|----------------|----------------|---------------|
+| **User Management** | Creates, modifies, and deletes users efficiently with proper settings | Good user management with minor issues | Basic user operations with guidance | Struggles with basic user commands |
+| **Group Management** | Effectively manages groups and permissions with best practices | Solid group management skills | Basic group operations | Difficulty with group concepts |
+| **Sudo Configuration** | Configures complex sudo rules safely and effectively | Sets up basic sudo access correctly | Simple sudo configuration with help | Cannot configure sudo properly |
+| **SSH Security** | Implements comprehensive SSH security with key management | Sets up basic SSH key authentication | Basic SSH configuration | Cannot configure SSH security |
+| **Troubleshooting** | Quickly diagnoses and resolves complex authentication issues | Solves common authentication problems | Basic troubleshooting with guidance | Cannot troubleshoot effectively |
 
-- **Security Implementation** (10 points):
-  - Configure PAM modules
-  - Implement account lockout policies
-  - Set up audit logging
-  - Demonstrate security monitoring
+### Practical Assessment Tasks
 
-#### Problem-Solving and Troubleshooting (15 points)
-- **Diagnostic Skills** (5 points): Ability to identify and diagnose authentication issues
-- **Resolution Techniques** (5 points): Effective troubleshooting and problem resolution
-- **Security Analysis** (5 points): Ability to identify and address security vulnerabilities
+#### Required Demonstrations
+1. **User Lifecycle Management** (20 points)
+   - Create users with appropriate settings
+   - Modify user accounts and group memberships
+   - Safely delete user accounts
+   - Configure password policies
 
-#### Documentation and Best Practices (10 points)
-- **Technical Documentation** (5 points): Clear and comprehensive documentation of procedures
-- **Security Best Practices** (5 points): Implementation of industry-standard security practices
+2. **Group and Access Control** (15 points)
+   - Create and manage groups
+   - Configure group-based file permissions
+   - Implement role-based access
 
-### Practical Evaluation Rubric
+3. **Sudo Configuration** (15 points)
+   - Add users to sudo group
+   - Create custom sudo rules
+   - Test and verify sudo access
 
-#### Excellent (90-100%)
-- Demonstrates mastery of all user and authentication management concepts
-- Implements comprehensive security measures with automation
-- Creates robust, scalable solutions with proper error handling
-- Provides detailed documentation and follows all best practices
-- Troubleshoots complex issues efficiently
+4. **SSH Security** (10 points)
+   - Generate and install SSH keys
+   - Configure SSH key authentication
+   - Test secure remote access
 
-#### Proficient (80-89%)
-- Shows solid understanding of user and authentication management
-- Implements most security measures correctly
-- Creates functional solutions with basic automation
-- Provides adequate documentation
+#### Assessment Standards
+
+**Excellent Performance (90-100%)**
+- Completes all tasks efficiently and correctly
+- Demonstrates understanding of security principles
+- Uses best practices consistently
+- Troubleshoots issues independently
+- Provides clear documentation
+
+**Proficient Performance (80-89%)**
+- Completes most tasks correctly
+- Shows good understanding of concepts
+- Uses appropriate commands and options
+- Resolves basic issues with minimal help
+- Adequate documentation
+
+**Developing Performance (70-79%)**
+- Completes basic tasks with some guidance
+- Understands fundamental concepts
+- Uses correct commands with prompting
+- Needs help with troubleshooting
+- Basic documentation provided
+
+**Beginning Performance (Below 70%)**
+- Struggles with basic tasks
+- Limited understanding of concepts
+- Needs significant guidance
+- Cannot troubleshoot independently
+- Poor or missing documentation
+
+## Next Steps
+
+After completing this module, students should proceed to:
+
+- **Module 7: Networking Fundamentals** - Apply user management skills to network security and access control
+- **Module 8: Logging and Monitoring** - Use monitoring tools to track user activity and authentication events
+- **Module 13: OpenSSH Best Practices** - Advanced SSH security configuration and management
+
+The fundamental user management skills learned in this module are essential for all subsequent Linux administration tasks and provide the foundation for secure system management.
 - Handles most troubleshooting scenarios
 
 #### Developing (70-79%)

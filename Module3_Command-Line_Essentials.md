@@ -127,14 +127,16 @@ By the end of this module, you will be able to:
 
 | Command | Description | Common Options | Example |
 |---------|-------------|----------------|---------|
-| `ls` | List directory contents | `-la`, `-h`, `-t`, `-r` | `ls -la /etc/` |
+| `ls` | List directory contents | `-la`, `-h`, `-t`, `-r` | `ls -alhtr /var/log/` |
 | `cd` | Change directory | N/A | `cd /var/log` |
 | `pwd` | Print working directory | N/A | `pwd` |
 | `mkdir` | Create directories | `-p`, `-m` | `mkdir -p /path/to/dir` |
 | `rm` | Remove files/directories | `-r`, `-f`, `-i` | `rm -rf directory/` |
 | `cp` | Copy files/directories | `-r`, `-p`, `-u` | `cp -r src/ dest/` |
 | `mv` | Move/rename files | N/A | `mv old.txt new.txt` |
+| `du` | Disk usage | `-ah`, `--max-depth` | `du -ah --max-depth=1 /var/` |
 | `find` | Search for files | `-name`, `-type`, `-size` | `find /var -name "*.log"` |
+| `locate` | Find files by name | `-i`, `-r`, `-c` | `locate nginx.conf` |
 | `grep` | Search text patterns | `-r`, `-i`, `-v`, `-n` | `grep -r "error" /var/log/` |
 | `sed` | Stream editor | `-i`, `-e`, `-n` | `sed 's/old/new/g' file.txt` |
 | `awk` | Text processing | `-F`, `-v` | `awk '{print $1}' file.txt` |
@@ -143,6 +145,7 @@ By the end of this module, you will be able to:
 | `tar` | Archive files | `-czf`, `-xzf`, `-tzf` | `tar -czf backup.tar.gz dir/` |
 | `head` | Show file beginning | `-n`, `-c` | `head -n 20 file.txt` |
 | `tail` | Show file end | `-n`, `-f` | `tail -f /var/log/syslog` |
+| `sudo` | Execute as another user | `-u`, `-i`, `-s` | `sudo -u www-data whoami` |
 
 ## Practical Examples
 - Pipes: `|`
@@ -152,6 +155,61 @@ By the end of this module, you will be able to:
 - Finding files: `find`
 - Locating commands: `which`, `whereis`, `locate`
 - Pattern matching with wildcards
+
+### 3.6.1 Privilege Escalation and User Switching
+The `sudo` (substitute user do) command allows authorized users to execute commands as another user, typically root, without knowing their password.
+
+#### Basic sudo Usage
+```bash
+# Execute command as root (default)
+sudo command
+
+# Execute command as specific user
+sudo -u username command
+sudo -u www-data ls /var/www/
+sudo -u postgres psql
+
+# Switch to another user's shell
+sudo -u username -s
+sudo -u postgres -s
+
+# Execute command with target user's environment
+sudo -u username -i command
+sudo -u postgres -i psql
+
+# Check sudo permissions
+sudo -l                    # List allowed commands
+sudo -l -U username        # Check permissions for specific user
+```
+
+#### Common sudo Examples
+```bash
+# System administration as root
+sudo systemctl restart nginx
+sudo apt update && sudo apt upgrade
+sudo mount /dev/sdb1 /mnt/backup
+
+# File operations as specific users
+sudo -u apache touch /var/www/html/test.php
+sudo -u mysql mysqldump database > backup.sql
+sudo -u git git clone repo.git /opt/repo
+
+# Service account operations
+sudo -u jenkins /opt/jenkins/scripts/deploy.sh
+sudo -u nagios /usr/lib/nagios/plugins/check_disk
+
+# Debugging and troubleshooting
+sudo -u www-data php -l /var/www/html/script.php
+sudo -u postgres createdb newdatabase
+```
+
+#### Security Best Practices
+- Always use `sudo -l` to verify permissions before execution
+- Prefer `sudo command` over `sudo su -` for single commands
+- Use specific user accounts (`-u`) instead of root when possible
+- Log sudo usage is automatically recorded in `/var/log/auth.log`
+
+> **See Also:** For comprehensive sudoers configuration, user management, and security policies, refer to [Module 6: Users, Groups, and Authentication](Module6_Users_Groups_and_Authentication.md#sudoers-configuration) which covers sudoers file syntax, user privilege management, and advanced sudo configurations.
 
 ### 3.7 Shell Customization and Environment
 - Environment variables and their usage
@@ -195,6 +253,72 @@ rm -i *.tmp                             # Interactive deletion
 cp -p source.txt dest.txt               # Preserve timestamps and permissions
 cp -u source/ dest/                     # Update only newer files
 rsync -av source/ dest/                 # Advanced synchronization
+
+# Enhanced file listing with comprehensive options
+ls -alhtr /var/log/                     # All files, human-readable, time-sorted, reverse order
+# -a: show all files (including hidden)
+# -l: long format with details
+# -h: human-readable file sizes
+# -t: sort by modification time
+# -r: reverse sort order (newest last)
+
+ls -alhtr --time-style=long-iso /etc/   # ISO timestamp format
+ls -alhS /var/                          # Sort by file size (largest first)
+ls -alht --color=always /tmp/           # Force color output
+
+# Disk usage analysis with depth control
+du -ah --max-depth=1 /var/              # Show all files and directories, human-readable, 1 level deep
+du -ah --max-depth=2 /usr/              # 2 levels deep for more detail
+du -sh --max-depth=1 /home/*/           # Summary of each user's home directory
+du -ah --max-depth=1 . | sort -hr       # Sort by size, largest first
+
+# Advanced du usage examples
+du -ah --max-depth=1 /var/ | grep -E '^[0-9.]+[MG]'  # Show only MB/GB sized items
+du -ah --max-depth=3 /usr/share/ | tail -20          # Last 20 items (smallest)
+du -ah --max-depth=1 --threshold=100M /opt/          # Only show items larger than 100MB
+```
+
+#### File Location and Search Operations
+```bash
+# Setting up and using locate command
+# First-time setup and installation (if not already installed)
+sudo apt update && sudo apt install mlocate    # On Debian/Ubuntu
+sudo yum install mlocate                       # On RHEL/CentOS
+sudo dnf install mlocate                       # On newer Fedora
+
+# Initialize the locate database
+sudo updatedb                                  # Create/update the file database
+
+# Schedule automatic updates (usually done via cron)
+# The database is typically updated daily via:
+# /etc/cron.daily/mlocate (on most systems)
+
+# Basic locate usage
+locate nginx.conf                              # Find all files named nginx.conf
+locate -i nginx                                # Case-insensitive search
+locate "*.log" | head -10                      # Find log files (show first 10)
+locate -c "*.pdf"                              # Count PDF files
+locate -r "\.conf$"                            # Regex search for files ending in .conf
+
+# Advanced locate examples
+locate -e /etc/passwd                          # Only show existing files
+locate -l 5 python                            # Limit output to 5 results
+locate --regex ".*/(bin|sbin)/.*"              # Find files in bin or sbin directories
+locate -S                                      # Show database statistics
+
+# Updating locate database
+sudo updatedb                                  # Manual update (may take time)
+sudo updatedb --localpaths="/home /opt"       # Update specific paths only
+sudo updatedb --prunepaths="/tmp /var/tmp"    # Exclude specific paths
+
+# Locate vs find comparison
+time locate "*.conf"                           # Fast database lookup
+time find / -name "*.conf" 2>/dev/null        # Slower but real-time
+
+# Combine locate with other commands
+locate "*.log" | xargs ls -lht                 # Show log files with details
+locate -0 "*.tmp" | xargs -0 rm               # Safely delete tmp files
+locate nginx | grep -E "(bin|sbin)"           # Find nginx executables
 ```
 
 #### Efficient Navigation Techniques
@@ -518,12 +642,33 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+# Sudo convenience aliases
+alias sudo='sudo '                      # Enable alias expansion after sudo
+alias please='sudo'                     # Polite sudo alternative
+alias root='sudo -i'                    # Quick root shell
+alias sudol='sudo -l'                   # List sudo permissions
+
 # System administration aliases
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 alias ps='ps auxf'
 alias pstree='pstree -p'
+
+# Enhanced listing and disk usage aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias lt='ls -alhtr'                    # Time-sorted listing, newest last
+alias lS='ls -alSh'                     # Size-sorted listing
+alias ltr='ls -ltr'                     # Simple time-sorted
+alias dus='du -ah --max-depth=1'        # Disk usage summary for current level
+alias duf='du -ah --max-depth=1 | sort -hr'  # Disk usage sorted by size
+
+# File location and search aliases
+alias updatedb='sudo updatedb'          # Update locate database
+alias locatei='locate -i'               # Case-insensitive locate
+alias locater='locate -r'               # Regex locate
+alias whichall='type -a'                # Show all instances of command
 
 # Network aliases
 alias ports='netstat -tulanp'
@@ -597,10 +742,41 @@ netstat -i | awk 'NR>2 {print $1, $3+$7}'          # Interface traffic summary
 
 #### File and Directory Analysis
 ```bash
-# Disk usage analysis
+# Advanced disk usage analysis with depth control
+du -ah --max-depth=1 /var/ | sort -hr               # Top-level /var analysis, sorted by size
+du -ah --max-depth=2 /usr/share/ | grep -E '[0-9.]+[MG]' # Show MB/GB items in /usr/share
+du -ah --max-depth=1 /home/ | tail -n +2 | sort -hr # All user directories by size
+du -sh --max-depth=1 /opt/* 2>/dev/null | sort -hr  # Largest items in /opt
+
+# Comprehensive directory size analysis
+du -ah --max-depth=1 / | grep -E '^[0-9.]+[GM]' | sort -hr | head -20  # Top 20 largest items
+du -ah --max-depth=3 /var/log/ | grep -v '^[0-9.]*K' | sort -hr        # Exclude KB items
+
+# Enhanced file listing with time sorting
+ls -alhtr /var/log/                                  # Time-sorted, newest last
+ls -alhtr --time=atime /tmp/                         # Sort by access time
+ls -alhtr --time=ctime /etc/                         # Sort by change time
+ls -alS /var/cache/                                  # Sort by file size
+
+# Locate database management and advanced usage
+sudo updatedb                                        # Update file database
+locate -S                                           # Show database statistics
+locate -e -i "*.conf" | head -10                   # Existing config files only
+locate -r "/etc/.*\.conf$" | grep -v "/etc/ssl/"   # Config files excluding SSL
+
+# Combining locate with other tools
+locate "*.log" | xargs ls -lhtr | tail -10         # 10 most recent log files
+locate -0 "*.tmp" | xargs -0 ls -lh                # Handle filenames with spaces
+locate nginx | grep -E "/(s?bin|libexec)/" | head -5  # Find nginx executables
+
+# Traditional find vs locate comparison
+time find /usr -name "*.so" 2>/dev/null | wc -l    # Count shared libraries (slow)
+time locate "*.so" | grep "^/usr" | wc -l           # Same using locate (fast)
+
+# Large file analysis
 find /var/log -type f -size +100M -exec ls -lh {} \; # Large log files
-du -sh /var/* | sort -hr | head -10                  # Largest directories
-find / -type f -size +1G 2>/dev/null                # Files larger than 1GB
+find / -type f -size +1G 2>/dev/null | head -10    # Files larger than 1GB
+du -ah / 2>/dev/null | awk '$1 ~ /[0-9]+G/ {print}' | sort -hr  # GB-sized items
 
 # File age analysis
 find /tmp -type f -mtime +7 -exec rm {} \;          # Remove files older than 7 days
@@ -611,6 +787,29 @@ find /home -type f -atime +30 -exec ls -lu {} \;    # Files not accessed in 30 d
 find /var/www -type f ! -perm 644 -exec ls -l {} \; # Files with non-standard permissions
 find /usr/bin -perm -4000 -exec ls -l {} \;         # SUID files
 find /tmp -type d ! -perm 1777 -exec ls -ld {} \;   # Directories without sticky bit
+
+# Practical file management examples
+# Clean up old files with confirmation
+find /tmp -type f -mtime +7 -print0 | xargs -0 ls -lh
+find /tmp -type f -mtime +7 -print0 | xargs -0 -p rm
+
+# Find duplicate files by size
+find /home -type f -exec ls -l {} \; | awk '{print $5, $9}' | sort | uniq -d -w 10
+
+# Comprehensive directory analysis function
+analyze_directory() {
+    local dir="${1:-.}"
+    echo "=== Directory Analysis: $dir ==="
+    echo "Total size: $(du -sh "$dir" 2>/dev/null | cut -f1)"
+    echo "File count: $(find "$dir" -type f 2>/dev/null | wc -l)"
+    echo "Directory count: $(find "$dir" -type d 2>/dev/null | wc -l)"
+    echo ""
+    echo "=== Top 10 largest items ==="
+    du -ah --max-depth=1 "$dir" 2>/dev/null | sort -hr | head -10
+    echo ""
+    echo "=== Most recent files ==="
+    find "$dir" -type f -exec ls -lt {} \; 2>/dev/null | head -5
+}
 ```
 
 #### Data Processing Pipelines
