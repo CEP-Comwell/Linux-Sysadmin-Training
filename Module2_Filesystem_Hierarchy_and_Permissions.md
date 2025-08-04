@@ -10,22 +10,22 @@
 - [Overview](#overview)
 - [Learning Objectives](#learning-objectives)
 - [Topics](#topics)
-  - [2.1 Filesystem Hierarchy Standard (FHS)](#21-filesystem-hierarchy-standard-fhs) 🟢
-  - [2.2 Basic File and Directory Permissions](#22-basic-file-and-directory-permissions) 🟢
-  - [2.3 Special Permission Modes](#23-special-permission-modes) 🟡
-  - [2.4 Access Control Lists (ACLs)](#24-access-control-lists-acls) 🟡
-  - [2.5 File Attributes and Extended Attributes](#25-file-attributes-and-extended-attributes) 🟡
+  - [2.1 Filesystem Hierarchy Standard (FHS)](#21-filesystem-hierarchy-standard-fhs)
+  - [2.2 Basic File and Directory Permissions](#22-basic-file-and-directory-permissions)
+  - [2.3 Special Permission Modes](#23-special-permission-modes)
+  - [2.4 Access Control Lists (ACLs)](#24-access-control-lists-acls)
+  - [2.5 File Attributes and Extended Attributes](#25-file-attributes-and-extended-attributes)
 - [Essential Command Reference](#essential-command-reference)
 - [Practical Examples](#practical-examples)
-  - [Filesystem Navigation and Understanding](#filesystem-navigation-and-understanding) 🟢
-  - [Permission Management](#permission-management) 🟢
-  - [Advanced Access Control](#advanced-access-control) 🟡
-  - [Security Auditing and Troubleshooting](#security-auditing-and-troubleshooting) 🟡
+  - [Filesystem Navigation and Understanding](#filesystem-navigation-and-understanding)
+  - [Permission Management](#permission-management)
+  - [Advanced Access Control](#advanced-access-control)
+  - [Security Auditing and Troubleshooting](#security-auditing-and-troubleshooting)
 - [Lab Exercises](#lab-exercises)
-  - [Lab 1: Filesystem Hierarchy Exploration](#lab-1-filesystem-hierarchy-exploration) 🟢
-  - [Lab 2: Permission Management Mastery](#lab-2-permission-management-mastery) 🟢
-  - [Lab 3: Advanced Access Control Implementation](#lab-3-advanced-access-control-implementation) 🟡
-  - [Lab 4: Security Auditing and Remediation](#lab-4-security-auditing-and-remediation) 🟡
+  - [Lab 1: Filesystem Hierarchy Exploration](#lab-1-filesystem-hierarchy-exploration)
+  - [Lab 2: Permission Management Mastery](#lab-2-permission-management-mastery)
+  - [Lab 3: Advanced Access Control Implementation](#lab-3-advanced-access-control-implementation)
+  - [Lab 4: Security Auditing and Remediation](#lab-4-security-auditing-and-remediation)
 - [Best Practices Summary](#best-practices-summary)
 - [Troubleshooting Common Issues](#troubleshooting-common-issues)
 - [Assessment Criteria](#assessment-criteria)
@@ -58,8 +58,10 @@ By the end of this module, you will be able to:
 [⬆️ Back to Top](#table-of-contents)
 
 ## Topics
+[⬆️ Back to Top](#table-of-contents)
 
-### 2.1 Filesystem Hierarchy Standard (FHS) 🟢
+### 2.1 Filesystem Hierarchy Standard (FHS)
+[Related Commands/Topics: ls, cd, pwd, du, df, tree] 🟢
 - **Root Directory Structure**: Understanding `/`, `/bin`, `/sbin`, `/lib`, `/lib64`
 - **Configuration and Data**: `/etc` for system configuration, `/var` for variable data
 - **User and Application Areas**: `/home`, `/usr`, `/opt`, `/srv` organization
@@ -67,28 +69,32 @@ By the end of this module, you will be able to:
 - **Mount Points and Storage**: `/mnt`, `/media`, `/dev` device management
 - **Distribution-Specific Variations**: How different distributions modify FHS
 
-### 2.2 Basic File and Directory Permissions 🟢
+### 2.2 Basic File and Directory Permissions
+[Related Commands/Topics: chmod, chown, chgrp, umask, stat, find] 🟢
 - **Permission Bits**: Read (r), Write (w), Execute (x) for files and directories
 - **Ownership Model**: User (owner), Group, Others permission structure
 - **Numeric and Symbolic Notation**: Octal values and symbolic representation
 - **Default Permissions**: Understanding umask and permission inheritance
 - **Directory vs File Permissions**: Different behaviors for directories and files
 
-### 2.3 Special Permission Modes 🟡
+### 2.3 Special Permission Modes
+[Related Commands/Topics: chmod, find, stat] 🟡
 - **Set User ID (SUID)**: Execution with owner privileges
 - **Set Group ID (SGID)**: File inheritance and directory group ownership
 - **Sticky Bit**: Directory protection and shared workspace security
 - **Security Implications**: Understanding attack vectors and proper usage
 - **Common SUID/SGID Programs**: System utilities and security considerations
 
-### 2.4 Access Control Lists (ACLs) 🟡
+### 2.4 Access Control Lists (ACLs)
+[Related Commands/Topics: setfacl, getfacl, lsattr, chattr] 🟡
 - **POSIX ACL Implementation**: Extended permissions beyond basic owner/group/other
 - **ACL Types**: Access ACLs vs Default ACLs for directories
 - **Granular Control**: User-specific and group-specific permissions
 - **ACL Inheritance**: How directory ACLs affect new files and subdirectories
 - **Backup and Migration**: Preserving ACLs during system operations
 
-### 2.5 File Attributes and Extended Attributes 🟡
+### 2.5 File Attributes and Extended Attributes
+[Related Commands/Topics: lsattr, chattr, getfattr, setfattr] 🟡
 - **File Attributes**: Immutable, append-only, and other protective attributes
 - **Extended Attributes**: User-defined metadata and system attributes
 - **SELinux/AppArmor Context**: Security context as extended attributes
@@ -96,6 +102,7 @@ By the end of this module, you will be able to:
 - **Security Applications**: Using attributes for system hardening
 
 ## Essential Command Reference
+[⬆️ Back to Top](#table-of-contents)
 
 [⬆️ Back to Top](#table-of-contents)
 
@@ -116,6 +123,7 @@ By the end of this module, you will be able to:
 | `setfattr` | Set extended attributes | `setfattr -n user.comment -v "text" file` |
 
 ## Practical Examples
+[⬆️ Back to Top](#table-of-contents)
 
 [⬆️ Back to Top](#table-of-contents)
 
@@ -641,6 +649,7 @@ echo "Full report saved to: $REPORT_FILE"
 ```
 
 ## Lab Exercises
+[⬆️ Back to Top](#table-of-contents)
 
 [⬆️ Back to Top](#table-of-contents)
 
