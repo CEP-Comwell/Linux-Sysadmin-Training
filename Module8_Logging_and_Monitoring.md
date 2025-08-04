@@ -33,7 +33,9 @@
 - [Assessment Criteria](#assessment-criteria)
 - [Next Steps](#next-steps)
 
+
 ## Overview
+[⬆️ Back to Top](#table-of-contents)
 
 This module provides comprehensive coverage of Linux logging and monitoring systems, from basic log management to enterprise-grade observability platforms. Students will master log analysis, implement performance monitoring, deploy centralized logging solutions, and create comprehensive monitoring infrastructure for production environments.
 
@@ -47,7 +49,9 @@ This module provides comprehensive coverage of Linux logging and monitoring syst
 - Custom monitoring solutions and automation
 - Enterprise observability and incident response workflows
 
+
 ## Learning Objectives
+[⬆️ Back to Top](#table-of-contents)
 
 By the end of this module, you will be able to:
 
@@ -60,7 +64,9 @@ By the end of this module, you will be able to:
 7. **Implement Security Monitoring**: Deploy security event monitoring, audit logging, and SIEM integration
 8. **Automate Monitoring Tasks**: Create custom monitoring solutions and automated incident response workflows
 
+
 ## Topics Covered
+[⬆️ Back to Top](#table-of-contents)
 
 ### 8.1 System Logging Architecture
 - Modern logging architectures and design patterns
@@ -193,7 +199,9 @@ By the end of this module, you will be able to:
 
 **🔗 Practical Examples**: [ELK Stack Setup](#elk-stack-configuration) | [Secure Log Forwarding](#secure-log-transport)
 
+
 ## Essential Command Reference
+[⬆️ Back to Top](#table-of-contents)
 
 ### Log Management Commands
 | Command | Purpose | Common Usage |
@@ -243,7 +251,9 @@ By the end of this module, you will be able to:
 | `grafana-server` | Visualization platform | `systemctl start grafana-server` |
 | `alertmanager` | Alert handling | `./alertmanager --config.file=alertmanager.yml` |
 
+
 ## Practical Examples
+[⬆️ Back to Top](#table-of-contents)
 
 ### System Logging Configuration
 
