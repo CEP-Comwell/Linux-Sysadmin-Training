@@ -155,9 +155,9 @@ By the end of this module, you will be able to:
 ## Practical Examples
 [⬆️ Back to Top](#table-of-contents)
 
-[Related Commands/Topics: Network Interface Management](#71-network-interface-management) 🟢
+[Related Commands/Topics: Network Interface Management](#network-interface-management) 🟢
 
-[Related Commands/Topics: Network Interface Management](#71-network-interface-management) 🟢
+[Related Commands/Topics: Network Interface Management](#network-interface-management) 🟢
 ```bash
 # Show all network interfaces
 ip a
@@ -175,7 +175,7 @@ nmcli device status
 nmcli device show eth0
 ```
 
-[Related Commands/Topics: Network Interface Management](#71-network-interface-management) 🟢
+[Related Commands/Topics: Network Interface Management](#network-interface-management) 🟢
 ```bash
 # Bring interface up/down
 sudo ip link set eth0 up
@@ -190,7 +190,7 @@ sudo ip addr del 192.168.1.100/24 dev eth0
 # Show routing table
 ip route show
 ```
-[Related Commands/Topics: IP Configuration with Netplan](#72-ip-configuration-with-netplan) 🟡
+[Related Commands/Topics: IP Configuration](#ip-configuration) 🟡
 
 #### Static IP Configuration
 Create `/etc/netplan/01-static.yaml`:
@@ -252,7 +252,7 @@ sudo netplan apply
 sudo netplan --debug apply
 ```
 
-[Related Commands/Topics: Legacy Network Configuration](#73-legacy-network-configuration) 🟡
+[Related Commands/Topics: IP Configuration](#ip-configuration) 🟡
 
 #### Using /etc/network/interfaces (Debian/Ubuntu)
 ```bash
@@ -309,7 +309,7 @@ sudo nmcli con add type ethernet con-name dhcp-eth0 ifname eth0
 nmcli con show
 ```
 
-[Related Commands/Topics: DNS and Name Resolution](#74-dns-and-name-resolution) 🟡
+[Related Commands/Topics: DNS Tools](#dns-tools) 🟡
 
 #### Basic DNS Setup
 ```bash
@@ -357,7 +357,7 @@ sudo nano /etc/hosts
 10.0.0.5        internal.example.com
 ```
 
-[Related Commands/Topics: Basic Network Troubleshooting](#75-basic-network-troubleshooting) 🟡
+[Related Commands/Topics: Network Diagnostics](#network-diagnostics) 🟡
 
 #### Connectivity Testing
 ```bash
@@ -409,7 +409,7 @@ sudo tcpdump -i eth0 -w capture.pcap
 tcpdump -r capture.pcap
 ```
 
-[Related Commands/Topics: Firewall Basics](#76-firewall-basics) 🟡
+[Related Commands/Topics: Firewall Management](#firewall-management) 🟡
 
 #### UFW (Ubuntu Firewall)
 ```bash
@@ -476,7 +476,7 @@ sudo iptables -P INPUT DROP
 sudo iptables-save > /etc/iptables/rules.v4
 ```
 
-[Related Commands/Topics: SSH Configuration](#77-ssh-configuration) 🟡
+[Related Commands/Topics: SSH](#ssh) 🟡
 
 #### Basic SSH Server Setup
 ```bash
@@ -531,7 +531,7 @@ AllowUsers alice bob
 sudo systemctl restart sshd
 ```
 
-[Related Commands/Topics: VPN Setup (WireGuard)](#78-vpn-setup-wireguard) 🟡
+[Related Commands/Topics: SSH](#ssh) 🟡
 
 #### WireGuard Setup
 ```bash
