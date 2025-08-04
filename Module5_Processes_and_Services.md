@@ -4,1032 +4,288 @@
 - [Overview](#overview)
 - [Learning Objectives](#learning-objectives)
 - [Topics](#topics)
-  - [5.1 Process Fundamentals](#51-process-fundamentals)
-  - [5.2 Advanced Process Monitoring](#52-advanced-process-monitoring)
-  - [5.3 Process Control and Signal Management](#53-process-control-and-signal-management)
-  - [5.4 Init Systems Evolution](#54-init-systems-evolution)
-  - [5.5 Systemd Service Management](#55-systemd-service-management)
-  - [5.6 Systemd Unit Files](#56-systemd-unit-files)
-  - [5.7 Process Priority and Scheduling](#57-process-priority-and-scheduling)
-  - [5.8 Advanced Service Configuration](#58-advanced-service-configuration)
-  - [5.9 Performance Monitoring and Troubleshooting](#59-performance-monitoring-and-troubleshooting)
+  - [5.1 Process Basics](#51-process-basics)
+  - [5.2 Process Monitoring](#52-process-monitoring)
+  - [5.3 Process Control](#53-process-control)
+  - [5.4 Basic Service Management](#54-basic-service-management)
+  - [5.5 Essential Systemd Operations](#55-essential-systemd-operations)
 - [Essential Command Reference](#essential-command-reference)
 - [Practical Examples](#practical-examples)
-  - [Process Management and Monitoring](#process-management-and-monitoring)
-  - [Signal Management and Process Control](#signal-management-and-process-control)
-  - [Systemd Service Operations](#systemd-service-operations)
-  - [Custom Service Creation](#custom-service-creation)
-  - [Performance Analysis Scripts](#performance-analysis-scripts)
 - [Lab Exercises](#lab-exercises)
-  - [Lab 1: Process Monitoring and Management](#lab-1-process-monitoring-and-management)
-  - [Lab 2: Systemd Service Configuration](#lab-2-systemd-service-configuration)
-  - [Lab 3: Custom Service Development](#lab-3-custom-service-development)
-  - [Lab 4: Performance Analysis and Optimization](#lab-4-performance-analysis-and-optimization)
-- [Best Practices Summary](#best-practices-summary)
-- [Troubleshooting Guide](#troubleshooting-guide)
-- [Assessment Criteria](#assessment-criteria)
-- [Next Steps](#next-steps)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+- [Summary](#summary)
 
 ## Overview
-Master Linux process management and service administration—critical skills for maintaining reliable, high-performance systems. This module covers everything from basic process monitoring to advanced systemd service configuration, performance optimization, and enterprise-grade troubleshooting methodologies.
+Learn the essential skills for managing processes and services in Linux systems. This module covers the fundamental commands and concepts needed to monitor running processes, control system services, and troubleshoot basic performance issues.
 
-**Key Learning Outcomes:**
-- Monitor and analyze system processes using advanced filtering and diagnostic techniques
-- Implement comprehensive service management strategies with systemd
-- Create and deploy custom services with proper dependency management and error handling
-- Optimize system performance through process prioritization and resource management
-- Troubleshoot complex process and service issues using systematic methodologies
-- Design automated monitoring and recovery solutions for production environments
+**What You'll Learn:**
+- How to view and monitor running processes
+- Basic process control and management
+- Understanding Linux services and systemd
+- Common troubleshooting techniques
+- Essential command-line tools for system monitoring
 
 ## Learning Objectives
 By the end of this module, you will be able to:
 
-1. **Master Process Analysis**: Use `ps`, `top`, `htop`, and `/proc` filesystem to diagnose system performance issues
-2. **Control Process Execution**: Manage process lifecycle using signals, job control, and priority adjustment
-3. **Implement Service Management**: Configure and manage services using systemd with advanced dependency handling
-4. **Create Custom Services**: Design and deploy custom systemd unit files with proper security and resource controls
-5. **Optimize Performance**: Apply process prioritization, CPU affinity, and resource limits for optimal system performance
-6. **Troubleshoot Systematically**: Diagnose and resolve complex process and service issues using structured methodologies
-7. **Monitor Proactively**: Implement automated monitoring and alerting for critical system processes and services
-8. **Ensure High Availability**: Design service configurations with automatic recovery and failover capabilities
+1. **View Running Processes**: Use `ps`, `top`, and `htop` to see what's running on your system
+2. **Monitor System Activity**: Check CPU and memory usage with basic monitoring tools
+3. **Control Processes**: Start, stop, and manage processes safely
+4. **Manage Services**: Start, stop, and check the status of system services
+5. **Use Systemd Basics**: Understand and use basic systemd commands
+6. **Troubleshoot Issues**: Find and fix common process and service problems
 
 ## Topics
 
-### 5.1 Process Fundamentals
-- Process lifecycle: creation, execution, termination, and zombie processes
-- Process identification: PID, PPID, process groups, and sessions
-- Process states: running, sleeping, stopped, zombie, and uninterruptible sleep
-- Process relationships: parent-child hierarchies and process trees
-- Foreground vs background execution models
-- Daemon processes and service architecture patterns
+### 5.1 Process Basics
+- What is a process and how it works
+- Process identification (PID) and process states
+- Parent and child processes
+- Foreground vs background processes
+- Understanding process hierarchy
 
-### 5.2 Advanced Process Monitoring
-- Comprehensive process listing with `ps` command variations and custom formatting
-- Real-time monitoring using `top`, `htop`, and specialized process monitors
-- Process searching and filtering with `pgrep`, `pkill`, and pattern matching
-- `/proc` filesystem exploration for detailed process information
-- Resource usage analysis: CPU, memory, I/O, and network utilization
-- Performance bottleneck identification and capacity planning
+### 5.2 Process Monitoring
+- Using `ps` command to list processes
+- Real-time monitoring with `top` and `htop`
+- Finding processes with `pgrep` and `pidof`
+- Checking process resource usage
+- Basic performance monitoring
 
-### 5.3 Process Control and Signal Management
-- Job control mechanisms: background execution, job management, and session control
-- Signal types and handling: termination, interruption, and custom signals
-- Safe process termination strategies and graceful shutdown procedures
-- Process persistence with `nohup`, `screen`, and `tmux`
-- Advanced signal handling and inter-process communication
-- Process debugging and core dump analysis
+### 5.3 Process Control
+- Starting and stopping processes
+- Using signals to control processes (`kill`, `killall`)
+- Background job control (`&`, `jobs`, `fg`, `bg`)
+- Keeping processes running with `nohup`
+- Basic process priority with `nice`
 
-### 5.4 Init Systems Evolution
-- Linux boot process: kernel initialization to user space
-- SysV init: runlevels, init scripts, and sequential service startup
-- Upstart: event-driven initialization and dependency management
-- systemd: modern service management with parallel startup and advanced features
-- Init system comparison: performance, complexity, and feature analysis
-- Migration strategies and compatibility considerations
+### 5.4 Basic Service Management
+- Understanding Linux services and daemons
+- What is systemd and why it's important
+- Service states: active, inactive, failed
+- Common system services (web servers, databases, etc.)
 
-### 5.5 Systemd Service Management
-- systemd architecture: units, targets, and dependency resolution
-- Service lifecycle management: start, stop, restart, reload operations
-- Service status monitoring and health checking mechanisms
-- Boot-time service configuration: enable, disable, and mask operations
-- Log analysis with `journalctl`: filtering, following, and structured logging
-- Service discovery and inter-service communication
-
-### 5.6 Systemd Unit Files
-- Service unit structure: [Unit], [Service], and [Install] sections
-- Socket activation: on-demand service startup and resource optimization
-- Timer units: systemd-based scheduling and cron replacement
-- Target units: system state management and dependency grouping
-- Mount and device units: filesystem and hardware integration
-- Template units: parameterized services and instance management
-
-### 5.7 Process Priority and Scheduling
-- Linux scheduler: Completely Fair Scheduler (CFS) and scheduling classes
-- Process nice values: priority adjustment and impact on scheduling
-- Real-time scheduling: FIFO, Round Robin, and deadline scheduling
-- CPU affinity: binding processes to specific cores for performance
-- Resource limits: memory, CPU time, and file descriptor constraints
-- Control groups (cgroups): resource allocation and limits
-
-### 5.8 Advanced Service Configuration
-- Security hardening: user isolation, capability restrictions, and sandboxing
-- Resource management: memory limits, CPU quotas, and I/O throttling
-- Network configuration: socket activation, firewall integration, and service mesh
-- Environment management: variable injection, secret handling, and configuration
-- Dependency modeling: complex service relationships and startup ordering
-- Health checking: readiness probes, liveness checks, and automatic recovery
-
-### 5.9 Performance Monitoring and Troubleshooting
-- System-wide performance analysis: CPU, memory, I/O, and network metrics
-- Process-specific diagnostics: profiling, tracing, and resource utilization
-- Service troubleshooting: log analysis, dependency checking, and state validation
-- Automated monitoring: alerting, metrics collection, and trend analysis
-- Capacity planning: resource forecasting and scaling strategies
-- Incident response: systematic troubleshooting and root cause analysis
+### 5.5 Essential Systemd Operations
+- Starting and stopping services with `systemctl`
+- Checking service status and logs
+- Enabling and disabling services at boot
+- Restarting and reloading services
+- Basic troubleshooting with `journalctl`
 
 ## Essential Command Reference
 
 ### Process Monitoring Commands
 
-| Command | Purpose | Key Options | Example |
-|---------|---------|-------------|---------|
-| `ps` | List processes | `aux`, `-ef`, `-eo format` | `ps aux --sort=-%cpu` |
-| `top` | Real-time process monitor | `-p PID`, `-u user` | `top -p 1234` |
-| `htop` | Enhanced process monitor | `-u user`, `-p PID` | `htop -u nginx` |
-| `pgrep` | Find processes by pattern | `-f`, `-u user`, `-l` | `pgrep -f nginx` |
-| `pidstat` | Process statistics | `-u`, `-r`, `-d` | `pidstat -u 1 5` |
-| `lsof` | List open files | `-p PID`, `-u user` | `lsof -p 1234` |
+| Command | Purpose | Common Examples |
+|---------|---------|-----------------|
+| `ps` | List running processes | `ps aux`, `ps -ef` |
+| `top` | Real-time process monitor | `top`, `top -u username` |
+| `htop` | Enhanced process monitor | `htop` (interactive) |
+| `pgrep` | Find process by name | `pgrep nginx`, `pgrep -u user` |
+| `pidof` | Get PID of process | `pidof nginx` |
 
 ### Process Control Commands
 
-| Command | Purpose | Key Options | Example |
-|---------|---------|-------------|---------|
-| `kill` | Send signal to process | `-TERM`, `-KILL`, `-HUP` | `kill -TERM 1234` |
-| `pkill` | Kill processes by pattern | `-f`, `-u user`, `-TERM` | `pkill -f nginx` |
-| `killall` | Kill by process name | `-TERM`, `-KILL` | `killall nginx` |
-| `nohup` | Run immune to hangups | `&` for background | `nohup command &` |
-| `jobs` | List background jobs | `-l`, `-p` | `jobs -l` |
-| `fg` | Bring job to foreground | `%jobnum` | `fg %1` |
-| `bg` | Send job to background | `%jobnum` | `bg %1` |
+| Command | Purpose | Common Examples |
+|---------|---------|-----------------|
+| `kill` | Terminate process by PID | `kill 1234`, `kill -9 1234` |
+| `killall` | Kill processes by name | `killall firefox` |
+| `pkill` | Kill processes by pattern | `pkill -f "java.*tomcat"` |
+| `nohup` | Run process immune to hangups | `nohup command &` |
+| `jobs` | List background jobs | `jobs`, `jobs -l` |
+| `fg` | Bring job to foreground | `fg`, `fg %1` |
+| `bg` | Send job to background | `bg %1` |
 
-### Systemd Service Commands
+### Service Management Commands
 
-| Command | Purpose | Key Options | Example |
-|---------|---------|-------------|---------|
-| `systemctl` | Service management | `start`, `stop`, `restart`, `status` | `systemctl status nginx` |
-| `journalctl` | Log analysis | `-u unit`, `-f`, `--since` | `journalctl -u nginx -f` |
-| `systemd-analyze` | Boot analysis | `blame`, `critical-chain` | `systemd-analyze blame` |
-| `systemd-cgls` | Control group tree | `-u unit` | `systemd-cgls` |
-| `systemd-cgtop` | Control group monitor | Real-time resource usage | `systemd-cgtop` |
+| Command | Purpose | Common Examples |
+|---------|---------|-----------------|
+| `systemctl status` | Check service status | `systemctl status nginx` |
+| `systemctl start` | Start a service | `systemctl start apache2` |
+| `systemctl stop` | Stop a service | `systemctl stop mysql` |
+| `systemctl restart` | Restart a service | `systemctl restart sshd` |
+| `systemctl enable` | Enable service at boot | `systemctl enable nginx` |
+| `systemctl disable` | Disable service at boot | `systemctl disable apache2` |
+| `journalctl` | View service logs | `journalctl -u nginx`, `journalctl -f` |
 
-### Process Priority Commands
+### System Monitoring Commands
 
-| Command | Purpose | Key Options | Example |
-|---------|---------|-------------|---------|
-| `nice` | Start with priority | `-n priority` | `nice -n 10 command` |
-| `renice` | Change process priority | `-n priority -p PID` | `renice 5 -p 1234` |
-| `taskset` | Set CPU affinity | `-c cores -p PID` | `taskset -c 0,1 command` |
-| `ionice` | Set I/O priority | `-c class -n level` | `ionice -c 2 -n 7 command` |
-
-### Custom Service Creation
-
-#### Complete Custom Service Development
-```bash
-#!/bin/bash
-# service-creator.sh - Automated custom service creation and deployment
-
-create_basic_service() {
-    local service_name="$1"
-    local executable_path="$2"
-    local user="${3:-nobody}"
-    local description="${4:-Custom service created by service-creator}"
-    
-    if [[ -z "$service_name" || -z "$executable_path" ]]; then
-        echo "Usage: create_basic_service <service_name> <executable_path> [user] [description]"
-        return 1
-    fi
-    
-    echo "Creating basic service: $service_name"
-    
-    # Create service unit file
-    cat > "/tmp/${service_name}.service" << EOF
-[Unit]
-Description=$description
-Documentation=man:${service_name}(8)
-After=network.target
-Wants=network-online.target
-
-[Service]
-Type=simple
-User=$user
-Group=$user
-ExecStart=$executable_path
-Restart=always
-RestartSec=5
-TimeoutStartSec=30
-TimeoutStopSec=30
-KillMode=mixed
-
-# Security settings
-NoNewPrivileges=true
-PrivateTmp=true
-ProtectSystem=strict
-ProtectHome=true
-ReadWritePaths=/var/lib/$service_name
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-    echo "Service unit file created: /tmp/${service_name}.service"
-    echo "To install: sudo cp /tmp/${service_name}.service /etc/systemd/system/"
-    echo "Then run: sudo systemctl daemon-reload && sudo systemctl enable $service_name"
-}
-
-create_advanced_service() {
-    local service_name="$1"
-    local executable_path="$2"
-    local config_file="$3"
-    local user="${4:-$service_name}"
-    
-    if [[ -z "$service_name" || -z "$executable_path" ]]; then
-        echo "Usage: create_advanced_service <service_name> <executable_path> [config_file] [user]"
-        return 1
-    fi
-    
-    echo "Creating advanced service: $service_name"
-    
-    # Create comprehensive service unit file
-    cat > "/tmp/${service_name}.service" << EOF
-[Unit]
-Description=Advanced $service_name Service
-Documentation=https://example.com/docs/$service_name
-After=network.target network-online.target
-Wants=network-online.target
-Before=nginx.service
-PartOf=application.target
-
-[Service]
-Type=notify
-User=$user
-Group=$user
-WorkingDirectory=/opt/$service_name
-
-# Main service configuration
-ExecStartPre=/usr/bin/test -f $executable_path
-ExecStart=$executable_path ${config_file:+--config $config_file}
-ExecReload=/bin/kill -HUP \$MAINPID
-ExecStop=/bin/kill -TERM \$MAINPID
-TimeoutStartSec=60
-TimeoutStopSec=30
-TimeoutReloadSec=10
-
-# Restart configuration
-Restart=always
-RestartSec=10
-StartLimitInterval=300
-StartLimitBurst=5
-
-# Process management
-KillMode=mixed
-KillSignal=SIGTERM
-SendSIGKILL=yes
-FinalKillSignal=SIGKILL
-
-# Resource limits
-LimitNOFILE=65536
-LimitNPROC=4096
-MemoryMax=1G
-CPUQuota=200%
-
-# Security hardening
-NoNewPrivileges=true
-PrivateTmp=true
-PrivateDevices=true
-ProtectSystem=strict
-ProtectHome=true
-ProtectKernelTunables=true
-ProtectKernelModules=true
-ProtectKernelLogs=true
-ProtectControlGroups=true
-RestrictNamespaces=true
-RestrictRealtime=true
-RestrictSUIDSGID=true
-LockPersonality=true
-RemoveIPC=true
-
-# Filesystem access
-ReadWritePaths=/var/lib/$service_name
-ReadWritePaths=/var/log/$service_name
-ReadOnlyPaths=/etc/$service_name
-
-# Network security
-PrivateNetwork=false
-RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
-
-# System calls
-SystemCallFilter=@system-service
-SystemCallFilter=~@debug @mount @cpu-emulation @obsolete @privileged @reboot @swap @raw-io
-SystemCallErrorNumber=EPERM
-
-[Install]
-WantedBy=multi-user.target
-Also=application.target
-EOF
-
-    echo "Advanced service unit file created: /tmp/${service_name}.service"
-    
-    # Create matching socket unit if needed
-    if [[ "$5" == "socket" ]]; then
-        cat > "/tmp/${service_name}.socket" << EOF
-[Unit]
-Description=$service_name Socket
-PartOf=$service_name.service
-
-[Socket]
-ListenStream=8080
-BindIPv6Only=both
-ReusePort=true
-FreeBind=true
-Transparent=true
-DeferAcceptSec=1
-
-[Install]
-WantedBy=sockets.target
-EOF
-        echo "Socket unit file created: /tmp/${service_name}.socket"
-    fi
-    
-    # Create timer unit if needed
-    if [[ "$6" == "timer" ]]; then
-        cat > "/tmp/${service_name}.timer" << EOF
-[Unit]
-Description=Run $service_name periodically
-Requires=$service_name.service
-
-[Timer]
-OnBootSec=15min
-OnUnitActiveSec=1h
-RandomizedDelaySec=300
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-EOF
-        echo "Timer unit file created: /tmp/${service_name}.timer"
-    fi
-}
-
-# Service template generator
-create_service_template() {
-    local template_name="$1"
-    local base_path="$2"
-    
-    if [[ -z "$template_name" || -z "$base_path" ]]; then
-        echo "Usage: create_service_template <template_name> <base_path>"
-        return 1
-    fi
-    
-    echo "Creating service template: $template_name"
-    
-    # Create template unit file
-    cat > "/tmp/${template_name}@.service" << EOF
-[Unit]
-Description=$template_name instance %i
-Documentation=man:${template_name}(8)
-After=network.target
-BindsTo=${template_name}.service
-
-[Service]
-Type=simple
-User=%i
-Group=%i
-WorkingDirectory=$base_path/%i
-ExecStart=$base_path/bin/$template_name --instance %i
-Environment=INSTANCE_NAME=%i
-Environment=INSTANCE_ID=%i
-
-# Instance-specific configuration
-EnvironmentFile=-/etc/$template_name/%i.conf
-ExecStartPre=/bin/mkdir -p /var/lib/$template_name/%i
-ExecStartPre=/bin/chown %i:%i /var/lib/$template_name/%i
-
-# Standard service options
-Restart=always
-RestartSec=5
-TimeoutStartSec=30
-
-# Security
-NoNewPrivileges=true
-PrivateTmp=true
-ProtectSystem=strict
-ReadWritePaths=/var/lib/$template_name/%i
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-    echo "Service template created: /tmp/${template_name}@.service"
-    echo "Usage: systemctl enable ${template_name}@instance1.service"
-    echo "       systemctl start ${template_name}@instance2.service"
-}
-
-# Service validation and testing
-validate_service() {
-    local service_file="$1"
-    
-    if [[ -z "$service_file" || ! -f "$service_file" ]]; then
-        echo "Usage: validate_service <service_file_path>"
-        return 1
-    fi
-    
-    echo "=== Validating Service File: $service_file ==="
-    
-    # Check syntax
-    echo "Checking syntax..."
-    if systemd-analyze verify "$service_file" 2>/dev/null; then
-        echo "✓ Syntax is valid"
-    else
-        echo "✗ Syntax errors found:"
-        systemd-analyze verify "$service_file"
-        return 1
-    fi
-    
-    # Check required sections
-    echo ""
-    echo "Checking required sections..."
-    
-    local has_unit=$(grep -q "^\[Unit\]" "$service_file" && echo "yes" || echo "no")
-    local has_service=$(grep -q "^\[Service\]" "$service_file" && echo "yes" || echo "no")
-    local has_install=$(grep -q "^\[Install\]" "$service_file" && echo "yes" || echo "no")
-    
-    echo "  [Unit] section: $([[ $has_unit == "yes" ]] && echo "✓" || echo "✗")"
-    echo "  [Service] section: $([[ $has_service == "yes" ]] && echo "✓" || echo "✗")"
-    echo "  [Install] section: $([[ $has_install == "yes" ]] && echo "✓" || echo "✗")"
-    
-    # Check essential fields
-    echo ""
-    echo "Checking essential fields..."
-    
-    local has_description=$(grep -q "^Description=" "$service_file" && echo "yes" || echo "no")
-    local has_execstart=$(grep -q "^ExecStart=" "$service_file" && echo "yes" || echo "no")
-    local has_wantedby=$(grep -q "^WantedBy=" "$service_file" && echo "yes" || echo "no")
-    
-    echo "  Description: $([[ $has_description == "yes" ]] && echo "✓" || echo "✗")"
-    echo "  ExecStart: $([[ $has_execstart == "yes" ]] && echo "✓" || echo "✗")"
-    echo "  WantedBy: $([[ $has_wantedby == "yes" ]] && echo "✓" || echo "✗")"
-    
-    # Security analysis
-    echo ""
-    echo "Security analysis..."
-    
-    local security_options=(
-        "NoNewPrivileges"
-        "PrivateTmp"
-        "ProtectSystem"
-        "ProtectHome"
-        "User"
-    )
-    
-    for option in "${security_options[@]}"; do
-        if grep -q "^$option=" "$service_file"; then
-            echo "  $option: ✓"
-        else
-            echo "  $option: ⚠ (recommended)"
-        fi
-    done
-    
-    echo ""
-    echo "Validation complete"
-}
-
-# Service deployment automation
-deploy_service() {
-    local service_file="$1"
-    local enable_service="${2:-yes}"
-    local start_service="${3:-no}"
-    
-    if [[ -z "$service_file" || ! -f "$service_file" ]]; then
-        echo "Usage: deploy_service <service_file> [enable:yes/no] [start:yes/no]"
-        return 1
-    fi
-    
-    local service_name=$(basename "$service_file")
-    
-    echo "=== Deploying Service: $service_name ==="
-    
-    # Validate first
-    if ! validate_service "$service_file"; then
-        echo "Service validation failed. Aborting deployment."
-        return 1
-    fi
-    
-    # Copy to system directory
-    echo "Installing service file..."
-    if sudo cp "$service_file" "/etc/systemd/system/"; then
-        echo "✓ Service file installed"
-    else
-        echo "✗ Failed to install service file"
-        return 1
-    fi
-    
-    # Reload systemd
-    echo "Reloading systemd daemon..."
-    if sudo systemctl daemon-reload; then
-        echo "✓ Systemd daemon reloaded"
-    else
-        echo "✗ Failed to reload systemd daemon"
-        return 1
-    fi
-    
-    # Enable service if requested
-    if [[ "$enable_service" == "yes" ]]; then
-        echo "Enabling service..."
-        if sudo systemctl enable "$service_name"; then
-            echo "✓ Service enabled"
-        else
-            echo "✗ Failed to enable service"
-            return 1
-        fi
-    fi
-    
-    # Start service if requested
-    if [[ "$start_service" == "yes" ]]; then
-        echo "Starting service..."
-        if sudo systemctl start "$service_name"; then
-            echo "✓ Service started"
-            
-            # Show status
-            echo ""
-            echo "Service status:"
-            systemctl status "$service_name" --no-pager
-        else
-            echo "✗ Failed to start service"
-            echo "Check logs with: journalctl -u $service_name"
-            return 1
-        fi
-    fi
-    
-    echo ""
-    echo "Deployment complete!"
-    echo "Useful commands:"
-    echo "  systemctl status $service_name"
-    echo "  journalctl -u $service_name -f"
-    echo "  systemctl enable $service_name"
-    echo "  systemctl start $service_name"
-}
-
-# Usage
-case "${1:-help}" in
-    "basic")
-        create_basic_service "$2" "$3" "$4" "$5"
-        ;;
-    "advanced")
-        create_advanced_service "$2" "$3" "$4" "$5"
-        ;;
-    "template")
-        create_service_template "$2" "$3"
-        ;;
-    "validate")
-        validate_service "$2"
-        ;;
-    "deploy")
-        deploy_service "$2" "$3" "$4"
-        ;;
-    "help")
-        echo "Usage: $0 {basic|advanced|template|validate|deploy} [arguments]"
-        echo ""
-        echo "Commands:"
-        echo "  basic <name> <exec> [user] [desc]     - Create basic service"
-        echo "  advanced <name> <exec> [config] [user] - Create advanced service"
-        echo "  template <name> <path>                - Create service template"
-        echo "  validate <service_file>               - Validate service file"
-        echo "  deploy <service_file> [enable] [start] - Deploy service"
-        ;;
-esac
-```
-
-### Performance Analysis Scripts
-
-#### System Performance Monitor
-```bash
-#!/bin/bash
-# performance-monitor.sh - Comprehensive system and process performance monitoring
-
-# Global configuration
-MONITOR_INTERVAL=5
-LOG_DIR="/var/log/performance"
-ALERT_THRESHOLDS=(
-    "cpu:80"
-    "memory:85"
-    "disk:90"
-    "load:4.0"
-)
-
-# Initialize monitoring
-init_monitoring() {
-    echo "Initializing performance monitoring..."
-    
-    # Create log directory
-    sudo mkdir -p "$LOG_DIR"
-    sudo chmod 755 "$LOG_DIR"
-    
-    # Create log files
-    local timestamp=$(date +%Y%m%d_%H%M%S)
-    export CPU_LOG="$LOG_DIR/cpu_$timestamp.log"
-    export MEM_LOG="$LOG_DIR/memory_$timestamp.log"
-    export DISK_LOG="$LOG_DIR/disk_$timestamp.log"
-    export PROC_LOG="$LOG_DIR/processes_$timestamp.log"
-    export ALERT_LOG="$LOG_DIR/alerts_$timestamp.log"
-    
-    # Initialize log files
-    echo "timestamp,user,nice,system,idle,iowait,irq,softirq,steal" > "$CPU_LOG"
-    echo "timestamp,total,used,free,shared,buff_cache,available,used_percent" > "$MEM_LOG"
-    echo "timestamp,filesystem,size,used,avail,use_percent,mount" > "$DISK_LOG"
-    echo "timestamp,pid,user,cpu,mem,vsz,rss,tty,stat,start,time,command" > "$PROC_LOG"
-    echo "timestamp,alert_type,value,threshold,message" > "$ALERT_LOG"
-    
-    echo "Performance monitoring initialized"
-    echo "Logs will be written to: $LOG_DIR"
-}
-
-# Collect CPU statistics
-collect_cpu_stats() {
-    local timestamp=$(date +%s)
-    
-    # Get CPU statistics from /proc/stat
-    local cpu_stats=$(awk '/^cpu / {print $2,$3,$4,$5,$6,$7,$8,$9}' /proc/stat)
-    echo "$timestamp,$cpu_stats" >> "$CPU_LOG"
-    
-    # Calculate CPU usage percentage
-    local cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | sed 's/%us,//')
-    
-    # Check CPU threshold
-    if (( $(echo "$cpu_usage > 80" | bc -l) )); then
-        log_alert "cpu" "$cpu_usage" "80" "High CPU usage detected"
-    fi
-}
-
-# Collect memory statistics
-collect_memory_stats() {
-    local timestamp=$(date +%s)
-    
-    # Get memory information
-    local mem_info=$(free -b | grep Mem)
-    local total=$(echo "$mem_info" | awk '{print $2}')
-    local used=$(echo "$mem_info" | awk '{print $3}')
-    local free=$(echo "$mem_info" | awk '{print $4}')
-    local shared=$(echo "$mem_info" | awk '{print $5}')
-    local buff_cache=$(echo "$mem_info" | awk '{print $6}')
-    local available=$(echo "$mem_info" | awk '{print $7}')
-    local used_percent=$(echo "scale=2; $used * 100 / $total" | bc)
-    
-    echo "$timestamp,$total,$used,$free,$shared,$buff_cache,$available,$used_percent" >> "$MEM_LOG"
-    
-    # Check memory threshold
-    if (( $(echo "$used_percent > 85" | bc -l) )); then
-        log_alert "memory" "$used_percent" "85" "High memory usage detected"
-    fi
-}
-
-# Collect disk statistics
-collect_disk_stats() {
-    local timestamp=$(date +%s)
-    
-    # Get disk usage for all mounted filesystems
-    df -B1 | grep -vE '^Filesystem|tmpfs|cdrom|udev' | while read line; do
-        local filesystem=$(echo "$line" | awk '{print $1}')
-        local size=$(echo "$line" | awk '{print $2}')
-        local used=$(echo "$line" | awk '{print $3}')
-        local avail=$(echo "$line" | awk '{print $4}')
-        local use_percent=$(echo "$line" | awk '{print $5}' | sed 's/%//')
-        local mount=$(echo "$line" | awk '{print $6}')
-        
-        echo "$timestamp,$filesystem,$size,$used,$avail,$use_percent,$mount" >> "$DISK_LOG"
-        
-        # Check disk threshold
-        if [[ $use_percent -gt 90 ]]; then
-            log_alert "disk" "$use_percent" "90" "High disk usage on $mount ($filesystem)"
-        fi
-    done
-}
-
-# Collect process statistics
-collect_process_stats() {
-    local timestamp=$(date +%s)
-    
-    # Get top 10 CPU consuming processes
-    ps aux --sort=-%cpu | head -11 | tail -10 | while read line; do
-        local user=$(echo "$line" | awk '{print $1}')
-        local pid=$(echo "$line" | awk '{print $2}')
-        local cpu=$(echo "$line" | awk '{print $3}')
-        local mem=$(echo "$line" | awk '{print $4}')
-        local vsz=$(echo "$line" | awk '{print $5}')
-        local rss=$(echo "$line" | awk '{print $6}')
-        local tty=$(echo "$line" | awk '{print $7}')
-        local stat=$(echo "$line" | awk '{print $8}')
-        local start=$(echo "$line" | awk '{print $9}')
-        local time=$(echo "$line" | awk '{print $10}')
-        local command=$(echo "$line" | awk '{for(i=11;i<=NF;i++) printf "%s ", $i; print ""}' | tr ',' '_')
-        
-        echo "$timestamp,$pid,$user,$cpu,$mem,$vsz,$rss,$tty,$stat,$start,$time,$command" >> "$PROC_LOG"
-    done
-}
-
-# Log alert
-log_alert() {
-    local alert_type="$1"
-    local value="$2"
-    local threshold="$3"
-    local message="$4"
-    local timestamp=$(date +%s)
-    
-    echo "$timestamp,$alert_type,$value,$threshold,$message" >> "$ALERT_LOG"
-    
-    # Also log to syslog
-    logger -t "performance-monitor" "ALERT: $message (value: $value, threshold: $threshold)"
-    
-    # Display alert if running interactively
-    if [[ -t 1 ]]; then
-        echo "ALERT [$(date)]: $message (value: $value, threshold: $threshold)"
-    fi
-}
-
-# Generate performance report
-generate_report() {
-    local report_file="${1:-/tmp/performance_report_$(date +%Y%m%d_%H%M%S).html}"
-    
-    echo "Generating performance report: $report_file"
-    
-    cat > "$report_file" << 'EOF'
-<!DOCTYPE html>
-<html>
-<head>
-    <title>System Performance Report</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .header { background-color: #f0f0f0; padding: 10px; border-radius: 5px; }
-        .section { margin: 20px 0; }
-        .alert { background-color: #ffe6e6; padding: 10px; border-left: 5px solid #ff0000; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .metric { display: inline-block; margin: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>System Performance Report</h1>
-        <p>Generated: REPORT_TIMESTAMP</p>
-        <p>Hostname: HOSTNAME</p>
-    </div>
-EOF
-
-    # Replace placeholders
-    sed -i "s/REPORT_TIMESTAMP/$(date)/" "$report_file"
-    sed -i "s/HOSTNAME/$(hostname)/" "$report_file"
-    
-    # Add system overview
-    cat >> "$report_file" << EOF
-    <div class="section">
-        <h2>System Overview</h2>
-        <div class="metric">
-            <strong>Uptime:</strong> $(uptime -p)
-        </div>
-        <div class="metric">
-            <strong>Load Average:</strong> $(cat /proc/loadavg | awk '{print $1, $2, $3}')
-        </div>
-        <div class="metric">
-            <strong>CPU Cores:</strong> $(nproc)
-        </div>
-        <div class="metric">
-            <strong>Total Memory:</strong> $(free -h | grep Mem | awk '{print $2}')
-        </div>
-    </div>
-EOF
-
-    # Add alerts if any
-    if [[ -f "$ALERT_LOG" && -s "$ALERT_LOG" ]]; then
-        echo '    <div class="section">' >> "$report_file"
-        echo '        <h2>Alerts</h2>' >> "$report_file"
-        
-        tail -20 "$ALERT_LOG" | while IFS=',' read timestamp alert_type value threshold message; do
-            if [[ "$timestamp" != "timestamp" ]]; then
-                local alert_time=$(date -d "@$timestamp" "+%Y-%m-%d %H:%M:%S")
-                echo "        <div class=\"alert\">[$alert_time] $message (value: $value, threshold: $threshold)</div>" >> "$report_file"
-            fi
-        done
-        
-        echo '    </div>' >> "$report_file"
-    fi
-    
-    # Close HTML
-    echo '</body></html>' >> "$report_file"
-    
-    echo "Report generated: $report_file"
-}
-
-# Real-time monitoring dashboard
-run_dashboard() {
-    local duration="${1:-continuous}"
-    
-    echo "Starting performance monitoring dashboard..."
-    echo "Press Ctrl+C to stop"
-    
-    # Initialize
-    init_monitoring
-    
-    local start_time=$(date +%s)
-    local iteration=0
-    
-    while true; do
-        # Clear screen for dashboard display
-        clear
-        
-        echo "╔══════════════════════════════════════════════════════════════╗"
-        echo "║                    PERFORMANCE MONITOR                       ║"
-        echo "║                    $(date '+%Y-%m-%d %H:%M:%S')                    ║"
-        echo "╚══════════════════════════════════════════════════════════════╝"
-        echo ""
-        
-        # System overview
-        echo "=== SYSTEM OVERVIEW ==="
-        echo "Hostname: $(hostname)"
-        echo "Uptime: $(uptime -p)"
-        echo "Load: $(cat /proc/loadavg | awk '{print $1, $2, $3}')"
-        echo ""
-        
-        # Current metrics
-        echo "=== CURRENT METRICS ==="
-        local cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | sed 's/%us,//')
-        local mem_usage=$(free | grep Mem | awk '{printf "%.1f", $3/$2 * 100.0}')
-        local load1=$(cat /proc/loadavg | awk '{print $1}')
-        
-        printf "CPU Usage: %6.1f%%  " "$cpu_usage"
-        printf "Memory Usage: %6.1f%%  " "$mem_usage"
-        printf "Load (1m): %6.2f\n" "$load1"
-        echo ""
-        
-        # Top processes
-        echo "=== TOP PROCESSES (CPU) ==="
-        ps aux --sort=-%cpu | head -6 | tail -5 | awk '{printf "%-8s %6s %6.1f%% %6.1f%% %.30s\n", $1, $2, $3, $4, $11}'
-        echo ""
-        
-        # Collect stats
-        collect_cpu_stats
-        collect_memory_stats
-        collect_disk_stats
-        collect_process_stats
-        
-        # Check if duration is reached
-        if [[ "$duration" != "continuous" ]]; then
-            local current_time=$(date +%s)
-            local elapsed=$((current_time - start_time))
-            
-            if [[ $elapsed -ge $duration ]]; then
-                echo "Monitoring duration reached: ${duration}s"
-                break
-            fi
-            
-            echo "Elapsed: ${elapsed}s / ${duration}s"
-        fi
-        
-        ((iteration++))
-        echo "Iteration: $iteration"
-        
-        sleep "$MONITOR_INTERVAL"
-    done
-    
-    echo ""
-    echo "Monitoring stopped. Generating report..."
-    generate_report
-}
-
-# Batch monitoring (non-interactive)
-run_batch_monitoring() {
-    local duration="${1:-3600}"  # 1 hour default
-    local interval="${2:-$MONITOR_INTERVAL}"
-    
-    echo "Starting batch performance monitoring..."
-    echo "Duration: ${duration}s, Interval: ${interval}s"
-    
-    init_monitoring
-    
-    local start_time=$(date +%s)
-    local end_time=$((start_time + duration))
-    
-    while [[ $(date +%s) -lt $end_time ]]; do
-        collect_cpu_stats
-        collect_memory_stats
-        collect_disk_stats
-        collect_process_stats
-        
-        sleep "$interval"
-    done
-    
-    echo "Batch monitoring completed"
-    generate_report
-}
-
-# Usage
-case "${1:-help}" in
-    "dashboard")
-        run_dashboard "$2"
-        ;;
-    "batch")
-        run_batch_monitoring "$2" "$3"
-        ;;
-    "report")
-        generate_report "$2"
-        ;;
-    "init")
-        init_monitoring
-        ;;
-    "help")
-        echo "Usage: $0 {dashboard|batch|report|init} [arguments]"
-        echo ""
-        echo "Commands:"
-        echo "  dashboard [duration]       - Run interactive dashboard"
-        echo "  batch [duration] [interval] - Run batch monitoring"
-        echo "  report [output_file]       - Generate HTML report"
-        echo "  init                       - Initialize monitoring"
-        ;;
-esac
-```
+| Command | Purpose | Common Examples |
+|---------|---------|-----------------|
+| `uptime` | System load and uptime | `uptime` |
+| `free` | Memory usage | `free -h` |
+| `df` | Disk usage | `df -h` |
+| `who` | Who is logged in | `who`, `w` |
 
 ## Lab Exercises
 
-### Lab 1: Process Monitoring and Management
-**Objective:** Master advanced process monitoring, analysis, and control techniques.
+### Lab 1: Basic Process Monitoring
+**Objective:** Learn to monitor and understand running processes.
 
 **Tasks:**
-1. Implement comprehensive process monitoring scripts using `ps`, `top`, and `/proc` filesystem
-2. Create automated detection systems for problematic processes (high CPU, memory leaks, zombies)
-3. Develop graceful process termination procedures with fallback mechanisms
-4. Build process performance analysis tools with trend tracking
-5. Implement automated process recovery and alerting systems
+1. Use `ps aux` to view all running processes
+2. Use `top` to monitor processes in real-time
+3. Install and use `htop` for enhanced monitoring
+4. Find processes by name using `pgrep` and `pidof`
+5. Practice sorting processes by CPU and memory usage
+
+**Exercises:**
+```bash
+# View all processes
+ps aux
+
+# Find your own processes
+ps ux
+
+# Find Firefox processes
+pgrep firefox
+ps aux | grep firefox
+
+# Monitor system in real-time
+top
+htop
+
+# Sort processes by CPU usage
+ps aux --sort=-%cpu | head -10
+
+# Sort processes by memory usage
+ps aux --sort=-%mem | head -10
+```
 
 **Deliverables:**
-- Process monitoring dashboard with real-time metrics
-- Automated problem detection and alert system
-- Process performance analysis reports
-- Graceful termination and recovery procedures
+- Screenshots of `ps`, `top`, and `htop` output
+- List of the top 5 CPU and memory consuming processes
+- Documentation of what each process does
 
-### Lab 2: Systemd Service Configuration
-**Objective:** Configure and optimize systemd services for production environments.
+### Lab 2: Process Control Practice
+**Objective:** Learn to control processes safely.
 
 **Tasks:**
-1. Analyze existing services for performance and security improvements
-2. Configure service dependencies, ordering, and conflict resolution
-3. Implement advanced logging and monitoring for critical services
-4. Optimize service startup times and resource utilization
-5. Create service health checking and automatic recovery mechanisms
+1. Start processes in the background
+2. Practice job control (`jobs`, `fg`, `bg`)
+3. Use `kill` to terminate processes safely
+4. Use `nohup` to run persistent processes
+5. Practice graceful vs forceful process termination
+
+**Exercises:**
+```bash
+# Start a long-running process in background
+sleep 300 &
+
+# Check background jobs
+jobs
+
+# Bring job to foreground
+fg %1
+
+# Send job back to background (Ctrl+Z, then bg)
+bg %1
+
+# Kill the process gracefully
+kill %1
+
+# Start a persistent process
+nohup sleep 600 &
+
+# Kill it when done
+kill $(pgrep sleep)
+```
 
 **Deliverables:**
-- Service optimization report with before/after metrics
-- Advanced service configuration templates
-- Health monitoring and recovery automation
-- Service dependency mapping and optimization
+- Command history showing job control
+- Examples of graceful process termination
+- Documentation of when to use `kill` vs `kill -9`
 
-### Lab 3: Custom Service Development
-**Objective:** Design and deploy custom systemd services with enterprise-grade features.
+### Lab 3: Basic Service Management
+**Objective:** Learn to manage system services with systemd.
 
 **Tasks:**
-1. Create custom services with comprehensive security hardening
-2. Implement socket activation and on-demand service startup
-3. Design service templates for multi-instance deployments
-4. Configure resource limits and performance optimization
-5. Develop automated testing and validation procedures
+1. Check status of common services
+2. Practice starting and stopping services
+3. Enable and disable services at boot
+4. View service logs with `journalctl`
+5. Troubleshoot a failing service
+
+**Exercises:**
+```bash
+# Check service status
+systemctl status nginx
+systemctl status ssh
+systemctl status cron
+
+# List all active services
+systemctl list-units --type=service --state=active
+
+# List failed services
+systemctl list-units --type=service --state=failed
+
+# Start/stop a service (if installed)
+sudo systemctl stop nginx
+sudo systemctl start nginx
+sudo systemctl restart nginx
+
+# Enable/disable service at boot
+sudo systemctl enable nginx
+sudo systemctl disable nginx
+systemctl is-enabled nginx
+
+# View service logs
+journalctl -u nginx
+journalctl -u nginx -f
+journalctl -u nginx --since "1 hour ago"
+```
 
 **Deliverables:**
-- Custom service implementations with security features
-- Socket activation and template configurations
-- Automated deployment and testing frameworks
-- Performance optimization and resource management
+- List of active services on your system
+- Examples of starting/stopping services
+- Service log analysis for at least one service
+- Documentation of enabled vs disabled services
 
-### Lab 4: Performance Analysis and Optimization
-**Objective:** Implement comprehensive system performance monitoring and optimization.
-
-**Tasks:**
-1. Deploy system-wide performance monitoring with alerting
-2. Analyze process and service performance bottlenecks
-3. Implement automated performance tuning recommendations
-4. Create capacity planning and trend analysis reports
-5. Design automated remediation for common performance issues
-
-**Deliverables:**
-- Performance monitoring dashboard with alerting
-- Bottleneck analysis and optimization recommendations
-- Automated tuning and remediation systems
-- Capacity planning and trend analysis reports
-
-## Best Practices Summary
+## Best Practices
 
 ### Process Management Best Practices
 
-| Practice | Implementation | Benefits |
-|----------|----------------|----------|
-| **Graceful Termination** | Always try SIGTERM before SIGKILL | Prevents data corruption and resource leaks |
-| **Resource Monitoring** | Regular monitoring of CPU, memory, I/O | Early detection of performance issues |
-| **Process Isolation** | Use proper user accounts and permissions | Enhanced security and stability |
-| **Automated Recovery** | Implement monitoring and restart mechanisms | Improved system reliability |
-| **Documentation** | Document process dependencies and requirements | Easier troubleshooting and maintenance |
+1. **Monitor Regularly**
+   - Check system load with `uptime` and `top`
+   - Look for processes using too much CPU or memory
+   - Be aware of what's running on your system
 
-### Systemd Service Best Practices
+2. **Kill Processes Safely**
+   - Try `kill PID` first (graceful termination)
+   - Use `kill -9 PID` only when necessary (forceful kill)
+   - Always check if the process actually stopped
 
-1. **Security Hardening**
-   - Use `NoNewPrivileges=true`
-   - Implement filesystem restrictions (`ProtectSystem`, `PrivateTmp`)
-   - Set resource limits (`MemoryMax`, `CPUQuota`)
-   - Use minimal user privileges
+3. **Use Background Jobs Wisely**
+   - Use `&` for long-running commands
+   - Use `nohup` for processes that should survive logout
+   - Keep track of background jobs with `jobs`
 
-2. **Reliability Configuration**
-   - Configure appropriate restart policies
-   - Set reasonable timeout values
-   - Implement proper dependency management
-   - Use health checking mechanisms
+4. **Keep It Simple**
+   - Don't run unnecessary processes
+   - Close applications you're not using
+   - Monitor system resources regularly
 
-3. **Performance Optimization**
+### Service Management Best Practices
+
+1. **Check Before Making Changes**
+   - Always check service status before starting/stopping
+   - Understand what a service does before disabling it
+   - Check dependencies before making changes
+
+2. **Use Proper Commands**
+   - Use `systemctl` for service management
+   - Use `journalctl` to check logs when troubleshooting
+   - Always use `sudo` when starting/stopping services
+
+3. **Document Changes**
+   - Keep track of what services you enable/disable
+   - Document why you made specific changes
+   - Test changes in a safe environment first
+
+4. **Security Awareness**
+   - Don't run unnecessary services
+   - Keep services updated
+   - Monitor service logs for unusual activity
    - Use socket activation for on-demand services
    - Configure appropriate resource limits
    - Optimize startup dependencies
@@ -1049,257 +305,386 @@ esac
    - Monitor signal response times
    - Log signal handling events
 
-## Troubleshooting Guide
+## Troubleshooting
 
-### Common Process Issues
+### Common Process Problems
 
-#### High CPU Usage
+#### System Running Slow
+**Problem:** Computer feels sluggish or unresponsive
+**Solutions:**
 ```bash
-# Identify high CPU processes
+# Check what's using CPU
+top
 ps aux --sort=-%cpu | head -10
 
-# Monitor process CPU usage over time
-pidstat -u -p PID 1 10
+# Check memory usage
+free -h
+ps aux --sort=-%mem | head -10
 
-# Check process threads
-ps -T -p PID
-
-# Analyze with profiling tools
-perf top -p PID
-strace -p PID -c
-```
-
-#### Memory Leaks
-```bash
-# Monitor memory usage
-ps -p PID -o pid,ppid,%mem,vsz,rss,etime
-
-# Check memory maps
-cat /proc/PID/maps
-cat /proc/PID/smaps
-
-# Monitor over time
-watch -n 1 'ps -p PID -o pid,%mem,vsz,rss'
-
-# Use memory debugging tools
-valgrind --tool=memcheck --leak-check=full program
-```
-
-#### Zombie Processes
-```bash
-# Find zombie processes
-ps aux | awk '$8 ~ /^Z/ { print $2, $3, $11 }'
-
-# Check parent process
-ps -o pid,ppid,stat,comm -p ZOMBIE_PID
-
-# Kill parent to clean zombies
-kill -TERM PARENT_PID
-```
-
-### Systemd Service Issues
-
-#### Service Won't Start
-```bash
-# Check service status
-systemctl status service-name.service
-
-# Check logs
-journalctl -u service-name.service -n 50
-
-# Check dependencies
-systemctl list-dependencies service-name.service
-
-# Verify unit file
-systemd-analyze verify /etc/systemd/system/service-name.service
-
-# Check file permissions
-ls -la /etc/systemd/system/service-name.service
-```
-
-#### Service Keeps Restarting
-```bash
-# Check restart configuration
-systemctl show service-name.service | grep Restart
-
-# Monitor restart events
-journalctl -u service-name.service -f
-
-# Check resource limits
-systemctl show service-name.service | grep -E "(Memory|CPU|Limit)"
-
-# Analyze exit codes
-journalctl -u service-name.service | grep "code=exited"
-```
-
-### Performance Issues
-
-#### System Slow Response
-```bash
 # Check system load
 uptime
-cat /proc/loadavg
-
-# Identify resource bottlenecks
-iostat -x 1 5
-sar -u 1 5
-free -m
-
-# Find blocking processes
-ps aux | awk '$8 ~ /^D/ { print $2, $11 }'
-
-# Check disk I/O
-iotop -o
 ```
 
-#### Service Performance Problems
+#### Process Won't Stop
+**Problem:** Can't kill a process with normal `kill` command
+**Solutions:**
 ```bash
-# Monitor service resource usage
-systemd-cgtop
+# Try graceful kill first
+kill PID
 
-# Check service limits
-systemctl show service-name.service | grep -E "(CPU|Memory|IO)"
+# If that doesn't work, force kill
+kill -9 PID
 
-# Analyze service performance
-journalctl -u service-name.service --since "1 hour ago" | grep -i "slow\|timeout\|error"
-
-# Profile service execution
-perf record -p PID sleep 10
-perf report
+# For processes by name
+killall process_name
+pkill process_name
 ```
 
-## Assessment Criteria
+#### Process Using Too Much Memory
+**Problem:** A process is consuming excessive memory
+**Solutions:**
+```bash
+# Find memory-hungry processes
+ps aux --sort=-%mem | head -10
 
-Students will be evaluated on their ability to:
+# Monitor specific process
+top -p PID
 
-| Criteria | Proficient (4) | Developing (3) | Beginning (2) | Inadequate (1) |
-|----------|----------------|----------------|---------------|----------------|
-| **Process Analysis** | Expertly analyzes complex process hierarchies and resource usage patterns | Good process analysis with minor gaps | Basic process monitoring capabilities | Limited understanding of process concepts |
-| **Service Management** | Masters advanced systemd configurations with security and performance optimization | Good systemd skills with functional services | Basic service management operations | Struggles with basic service concepts |
-| **Troubleshooting** | Efficiently diagnoses and resolves complex process and service issues | Good problem-solving with systematic approach | Basic troubleshooting with guidance | Poor diagnostic and resolution skills |
-| **Automation** | Creates sophisticated monitoring and automation solutions | Good automation with functional scripts | Basic automation capabilities | Manual operations only |
+# If safe to do so, restart the process
+kill PID
+# Then restart the application
+```
+
+### Common Service Problems
+
+#### Service Won't Start
+**Problem:** `systemctl start` fails
+**Solutions:**
+```bash
+# Check detailed status
+systemctl status service-name
+
+# Check recent logs
+journalctl -u service-name -n 20
+
+# Common fixes:
+# 1. Check if another service is using the same port
+# 2. Verify configuration files
+# 3. Check file permissions
+# 4. Ensure dependencies are running
+```
+
+#### Service Keeps Stopping
+**Problem:** Service starts but stops shortly after
+**Solutions:**
+```bash
+# Monitor logs in real-time
+journalctl -u service-name -f
+
+# Check for error messages
+journalctl -u service-name | grep -i error
+
+# Check configuration
+systemctl status service-name
+```
+
+#### Can't Connect to Service
+**Problem:** Service appears running but can't connect
+**Solutions:**
+```bash
+# Verify service is actually running
+systemctl status service-name
+ps aux | grep service-name
+
+# Check if service is listening on expected port
+ss -tulpn | grep port-number
+
+# Try restarting the service
+sudo systemctl restart service-name
+```
+
+### General Troubleshooting Steps
+
+1. **Identify the Problem**
+   - What exactly is not working?
+   - When did it start happening?
+   - What changed recently?
+
+2. **Gather Information**
+   - Check system load: `uptime`
+   - Check memory: `free -h`
+   - Check disk space: `df -h`
+   - Check processes: `ps aux`
+
+3. **Check Logs**
+   - System logs: `journalctl`
+   - Service logs: `journalctl -u service-name`
+   - Check recent entries: `journalctl --since "1 hour ago"`
+
+4. **Try Simple Fixes First**
+   - Restart the problematic service
+   - Check configuration files
+   - Verify permissions
+
+5. **Document and Learn**
+   - Note what worked
+   - Keep track of common problems
+   - Remember solutions for next time
+
+## Summary
+
+This module covered the essential skills for managing processes and services in Linux systems. You learned:
+
+### Key Concepts Covered
+- **Process Monitoring**: Using `ps`, `top`, and `htop` to monitor system activity
+- **Process Control**: Starting, stopping, and managing processes safely
+- **Service Management**: Using systemd to control system services
+- **Basic Troubleshooting**: Finding and fixing common process and service issues
+
+### Essential Commands Mastered
+- `ps aux` - List all running processes
+- `top` and `htop` - Real-time system monitoring
+- `kill`, `killall`, `pkill` - Process termination
+- `systemctl` - Service management (start, stop, status, enable, disable)
+- `journalctl` - View service logs
+- `jobs`, `fg`, `bg` - Job control
+
+### Best Practices Applied
+- Always try graceful process termination before force killing
+- Monitor system resources regularly
+- Check service logs when troubleshooting
+- Use proper commands for service management
+- Document changes and solutions
 
 ## Next Steps
 
-After mastering processes and services, proceed to:
+Continue building your Linux administration skills with:
 
-- **Module 6: Users, Groups & Authentication** - Apply process knowledge to user session management and authentication services
-- **Module 8: Logging and Monitoring** - Integrate process monitoring with comprehensive system logging strategies
-- **Module 14: Proxmox Infrastructure Automation** - Use service management skills for virtualized infrastructure automation
+- **Module 6: Users, Groups & Authentication** - Learn user and permission management
+- **Module 7: Networking Fundamentals** - Understand network configuration
+- **Module 8: Logging and Monitoring** - Advanced system monitoring and log analysis
 
-The process and service management expertise developed in this module is fundamental to maintaining stable, secure, and high-performance Linux systems in enterprise environments.
+The process and service management skills from this module are fundamental for maintaining stable Linux systems and will be used throughout your system administration career.
+# Basic top usage
+top
 
-## Practical Examples
+# Show processes for specific user
+top -u username
 
-### Process Management and Monitoring
+# Sort by memory usage (press 'M' while in top)
+# Sort by CPU usage (press 'P' while in top)
+# Quit top (press 'q')
+```
 
-#### Advanced Process Analysis Scripts
+#### Using htop (Enhanced Process Monitor)
 ```bash
-#!/bin/bash
-# process-analyzer.sh - Comprehensive process analysis and monitoring
+# Install htop if not available
+sudo apt install htop    # Ubuntu/Debian
+sudo yum install htop    # CentOS/RHEL
 
-# System-wide process analysis
-analyze_system_processes() {
-    echo "=== System Process Analysis ==="
-    echo "Generated: $(date)"
-    echo ""
-    
-    # Overall system statistics
-    echo "=== System Overview ==="
-    echo "Total processes: $(ps aux | wc -l)"
-    echo "Running processes: $(ps aux | awk '$8 ~ /^R/ {count++} END {print count+0}')"
-    echo "Sleeping processes: $(ps aux | awk '$8 ~ /^S/ {count++} END {print count+0}')"
-    echo "Zombie processes: $(ps aux | awk '$8 ~ /^Z/ {count++} END {print count+0}')"
-    echo "System load: $(uptime | awk -F'load average:' '{print $2}')"
-    echo "Memory usage: $(free -h | grep Mem | awk '{print $3"/"$2" ("$3/$2*100"%)"}')"
-    echo ""
-    
-    # Top CPU consumers
-    echo "=== Top 10 CPU Consumers ==="
-    ps aux --sort=-%cpu | head -11 | tail -10 | awk '{printf "%-8s %-6s %-6.1f%% %-6.1f%% %s\n", $1, $2, $3, $4, $11}'
-    echo ""
-    
-    # Top memory consumers
-    echo "=== Top 10 Memory Consumers ==="
-    ps aux --sort=-%mem | head -11 | tail -10 | awk '{printf "%-8s %-6s %-6.1f%% %-6.1f%% %s\n", $1, $2, $3, $4, $11}'
-    echo ""
-    
-    # Long-running processes
-    echo "=== Long-Running Processes (>1 day) ==="
-    ps -eo pid,ppid,user,etime,cmd --sort=-etime | awk 'NR==1 || $4 ~ /-/ {print}'
-    echo ""
-    
-    # Network-connected processes
-    echo "=== Network-Connected Processes ==="
-    ss -tulpn | grep LISTEN | awk '{print $5, $7}' | sort -u
-    echo ""
-}
+# Run htop
+htop
 
-# Monitor specific process performance
-monitor_process() {
-    local pid="$1"
-    local duration="${2:-60}"
-    local interval="${3:-1}"
-    
-    if [[ -z "$pid" ]]; then
-        echo "Usage: monitor_process <PID> [duration] [interval]"
-        return 1
-    fi
-    
-    echo "=== Monitoring Process $pid for $duration seconds ==="
-    
-    # Process information
-    if [[ -d "/proc/$pid" ]]; then
-        echo "Process: $(cat /proc/$pid/comm 2>/dev/null)"
-        echo "Command: $(cat /proc/$pid/cmdline 2>/dev/null | tr '\0' ' ')"
-        echo "Parent PID: $(awk '/PPid:/ {print $2}' /proc/$pid/status 2>/dev/null)"
-        echo "Start time: $(ps -o lstart= -p $pid 2>/dev/null)"
-        echo ""
-    else
-        echo "Process $pid not found"
-        return 1
-    fi
-    
-    # Monitor resource usage
-    local end_time=$(($(date +%s) + duration))
-    
-    echo "Time     CPU%   MEM%   VSZ(MB)  RSS(MB)  Threads  FDs"
-    echo "========================================================"
-    
-    while [[ $(date +%s) -lt $end_time ]]; do
-        if [[ -d "/proc/$pid" ]]; then
-            local stats=$(ps -p "$pid" -o %cpu,%mem,vsz,rss,nlwp --no-headers 2>/dev/null)
-            local fd_count=$(ls /proc/$pid/fd 2>/dev/null | wc -l)
-            
-            if [[ -n "$stats" ]]; then
-                local cpu=$(echo "$stats" | awk '{print $1}')
-                local mem=$(echo "$stats" | awk '{print $2}')
-                local vsz=$(echo "$stats" | awk '{printf "%.1f", $3/1024}')
-                local rss=$(echo "$stats" | awk '{printf "%.1f", $4/1024}')
-                local threads=$(echo "$stats" | awk '{print $5}')
-                
-                printf "%-8s %-6s %-6s %-8s %-8s %-8s %s\n" \
-                    "$(date +%H:%M:%S)" "$cpu" "$mem" "$vsz" "$rss" "$threads" "$fd_count"
-            fi
-        else
-            echo "Process $pid terminated"
-            break
-        fi
-        
-        sleep "$interval"
-    done
-}
+# htop shortcuts:
+# F1 - Help
+# F9 - Kill process
+# F10 - Quit
+# Arrow keys to navigate
+# Space to tag processes
+```
 
-# Find problematic processes
-find_problematic_processes() {
-    echo "=== Problematic Process Detection ==="
-    
-    # High CPU usage processes
-    echo "High CPU Usage (>80%):"
-    ps aux | awk '$3 > 80 {printf "PID: %-6s User: %-8s CPU: %-6s%% Command: %s\n", $2, $1, $3, $11}'
-    echo ""
-    
-    # High memory usage processes
+### Finding Processes
+
+#### Find Process by Name
+```bash
+# Find process by name
+pgrep firefox
+pgrep -l firefox    # Show name and PID
+
+# Find process ID by exact name
+pidof firefox
+
+# Search for processes containing a pattern
+ps aux | grep apache
+```
+
+### Basic Process Control
+
+#### Starting and Stopping Processes
+```bash
+# Start a process in background
+command &
+
+# Example: Start a long-running process
+sleep 300 &
+
+# Check background jobs
+jobs
+
+# Bring a job to foreground
+fg %1
+
+# Send a job to background
+bg %1
+```
+
+#### Killing Processes
+```bash
+# Kill process by PID (graceful)
+kill 1234
+
+# Force kill process (when normal kill doesn't work)
+kill -9 1234
+
+# Kill all processes with a specific name
+killall firefox
+
+# Kill processes by name pattern
+pkill -f "java.*tomcat"
+```
+
+#### Using nohup for Persistent Processes
+```bash
+# Run a command that continues after logout
+nohup long-running-command &
+
+# Check the output
+tail -f nohup.out
+```
+
+### Basic Service Management
+
+#### Checking Service Status
+```bash
+# Check if a service is running
+systemctl status nginx
+systemctl status apache2
+systemctl status ssh
+
+# List all active services
+systemctl list-units --type=service --state=active
+
+# List all failed services
+systemctl list-units --type=service --state=failed
+```
+
+#### Starting and Stopping Services
+```bash
+# Start a service
+sudo systemctl start nginx
+
+# Stop a service
+sudo systemctl stop nginx
+
+# Restart a service
+sudo systemctl restart nginx
+
+# Reload service configuration (without stopping)
+sudo systemctl reload nginx
+```
+
+#### Managing Services at Boot
+```bash
+# Enable service to start at boot
+sudo systemctl enable nginx
+
+# Disable service from starting at boot
+sudo systemctl disable nginx
+
+# Check if service is enabled
+systemctl is-enabled nginx
+```
+
+### Viewing Service Logs
+
+#### Using journalctl
+```bash
+# View logs for a specific service
+journalctl -u nginx
+
+# Follow logs in real-time
+journalctl -u nginx -f
+
+# View logs from the last hour
+journalctl -u nginx --since "1 hour ago"
+
+# View logs from today
+journalctl -u nginx --since today
+
+# View last 50 lines of logs
+journalctl -u nginx -n 50
+```
+
+### Simple System Monitoring
+
+#### Check System Load and Memory
+```bash
+# Show system uptime and load
+uptime
+
+# Show memory usage
+free -h
+
+# Show disk usage
+df -h
+
+# Show who is logged in
+who
+w
+```
+
+#### Quick Process Information
+```bash
+# Show top 10 CPU-using processes
+ps aux --sort=-%cpu | head -10
+
+# Show top 10 memory-using processes
+ps aux --sort=-%mem | head -10
+
+# Count total number of processes
+ps aux | wc -l
+```
+
+### Common Troubleshooting Examples
+
+#### Find High CPU Usage
+```bash
+# Find processes using most CPU
+top -n 1 | head -20
+
+# Or using ps
+ps aux --sort=-%cpu | head -10
+```
+
+#### Find High Memory Usage
+```bash
+# Find processes using most memory
+ps aux --sort=-%mem | head -10
+
+# Show memory usage summary
+free -h
+```
+
+#### Check if a Service is Running
+```bash
+# Multiple ways to check nginx
+systemctl status nginx
+pgrep nginx
+ps aux | grep nginx
+```
+
+#### Restart a Stuck Service
+```bash
+# Try graceful restart first
+sudo systemctl restart nginx
+
+# If that fails, stop and start
+sudo systemctl stop nginx
+sudo systemctl start nginx
+
+# Check status after restart
+systemctl status nginx
+```
     echo "High Memory Usage (>80%):"
     ps aux | awk '$4 > 80 {printf "PID: %-6s User: %-8s MEM: %-6s%% Command: %s\n", $2, $1, $4, $11}'
     echo ""
