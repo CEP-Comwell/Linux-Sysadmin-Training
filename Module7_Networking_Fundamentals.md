@@ -155,11 +155,9 @@ By the end of this module, you will be able to:
 ## Practical Examples
 [⬆️ Back to Top](#table-of-contents)
 
-### 7.1 Network Interface Management
-[Related Commands/Topics: ip, nmcli, ip link, ip addr, ip route] 🟢
+Related Commands/Topics: ip, nmcli, ip link, ip addr, ip route 🟢
 
-#### View Interface Information
-[Related Commands/Topics: ip a, ip link, nmcli device, nmcli device show] 🟢
+Related Commands/Topics: ip a, ip link, nmcli device, nmcli device show 🟢
 ```bash
 # Show all network interfaces
 ip a
@@ -177,8 +175,7 @@ nmcli device status
 nmcli device show eth0
 ```
 
-#### Basic Interface Management
-[Related Commands/Topics: ip link set, ip addr add, ip addr del, ip route show] 🟢
+Related Commands/Topics: ip link set, ip addr add, ip addr del, ip route show 🟢
 ```bash
 # Bring interface up/down
 sudo ip link set eth0 up
@@ -193,8 +190,7 @@ sudo ip addr del 192.168.1.100/24 dev eth0
 # Show routing table
 ip route show
 ```
-### 7.2 Netplan Configuration
-[Related Commands/Topics: netplan, netplan apply, netplan try, netplan --debug] 🟡
+Related Commands/Topics: netplan, netplan apply, netplan try, netplan --debug 🟡
 
 #### Static IP Configuration
 Create `/etc/netplan/01-static.yaml`:
@@ -256,8 +252,7 @@ sudo netplan apply
 sudo netplan --debug apply
 ```
 
-### 7.3 Legacy Network Configuration
-[Related Commands/Topics: /etc/network/interfaces, interfaces.d, systemd-networkd, nmcli] 🟡
+Related Commands/Topics: /etc/network/interfaces, interfaces.d, systemd-networkd, nmcli 🟡
 
 #### Using /etc/network/interfaces (Debian/Ubuntu)
 ```bash
@@ -314,8 +309,7 @@ sudo nmcli con add type ethernet con-name dhcp-eth0 ifname eth0
 nmcli con show
 ```
 
-### 7.4 DNS Configuration
-[Related Commands/Topics: resolv.conf, systemd-resolved, dig, nslookup, host] 🟡
+Related Commands/Topics: resolv.conf, systemd-resolved, dig, nslookup, host 🟡
 
 #### Basic DNS Setup
 ```bash
@@ -363,8 +357,7 @@ sudo nano /etc/hosts
 10.0.0.5        internal.example.com
 ```
 
-### 7.5 Network Troubleshooting
-[Related Commands/Topics: ping, traceroute, mtr, nc, telnet, ss, netstat, tcpdump] 🟡
+Related Commands/Topics: ping, traceroute, mtr, nc, telnet, ss, netstat, tcpdump 🟡
 
 #### Connectivity Testing
 ```bash
@@ -416,8 +409,7 @@ sudo tcpdump -i eth0 -w capture.pcap
 tcpdump -r capture.pcap
 ```
 
-### 7.6 Firewall Configuration
-[Related Commands/Topics: ufw, firewalld, firewall-cmd, iptables, iptables-save] 🟡
+Related Commands/Topics: ufw, firewalld, firewall-cmd, iptables, iptables-save 🟡
 
 #### UFW (Ubuntu Firewall)
 ```bash
@@ -484,8 +476,7 @@ sudo iptables -P INPUT DROP
 sudo iptables-save > /etc/iptables/rules.v4
 ```
 
-### 7.7 SSH Configuration
-[Related Commands/Topics: sshd_config, ssh, ssh-keygen, ssh-copy-id, systemctl restart sshd] 🟡
+Related Commands/Topics: sshd_config, ssh, ssh-keygen, ssh-copy-id, systemctl restart sshd 🟡
 
 #### Basic SSH Server Setup
 ```bash
@@ -540,8 +531,7 @@ AllowUsers alice bob
 sudo systemctl restart sshd
 ```
 
-### 7.8 VPN Configuration
-[Related Commands/Topics: wireguard, wg, wg-quick, wg0.conf, systemctl enable wg-quick@wg0] 🟡
+Related Commands/Topics: wireguard, wg, wg-quick, wg0.conf, systemctl enable wg-quick@wg0 🟡
 
 #### WireGuard Setup
 ```bash
