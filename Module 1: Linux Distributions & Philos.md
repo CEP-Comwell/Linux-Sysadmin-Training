@@ -1,25 +1,24 @@
 # Module 1: Linux Distributions & Philosophy 📘
 
-
 ## Table of Contents
 - [Introduction](#introduction) 📖
 - [Learning Objectives](#learning-objectives) 🎯
 - [Core Concepts](#core-concepts) 🧠
   - [Concept 1: Linux History and Philosophy](#concept-1-linux-history-and-philosophy) 🔹
-    - [➡ Practical Example](#practical-example-1-linux-history-and-philosophy) ➡
-    - [➡ Command Reference](#command-reference-1-linux-history-and-philosophy) ➡
+    - [➡ Practical Example](#practical-example-1-linux-history-and-philosophy)
+    - [➡ Command Reference](#command-reference-1-linux-history-and-philosophy)
   - [Concept 2: Distribution Families and Package Management](#concept-2-distribution-families-and-package-management) 🔹
-    - [➡ Practical Example](#practical-example-2-distribution-families-and-package-management) ➡
-    - [➡ Command Reference](#command-reference-2-distribution-families-and-package-management) ➡
+    - [➡ Practical Example](#practical-example-2-distribution-families-and-package-management)
+    - [➡ Command Reference](#command-reference-2-distribution-families-and-package-management)
   - [Concept 3: Release Models and Support Cycles](#concept-3-release-models-and-support-cycles) 🔹
-    - [➡ Practical Example](#practical-example-3-release-models-and-support-cycles) ➡
-    - [➡ Command Reference](#command-reference-3-release-models-and-support-cycles) ➡
+    - [➡ Practical Example](#practical-example-3-release-models-and-support-cycles)
+    - [➡ Command Reference](#command-reference-3-release-models-and-support-cycles)
   - [Concept 4: Open Source Licensing and Governance](#concept-4-open-source-licensing-and-governance) 🔹
-    - [➡ Practical Example](#practical-example-4-open-source-licensing-and-governance) ➡
-    - [➡ Command Reference](#command-reference-4-open-source-licensing-and-governance) ➡
+    - [➡ Practical Example](#practical-example-4-open-source-licensing-and-governance)
+    - [➡ Command Reference](#command-reference-4-open-source-licensing-and-governance)
   - [Concept 5: Distribution Selection Criteria](#concept-5-distribution-selection-criteria) 🔹
-    - [➡ Practical Example](#practical-example-5-distribution-selection-criteria) ➡
-    - [➡ Command Reference](#command-reference-5-distribution-selection-criteria) ➡
+    - [➡ Practical Example](#practical-example-5-distribution-selection-criteria)
+    - [➡ Command Reference](#command-reference-5-distribution-selection-criteria)
 - [Command Reference](#command-reference) 💻
 - [Practical Examples](#practical-examples) 🔍
 - [Exercises](#exercises) 🛠
