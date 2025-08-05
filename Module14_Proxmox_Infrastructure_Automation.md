@@ -47,29 +47,29 @@ By completing this module, you will be able to:
         * Variables and outputs
         * Data sources
         * Resource lifecycle management
-    * [14.3 Ansible Configuration Management](#143-ansible-configuration-management)
+    * [14.3 Advanced Terraform Practices](#143-advanced-terraform-practices)
         * Ansible inventory basics
         * Playbooks and tasks
         * Modules and collections
         * Variable management
         * SSH-based automation
-    * [14.4 Cloud-Init Integration](#144-cloud-init-integration)
+    * [14.4 Ansible Configuration Management](#144-ansible-configuration-management)
         * Cloud-Init configuration basics
         * Network automation
         * Package and service management
         * SSH key injection
         * Custom scripts
-    * [14.5 Secrets Management](#145-secrets-management)
+    * [14.5 Advanced Ansible Techniques](#145-advanced-ansible-techniques)
         * Ansible Vault basics
         * Environment variables for credentials
         * Key management
         * Secret rotation
-    * [14.6 Testing and Validation](#146-testing-and-validation)
+    * [14.6 Cloud-Init Integration](#146-cloud-init-integration)
         * Terraform validation and formatting
         * Ansible linting
         * Infrastructure testing basics
         * Security scanning
-    * [14.7 Monitoring and Observability](#147-monitoring-and-observability)
+    * [14.7 Secrets Management](#147-secrets-management)
         * Infrastructure monitoring basics
         * Log aggregation
         * Alerting systems
