@@ -51,14 +51,46 @@ By completing this module, you will be able to:
    - Maintain clean commit history
    - Handle common Git problems and recovery
    - Set up efficient development environments
+
 ## Table of Contents
 
-* [15.1 SSH Key Setup for GitHub](#151-ssh-key-setup-for-github)
-* [15.2 Git Installation and Basic Configuration](#152-git-installation-and-basic-configuration)
-* [15.3 Basic Git Operations and Workflow](#153-basic-git-operations-and-workflow)
-* [15.4 GitHub Integration and Collaboration](#154-github-integration-and-collaboration)
-* [15.5 File Management with .gitignore](#155-file-management-with-gitignore)
-* [15.6 Practical Git Workflows](#156-practical-git-workflows)
+* [Learning Objectives](#learning-objectives)
+* [Topics](#topics)
+    * [15.1 SSH Key Setup for GitHub](#151-ssh-key-setup-for-github)
+        * Understanding SSH keys 🔑
+        * Generating SSH keys ⚡
+        * Adding SSH key to SSH agent 🗝️
+        * Adding SSH key to GitHub 🌐
+        * Testing SSH connection ✅
+        * SSH config for multiple accounts 🧑‍💻
+    * [15.2 Git Installation and Basic Configuration](#152-git-installation-and-basic-configuration)
+        * Installing Git 💻
+        * Basic Git configuration ⚙️
+        * Useful Git aliases ⏩
+        * Git configuration levels 📚
+    * [15.3 Basic Git Operations and Workflow](#153-basic-git-operations-and-workflow)
+        * Repository operations 📁
+        * Basic workflow 🔄
+        * Working with branches 🌿
+        * Viewing history 🕑
+    * [15.4 GitHub Integration and Collaboration](#154-github-integration-and-collaboration)
+        * Creating repositories on GitHub 🆕
+        * Connecting existing repo to GitHub 🔗
+        * Pull requests workflow 🔄
+        * Working with issues 📝
+        * Basic team workflow 👥
+    * [15.5 File Management with .gitignore](#155-file-management-with-gitignore)
+        * Using built-in templates 📄
+        * Common ignore patterns 🚫
+        * Global .gitignore 🌍
+        * Managing sensitive files 🔒
+    * [15.6 Practical Git Workflows](#156-practical-git-workflows)
+        * Feature branch workflow 🌱
+        * Handling merge conflicts ⚔️
+        * Common git recovery 🛠️
+        * Keeping fork updated 🔃
+* [Back to Top](#module-15-git--github-setup-with-ssh-access) ⬆️
+* [Main Index](README.md) 📚
 
 ## 15.1 SSH Key Setup for GitHub
 

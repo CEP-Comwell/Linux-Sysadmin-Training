@@ -226,7 +226,7 @@ By completing this module, you will be able to:
 - **Code organization**: Directory structure, naming conventions, and documentation
 - **Testing strategies**: Validation, linting, and automated testing frameworks
 
-**🔗 Practical Examples**: [Terraform Provider Configuration](#terraform-provider-configuration) | [State Management Setup](#terraform-state-management)
+**Practical Examples**: [Terraform Provider Configuration](#terraform-provider-configuration) | [State Management Setup](#terraform-state-management)
 
 ### 14.2 Terraform with Proxmox
 - **Terraform Proxmox provider**: Installation, configuration, and authentication
@@ -235,7 +235,7 @@ By completing this module, you will be able to:
 - **Data sources**: Querying existing infrastructure and templates
 - **Resource lifecycle management**: Creation, updates, and destruction
 
-**🔗 Practical Examples**: [VM Resource Definition](#vm-resource-definition) | [Load Balancer Configuration](#load-balancer-configuration)
+**Practical Examples**: [VM Resource Definition](#vm-resource-definition) | [Load Balancer Configuration](#load-balancer-configuration)
 
 ### 14.3 Advanced Terraform Practices
 - **Remote state backends**: S3, Azure Storage, Consul configuration with locking
@@ -244,7 +244,7 @@ By completing this module, you will be able to:
 - **Code organization**: Module structure, variable files, and best practices
 - **Provider versioning**: Constraint management and updates
 
-**🔗 Practical Examples**: [Terraform Modules](#terraform-modules) | [Workspace Configuration](#terraform-workspaces)
+**Practical Examples**: [Terraform Modules](#terraform-modules) | [Workspace Configuration](#terraform-workspaces)
 
 ### 14.4 Ansible Configuration Management
 - **Ansible inventory**: Static and dynamic inventory for Proxmox integration
@@ -253,7 +253,7 @@ By completing this module, you will be able to:
 - **Variable management**: Group vars, host vars, and precedence
 - **Agentless architecture**: SSH-based automation and security considerations
 
-**🔗 Practical Examples**: [Ansible Inventory](#ansible-inventory) | [Web Server Playbook](#web-server-playbook)
+**Practical Examples**: [Ansible Inventory](#ansible-inventory) | [Web Server Playbook](#web-server-playbook)
 
 ### 14.5 Advanced Ansible Techniques
 - **Role-based automation**: Creating, organizing, and sharing reusable roles
@@ -262,7 +262,7 @@ By completing this module, you will be able to:
 - **Handlers and notifications**: Event-driven configuration management
 - **Error handling**: Conditional execution and failure recovery
 
-**🔗 Practical Examples**: [Common Role](#common-role) | [Role-based Automation](#ansible-roles)
+**Practical Examples**: [Common Role](#common-role) | [Role-based Automation](#ansible-roles)
 
 ### 14.6 Cloud-Init Integration
 - **Cloud-Init configuration**: Templates, user data, and metadata customization
@@ -271,7 +271,7 @@ By completing this module, you will be able to:
 - **SSH key injection**: User management and secure access setup
 - **Custom scripts**: Post-boot automation and application deployment
 
-**🔗 Practical Examples**: [Basic Cloud-Init Template](#basic-cloud-init-template) | [Load Balancer Cloud-Init](#load-balancer-cloud-init)
+**Practical Examples**: [Basic Cloud-Init Template](#basic-cloud-init-template) | [Load Balancer Cloud-Init](#load-balancer-cloud-init)
 
 ### 14.7 Secrets Management
 - **Terraform Vault provider**: HashiCorp Vault integration for secrets
@@ -280,7 +280,7 @@ By completing this module, you will be able to:
 - **Key management**: SSH keys, API tokens, and certificate handling
 - **Secret rotation**: Automated credential updates and compliance
 
-**🔗 Practical Examples**: [Ansible Vault Usage](#ansible-vault-secrets) | [Terraform Secrets](#terraform-secrets-management)
+**Practical Examples**: [Ansible Vault Usage](#ansible-vault-secrets) | [Terraform Secrets](#terraform-secrets-management)
 
 ### 14.8 Testing and Validation
 - **Terraform validation**: `terraform validate`, `terraform fmt`, and plan analysis
@@ -289,7 +289,7 @@ By completing this module, you will be able to:
 - **Infrastructure testing**: Automated verification and compliance checking
 - **Security scanning**: Vulnerability assessment and policy enforcement
 
-**🔗 Practical Examples**: [Infrastructure Testing Script](#infrastructure-testing-script) | [Validation Pipelines](#testing-automation)
+**Practical Examples**: [Infrastructure Testing Script](#infrastructure-testing-script) | [Validation Pipelines](#testing-automation)
 
 ### 14.9 CI/CD Pipeline Integration
 - **Git workflows**: GitOps principles and infrastructure versioning
@@ -298,7 +298,7 @@ By completing this module, you will be able to:
 - **Infrastructure rollback**: Disaster recovery and state management
 - **Compliance automation**: Policy enforcement and audit trails
 
-**🔗 Practical Examples**: [GitLab CI Pipeline](#gitlab-ci-pipeline) | [GitHub Actions Workflow](#github-actions-workflow)
+**Practical Examples**: [GitLab CI Pipeline](#gitlab-ci-pipeline) | [GitHub Actions Workflow](#github-actions-workflow)
 
 ### 14.10 Monitoring and Observability
 - **Infrastructure monitoring**: Automated Prometheus and Grafana deployment
@@ -307,7 +307,7 @@ By completing this module, you will be able to:
 - **Performance optimization**: Resource monitoring and auto-scaling
 - **Cost optimization**: Resource rightsizing and lifecycle management
 
-**🔗 Practical Examples**: [Prometheus Configuration](#prometheus-configuration) | [Infrastructure Testing Script](#infrastructure-testing-script)
+**Practical Examples**: [Prometheus Configuration](#prometheus-configuration) | [Infrastructure Testing Script](#infrastructure-testing-script)
 
 ## Command & Tool Reference
 
