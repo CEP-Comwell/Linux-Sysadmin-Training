@@ -5,6 +5,7 @@
 
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Learning Objectives](#learning-objectives)
 - [Topics](#topics)
@@ -429,6 +430,8 @@ optimize_pool_performance "backup-pool" "backup"
 log_zfs_operation "Enterprise ZFS setup completed successfully"
 ```
 
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Pool Management and Performance. 🔗
+
 #### Pool Import/Export and Migration
 ```bash
 #!/bin/bash
@@ -596,6 +599,8 @@ EOF
 # import_pool_safely "storage-pool"
 # migrate_pool_cross_platform "old-pool" "new-server.example.com" "send-receive"
 ```
+
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Pool Management and Replication. 🔗
 
 ### Dataset Operations
 
@@ -819,6 +824,8 @@ monitor_dataset_usage "$POOL_NAME" 80
 
 log_dataset_operation "Enterprise dataset management setup completed"
 ```
+
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Dataset and Filesystem Operations, Delegation, and Quota Management. 🔗
 
 ### Snapshot Management
 
@@ -1113,7 +1120,10 @@ setup_snapshot_automation
 # manage_development_clones "corporate-pool/projects/production@prod-daily_20250802_020000" "corporate-pool/projects/dev-clone-001" "development"
 
 log_snapshot_operation "Snapshot management system initialized"
+
 ```
+
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Snapshot and Clone Management. 🔗
 
 ### Replication Setup
 
@@ -1433,6 +1443,8 @@ sudo crontab /tmp/zfs-replication-crontab
 
 log_replication "Replication infrastructure setup completed"
 ```
+
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Replication and Backup. 🔗
 
 ### Performance Optimization
 
@@ -1811,6 +1823,8 @@ setup_performance_alerts
 
 log_performance "ZFS performance optimization setup completed"
 ```
+
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Performance and Monitoring. 🔗
 
 ### Monitoring and Diagnostics
 
