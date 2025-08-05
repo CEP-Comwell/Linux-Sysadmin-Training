@@ -1,4 +1,8 @@
+
 # Module 11: ZFS Fundamentals
+
+[⬅️ Main Index](#table-of-contents)  
+
 
 ## Table of Contents
 - [Overview](#overview)
@@ -30,6 +34,8 @@
 - [Troubleshooting](#troubleshooting)
 - [Assessment Criteria](#assessment-criteria)
 - [Next Steps](#next-steps)
+
+[⬆️ Back to Top](#module-11-zfs-fundamentals)
 
 ## Overview
 This module provides comprehensive coverage of ZFS (Zettabyte File System), a revolutionary storage platform that combines traditional filesystem and volume manager functionality with advanced features including copy-on-write architecture, automatic data integrity verification, and enterprise-grade storage management capabilities. Students will master ZFS implementation from basic pool creation to advanced replication and performance optimization strategies.
