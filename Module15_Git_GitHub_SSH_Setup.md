@@ -764,7 +764,7 @@ git reset --hard HEAD
 - Custom patterns working correctly
 - Sensitive files properly excluded from version control
 
-**[⬆️ Back to Top](#module-15-git--github-setup-with-ssh-access)** | **[📚 Main Index](README.md)**
+**[Back to Top](#module-15-git--github-setup-with-ssh-access)** ⬆️ | **[Main Index](README.md)** 📚
 
 ---
 
