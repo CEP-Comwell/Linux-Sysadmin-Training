@@ -235,16 +235,12 @@ By completing this module, you will be able to:
 - **Data sources**: Querying existing infrastructure and templates
 - **Resource lifecycle management**: Creation, updates, and destruction
 
-**Practical Examples**: [VM Resource Definition](#vm-resource-definition) | [Load Balancer Configuration](#load-balancer-configuration)
-
 ### 14.3 Advanced Terraform Practices
 - **Remote state backends**: S3, Azure Storage, Consul configuration with locking
 - **Terraform modules**: Creating, versioning, and sharing reusable components
 - **Workspace management**: Environment isolation (dev, staging, prod)
 - **Code organization**: Module structure, variable files, and best practices
 - **Provider versioning**: Constraint management and updates
-
-**Practical Examples**: [Terraform Modules](#terraform-modules) | [Workspace Configuration](#terraform-workspaces)
 
 ### 14.4 Ansible Configuration Management
 - **Ansible inventory**: Static and dynamic inventory for Proxmox integration
@@ -271,7 +267,7 @@ By completing this module, you will be able to:
 - **SSH key injection**: User management and secure access setup
 - **Custom scripts**: Post-boot automation and application deployment
 
-**Practical Examples**: [Basic Cloud-Init Template](#basic-cloud-init-template) | [Load Balancer Cloud-Init](#load-balancer-cloud-init)
+**Practical Examples**: [Basic Cloud-Init Template](#basic-cloud-init-template)
 
 ### 14.7 Secrets Management
 - **Terraform Vault provider**: HashiCorp Vault integration for secrets
@@ -298,7 +294,7 @@ By completing this module, you will be able to:
 - **Infrastructure rollback**: Disaster recovery and state management
 - **Compliance automation**: Policy enforcement and audit trails
 
-**Practical Examples**: [GitLab CI Pipeline](#gitlab-ci-pipeline) | [GitHub Actions Workflow](#github-actions-workflow)
+**Practical Examples**:
 
 ### 14.10 Monitoring and Observability
 - **Infrastructure monitoring**: Automated Prometheus and Grafana deployment
@@ -307,7 +303,7 @@ By completing this module, you will be able to:
 - **Performance optimization**: Resource monitoring and auto-scaling
 - **Cost optimization**: Resource rightsizing and lifecycle management
 
-**Practical Examples**: [Prometheus Configuration](#prometheus-configuration) | [Infrastructure Testing Script](#infrastructure-testing-script)
+**Practical Examples**: [Infrastructure Testing Script](#infrastructure-testing-script)
 
 ## Command & Tool Reference
 
@@ -338,6 +334,23 @@ By completing this module, you will be able to:
 
 ## Practical Examples
 
+### Ansible Inventory
+
+This section provides a sample dynamic and static Ansible inventory for Proxmox environments, including group and host variables for enterprise automation. See the code examples in the Ansible Integration and Enterprise Ansible Automation Framework sections for details.
+
+---
+
+### Web Server Playbook
+
+This section describes a typical Ansible playbook for configuring web servers in a Proxmox-managed infrastructure. See the code examples in the Web Server Playbook and Enterprise Playbook Structure sections for implementation details.
+
+---
+
+### Basic Cloud-Init Template
+
+This section provides a minimal cloud-init configuration template for provisioning VMs in Proxmox. See the code examples in the Cloud-Init Configuration section for YAML templates and usage.
+
+---
 [Back to Top](#table-of-contents) ⬆️ | [Main Index](../README.md) 📚
 
 
