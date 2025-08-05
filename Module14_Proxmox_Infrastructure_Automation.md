@@ -325,19 +325,19 @@ By completing this module, you will be able to:
 | `tflint` | Terraform linter for errors and best practices | `--init`, `--config` |
 | `checkov -f main.tf` | Security and compliance scanning | `--framework`, `--check` |
 
-**[⬆️ Back to Top](#module-14-proxmox-infrastructure-automation)** | **[📚 Main Index](README.md)**
+**[Back to Top](#module-14-proxmox-infrastructure-automation)** ⬆️ | **[Main Index](README.md)** 📚
 
 
 ---
 
 ## Practical Examples
 
-[⬆️ Back to Top](#table-of-contents) | [📚 Main Index](../README.md) ⬆️
+[Back to Top](#table-of-contents) ⬆️ | [Main Index](../README.md) 📚
 
 
 ### Enterprise Terraform Infrastructure as Code Implementation
 
-[⬆️ Back to Top](#table-of-contents) | [📚 Main Index](../README.md) ⬆️
+[Back to Top](#table-of-contents) ⬆️ | [Main Index](../README.md) 📚
 
 ```hcl
 # terraform/providers.tf
@@ -1782,7 +1782,7 @@ resource "proxmox_vm_qemu" "load_balancer" {
 
 ### Cloud-Init Configuration
 
-[⬆️ Back to Top](#table-of-contents) | [📚 Main Index](../README.md) ⬆️
+[Back to Top](#table-of-contents) ⬆️ | [Main Index](../README.md) 📚
 
 #### Basic Cloud-Init Template
 ```yaml
