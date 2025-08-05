@@ -16,27 +16,33 @@ This comprehensive repository guides experienced Windows sysadmins through a str
    - [1.5 Distribution Selection Criteria](Module1_Linux_Distributions_and_Philosophy.md#15-distribution-selection-criteria)
 
 2. **[Module 2: Filesystem Hierarchy & Permissions](Module2_Filesystem_Hierarchy_and_Permissions.md)**
-   - [2.1 Linux Filesystem Hierarchy Standard (FHS)](Module2_Filesystem_Hierarchy_and_Permissions.md#21-linux-filesystem-hierarchy-standard-fhs)
-   - [2.2 File and Directory Permissions](Module2_Filesystem_Hierarchy_and_Permissions.md#22-file-and-directory-permissions)
-   - [2.3 Advanced Permission Systems](Module2_Filesystem_Hierarchy_and_Permissions.md#23-advanced-permission-systems)
-   - [2.4 File Attributes and Extended Attributes](Module2_Filesystem_Hierarchy_and_Permissions.md#24-file-attributes-and-extended-attributes)
-   - [2.5 Security Contexts and MAC Systems](Module2_Filesystem_Hierarchy_and_Permissions.md#25-security-contexts-and-mac-systems)
+   - [2.1 Filesystem Hierarchy Standard (FHS)](Module2_Filesystem_Hierarchy_and_Permissions.md#21-filesystem-hierarchy-standard-fhs)
+   - [2.2 Basic File and Directory Permissions](Module2_Filesystem_Hierarchy_and_Permissions.md#22-basic-file-and-directory-permissions)
+   - [2.3 Special Permission Modes](Module2_Filesystem_Hierarchy_and_Permissions.md#23-special-permission-modes)
+   - [2.4 Access Control Lists (ACLs)](Module2_Filesystem_Hierarchy_and_Permissions.md#24-access-control-lists-acls)
+   - [2.5 File Attributes and Extended Attributes](Module2_Filesystem_Hierarchy_and_Permissions.md#25-file-attributes-and-extended-attributes)
 
 3. **[Module 3: Command-Line Essentials](Module3_Command-Line_Essentials.md)**
-   - [3.1 Shell Fundamentals and Environment](Module3_Command-Line_Essentials.md#31-shell-fundamentals-and-environment)
-   - [3.2 File and Directory Operations](Module3_Command-Line_Essentials.md#32-file-and-directory-operations)
-   - [3.3 Text Processing and Data Manipulation](Module3_Command-Line_Essentials.md#33-text-processing-and-data-manipulation)
-   - [3.4 Process and System Management](Module3_Command-Line_Essentials.md#34-process-and-system-management)
-   - [3.5 Search and Information Gathering](Module3_Command-Line_Essentials.md#35-search-and-information-gathering)
-   - [3.6 Advanced Command Line Techniques](Module3_Command-Line_Essentials.md#36-advanced-command-line-techniques)
+   - [3.1 Shell Basics and Environment](Module3_Command-Line_Essentials.md#31-shell-basics-and-environment)
+   - [3.2 Navigation and File Operations](Module3_Command-Line_Essentials.md#32-navigation-and-file-operations)
+   - [3.3 File Content Management](Module3_Command-Line_Essentials.md#33-file-content-management)
+   - [3.4 Text Processing and Data Manipulation](Module3_Command-Line_Essentials.md#34-text-processing-and-data-manipulation)
+   - [3.5 Pipes, Redirection, and Command Chaining](Module3_Command-Line_Essentials.md#35-pipes-redirection-and-command-chaining)
+   - [3.6 File Searching and Pattern Matching](Module3_Command-Line_Essentials.md#36-file-searching-and-pattern-matching)
+   - [3.7 Shell Customization and Productivity](Module3_Command-Line_Essentials.md#37-shell-customization-and-productivity)
+   - [3.8 Debugging and Error Handling](Module3_Command-Line_Essentials.md#38-debugging-and-error-handling)
+   - [3.9 Archives and Compression](Module3_Command-Line_Essentials.md#39-archives-and-compression)
 
 4. **[Module 4: Package Management](Module4_Package_Management.md)**
    - [4.1 Package Management Fundamentals](Module4_Package_Management.md#41-package-management-fundamentals)
-   - [4.2 APT Package Management (Debian/Ubuntu)](Module4_Package_Management.md#42-apt-package-management-debianubuntu)
-   - [4.3 YUM/DNF Package Management (RHEL/CentOS/Fedora)](Module4_Package_Management.md#43-yumdnf-package-management-rhelcentosfedora)
-   - [4.4 Advanced Package Operations](Module4_Package_Management.md#44-advanced-package-operations)
-   - [4.5 Repository Management and Third-Party Sources](Module4_Package_Management.md#45-repository-management-and-third-party-sources)
-   - [4.6 Package Building and Custom Repositories](Module4_Package_Management.md#46-package-building-and-custom-repositories)
+   - [4.2 Debian/Ubuntu Package Management (APT)](Module4_Package_Management.md#42-debianubuntu-package-management-apt)
+   - [4.3 Red Hat/CentOS Package Management (YUMDNF)](Module4_Package_Management.md#43-red-hatcentos-package-management-yumdnf)
+   - [4.4 SUSE Package Management (Zypper)](Module4_Package_Management.md#44-suse-package-management-zypper)
+   - [4.5 Arch Linux Package Management (Pacman)](Module4_Package_Management.md#45-arch-linux-package-management-pacman)
+   - [4.6 Universal Package Managers](Module4_Package_Management.md#46-universal-package-managers)
+   - [4.7 Repository Management and Security](Module4_Package_Management.md#47-repository-management-and-security)
+   - [4.8 Source Compilation and Custom Packages](Module4_Package_Management.md#48-source-compilation-and-custom-packages)
+   - [4.9 Package Automation and Scripting](Module4_Package_Management.md#49-package-automation-and-scripting)
 
 5. **[Module 5: Processes & Services](Module5_Processes_and_Services.md)**
    - [5.1 Process Basics (Beginner)](Module5_Processes_and_Services.md#51-process-basics-beginner)
@@ -44,15 +50,6 @@ This comprehensive repository guides experienced Windows sysadmins through a str
    - [5.3 Process Control (Intermediate)](Module5_Processes_and_Services.md#53-process-control-intermediate)
    - [5.4 Basic Service Management (Intermediate)](Module5_Processes_and_Services.md#54-basic-service-management-intermediate)
    - [5.5 Essential Systemd Operations (Advanced)](Module5_Processes_and_Services.md#55-essential-systemd-operations-advanced)
-   - [Essential Command Reference](Module5_Processes_and_Services.md#essential-command-reference)
-   - [Quick Start Commands](Module5_Processes_and_Services.md#quick-start-commands)
-   - [Understanding Linux Service Management Evolution](Module5_Processes_and_Services.md#understanding-linux-service-management-evolution)
-   - [Practical Examples](Module5_Processes_and_Services.md#practical-examples)
-   - [Lab Exercises](Module5_Processes_and_Services.md#lab-exercises-45-minutes-total)
-   - [Best Practices](Module5_Processes_and_Services.md#best-practices)
-   - [Troubleshooting](Module5_Processes_and_Services.md#troubleshooting)
-   - [Summary](Module5_Processes_and_Services.md#summary)
-   - [Next Steps](Module5_Processes_and_Services.md#next-steps)
 
 6. **[Module 6: Users, Groups & Authentication](Module6_Users_Groups_and_Authentication.md)**
    - [6.1 User Account Fundamentals](Module6_Users_Groups_and_Authentication.md#61-user-account-fundamentals)
@@ -62,13 +59,14 @@ This comprehensive repository guides experienced Windows sysadmins through a str
    - [6.5 Password Policies and Security](Module6_Users_Groups_and_Authentication.md#65-password-policies-and-security)
 
 7. **[Module 7: Networking Fundamentals](Module7_Networking_Fundamentals.md)**
-   - [7.1 Modern Network Interface Management](Module7_Networking_Fundamentals.md#71-modern-network-interface-management)
-   - [7.2 IP Address Configuration and Management](Module7_Networking_Fundamentals.md#72-ip-address-configuration-and-management)
-   - [7.3 DNS Resolution and Host Management](Module7_Networking_Fundamentals.md#73-dns-resolution-and-host-management)
-   - [7.4 Network Connectivity Diagnostics](Module7_Networking_Fundamentals.md#74-network-connectivity-diagnostics)
-   - [7.5 SSH Security and Hardening](Module7_Networking_Fundamentals.md#75-ssh-security-and-hardening)
-   - [7.6 Comprehensive Firewall Management](Module7_Networking_Fundamentals.md#76-comprehensive-firewall-management)
-   - [7.7 Network Security Best Practices](Module7_Networking_Fundamentals.md#77-network-security-best-practices)
+   - [7.1 Network Interface Management](Module7_Networking_Fundamentals.md#71-network-interface-management)
+   - [7.2 IP Configuration with Netplan](Module7_Networking_Fundamentals.md#72-ip-configuration-with-netplan)
+   - [7.3 Legacy Network Configuration](Module7_Networking_Fundamentals.md#73-legacy-network-configuration)
+   - [7.4 DNS and Name Resolution](Module7_Networking_Fundamentals.md#74-dns-and-name-resolution)
+   - [7.5 Basic Network Troubleshooting](Module7_Networking_Fundamentals.md#75-basic-network-troubleshooting)
+   - [7.6 Firewall Basics](Module7_Networking_Fundamentals.md#76-firewall-basics)
+   - [7.7 SSH Configuration](Module7_Networking_Fundamentals.md#77-ssh-configuration)
+   - [7.8 VPN Setup (WireGuard)](Module7_Networking_Fundamentals.md#78-vpn-setup-wireguard)
 
 8. **[Module 8: Logging & Monitoring](Module8_Logging_and_Monitoring.md)**
    - [8.1 System Logging Fundamentals](Module8_Logging_and_Monitoring.md#81-system-logging-fundamentals)
