@@ -100,34 +100,31 @@ This comprehensive repository guides experienced Windows sysadmins through a str
 ### 🚀 Advanced DevOps & Infrastructure Automation
  
 11. **[Module 11: ZFS Fundamentals](Module11_ZFS_Fundamentals.md)**
-    - [11.1 ZFS Architecture and Core Concepts](Module11_ZFS_Fundamentals.md#111-zfs-architecture-and-core-concepts)
-    - [11.2 Storage Pool (zpool) Management](Module11_ZFS_Fundamentals.md#112-storage-pool-zpool-management)
-    - [11.3 Dataset and Volume Administration](Module11_ZFS_Fundamentals.md#113-dataset-and-volume-administration)
-    - [11.4 Advanced ZFS Features](Module11_ZFS_Fundamentals.md#114-advanced-zfs-features)
-    - [11.5 Performance Tuning and Optimization](Module11_ZFS_Fundamentals.md#115-performance-tuning-and-optimization)
-    - [11.6 Backup and Replication Strategies](Module11_ZFS_Fundamentals.md#116-backup-and-replication-strategies)
-    - [11.7 Disaster Recovery and High Availability](Module11_ZFS_Fundamentals.md#117-disaster-recovery-and-high-availability)
-    - [11.8 Enterprise Integration and Monitoring](Module11_ZFS_Fundamentals.md#118-enterprise-integration-and-monitoring)
+    - [11.1 ZFS Architecture and Copy-on-Write Fundamentals](Module11_ZFS_Fundamentals.md#111-zfs-architecture-and-copy-on-write-fundamentals)
+    - [11.2 Pool Management and Storage Hierarchies](Module11_ZFS_Fundamentals.md#112-pool-management-and-storage-hierarchies)
+    - [11.3 Datasets, Zvols, and Hierarchical Management](Module11_ZFS_Fundamentals.md#113-datasets-zvols-and-hierarchical-management)
+    - [11.4 Advanced Features: Compression, Deduplication, and Optimization](Module11_ZFS_Fundamentals.md#114-advanced-features-compression-deduplication-and-optimization)
+    - [11.5 Snapshot and Clone Management](Module11_ZFS_Fundamentals.md#115-snapshot-and-clone-management)
+    - [11.6 Replication and Backup Strategies](Module11_ZFS_Fundamentals.md#116-replication-and-backup-strategies)
+    - [11.7 Performance Tuning and Caching](Module11_ZFS_Fundamentals.md#117-performance-tuning-and-caching)
+    - [11.8 Monitoring and Troubleshooting](Module11_ZFS_Fundamentals.md#118-monitoring-and-troubleshooting)
 
 12. **[Module 12: Proxmox Virtual Environment](Module12_Proxmox_Virtual_Environment.md)**
-    - [12.1 Proxmox VE Installation and Initial Configuration](Module12_Proxmox_Virtual_Environment.md#121-proxmox-ve-installation-and-initial-configuration)
-    - [12.2 Virtual Machine Management and Configuration](Module12_Proxmox_Virtual_Environment.md#122-virtual-machine-management-and-configuration)
-    - [12.3 Container Technology with LXC](Module12_Proxmox_Virtual_Environment.md#123-container-technology-with-lxc)
-    - [12.4 Storage Configuration and Management](Module12_Proxmox_Virtual_Environment.md#124-storage-configuration-and-management)
-    - [12.5 Networking and Security](Module12_Proxmox_Virtual_Environment.md#125-networking-and-security)
-    - [12.6 Cluster Configuration and High Availability](Module12_Proxmox_Virtual_Environment.md#126-cluster-configuration-and-high-availability)
-    - [12.7 Backup, Disaster Recovery, and Migration](Module12_Proxmox_Virtual_Environment.md#127-backup-disaster-recovery-and-migration)
-    - [12.8 Performance Monitoring and Optimization](Module12_Proxmox_Virtual_Environment.md#128-performance-monitoring-and-optimization)
+    - [12.1 Installation and Initial Setup](Module12_Proxmox_Virtual_Environment.md#121-installation-and-initial-setup)
+    - [12.2 Storage Configuration](Module12_Proxmox_Virtual_Environment.md#122-storage-configuration)
+    - [12.3 Virtual Machine Management](Module12_Proxmox_Virtual_Environment.md#123-virtual-machine-management)
+    - [12.4 Container Management](Module12_Proxmox_Virtual_Environment.md#124-container-management)
+    - [12.5 Basic Networking](Module12_Proxmox_Virtual_Environment.md#125-basic-networking)
+    - [12.6 Backup and Maintenance](Module12_Proxmox_Virtual_Environment.md#126-backup-and-maintenance)
+    - [12.7 Clustering Basics](Module12_Proxmox_Virtual_Environment.md#127-clustering-basics)
+    - [12.8 Future Technologies in Proxmox VE 9](Module12_Proxmox_Virtual_Environment.md#128-future-technologies-in-proxmox-ve-9)
 
 13. **[Module 13: OpenSSH Best Practices](Module13_OpenSSH_Best_Practices.md)**
-    - [13.1 SSH Architecture and Security Fundamentals](Module13_OpenSSH_Best_Practices.md#131-ssh-architecture-and-security-fundamentals)
-    - [13.2 Key-Based Authentication and Management](Module13_OpenSSH_Best_Practices.md#132-key-based-authentication-and-management)
-    - [13.3 Server Hardening and Configuration](Module13_OpenSSH_Best_Practices.md#133-server-hardening-and-configuration)
-    - [13.4 Advanced SSH Features and Tunneling](Module13_OpenSSH_Best_Practices.md#134-advanced-ssh-features-and-tunneling)
-    - [13.5 Enterprise Access Control and Monitoring](Module13_OpenSSH_Best_Practices.md#135-enterprise-access-control-and-monitoring)
-    - [13.6 SSH Automation and Integration](Module13_OpenSSH_Best_Practices.md#136-ssh-automation-and-integration)
-    - [13.7 Certificate Authority and Enterprise PKI](Module13_OpenSSH_Best_Practices.md#137-certificate-authority-and-enterprise-pki)
-    - [13.8 Incident Response and Forensics](Module13_OpenSSH_Best_Practices.md#138-incident-response-and-forensics)
+    - [13.1 SSH Key Generation and Management](Module13_OpenSSH_Best_Practices.md#131-ssh-key-generation-and-management)
+    - [13.2 Secure Key Distribution](Module13_OpenSSH_Best_Practices.md#132-secure-key-distribution)
+    - [13.3 SSH Server Security Configuration](Module13_OpenSSH_Best_Practices.md#133-ssh-server-security-configuration)
+    - [13.5 SSH Security Best Practices](Module13_OpenSSH_Best_Practices.md#135-ssh-security-best-practices)
+    - [13.6 Practical Labs and Troubleshooting](Module13_OpenSSH_Best_Practices.md#136-practical-labs-and-troubleshooting)
 
 14. **[Module 14: Proxmox Infrastructure Automation](Module14_Proxmox_Infrastructure_Automation.md)**
     - [14.1 Infrastructure as Code Fundamentals](Module14_Proxmox_Infrastructure_Automation.md#141-infrastructure-as-code-fundamentals)
@@ -142,14 +139,14 @@ This comprehensive repository guides experienced Windows sysadmins through a str
     - [14.10 Monitoring and Observability](Module14_Proxmox_Infrastructure_Automation.md#1410-monitoring-and-observability)
 
 15. **[Module 15: Git & GitHub Setup with SSH Access](Module15_Git_GitHub_SSH_Setup.md)**
-    - [15.1 Enterprise SSH Key Management and Authentication](Module15_Git_GitHub_SSH_Setup.md#151-enterprise-ssh-key-management-and-authentication)
-    - [15.2 Advanced Git Configuration and Workflow Architecture](Module15_Git_GitHub_SSH_Setup.md#152-advanced-git-configuration-and-workflow-architecture)
-    - [15.3 GitHub Enterprise Integration and Administration](Module15_Git_GitHub_SSH_Setup.md#153-github-enterprise-integration-and-administration)
-    - [15.4 Infrastructure as Code Version Control Integration](Module15_Git_GitHub_SSH_Setup.md#154-infrastructure-as-code-version-control-integration)
-    - [15.5 Automated Quality Assurance and Security Validation](Module15_Git_GitHub_SSH_Setup.md#155-automated-quality-assurance-and-security-validation)
-    - [15.6 Professional Collaboration and Code Review Workflows](Module15_Git_GitHub_SSH_Setup.md#156-professional-collaboration-and-code-review-workflows)
-    - [15.7 Enterprise Governance and Compliance Management](Module15_Git_GitHub_SSH_Setup.md#157-enterprise-governance-and-compliance-management)
-    - [15.8 Advanced Integration and Automation Patterns](Module15_Git_GitHub_SSH_Setup.md#158-advanced-integration-and-automation-patterns)
+    - [15.1 SSH Key Setup for GitHub](Module15_Git_GitHub_SSH_Setup.md#151-ssh-key-setup-for-github)
+    - [15.2 Git Installation and Basic Configuration](Module15_Git_GitHub_SSH_Setup.md#152-git-installation-and-basic-configuration)
+    - [15.3 Basic Git Operations and Workflow](Module15_Git_GitHub_SSH_Setup.md#153-basic-git-operations-and-workflow)
+    - [15.4 GitHub Integration and Collaboration](Module15_Git_GitHub_SSH_Setup.md#154-github-integration-and-collaboration)
+    - [15.5 File Management with .gitignore](Module15_Git_GitHub_SSH_Setup.md#155-file-management-with-gitignore)
+    - [15.6 Practical Git Workflows](Module15_Git_GitHub_SSH_Setup.md#156-practical-git-workflows)
+    - [15.7 Troubleshooting Common Issues](Module15_Git_GitHub_SSH_Setup.md#157-troubleshooting-common-issues)
+    - [15.8 Lab Exercises](Module15_Git_GitHub_SSH_Setup.md#158-lab-exercises)
 
 ---
 
