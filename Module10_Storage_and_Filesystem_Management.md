@@ -1,29 +1,34 @@
-# Module 10: Storage & Filesystem Management
+# Module 10: Storage and Filesystem Management
 
 ## Table of Contents
 - [Overview](#overview)
 - [Learning Objectives](#learning-objectives)
 - [Topics](#topics)
   - [10.1 Storage Fundamentals and Basic Partitioning](#101-storage-fundamentals-and-basic-partitioning)
-  - [10.2 EXT4 and XFS Filesystem Management](#102-ext4-and-xfs-filesystem-management)
-  - [10.3 LVM Fundamentals and Benefits](#103-lvm-fundamentals-and-benefits)
+  - [10.2 Ext4 and Xfs Filesystem Management](#102-ext4-and-xfs-filesystem-management)
+  - [10.3 Lvm Fundamentals and Benefits](#103-lvm-fundamentals-and-benefits)
   - [10.4 Storage Security and Backup Basics](#104-storage-security-and-backup-basics)
-  - [10.5 Looking Ahead: ZFS Overview](#105-looking-ahead-zfs-overview)
+  - [10.5 Looking Ahead Zfs Overview](#105-looking-ahead-zfs-overview)
 - [Essential Command Reference](#essential-command-reference)
 - [Practical Examples](#practical-examples)
   - [Basic Partitioning](#basic-partitioning)
   - [Filesystem Creation and Management](#filesystem-creation-and-management)
-  - [LVM Basics](#lvm-basics)
+  - [Lvm Basics](#lvm-basics)
   - [Storage Maintenance](#storage-maintenance)
 - [Hands-on Labs](#hands-on-labs)
-  - [Lab 1: Partitioning and Filesystem Creation](#lab-1-partitioning-and-filesystem-creation)
-  - [Lab 2: LVM Setup and Management](#lab-2-lvm-setup-and-management)
-  - [Lab 3: Storage Maintenance and Troubleshooting](#lab-3-storage-maintenance-and-troubleshooting)
+  - [Lab 1: Basic Partitioning and Filesystem Management](#lab-1-basic-partitioning-and-filesystem-management)
+  - [Lab 2: LVM Basics](#lab-2-lvm-basics)
+  - [Lab 3: Basic Storage Security](#lab-3-basic-storage-security)
+  - [Lab 4: Storage Monitoring](#lab-4-storage-monitoring)
+  - [Lab Solutions and Expected Outcomes](#lab-solutions-and-expected-outcomes)
 - [Best Practices](#best-practices)
 - [Troubleshooting](#troubleshooting)
 - [Next Steps](#next-steps)
 
+
 ## Overview
+
+**[Back to Top](#module-10-storage-and-filesystem-management)** ⬆️ | **[Main Index](README.md)** 🏠
 
 Learn essential Linux storage and filesystem management skills for system administrators. This module covers practical filesystem creation and management using EXT4 and XFS, basic partitioning, and an introduction to Logical Volume Manager (LVM). You'll gain hands-on experience with the most common storage tasks that system administrators perform daily.
 
@@ -37,7 +42,10 @@ This module focuses on practical skills rather than advanced performance tuning,
 - Troubleshoot common filesystem issues
 - Prepare for advanced storage concepts in Module 11 (ZFS)
 
+
 ## Learning Objectives
+
+**[Back to Top](#module-10-storage-and-filesystem-management)** ⬆️ | **[Main Index](README.md)** 🏠
 
 By completing this module, you will be able to:
 
@@ -65,7 +73,10 @@ By completing this module, you will be able to:
    - Monitor filesystem usage and health
    - Apply security practices for storage management
 
+
 ## Topics
+
+**[Back to Top](#module-10-storage-and-filesystem-management)** ⬆️ | **[Main Index](README.md)** 🏠
 
 ### 10.1 Storage Fundamentals and Basic Partitioning
 - Understanding Linux storage hierarchy and device naming
@@ -75,7 +86,7 @@ By completing this module, you will be able to:
 - UUID and label usage for reliable mounting
 - Safe partitioning practices
 
-### 10.2 EXT4 and XFS Filesystem Management
+### 10.2 Ext4 and Xfs Filesystem Management
 - EXT4 vs XFS: when to choose each filesystem
 - Creating filesystems with appropriate settings
 - Essential mount options for security and performance
@@ -83,7 +94,7 @@ By completing this module, you will be able to:
 - Monitoring filesystem usage and health
 - Filesystem resizing basics
 
-### 10.3 LVM Fundamentals and Benefits
+### 10.3 Lvm Fundamentals and Benefits
 - Why use LVM vs traditional partitions
 - LVM architecture: Physical Volumes, Volume Groups, Logical Volumes
 - Basic LVM operations: create, extend, monitor
@@ -98,7 +109,7 @@ By completing this module, you will be able to:
 - Simple encryption concepts
 - Monitoring and alerting for storage issues
 
-### 10.5 Looking Ahead: ZFS Overview
+### 10.5 Looking Ahead Zfs Overview
 - Introduction to ZFS concepts and benefits
 - How ZFS differs from traditional Linux filesystems
 - When to consider ZFS (covered in detail in Module 11)
@@ -123,7 +134,10 @@ By completing this module, you will be able to:
 - Secure erasure and data destruction procedures
 - Regulatory compliance and data protection standards
 
+
 ## Essential Command Reference
+
+**[Back to Top](#module-10-storage-and-filesystem-management)** ⬆️ | **[Main Index](README.md)** 🏠
 
 ### Storage Discovery and Analysis
 
@@ -915,7 +929,6 @@ sudo smartctl -l selftest /dev/sda
 ZFS (Zettabyte File System) is an advanced filesystem that will be covered in detail in Module 11. Here's a brief overview of why it's worth learning:
 
 #### ZFS Key Features
-- **Built-in RAID**: No need for separate RAID controllers
 - **Snapshots and Clones**: Instant, space-efficient snapshots
 - **Data Integrity**: Checksums and self-healing
 - **Compression**: Transparent data compression
@@ -924,7 +937,6 @@ ZFS (Zettabyte File System) is an advanced filesystem that will be covered in de
 #### How ZFS Differs from Traditional Storage
 ```
 Traditional Approach:
-[Disk] → [RAID Controller] → [Partition] → [Filesystem] → [Application]
 
 ZFS Approach:
 [Disk] → [ZFS Pool] → [ZFS Dataset] → [Application]
@@ -958,7 +970,6 @@ sudo zfs list -t snapshot
 
 To get ready for ZFS training:
 
-1. **Understand RAID concepts** from this module
 2. **Practice with LVM** to understand storage abstraction
 3. **Learn basic pool and volume concepts**
 4. **Familiarize yourself with snapshot concepts**
@@ -972,7 +983,6 @@ To get ready for ZFS training:
 | Snapshots | No | No | Yes |
 | Compression | No | No | Yes |
 | Checksums | No | No | Yes |
-| RAID Support | External | External | Built-in |
 | Complexity | Low | Low | Medium |
 
 ### When to Use Each Filesystem
@@ -1031,6 +1041,8 @@ cat /mnt/lab-data/test.txt
 sudo tune2fs -l /dev/sdb1 | head -20
 ```
 
+**Related Commands/Topics:** [Partitioning Operations](#partitioning-operations), [Filesystem Operations](#filesystem-operations) 📑
+
 #### Exercise 2: Add to fstab and Test
 ```bash
 # 1. Get UUID of the filesystem
@@ -1044,6 +1056,8 @@ sudo umount /mnt/lab-data
 sudo mount -a
 df -h | grep lab-data
 ```
+
+**Related Commands/Topics:** [Working with UUIDs and Labels](#working-with-uuids-and-labels), [Configuring etc-fstab](#configuring-etc-fstab) 📑
 
 #### Exercise 3: Compare with XFS
 ```bash
@@ -1062,6 +1076,8 @@ echo "Hello from XFS!" | sudo tee /mnt/lab-xfs/test.txt
 # 4. Compare filesystem info
 sudo xfs_info /mnt/lab-xfs
 ```
+
+**Related Commands/Topics:** [Filesystem Operations](#filesystem-operations) 📑
 
 ### Lab 2: LVM Basics
 
@@ -1085,6 +1101,8 @@ sudo vgs
 sudo lvs
 ```
 
+**Related Commands/Topics:** [Basic LVM Commands](#basic-lvm-commands) 📑
+
 #### Exercise 2: Create Filesystems and Mount
 ```bash
 # 1. Create filesystems
@@ -1103,6 +1121,8 @@ echo "Web content" | sudo tee /srv/web/index.html
 echo "Application logs" | sudo tee /var/log/app/app.log
 ```
 
+**Related Commands/Topics:** [Filesystem Operations](#filesystem-operations), [Basic LVM Commands](#basic-lvm-commands) 📑
+
 #### Exercise 3: Extend Logical Volume
 ```bash
 # 1. Add more space to web-data
@@ -1114,6 +1134,8 @@ sudo resize2fs /dev/lab-vg/web-data
 # 3. Verify the change
 df -h | grep web-data
 ```
+
+**Related Commands/Topics:** [Basic LVM Commands](#basic-lvm-commands), [Resizing Filesystems](#resizing-filesystems) 📑
 
 ### Lab 3: Basic Storage Security
 
@@ -1133,6 +1155,8 @@ sudo chmod 750 /data/shared    # Owner and group
 ls -la /data/
 ```
 
+**Related Commands/Topics:** [Essential Storage Security](#essential-storage-security) 📑
+
 #### Exercise 2: Basic ACLs
 ```bash
 # 1. Install ACL tools
@@ -1148,6 +1172,8 @@ sudo setfacl -m g:users:r /data/shared/
 # 4. View ACL settings
 getfacl /data/shared/
 ```
+
+**Related Commands/Topics:** [Basic Access Control Lists (ACLs)](#basic-access-control-lists-acls) 📑
 
 #### Exercise 3: Simple Backup
 ```bash
@@ -1166,6 +1192,8 @@ chmod +x ~/simple-backup.sh
 # 3. Verify backup
 ls -la /tmp/data-backup-*
 ```
+
+**Related Commands/Topics:** [Simple Backup Strategies](#simple-backup-strategies) 📑
 
 ### Lab 4: Storage Monitoring
 
@@ -1204,6 +1232,8 @@ chmod +x ~/disk-check.sh
 ~/disk-check.sh
 ```
 
+**Related Commands/Topics:** [Monitoring Filesystem Usage](#monitoring-filesystem-usage), [Setting Up Basic Monitoring](#setting-up-basic-monitoring) 📑
+
 #### Exercise 2: SMART Monitoring
 ```bash
 # 1. Install SMART tools
@@ -1216,6 +1246,8 @@ sudo smartctl -H /dev/sda
 sudo smartctl -A /dev/sda | grep -E "(Raw_Read_Error_Rate|Reallocated_Sector|Power_On_Hours)"
 ```
 
+**Related Commands/Topics:** [Simple SMART Monitoring](#simple-smart-monitoring) 📑
+
 ### Lab Solutions and Expected Outcomes
 
 After completing these labs, you should have:
@@ -1226,6 +1258,8 @@ After completing these labs, you should have:
 4. **Monitoring scripts** for disk usage and health checks
 5. **Simple backup** procedures in place
 
+**Related Commands/Topics:** [Essential Command Reference](#essential-command-reference) 📑
+
 These hands-on exercises provide practical experience with the storage management concepts covered in this module and prepare you for the advanced ZFS topics in Module 11.
 
 ---
@@ -1233,369 +1267,7 @@ These hands-on exercises provide practical experience with the storage managemen
 *This concludes Module 10: Storage and Filesystem Management. You now have the foundational knowledge needed to manage Linux storage systems effectively, from basic partitioning through LVM and security considerations. In Module 11, we'll explore ZFS as an advanced storage solution with built-in features that simplify many of the tasks covered here.*
 ```bash
 #!/bin/bash
-# enterprise-raid-manager.sh - Complete RAID management solution
 
-RAID_CONFIG_DIR="/etc/mdadm"
-LOG_FILE="/var/log/raid-operations.log"
-ALERT_EMAIL="admin@company.com"
-
-log_raid_operation() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
-}
-
-send_alert() {
-    local subject="$1"
-    local message="$2"
-    
-    echo "$message" | mail -s "$subject" "$ALERT_EMAIL"
-    log_raid_operation "Alert sent: $subject"
-}
-
-# Create RAID array with optimal settings
-create_raid_array() {
-    local raid_level="$1"
-    local array_name="$2"
-    shift 2
-    local devices=("$@")
-    
-    log_raid_operation "Creating RAID $raid_level array $array_name with devices: ${devices[*]}"
-    
-    # Validate devices
-    for device in "${devices[@]}"; do
-        if [[ ! -b "$device" ]]; then
-            log_raid_operation "ERROR: Device $device is not a valid block device"
-            exit 1
-        fi
-        
-        # Check if device is already in use
-        if sudo mdadm --examine "$device" &>/dev/null; then
-            log_raid_operation "WARNING: Device $device appears to contain RAID metadata"
-        fi
-    done
-    
-    # Calculate optimal chunk size based on RAID level
-    local chunk_size
-    case "$raid_level" in
-        "0"|"10")
-            chunk_size="512"  # Optimal for performance
-            ;;
-        "1")
-            chunk_size=""     # Not applicable for RAID 1
-            ;;
-        "5"|"6")
-            chunk_size="256"  # Balance between performance and parity overhead
-            ;;
-        *)
-            log_raid_operation "ERROR: Unsupported RAID level: $raid_level"
-            exit 1
-            ;;
-    esac
-    
-    # Create array with optimal parameters
-    local create_cmd="sudo mdadm --create $array_name --level=$raid_level"
-    create_cmd+=" --raid-devices=${#devices[@]}"
-    
-    if [[ -n "$chunk_size" ]]; then
-        create_cmd+=" --chunk=$chunk_size"
-    fi
-    
-    create_cmd+=" --metadata=1.2 --assume-clean ${devices[*]}"
-    
-    log_raid_operation "Executing: $create_cmd"
-    eval "$create_cmd"
-    
-    # Wait for array to become active
-    sleep 5
-    
-    # Verify array creation
-    if sudo mdadm --detail "$array_name" &>/dev/null; then
-        log_raid_operation "RAID array $array_name created successfully"
-        
-        # Add to mdadm.conf for persistence
-        sudo mkdir -p "$RAID_CONFIG_DIR"
-        sudo mdadm --detail --scan >> "$RAID_CONFIG_DIR/mdadm.conf"
-        sudo update-initramfs -u
-        
-        # Display array information
-        sudo mdadm --detail "$array_name"
-        
-        send_alert "RAID Array Created" "RAID $raid_level array $array_name has been created successfully"
-    else
-        log_raid_operation "ERROR: Failed to create RAID array $array_name"
-        exit 1
-    fi
-}
-
-# Advanced RAID monitoring and alerting
-monitor_raid_arrays() {
-    local check_interval="$1"  # in minutes
-    
-    log_raid_operation "Starting RAID monitoring with $check_interval minute intervals"
-    
-    while true; do
-        # Check all RAID arrays
-        while IFS= read -r array; do
-            if [[ -n "$array" ]]; then
-                local array_name=$(echo "$array" | awk '{print $1}')
-                local array_status=$(sudo mdadm --detail "$array_name" | grep "State :" | awk '{print $3}')
-                
-                case "$array_status" in
-                    "clean")
-                        log_raid_operation "Array $array_name: Status OK ($array_status)"
-                        ;;
-                    "active")
-                        log_raid_operation "Array $array_name: Status OK ($array_status)"
-                        ;;
-                    "degraded")
-                        log_raid_operation "WARNING: Array $array_name is degraded"
-                        send_alert "RAID Degraded" "RAID array $array_name is in degraded state. Immediate attention required."
-                        ;;
-                    "failed")
-                        log_raid_operation "CRITICAL: Array $array_name has failed"
-                        send_alert "RAID Failed" "RAID array $array_name has failed. Data loss possible. Immediate intervention required."
-                        ;;
-                    *)
-                        log_raid_operation "WARNING: Array $array_name has unknown status: $array_status"
-                        send_alert "RAID Unknown Status" "RAID array $array_name has unknown status: $array_status"
-                        ;;
-                esac
-                
-                # Check individual device health
-                sudo mdadm --detail "$array_name" | grep -E "(Faulty|Spare)" | while read -r line; do
-                    log_raid_operation "Device issue in $array_name: $line"
-                done
-                
-                # Monitor rebuild progress
-                if sudo cat /proc/mdstat | grep -q "recovery\|resync\|reshape"; then
-                    local progress=$(sudo cat /proc/mdstat | grep -E "recovery|resync|reshape" | tail -1)
-                    log_raid_operation "Rebuild in progress for $array_name: $progress"
-                fi
-            fi
-        done <<< "$(cat /proc/mdstat | grep '^md' | awk '{print "/dev/" $1}')"
-        
-        sleep $((check_interval * 60))
-    done
-}
-
-# Automated RAID recovery procedures
-handle_disk_failure() {
-    local array_name="$1"
-    local failed_device="$2"
-    local replacement_device="$3"
-    
-    log_raid_operation "Handling disk failure: $failed_device in array $array_name"
-    
-    # Mark device as failed (if not already)
-    sudo mdadm --manage "$array_name" --fail "$failed_device" 2>/dev/null
-    
-    # Remove failed device
-    log_raid_operation "Removing failed device $failed_device from $array_name"
-    sudo mdadm --manage "$array_name" --remove "$failed_device"
-    
-    # Add replacement device
-    if [[ -n "$replacement_device" ]] && [[ -b "$replacement_device" ]]; then
-        log_raid_operation "Adding replacement device $replacement_device to $array_name"
-        
-        # Copy partition table if necessary
-        local source_device=$(sudo mdadm --detail "$array_name" | grep "active sync" | head -1 | awk '{print $7}')
-        if [[ -n "$source_device" ]]; then
-            sudo sfdisk -d "$source_device" | sudo sfdisk "$replacement_device" 2>/dev/null || true
-        fi
-        
-        # Add to array
-        sudo mdadm --manage "$array_name" --add "$replacement_device"
-        
-        # Monitor rebuild progress
-        log_raid_operation "Rebuild started for $array_name with replacement device $replacement_device"
-        send_alert "RAID Rebuild Started" "RAID rebuild started for $array_name with replacement device $replacement_device"
-        
-        # Wait for rebuild to complete
-        while sudo cat /proc/mdstat | grep -q "recovery\|resync"; do
-            local progress=$(sudo cat /proc/mdstat | grep -E "recovery|resync" | tail -1)
-            log_raid_operation "Rebuild progress: $progress"
-            sleep 300  # Check every 5 minutes
-        done
-        
-        log_raid_operation "Rebuild completed for $array_name"
-        send_alert "RAID Rebuild Complete" "RAID rebuild completed successfully for $array_name"
-    else
-        log_raid_operation "No replacement device specified or device not available"
-        send_alert "RAID Manual Intervention Required" "Failed device removed from $array_name. Manual replacement required."
-    fi
-}
-
-# Performance optimization for RAID arrays
-optimize_raid_performance() {
-    local array_name="$1"
-    local workload_type="$2"  # random, sequential, mixed
-    
-    log_raid_operation "Optimizing RAID performance for $array_name (workload: $workload_type)"
-    
-    # Get underlying devices
-    local devices=($(sudo mdadm --detail "$array_name" | grep "active sync" | awk '{print $7}'))
-    
-    # Set optimal read-ahead based on RAID level and workload
-    local raid_level=$(sudo mdadm --detail "$array_name" | grep "Raid Level" | awk '{print $4}')
-    local read_ahead
-    
-    case "$raid_level" in
-        "raid0")
-            read_ahead=$((512 * ${#devices[@]}))  # Multiply by number of devices
-            ;;
-        "raid1")
-            read_ahead=512
-            ;;
-        "raid5"|"raid6")
-            read_ahead=$((256 * (${#devices[@]} - 1)))  # Account for parity
-            ;;
-        "raid10")
-            read_ahead=$((512 * (${#devices[@]} / 2)))  # Account for mirroring
-            ;;
-        *)
-            read_ahead=512
-            ;;
-    esac
-    
-    # Apply read-ahead settings
-    sudo blockdev --setra "$read_ahead" "$array_name"
-    log_raid_operation "Set read-ahead to $read_ahead for $array_name"
-    
-    # Optimize underlying devices
-    for device in "${devices[@]}"; do
-        local base_device=$(echo "$device" | sed 's/[0-9]*$//')
-        
-        # Set appropriate I/O scheduler
-        if sudo smartctl -a "$base_device" | grep -q "Solid State"; then
-            echo "none" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
-            log_raid_operation "Set 'none' scheduler for SSD $base_device"
-        else
-            echo "mq-deadline" | sudo tee "/sys/block/$(basename $base_device)/queue/scheduler" >/dev/null
-            log_raid_operation "Set 'mq-deadline' scheduler for HDD $base_device"
-        fi
-        
-        # Optimize queue settings
-        case "$workload_type" in
-            "random")
-                echo 1 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
-                echo 32 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
-                ;;
-            "sequential")
-                echo 2 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
-                echo 128 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
-                ;;
-            "mixed"|*)
-                echo 1 | sudo tee "/sys/block/$(basename $base_device)/queue/rq_affinity" >/dev/null
-                echo 64 | sudo tee "/sys/block/$(basename $base_device)/queue/nr_requests" >/dev/null
-                ;;
-        esac
-    done
-    
-    log_raid_operation "Performance optimization completed for $array_name"
-}
-
-# Comprehensive RAID testing and validation
-test_raid_functionality() {
-    local array_name="$1"
-    
-    log_raid_operation "Starting comprehensive RAID functionality test for $array_name"
-    
-    # Create test filesystem and mount point
-    local test_mount="/mnt/raid_test_$(date +%s)"
-    sudo mkdir -p "$test_mount"
-    
-    # Create test filesystem
-    sudo mkfs.ext4 -F "$array_name" >/dev/null 2>&1
-    sudo mount "$array_name" "$test_mount"
-    
-    # Performance baseline test
-    log_raid_operation "Running performance baseline test"
-    
-    # Sequential write test
-    local write_speed=$(dd if=/dev/zero of="$test_mount/testfile" bs=1M count=1024 conv=fsync 2>&1 | \
-                       grep "MB/s" | awk '{print $(NF-1)}')
-    log_raid_operation "Sequential write speed: $write_speed MB/s"
-    
-    # Sequential read test
-    local read_speed=$(dd if="$test_mount/testfile" of=/dev/null bs=1M 2>&1 | \
-                      grep "MB/s" | awk '{print $(NF-1)}')
-    log_raid_operation "Sequential read speed: $read_speed MB/s"
-    
-    # Cleanup test environment
-    sudo umount "$test_mount"
-    sudo rmdir "$test_mount"
-    
-    # Simulated failure test (if safe to do so)
-    local device_count=$(sudo mdadm --detail "$array_name" | grep "active sync" | wc -l)
-    local raid_level=$(sudo mdadm --detail "$array_name" | grep "Raid Level" | awk '{print $4}')
-    
-    if [[ "$device_count" -gt 2 ]] && [[ "$raid_level" =~ raid[56] ]]; then
-        log_raid_operation "RAID configuration supports failure simulation - skipping for safety"
-        # In production, you might want to implement controlled failure testing
-    fi
-    
-    log_raid_operation "RAID functionality test completed for $array_name"
-}
-
-# Example usage for different RAID configurations
-setup_enterprise_raid() {
-    # RAID 1 for OS (high availability)
-    create_raid_array "1" "/dev/md0" "/dev/sdb1" "/dev/sdc1"
-    optimize_raid_performance "/dev/md0" "mixed"
-    
-    # RAID 5 for data (balance of performance and redundancy)
-    create_raid_array "5" "/dev/md1" "/dev/sdd1" "/dev/sde1" "/dev/sdf1" "/dev/sdg1"
-    optimize_raid_performance "/dev/md1" "sequential"
-    
-    # RAID 10 for databases (high performance and redundancy)
-    create_raid_array "10" "/dev/md2" "/dev/sdh1" "/dev/sdi1" "/dev/sdj1" "/dev/sdk1"
-    optimize_raid_performance "/dev/md2" "random"
-    
-    # Start monitoring
-    monitor_raid_arrays 15 &  # Check every 15 minutes
-    
-    # Test all arrays
-    test_raid_functionality "/dev/md0"
-    test_raid_functionality "/dev/md1"
-    test_raid_functionality "/dev/md2"
-}
-
-# Disaster recovery procedures
-raid_disaster_recovery() {
-    local array_name="$1"
-    local backup_metadata_file="$2"
-    
-    log_raid_operation "Starting disaster recovery for $array_name"
-    
-    # Stop array if running
-    sudo mdadm --stop "$array_name" 2>/dev/null || true
-    
-    # Attempt to reassemble array
-    if [[ -f "$backup_metadata_file" ]]; then
-        log_raid_operation "Attempting recovery using metadata backup"
-        sudo mdadm --assemble "$array_name" --backup-file="$backup_metadata_file"
-    else
-        log_raid_operation "Attempting auto-assembly of array"
-        sudo mdadm --assemble --scan
-    fi
-    
-    # Force assembly if necessary (last resort)
-    if ! sudo mdadm --detail "$array_name" &>/dev/null; then
-        log_raid_operation "Normal assembly failed, attempting force assembly"
-        sudo mdadm --assemble --force "$array_name" /dev/sd*
-    fi
-    
-    # Check filesystem after recovery
-    if sudo mdadm --detail "$array_name" &>/dev/null; then
-        log_raid_operation "Array recovery successful, checking filesystem"
-        sudo fsck -y "$array_name" || log_raid_operation "Filesystem check completed with errors"
-    else
-        log_raid_operation "CRITICAL: Array recovery failed"
-        send_alert "RAID Recovery Failed" "Failed to recover RAID array $array_name. Manual intervention required."
-    fi
-}
-
-# Start enterprise RAID setup
-setup_enterprise_raid
 ```
 
 ### Performance Optimization
