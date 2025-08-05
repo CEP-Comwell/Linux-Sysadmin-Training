@@ -479,7 +479,7 @@ git merge upstream/main
 git push origin main
 ```
 
-**[⬆️ Back to Top](#module-15-git--github-setup-with-ssh-access)** | **[📚 Main Index](README.md)**
+**[Back to Top](#module-15-git--github-setup-with-ssh-access)** ⬆️ | **[Main Index](README.md)** 📚
 
 ## Essential Command Reference
 
@@ -648,11 +648,13 @@ git checkout -- filename.txt
 git reset --hard HEAD
 ```
 
-**[⬆️ Back to Top](#module-15-git--github-setup-with-ssh-access)** | **[📚 Main Index](README.md)**
+**[Back to Top](#module-15-git--github-setup-with-ssh-access)** ⬆️ | **[Main Index](README.md)** 📚
 
 ## Lab Exercises
 
 ### Lab 1: SSH Key Setup and GitHub Authentication
+
+**Related Commands/Topics:** [SSH Key Management](#ssh-key-management) 🔑 | [Essential Command Reference](#essential-command-reference) 📋
 **Objective:** Set up secure SSH authentication for GitHub access
 
 **Duration:** 30 minutes
@@ -678,7 +680,9 @@ git reset --hard HEAD
 - Can clone repositories using SSH URLs
 - SSH agent properly manages the key
 
-### Lab 2: Git Configuration and Repository Setup  
+### Lab 2: Git Configuration and Repository Setup
+
+**Related Commands/Topics:** [Git Configuration](#git-configuration) ⚙️ | [Repository Operations](#repository-operations) 📁 | [Essential Command Reference](#essential-command-reference) 📋
 **Objective:** Configure Git and create your first repository
 
 **Duration:** 45 minutes
@@ -705,6 +709,8 @@ git reset --hard HEAD
 - Changes successfully pushed to GitHub
 
 ### Lab 3: Branch Workflow and Collaboration
+
+**Related Commands/Topics:** [Branch Operations](#branch-operations) 🌿 | [Repository Operations](#repository-operations) 📁 | [Essential Command Reference](#essential-command-reference) 📋
 **Objective:** Practice feature branch workflow and collaboration
 
 **Duration:** 60 minutes
@@ -731,6 +737,8 @@ git reset --hard HEAD
 - Local repository properly cleaned up after merge
 
 ### Lab 4: File Management with .gitignore
+
+**Related Commands/Topics:** [File Operations](#file-operations) 📄 | [.gitignore](#155-file-management-with-gitignore) 🚫 | [Essential Command Reference](#essential-command-reference) 📋
 **Objective:** Master file management and ignore patterns
 
 **Duration:** 30 minutes
