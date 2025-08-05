@@ -134,14 +134,16 @@ This comprehensive repository guides experienced Windows sysadmins through a str
     - [13.8 Incident Response and Forensics](Module13_OpenSSH_Best_Practices.md#138-incident-response-and-forensics)
 
 14. **[Module 14: Proxmox Infrastructure Automation](Module14_Proxmox_Infrastructure_Automation.md)**
-    - [14.1 Enterprise Infrastructure as Code Architecture](Module14_Proxmox_Infrastructure_Automation.md#141-enterprise-infrastructure-as-code-architecture)
-    - [14.2 Advanced Terraform Enterprise Implementation](Module14_Proxmox_Infrastructure_Automation.md#142-advanced-terraform-enterprise-implementation)
-    - [14.3 Ansible Enterprise Automation Framework](Module14_Proxmox_Infrastructure_Automation.md#143-ansible-enterprise-automation-framework)
-    - [14.4 Cloud-Init and VM Template Automation](Module14_Proxmox_Infrastructure_Automation.md#144-cloud-init-and-vm-template-automation)
-    - [14.5 Enterprise Secrets Management Integration](Module14_Proxmox_Infrastructure_Automation.md#145-enterprise-secrets-management-integration)
-    - [14.6 Production CI/CD Pipeline Architecture](Module14_Proxmox_Infrastructure_Automation.md#146-production-cicd-pipeline-architecture)
-    - [14.7 Infrastructure Monitoring and Observability](Module14_Proxmox_Infrastructure_Automation.md#147-infrastructure-monitoring-and-observability)
-    - [14.8 Advanced Enterprise Patterns and Best Practices](Module14_Proxmox_Infrastructure_Automation.md#148-advanced-enterprise-patterns-and-best-practices)
+    - [14.1 Infrastructure as Code Fundamentals](Module14_Proxmox_Infrastructure_Automation.md#141-infrastructure-as-code-fundamentals)
+    - [14.2 Terraform with Proxmox](Module14_Proxmox_Infrastructure_Automation.md#142-terraform-with-proxmox)
+    - [14.3 Advanced Terraform Practices](Module14_Proxmox_Infrastructure_Automation.md#143-advanced-terraform-practices)
+    - [14.4 Ansible Configuration Management](Module14_Proxmox_Infrastructure_Automation.md#144-ansible-configuration-management)
+    - [14.5 Advanced Ansible Techniques](Module14_Proxmox_Infrastructure_Automation.md#145-advanced-ansible-techniques)
+    - [14.6 Cloud-Init Integration](Module14_Proxmox_Infrastructure_Automation.md#146-cloud-init-integration)
+    - [14.7 Secrets Management](Module14_Proxmox_Infrastructure_Automation.md#147-secrets-management)
+    - [14.8 Testing and Validation](Module14_Proxmox_Infrastructure_Automation.md#148-testing-and-validation)
+    - [14.9 CI/CD Pipeline Integration](Module14_Proxmox_Infrastructure_Automation.md#149-cicd-pipeline-integration)
+    - [14.10 Monitoring and Observability](Module14_Proxmox_Infrastructure_Automation.md#1410-monitoring-and-observability)
 
 15. **[Module 15: Git & GitHub Setup with SSH Access](Module15_Git_GitHub_SSH_Setup.md)**
     - [15.1 Enterprise SSH Key Management and Authentication](Module15_Git_GitHub_SSH_Setup.md#151-enterprise-ssh-key-management-and-authentication)
