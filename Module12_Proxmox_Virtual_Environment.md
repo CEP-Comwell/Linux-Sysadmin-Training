@@ -1,4 +1,7 @@
+
 # Module 12: Proxmox Virtual Environment
+
+[⬅️ Main Index](#table-of-contents)  
 
 **Learn Essential Virtualization with Proxmox VE 8.4**
 
@@ -52,55 +55,53 @@ By completing this module, you will be able to:
    - Learn about upcoming spine-leaf architecture support
    - Explore FRR, OVS, EVPN, and WireGuard integration
 
+
 ## Table of Contents
 
-### [12.1 Installation and Initial Setup](#121-installation-and-initial-setup)
-- Hardware requirements and compatibility
-- Installing Proxmox VE 8.4
-- Initial configuration and web interface
-- Basic security setup
+- [Learning Objectives](#learning-objectives)
+- [12.1 Installation and Initial Setup](#121-installation-and-initial-setup)
+  - Hardware requirements and compatibility
+  - Installing Proxmox VE 8.4
+  - Initial configuration and web interface
+  - Basic security setup
+- [12.2 Storage Configuration](#122-storage-configuration)
+  - Understanding storage types in Proxmox VE
+  - Local storage configuration
+  - ISO and template management
+  - Basic ZFS setup
+- [12.3 Virtual Machine Management](#123-virtual-machine-management)
+  - Creating your first virtual machine
+  - Installing guest operating systems
+  - Virtual hardware configuration
+  - VM lifecycle management
+- [12.4 Container Management](#124-container-management)
+  - Understanding LXC containers
+  - Creating and configuring containers
+  - Container templates and applications
 
-### [12.2 Storage Configuration](#122-storage-configuration)
-- Understanding storage types in Proxmox VE
-- Local storage configuration
-- ISO and template management
-- Basic ZFS setup
+  - Container vs VM use cases
+- [12.5 Basic Networking](#125-basic-networking)
+  - Network configuration fundamentals
+  - Creating bridges and VLANs
+  - Firewall basics
+  - Network troubleshooting
+- [12.6 Backup and Maintenance](#126-backup-and-maintenance)
+  - Backup strategies and configuration
+  - Scheduled backups and retention
+  - System updates and maintenance
+  - Monitoring and logging
+- [12.7 Clustering Basics](#127-clustering-basics)
+  - Small cluster setup for home labs
+  - Shared storage concepts
+  - Basic high availability
+  - Migration and maintenance
+- [12.8 Future Technologies in Proxmox VE 9](#128-future-technologies-in-proxmox-ve-9)
+  - Overview of Proxmox VE 9 beta features
+  - Enhanced SDN capabilities
+  - Spine-leaf architecture support
+  - FRR, OVS, EVPN, and WireGuard integration
 
-### [12.3 Virtual Machine Management](#123-virtual-machine-management)
-- Creating your first virtual machine
-- Installing guest operating systems
-- Virtual hardware configuration
-- VM lifecycle management
-
-### [12.4 Container Management](#124-container-management)
-- Understanding LXC containers
-- Creating and configuring containers
-- Container templates and applications
-- Container vs VM use cases
-
-### [12.5 Basic Networking](#125-basic-networking)
-- Network configuration fundamentals
-- Creating bridges and VLANs
-- Firewall basics
-- Network troubleshooting
-
-### [12.6 Backup and Maintenance](#126-backup-and-maintenance)
-- Backup strategies and configuration
-- Scheduled backups and retention
-- System updates and maintenance
-- Monitoring and logging
-
-### [12.7 Clustering Basics](#127-clustering-basics)
-- Small cluster setup for home labs
-- Shared storage concepts
-- Basic high availability
-- Migration and maintenance
-
-### [12.8 Future Technologies in Proxmox VE 9](#128-future-technologies-in-proxmox-ve-9)
-- Overview of Proxmox VE 9 beta features
-- Enhanced SDN capabilities
-- Spine-leaf architecture support
-- FRR, OVS, EVPN, and WireGuard integration
+[⬆️ Back to Top](#module-12-proxmox-virtual-environment)
 
 ## Essential Command Reference
 
@@ -666,6 +667,8 @@ pct set 101 --memory 512
 pct set 101 --rootfs local-lvm:8,quota=10G
 ```
 
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Containers and Storage. 🔗
+
 **Network Configuration:**
 ```bash
 # Static IP configuration
@@ -678,21 +681,24 @@ pct set 101 --net1 name=eth1,bridge=vmbr1,ip=10.0.1.100/24
 ### Container Management
 
 ```bash
-# Container operations
+# Basic container operations
 pct list                  # List all containers
-pct status 101           # Check container status
-pct start 101            # Start container
-pct stop 101             # Stop container
-pct reboot 101           # Restart container
+pct status 101            # Check container status
+pct start 101             # Start container
+pct stop 101              # Stop container
+pct reboot 101            # Restart container
 
-# Container access
-pct console 101          # Access container console
-pct enter 101            # Enter container shell
+# Accessing a container
+pct console 101           # Access container console (interactive)
+pct enter 101             # Enter container shell (recommended)
 
-# Container configuration
-pct config 101           # Show configuration
-pct set 101 --memory 2048 # Change memory
+# View and adjust configuration
+pct config 101            # Show configuration
+pct set 101 --memory 2048 # Change memory allocation
 ```
+
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Containers and Container Management. 🔗
+
 
 ### Practical Container Examples
 
@@ -709,8 +715,11 @@ pct set 101 --memory 2048 # Change memory
    pct enter 102
    apt update && apt install -y nginx
    systemctl enable nginx
-   ```
+   ```  
 
+**Related Commands/Topics:** See [Essential Command Reference](#essential-command-reference) → Containers, Networking, and Backups. 🔗
+
+**[⬆️ Back to Top](#module-12-proxmox-virtual-environment)**
 ## 12.5 Basic Networking
 
 ### Network Configuration Fundamentals
