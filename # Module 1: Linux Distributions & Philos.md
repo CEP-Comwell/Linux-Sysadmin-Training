@@ -1,33 +1,33 @@
-# Module 1: Linux Distributions & Philosophy  📘
+# Module 1: Linux Distributions & Philosophy 📘
 
 ## Table of Contents
-- [Introduction  📖](#introduction-)
-- [Learning Objectives  🎯](#learning-objectives-)
-- [Core Concepts  🧠](#core-concepts-)
-  - [Concept 1: Linux History and Philosophy  🔹](#concept-1-linux-history-and-philosophy-)
-    - [➡ Practical Example](#practical-example-1-linux-history-and-philosophy-)
-    - [➡ Command Reference](#command-reference-1-linux-history-and-philosophy-)
-  - [Concept 2: Distribution Families and Package Management  🔹](#concept-2-distribution-families-and-package-management-)
-    - [➡ Practical Example](#practical-example-2-distribution-families-and-package-management-)
-    - [➡ Command Reference](#command-reference-2-distribution-families-and-package-management-)
-  - [Concept 3: Release Models and Support Cycles  🔹](#concept-3-release-models-and-support-cycles-)
-    - [➡ Practical Example](#practical-example-3-release-models-and-support-cycles-)
-    - [➡ Command Reference](#command-reference-3-release-models-and-support-cycles-)
-  - [Concept 4: Open Source Licensing and Governance  🔹](#concept-4-open-source-licensing-and-governance-)
-    - [➡ Practical Example](#practical-example-4-open-source-licensing-and-governance-)
-    - [➡ Command Reference](#command-reference-4-open-source-licensing-and-governance-)
-  - [Concept 5: Distribution Selection Criteria  🔹](#concept-5-distribution-selection-criteria-)
-    - [➡ Practical Example](#practical-example-5-distribution-selection-criteria-)
-    - [➡ Command Reference](#command-reference-5-distribution-selection-criteria-)
-- [Command Reference  💻](#command-reference-)
-- [Practical Examples  🔍](#practical-examples-)
-- [Exercises  🛠](#exercises-)
-- [Summary  ✅](#summary-)
-- [Additional Resources  📚](#additional-resources-)
+- [Introduction](#introduction) 📖
+- [Learning Objectives](#learning-objectives) 🎯
+- [Core Concepts](#core-concepts) 🧠
+  - [Concept 1: Linux History and Philosophy](#concept-1-linux-history-and-philosophy) 🔹
+    - [➡ Practical Example](#practical-example-1-linux-history-and-philosophy)
+    - [➡ Command Reference](#command-reference-1-linux-history-and-philosophy)
+  - [Concept 2: Distribution Families and Package Management](#concept-2-distribution-families-and-package-management) 🔹
+    - [➡ Practical Example](#practical-example-2-distribution-families-and-package-management)
+    - [➡ Command Reference](#command-reference-2-distribution-families-and-package-management)
+  - [Concept 3: Release Models and Support Cycles](#concept-3-release-models-and-support-cycles) 🔹
+    - [➡ Practical Example](#practical-example-3-release-models-and-support-cycles)
+    - [➡ Command Reference](#command-reference-3-release-models-and-support-cycles)
+  - [Concept 4: Open Source Licensing and Governance](#concept-4-open-source-licensing-and-governance) 🔹
+    - [➡ Practical Example](#practical-example-4-open-source-licensing-and-governance)
+    - [➡ Command Reference](#command-reference-4-open-source-licensing-and-governance)
+  - [Concept 5: Distribution Selection Criteria](#concept-5-distribution-selection-criteria) 🔹
+    - [➡ Practical Example](#practical-example-5-distribution-selection-criteria)
+    - [➡ Command Reference](#command-reference-5-distribution-selection-criteria)
+- [Command Reference](#command-reference) 💻
+- [Practical Examples](#practical-examples) 🔍
+- [Exercises](#exercises) 🛠
+- [Summary](#summary) ✅
+- [Additional Resources](#additional-resources) 📚
 
 ---
 
-## Introduction  📖
+## Introduction 📖
 
 This module explores why Linux exists, how its culture shapes development, and provides the foundation for choosing the right distribution for your organization. Students will understand the philosophical differences between distributions, their technical architectures, and how these choices impact long-term infrastructure decisions.
 
@@ -35,7 +35,7 @@ This module explores why Linux exists, how its culture shapes development, and p
 
 ---
 
-## Learning Objectives  🎯
+## Learning Objectives 🎯
 
 By the end of this module, you will be able to:
 
@@ -50,9 +50,9 @@ By the end of this module, you will be able to:
 
 ---
 
-## Core Concepts  🧠
+## Core Concepts 🧠
 
-### Concept 1: Linux History and Philosophy  🔹
+### Concept 1: Linux History and Philosophy 🔹
 
 - Origins of Linux and the Unix philosophy
 - Free Software vs Open Source movements
@@ -60,11 +60,11 @@ By the end of this module, you will be able to:
 - The role of upstream projects and maintainers
 - Linux kernel development and distribution integration
 
-➡ [Jump to Practical Example](#practical-example-1-linux-history-and-philosophy-) | ➡ [Jump to Command Reference](#command-reference-1-linux-history-and-philosophy-)
+➡ [Jump to Practical Example](#practical-example-1-linux-history-and-philosophy) | ➡ [Jump to Command Reference](#command-reference-1-linux-history-and-philosophy)
 
 ⬆ Back to Top | 🏠 Main Index
 
-### Concept 2: Distribution Families and Package Management  🔹
+### Concept 2: Distribution Families and Package Management 🔹
 
 - **Debian Family**: Ubuntu, Debian, Linux Mint, Elementary OS
 - **Red Hat Family**: RHEL, CentOS Stream, Fedora, AlmaLinux, Rocky Linux
@@ -73,11 +73,11 @@ By the end of this module, you will be able to:
 - **Independent**: Alpine Linux, Gentoo, Slackware
 - Package management systems and their ecosystems
 
-➡ [Jump to Practical Example](#practical-example-2-distribution-families-and-package-management-) | ➡ [Jump to Command Reference](#command-reference-2-distribution-families-and-package-management-)
+➡ [Jump to Practical Example](#practical-example-2-distribution-families-and-package-management) | ➡ [Jump to Command Reference](#command-reference-2-distribution-families-and-package-management)
 
 ⬆ Back to Top | 🏠 Main Index
 
-### Concept 3: Release Models and Support Cycles  🔹
+### Concept 3: Release Models and Support Cycles 🔹
 
 - Long Term Support (LTS) vs regular releases
 - Rolling release models and continuous updates
@@ -85,11 +85,11 @@ By the end of this module, you will be able to:
 - Enterprise support lifecycle and extended support
 - Security patching and vulnerability management
 
-➡ [Jump to Practical Example](#practical-example-3-release-models-and-support-cycles-) | ➡ [Jump to Command Reference](#command-reference-3-release-models-and-support-cycles-)
+➡ [Jump to Practical Example](#practical-example-3-release-models-and-support-cycles) | ➡ [Jump to Command Reference](#command-reference-3-release-models-and-support-cycles)
 
 ⬆ Back to Top | 🏠 Main Index
 
-### Concept 4: Open Source Licensing and Governance  🔹
+### Concept 4: Open Source Licensing and Governance 🔹
 
 - GPL, LGPL, MIT, BSD, and Apache licenses
 - Copyleft vs permissive licensing
@@ -97,11 +97,11 @@ By the end of this module, you will be able to:
 - Foundation governance (Linux Foundation, Canonical, Red Hat)
 - Community contribution processes and code of conduct
 
-➡ [Jump to Practical Example](#practical-example-4-open-source-licensing-and-governance-) | ➡ [Jump to Command Reference](#command-reference-4-open-source-licensing-and-governance-)
+➡ [Jump to Practical Example](#practical-example-4-open-source-licensing-and-governance) | ➡ [Jump to Command Reference](#command-reference-4-open-source-licensing-and-governance)
 
 ⬆ Back to Top | 🏠 Main Index
 
-### Concept 5: Distribution Selection Criteria  🔹
+### Concept 5: Distribution Selection Criteria 🔹
 
 - Hardware compatibility and driver support
 - Performance characteristics and resource requirements
@@ -109,13 +109,13 @@ By the end of this module, you will be able to:
 - Commercial support and professional services
 - Ecosystem integration and third-party software availability
 
-➡ [Jump to Practical Example](#practical-example-5-distribution-selection-criteria-) | ➡ [Jump to Command Reference](#command-reference-5-distribution-selection-criteria-)
+➡ [Jump to Practical Example](#practical-example-5-distribution-selection-criteria) | ➡ [Jump to Command Reference](#command-reference-5-distribution-selection-criteria)
 
 ⬆ Back to Top | 🏠 Main Index
 
 ---
 
-## Command Reference  💻
+## Command Reference 💻
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -132,7 +132,7 @@ By the end of this module, you will be able to:
 
 ### Command Reference 1: Linux History and Philosophy
 
-- No direct commands; see [Practical Example 1](#practical-example-1-linux-history-and-philosophy-).
+- No direct commands; see [Practical Example 1](#practical-example-1-linux-history-and-philosophy).
 
 ⬆ Back to Top | 🏠 Main Index
 
@@ -157,7 +157,7 @@ By the end of this module, you will be able to:
 
 ### Command Reference 4: Open Source Licensing and Governance
 
-- No direct commands; see [Practical Example 4](#practical-example-4-open-source-licensing-and-governance-).
+- No direct commands; see [Practical Example 4](#practical-example-4-open-source-licensing-and-governance).
 
 ⬆ Back to Top | 🏠 Main Index
 
@@ -173,7 +173,7 @@ By the end of this module, you will be able to:
 
 ---
 
-## Practical Examples  🔍
+## Practical Examples 🔍
 
 ### Practical Example 1: Linux History and Philosophy
 
