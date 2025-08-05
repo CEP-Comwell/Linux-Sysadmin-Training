@@ -53,41 +53,12 @@ By completing this module, you will be able to:
    - Set up efficient development environments
 ## Table of Contents
 
-### [15.1 SSH Key Setup for GitHub](#151-ssh-key-setup-for-github)
-- Generating SSH keys with ED25519
-- Adding SSH keys to GitHub
-- Testing SSH connections
-- Managing multiple SSH keys
-
-### [15.2 Git Installation and Basic Configuration](#152-git-installation-and-basic-configuration)
-- Installing Git on Linux systems
-- Setting up user identity and preferences
-- Understanding Git configuration levels
-- Creating useful Git aliases
-
-### [15.3 Basic Git Operations and Workflow](#153-basic-git-operations-and-workflow)
-- Repository initialization and cloning
-- Staging, committing, and pushing changes
-- Working with branches and merging
-- Understanding Git history and logs
-
-### [15.4 GitHub Integration and Collaboration](#154-github-integration-and-collaboration)
-- Creating and managing repositories on GitHub
-- Forking repositories and pull requests
-- Working with issues and basic project management
-- Team collaboration workflows
-
-### [15.5 File Management with .gitignore](#155-file-management-with-gitignore)
-- Using built-in .gitignore templates
-- Common ignore patterns for different languages
-- Global .gitignore configuration
-- Managing sensitive files securely
-
-### [15.6 Practical Git Workflows](#156-practical-git-workflows)
-- Feature branch workflow
-- Working with remote repositories
-- Handling merge conflicts
-- Git troubleshooting and recovery
+* [15.1 SSH Key Setup for GitHub](#151-ssh-key-setup-for-github)
+* [15.2 Git Installation and Basic Configuration](#152-git-installation-and-basic-configuration)
+* [15.3 Basic Git Operations and Workflow](#153-basic-git-operations-and-workflow)
+* [15.4 GitHub Integration and Collaboration](#154-github-integration-and-collaboration)
+* [15.5 File Management with .gitignore](#155-file-management-with-gitignore)
+* [15.6 Practical Git Workflows](#156-practical-git-workflows)
 
 ## 15.1 SSH Key Setup for GitHub
 
