@@ -42,48 +42,48 @@ By completing this module, you will be able to:
    - Implement defense-in-depth strategies for SSH access
    - Troubleshoot SSH connectivity and security issues
 
+
 ## Table of Contents
-
-- [13.1 SSH Key Generation and Management](#131-ssh-key-generation-and-management)
-  - Understanding SSH key types: ED25519, RSA, and ECDSA
-  - Practical key generation examples with ssh-keygen
-  - Key security levels and algorithm comparison
-  - Managing key passphrases and file permissions
-
-- [13.2 Secure Key Distribution](#132-secure-key-distribution)
-  - Using ssh-copy-id for safe key deployment
-  - Manual key installation and authorized_keys configuration
-  - Key-based authentication setup and testing
-  - Basic key rotation and management practices
-
-- [13.3 SSH Server Security Configuration](#133-ssh-server-security-configuration)
-  - Essential sshd_config hardening settings
-  - Disabling weak algorithms and enabling strong cryptography
-  - Access control and authentication configuration
-  - Common security misconfigurations to avoid
-
-- [13.4 SSH Client Configuration](#134-ssh-client-configuration)
-  - Secure SSH client defaults and configuration
-  - Host-specific settings and connection management
-  - SSH agent usage and security considerations
-  - Connection troubleshooting and debugging
-
-- [13.5 SSH Security Best Practices](#135-ssh-security-best-practices)
-  - Defense-in-depth strategies for SSH access
-  - Common vulnerabilities and mitigation techniques
-  - Monitoring and logging SSH activities
-  - Incident response for SSH security issues
-
-- [13.6 Practical Labs and Troubleshooting](#136-practical-labs-and-troubleshooting)
-  - Hands-on key generation and distribution exercises
-  - SSH server hardening configuration lab
-  - Common SSH problems and solutions
-  - Security validation and testing procedures
-  - Advanced persistent threat (APT) detection and response
-  - Insider threat monitoring and prevention
-  - Supply chain security and trusted computing base
-  - International security standards and regulatory compliance
-  - Security architecture documentation and threat modeling
+* [Overview](#overview)
+* [Learning Objectives](#learning-objectives)
+* [Topics](#topics)
+    * [13.1 SSH Key Generation and Management](#131-ssh-key-generation-and-management)
+        * Understanding SSH key types: ED25519, RSA, and ECDSA
+        * Practical key generation examples with ssh-keygen
+        * Key security levels and algorithm comparison
+        * Managing key passphrases and file permissions
+    * [13.2 Secure Key Distribution](#132-secure-key-distribution)
+        * Using ssh-copy-id for safe key deployment
+        * Manual key installation and authorized_keys configuration
+        * Key-based authentication setup and testing
+        * Basic key rotation and management practices
+    * [13.3 SSH Server Security Configuration](#133-ssh-server-security-configuration)
+        * Essential sshd_config hardening settings
+        * Disabling weak algorithms and enabling strong cryptography
+        * Access control and authentication configuration
+        * Common security misconfigurations to avoid
+    * [13.4 SSH Client Configuration](#134-ssh-client-configuration)
+        * Secure SSH client defaults and configuration
+        * Host-specific settings and connection management
+        * SSH agent usage and security considerations
+        * Connection troubleshooting and debugging
+    * [13.5 SSH Security Best Practices](#135-ssh-security-best-practices)
+        * Defense-in-depth strategies for SSH access
+        * Common vulnerabilities and mitigation techniques
+        * Monitoring and logging SSH activities
+        * Incident response for SSH security issues
+    * [13.6 Practical Labs and Troubleshooting](#136-practical-labs-and-troubleshooting)
+        * Hands-on key generation and distribution exercises
+        * SSH server hardening configuration lab
+        * Common SSH problems and solutions
+        * Security validation and testing procedures
+        * Advanced persistent threat (APT) detection and response
+        * Insider threat monitoring and prevention
+        * Supply chain security and trusted computing base
+        * International security standards and regulatory compliance
+        * Security architecture documentation and threat modeling
+* [Essential SSH Commands Reference](#essential-ssh-commands-reference)
+* [Summary](#summary)
 
 
 ---
