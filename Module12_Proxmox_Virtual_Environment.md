@@ -56,50 +56,55 @@ By completing this module, you will be able to:
    - Explore FRR, OVS, EVPN, and WireGuard integration
 
 
+
 ## Table of Contents
+* [Learning Objectives](#learning-objectives)
+* [Topics](#topics)
+    * [12.1 Installation and Initial Setup](#121-installation-and-initial-setup)
+        * Hardware requirements and compatibility
+        * Installing Proxmox VE 8.4
+        * Initial configuration and web interface
+        * Basic security setup
+    * [12.2 Storage Configuration](#122-storage-configuration)
+        * Understanding storage types in Proxmox VE
+        * Local storage configuration
+        * ISO and template management
+        * Basic ZFS setup
+    * [12.3 Virtual Machine Management](#123-virtual-machine-management)
+        * Creating your first virtual machine
+        * Installing guest operating systems
+        * Virtual hardware configuration
+        * VM lifecycle management
+    * [12.4 Container Management](#124-container-management)
+        * Understanding LXC containers
+        * Creating and configuring containers
+        * Container templates and applications
+        * Container vs VM use cases
+    * [12.5 Basic Networking](#125-basic-networking)
+        * Network configuration fundamentals
+        * Creating bridges and VLANs
+        * Firewall basics
+        * Network troubleshooting
+    * [12.6 Backup and Maintenance](#126-backup-and-maintenance)
+        * Backup strategies and configuration
+        * Scheduled backups and retention
+        * System updates and maintenance
+        * Monitoring and logging
+    * [12.7 Clustering Basics](#127-clustering-basics)
+        * Small cluster setup for home labs
+        * Shared storage concepts
+        * Basic high availability
+        * Migration and maintenance
+    * [12.8 Future Technologies in Proxmox VE 9](#128-future-technologies-in-proxmox-ve-9)
+        * Overview of Proxmox VE 9 beta features
+        * Enhanced SDN capabilities
+        * Spine-leaf architecture support
+        * FRR, OVS, EVPN, and WireGuard integration
+* [Essential Command Reference](#essential-command-reference)
+* [Best Practices](#best-practices)
+* [Summary](#summary)
+* [Next Steps](#next-steps)
 
-- [Learning Objectives](#learning-objectives)
-- [12.1 Installation and Initial Setup](#121-installation-and-initial-setup)
-  - Hardware requirements and compatibility
-  - Installing Proxmox VE 8.4
-  - Initial configuration and web interface
-  - Basic security setup
-- [12.2 Storage Configuration](#122-storage-configuration)
-  - Understanding storage types in Proxmox VE
-  - Local storage configuration
-  - ISO and template management
-  - Basic ZFS setup
-- [12.3 Virtual Machine Management](#123-virtual-machine-management)
-  - Creating your first virtual machine
-  - Installing guest operating systems
-  - Virtual hardware configuration
-  - VM lifecycle management
-- [12.4 Container Management](#124-container-management)
-  - Understanding LXC containers
-  - Creating and configuring containers
-  - Container templates and applications
-
-  - Container vs VM use cases
-- [12.5 Basic Networking](#125-basic-networking)
-  - Network configuration fundamentals
-  - Creating bridges and VLANs
-  - Firewall basics
-  - Network troubleshooting
-- [12.6 Backup and Maintenance](#126-backup-and-maintenance)
-  - Backup strategies and configuration
-  - Scheduled backups and retention
-  - System updates and maintenance
-  - Monitoring and logging
-- [12.7 Clustering Basics](#127-clustering-basics)
-  - Small cluster setup for home labs
-  - Shared storage concepts
-  - Basic high availability
-  - Migration and maintenance
-- [12.8 Future Technologies in Proxmox VE 9](#128-future-technologies-in-proxmox-ve-9)
-  - Overview of Proxmox VE 9 beta features
-  - Enhanced SDN capabilities
-  - Spine-leaf architecture support
-  - FRR, OVS, EVPN, and WireGuard integration
 
 [⬆️ Back to Top](#module-12-proxmox-virtual-environment)
 
