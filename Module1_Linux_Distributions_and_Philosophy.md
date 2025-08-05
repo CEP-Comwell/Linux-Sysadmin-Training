@@ -1,26 +1,26 @@
 # Module 1: Linux Distributions & Philosophy
 
 ## Table of Contents
-- [Overview](#overview)
-- [Learning Objectives](#learning-objectives)
-- [Topics](#topics)
-  - [1.1 Linux History and Philosophy](#11-linux-history-and-philosophy)
-  - [1.2 Distribution Families and Package Management](#12-distribution-families-and-package-management)
-  - [1.3 Release Models and Support Cycles](#13-release-models-and-support-cycles)
-  - [1.4 Open Source Licensing and Governance](#14-open-source-licensing-and-governance)
-  - [1.5 Distribution Selection Criteria](#15-distribution-selection-criteria)
-- [Essential Command Reference](#essential-command-reference)
-- [Practical Examples](#practical-examples)
-  - [Distribution Information Commands](#distribution-information-commands)
-  - [Package Manager Comparison](#package-manager-comparison)
-  - [System Information Gathering](#system-information-gathering)
-- [Lab Exercises](#lab-exercises)
-  - [Lab 1: Distribution Analysis and Comparison](#lab-1-distribution-analysis-and-comparison)
-  - [Lab 2: Package Management Systems](#lab-2-package-management-systems)
-  - [Lab 3: Enterprise Distribution Selection](#lab-3-enterprise-distribution-selection)
-- [Best Practices Summary](#best-practices-summary)
-- [Assessment Criteria](#assessment-criteria)
-- [Next Steps](#next-steps)
+* [Overview](#overview)
+* [Learning Objectives](#learning-objectives)
+* [Topics](#topics)
+* [1.1 Linux History and Philosophy](#11-linux-history-and-philosophy)
+* [1.2 Distribution Families and Package Management](#12-distribution-families-and-package-management)
+* [1.3 Release Models and Support Cycles](#13-release-models-and-support-cycles)
+* [1.4 Open Source Licensing and Governance](#14-open-source-licensing-and-governance)
+* [1.5 Distribution Selection Criteria](#15-distribution-selection-criteria)
+* [Essential Command Reference](#essential-command-reference)
+* [Practical Examples](#practical-examples)
+* [Distribution Information Commands](#distribution-information-commands)
+* [Package Manager Comparison](#package-manager-comparison)
+* [System Information Gathering](#system-information-gathering)
+* [Lab Exercises](#lab-exercises)
+* [Lab 1: Distribution Analysis and Comparison](#lab-1-distribution-analysis-and-comparison)
+* [Lab 2: Package Management Systems](#lab-2-package-management-systems)
+* [Lab 3: Enterprise Distribution Selection](#lab-3-enterprise-distribution-selection)
+* [Best Practices Summary](#best-practices-summary)
+* [Assessment Criteria](#assessment-criteria)
+* [Next Steps](#next-steps)
 
 ## Overview
 This module explores why Linux exists, how its culture shapes development, and provides the foundation for choosing the right distribution for your organization. Students will understand the philosophical differences between distributions, their technical architectures, and how these choices impact long-term infrastructure decisions.
@@ -80,7 +80,7 @@ By the end of this module, you will be able to:
 - Commercial support and professional services
 - Ecosystem integration and third-party software availability
 
-**[⬆️ Back to Top](#module-1-linux-distributions--philosophy)** | **[📚 Main Index](README.md)**
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
 
 ## Essential Command Reference
 
