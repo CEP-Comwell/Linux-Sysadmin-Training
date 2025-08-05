@@ -153,18 +153,257 @@ By the end of this module, you will be able to:
 
 [Related Commands/Topics: ls, cd, pwd, cp, mv, rm, find, grep, awk, sed, sort, uniq, xargs, sudo] 🟢
 [⬆️ Back to Top](#table-of-contents)
-- Pipes: `|`
-- Command chaining: `;`, `&&`, `||`
 
--### 3.6 File Searching
-[Related Commands/Topics: find, locate, which, whereis, type, grep] 🟢
-- Finding files: `find`
-- Locating commands: `which`, `whereis`, `locate`
-- Pattern matching with wildcards
+### Navigation and File Management
+[Related Commands/Topics: cd, ls, pwd, mkdir, rm, mv, cp, tree] 🟢
 
--### 3.6.1 Privilege Escalation and User Switching
-[Related Commands/Topics: sudo, su, usermod, groups] 🟡
-The `sudo` (substitute user do) command allows authorized users to execute commands as another user, typically root, without knowing their password.
+#### Advanced File Operations
+```bash
+# Create complex directory structures
+mkdir -p projects/{web/{frontend,backend},mobile/{ios,android},docs}
+tree projects/  # Visualize structure
+
+# Bulk file operations
+touch file{1..10}.txt                    # Create multiple files
+cp file{1..5}.txt backup/                # Copy multiple files
+rename 's/\.txt$/.bak/' *.txt           # Rename with pattern
+
+# Safe file operations
+cp important.conf{,.backup}             # Create backup before editing
+mv /etc/important.conf{,.backup}        # Backup with move
+rm -i *.tmp                             # Interactive deletion
+
+# Advanced file copying
+cp -p source.txt dest.txt               # Preserve timestamps and permissions
+cp -u source/ dest/                     # Update only newer files
+rsync -av source/ dest/                 # Advanced synchronization
+
+# Enhanced file listing with comprehensive options
+ls -alhtr /var/log/                     # All files, human-readable, time-sorted, reverse order
+# -a: show all files (including hidden)
+# -l: long format with details
+# -h: human-readable file sizes
+# -t: sort by modification time
+# -r: reverse sort order (newest last)
+
+ls -alhtr --time-style=long-iso /etc/   # ISO timestamp format
+ls -alhS /var/                          # Sort by file size (largest first)
+ls -alht --color=always /tmp/           # Force color output
+
+# Disk usage analysis with depth control
+du -ah --max-depth=1 /var/              # Show all files and directories, human-readable, 1 level deep
+du -ah --max-depth=2 /usr/              # 2 levels deep for more detail
+du -sh --max-depth=1 /home/*/           # Summary of each user's home directory
+du -ah --max-depth=1 . | sort -hr       # Sort by size, largest first
+
+# Advanced du usage examples
+du -ah --max-depth=1 /var/ | grep -E '^[0-9.]+[MG]'  # Show only MB/GB sized items
+du -ah --max-depth=3 /usr/share/ | tail -20          # Last 20 items (smallest)
+du -ah --max-depth=1 --threshold=100M /opt/          # Only show items larger than 100MB
+```
+
+### Text Processing Pipelines
+[Related Commands/Topics: grep, awk, sed, sort, uniq, cut, paste, column, xargs] 🟡
+
+#### Advanced Text Processing Chains
+```bash
+# Log analysis pipeline
+tail -1000 /var/log/apache2/access.log | \
+awk '{print $1}' | \
+sort | \
+uniq -c | \
+sort -nr | \
+head -10
+# Shows top 10 IP addresses from last 1000 log entries
+
+# System monitoring pipeline
+ps aux | \
+awk 'NR>1 {cpu+=$3; mem+=$4; count++} END {printf "Avg CPU: %.2f%%, Avg MEM: %.2f%%, Processes: %d\n", cpu/count, mem/count, count}'
+
+# File processing pipeline
+find /var/log -name "*.log" -type f | \
+xargs grep -l "ERROR" | \
+xargs ls -lt | \
+head -5
+# Find the 5 most recently modified log files containing "ERROR"
+
+# Data extraction and formatting
+cat /etc/passwd | \
+awk -F: '{print $1, $3, $5}' | \
+sort -k2 -n | \
+column -t
+# Format user information in columns, sorted by UID
+```
+
+### Shell Customization and Functions
+[Related Commands/Topics: bashrc, profile, alias, function, PS1, history, export] 🟡
+
+#### Advanced Shell Configuration
+```bash
+# ~/.bashrc - Comprehensive configuration
+# History settings
+export HISTSIZE=50000
+export HISTFILESIZE=100000
+export HISTCONTROL=ignoredups:ignorespace:erasedups
+export HISTTIMEFORMAT='%F %T '
+shopt -s histappend
+shopt -s cmdhist
+
+# Shell options for better experience
+shopt -s checkwinsize    # Check window size after each command
+shopt -s globstar        # Enable ** pattern matching
+shopt -s nocaseglob      # Case-insensitive globbing
+shopt -s cdspell         # Minor spelling corrections for cd
+shopt -s dirspell        # Spelling corrections for directory names
+
+# Enhanced prompt with git support
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+get_git_status() {
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        local status=$(git status --porcelain 2>/dev/null)
+        if [[ -n $status ]]; then
+            echo "*"  # Uncommitted changes
+        fi
+    fi
+}
+
+# Dynamic prompt with color and git info
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]$(parse_git_branch)\[\033[01;33m\]$(get_git_status)\[\033[00m\]\$ '
+
+# Environment variables
+export EDITOR='vim'
+export PAGER='less -R'
+export LESS='-i -M -R -S -w -z-4'
+export GREP_OPTIONS='--color=auto'
+```
+
+#### Powerful Shell Functions
+```bash
+# ~/.bash_functions - Advanced shell functions
+
+# Multi-purpose extraction function
+extract() {
+    if [[ -f "$1" ]]; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"       ;;
+            *.tar.gz)    tar xzf "$1"       ;;
+            *.tar.xz)    tar xJf "$1"       ;;
+            *.bz2)       bunzip2 "$1"       ;;
+            *.rar)       unrar x "$1"       ;;
+            *.gz)        gunzip "$1"        ;;
+            *.tar)       tar xf "$1"        ;;
+            *.tbz2)      tar xjf "$1"       ;;
+            *.tgz)       tar xzf "$1"       ;;
+            *.zip)       unzip "$1"         ;;
+            *.Z)         uncompress "$1"    ;;
+            *.7z)        7z x "$1"          ;;
+            *.deb)       ar x "$1"          ;;
+            *.rpm)       rpm2cpio "$1" | cpio -idmv ;;
+            *)           echo "Don't know how to extract '$1'" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# Create directory and enter it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Find and kill processes by name
+killps() {
+    local process="$1"
+    if [[ -z "$process" ]]; then
+        echo "Usage: killps <process_name>"
+        return 1
+    fi
+    
+    local pids=$(pgrep "$process")
+    if [[ -n "$pids" ]]; then
+        echo "Killing processes matching '$process':"
+        ps -p $pids
+        kill $pids
+    else
+        echo "No processes found matching '$process'"
+    fi
+}
+
+# Show directory sizes sorted
+dirsize() {
+    local dir="${1:-.}"
+    du -sh "$dir"/* 2>/dev/null | sort -hr
+}
+
+# Quick backup function
+backup() {
+    local file="$1"
+    if [[ -f "$file" ]]; then
+        cp "$file" "${file}.backup.$(date +%Y%m%d_%H%M%S)"
+        echo "Backup created: ${file}.backup.$(date +%Y%m%d_%H%M%S)"
+    else
+        echo "File not found: $file"
+    fi
+}
+
+# Network information function
+netinfo() {
+    echo "Network Information:"
+    echo "==================="
+    echo "Hostname: $(hostname)"
+    echo "IP Address: $(ip route get 8.8.8.8 | awk '{print $7; exit}')"
+    echo "Gateway: $(ip route | awk '/default/ {print $3}')"
+    echo "DNS Servers: $(grep nameserver /etc/resolv.conf | awk '{print $2}' | tr '\n' ' ')"
+    echo "Open Ports: $(ss -tuln | grep LISTEN | wc -l)"
+}
+
+# System information function
+sysinfo() {
+    echo "System Information:"
+    echo "=================="
+    echo "OS: $(lsb_release -d | cut -f2)"
+    echo "Kernel: $(uname -r)"
+    echo "Uptime: $(uptime -p)"
+    echo "Load: $(uptime | awk -F'load average:' '{print $2}')"
+    echo "Memory: $(free -h | grep Mem | awk '{print $3"/"$2}')"
+    echo "Disk: $(df -h / | tail -1 | awk '{print $3"/"$2" ("$5" used)"}')"
+    echo "CPU: $(nproc) cores"
+}
+
+# Log monitoring function
+logwatch() {
+    local logfile="${1:-/var/log/syslog}"
+    local pattern="${2:-.*}"
+    
+    echo "Monitoring $logfile for pattern: $pattern"
+    echo "Press Ctrl+C to stop"
+    tail -f "$logfile" | grep --color=always "$pattern"
+}
+```
+
+### Advanced Command Combinations
+[Related Commands/Topics: watch, ps, top, ss, netstat, du, find, locate, awk, grep] 🟡
+
+#### System Monitoring One-Liners
+```bash
+# Real-time monitoring commands
+watch -n 1 'cat /proc/loadavg'                       # CPU load monitoring
+watch -n 1 'free -m'                                 # Memory monitoring
+watch -n 1 'df -h'                                   # Disk space monitoring
+watch -n 1 'ss -tuln | wc -l'                       # Network connections count
+
+# Process analysis
+ps aux --sort=-%cpu | head -10                       # Top CPU consumers
+ps aux --sort=-%mem | head -10                       # Top memory consumers
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head    # Detailed process info
+
+# Network monitoring
+ss -tuln | awk 'NR>1 {count[$1]++} END {for(i in count) print i, count[i]}' # Protocol counts
+netstat -i | awk 'NR>2 {print $1, $3+$7}'          # Interface traffic summary
+```
 
 #### Basic sudo Usage
 ```bash
