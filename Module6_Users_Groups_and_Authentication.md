@@ -1,21 +1,22 @@
 # Module 6: Users, Groups & Authentication
 
+
 ## Table of Contents
-- [Overview](#overview)
-- [Learning Objectives](#learning-objectives)
-- [Topics](#topics)
-  - [6.1 User Account Fundamentals](#61-user-account-fundamentals)
-  - [6.2 Basic User Management](#62-basic-user-management)
-  - [6.3 Group Management Basics](#63-group-management-basics)
-  - [6.4 Sudo Configuration](#64-sudo-configuration)
-  - [6.5 Password Policies and Security](#65-password-policies-and-security)
-- [Essential Command Reference](#essential-command-reference)
-- [Practical Examples](#practical-examples)
-- [Lab Exercises](#lab-exercises)
-- [Best Practices Summary](#best-practices-summary)
-- [Troubleshooting Common Issues](#troubleshooting-common-issues)
-- [Assessment Criteria](#assessment-criteria)
-- [Next Steps](#next-steps)
+* [Overview](#overview)
+* [Learning Objectives](#learning-objectives)
+* [Topics](#topics)
+    * [6.1 User Account Fundamentals](#61-user-account-fundamentals)
+    * [6.2 Basic User Management](#62-basic-user-management)
+    * [6.3 Group Management Basics](#63-group-management-basics)
+    * [6.4 Sudo Configuration](#64-sudo-configuration)
+    * [6.5 Password Policies and Security](#65-password-policies-and-security)
+* [Essential Command Reference](#essential-command-reference)
+* [Practical Examples](#practical-examples)
+* [Lab Exercises](#lab-exercises)
+* [Best Practices Summary](#best-practices-summary)
+* [Troubleshooting Common Issues](#troubleshooting-common-issues)
+* [Assessment Criteria](#assessment-criteria)
+* [Next Steps](#next-steps)
 
 ## Overview
 [⬆️ Back to Top](#table-of-contents)
