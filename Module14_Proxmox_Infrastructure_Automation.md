@@ -226,7 +226,7 @@ By completing this module, you will be able to:
 - **Code organization**: Directory structure, naming conventions, and documentation
 - **Testing strategies**: Validation, linting, and automated testing frameworks
 
-**Practical Examples**: [Terraform Provider Configuration](#terraform-provider-configuration) | [State Management Setup](#terraform-state-management)
+**Practical Examples**:
 
 ### 14.2 Terraform with Proxmox
 - **Terraform Proxmox provider**: Installation, configuration, and authentication
