@@ -55,12 +55,11 @@ This comprehensive repository guides experienced Windows sysadmins through a str
    - [Next Steps](Module5_Processes_and_Services.md#next-steps)
 
 6. **[Module 6: Users, Groups & Authentication](Module6_Users_Groups_and_Authentication.md)**
-   - [6.1 User and Group Management](Module6_Users_Groups_and_Authentication.md#61-user-and-group-management)
-   - [6.2 Authentication Systems and PAM](Module6_Users_Groups_and_Authentication.md#62-authentication-systems-and-pam)
-   - [6.3 Access Control and Security](Module6_Users_Groups_and_Authentication.md#63-access-control-and-security)
-   - [6.4 Directory Services Integration](Module6_Users_Groups_and_Authentication.md#64-directory-services-integration)
-   - [6.5 Multi-Factor Authentication](Module6_Users_Groups_and_Authentication.md#65-multi-factor-authentication)
-   - [6.6 Enterprise Identity Management](Module6_Users_Groups_and_Authentication.md#66-enterprise-identity-management)
+   - [6.1 User Account Fundamentals](Module6_Users_Groups_and_Authentication.md#61-user-account-fundamentals)
+   - [6.2 Basic User Management](Module6_Users_Groups_and_Authentication.md#62-basic-user-management)
+   - [6.3 Group Management Basics](Module6_Users_Groups_and_Authentication.md#63-group-management-basics)
+   - [6.4 Sudo Configuration](Module6_Users_Groups_and_Authentication.md#64-sudo-configuration)
+   - [6.5 Password Policies and Security](Module6_Users_Groups_and_Authentication.md#65-password-policies-and-security)
 
 7. **[Module 7: Networking Fundamentals](Module7_Networking_Fundamentals.md)**
    - [7.1 Modern Network Interface Management](Module7_Networking_Fundamentals.md#71-modern-network-interface-management)
