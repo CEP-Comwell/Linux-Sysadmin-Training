@@ -156,8 +156,6 @@ By the end of this module, you will be able to:
 [⬆️ Back to Top](#table-of-contents)
 
 [Related Commands/Topics: Network Interface Management](#network-interface-management) 🟢
-
-[Related Commands/Topics: Network Interface Management](#network-interface-management) 🟢
 ```bash
 # Show all network interfaces
 ip a
