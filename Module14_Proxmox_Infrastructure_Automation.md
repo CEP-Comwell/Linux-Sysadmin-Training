@@ -31,53 +31,59 @@ By completing this module, you will be able to:
    - Use built-in Proxmox tools and simple monitoring scripts
 
 
+
 ## Table of Contents
-
-- [14.1 Infrastructure as Code Fundamentals](#141-infrastructure-as-code-fundamentals)
-  - IaC principles: declarative vs imperative
-  - Version control for infrastructure
-  - State management concepts
-  - Code organization and documentation
-  - Testing strategies
-
-- [14.2 Terraform with Proxmox](#142-terraform-with-proxmox)
-  - Proxmox provider basics
-  - Resource definitions: VMs, storage, networking
-  - Variables and outputs
-  - Data sources
-  - Resource lifecycle management
-
-- [14.3 Ansible Configuration Management](#143-ansible-configuration-management)
-  - Ansible inventory basics
-  - Playbooks and tasks
-  - Modules and collections
-  - Variable management
-  - SSH-based automation
-
-- [14.4 Cloud-Init Integration](#144-cloud-init-integration)
-  - Cloud-Init configuration basics
-  - Network automation
-  - Package and service management
-  - SSH key injection
-  - Custom scripts
-
-- [14.5 Secrets Management](#145-secrets-management)
-  - Ansible Vault basics
-  - Environment variables for credentials
-  - Key management
-  - Secret rotation
-
-- [14.6 Testing and Validation](#146-testing-and-validation)
-  - Terraform validation and formatting
-  - Ansible linting
-  - Infrastructure testing basics
-  - Security scanning
-
-- [14.7 Monitoring and Observability](#147-monitoring-and-observability)
-  - Infrastructure monitoring basics
-  - Log aggregation
-  - Alerting systems
-  - Performance monitoring
+* [Learning Objectives](#learning-objectives)
+* [Topics](#topics)
+    * [14.1 Infrastructure as Code Fundamentals](#141-infrastructure-as-code-fundamentals)
+        * IaC principles: declarative vs imperative
+        * Version control for infrastructure
+        * State management concepts
+        * Code organization and documentation
+        * Testing strategies
+    * [14.2 Terraform with Proxmox](#142-terraform-with-proxmox)
+        * Proxmox provider basics
+        * Resource definitions: VMs, storage, networking
+        * Variables and outputs
+        * Data sources
+        * Resource lifecycle management
+    * [14.3 Ansible Configuration Management](#143-ansible-configuration-management)
+        * Ansible inventory basics
+        * Playbooks and tasks
+        * Modules and collections
+        * Variable management
+        * SSH-based automation
+    * [14.4 Cloud-Init Integration](#144-cloud-init-integration)
+        * Cloud-Init configuration basics
+        * Network automation
+        * Package and service management
+        * SSH key injection
+        * Custom scripts
+    * [14.5 Secrets Management](#145-secrets-management)
+        * Ansible Vault basics
+        * Environment variables for credentials
+        * Key management
+        * Secret rotation
+    * [14.6 Testing and Validation](#146-testing-and-validation)
+        * Terraform validation and formatting
+        * Ansible linting
+        * Infrastructure testing basics
+        * Security scanning
+    * [14.7 Monitoring and Observability](#147-monitoring-and-observability)
+        * Infrastructure monitoring basics
+        * Log aggregation
+        * Alerting systems
+        * Performance monitoring
+* [Essential Command Reference](#essential-command-reference)
+* [Command & Tool Reference](#command--tool-reference)
+* [Practical Examples](#practical-examples)
+* [Infrastructure Automation Best Practices](#infrastructure-automation-best-practices)
+* [Troubleshooting Common Issues](#troubleshooting-common-issues)
+* [Lab Exercises](#lab-exercises)
+* [Assessment Criteria](#assessment-criteria)
+* [Best Practices Summary](#best-practices-summary)
+* [Troubleshooting Guide](#troubleshooting-guide)
+* [Next Steps](#next-steps)
 
 
 
