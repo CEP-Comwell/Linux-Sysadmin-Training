@@ -44,48 +44,53 @@ By completing this module, you will be able to:
 
 ## Table of Contents
 
-### [13.1 SSH Key Generation and Management](#131-ssh-key-generation-and-management)
-- Understanding SSH key types: ED25519, RSA, and ECDSA
-- Practical key generation examples with ssh-keygen
-- Key security levels and algorithm comparison
-- Managing key passphrases and file permissions
+- [13.1 SSH Key Generation and Management](#131-ssh-key-generation-and-management)
+  - Understanding SSH key types: ED25519, RSA, and ECDSA
+  - Practical key generation examples with ssh-keygen
+  - Key security levels and algorithm comparison
+  - Managing key passphrases and file permissions
 
-### [13.2 Secure Key Distribution](#132-secure-key-distribution)
-- Using ssh-copy-id for safe key deployment
-- Manual key installation and authorized_keys configuration
-- Key-based authentication setup and testing
-- Basic key rotation and management practices
+- [13.2 Secure Key Distribution](#132-secure-key-distribution)
+  - Using ssh-copy-id for safe key deployment
+  - Manual key installation and authorized_keys configuration
+  - Key-based authentication setup and testing
+  - Basic key rotation and management practices
 
-### [13.3 SSH Server Security Configuration](#133-ssh-server-security-configuration)
-- Essential sshd_config hardening settings
-- Disabling weak algorithms and enabling strong cryptography
-- Access control and authentication configuration
-- Common security misconfigurations to avoid
+- [13.3 SSH Server Security Configuration](#133-ssh-server-security-configuration)
+  - Essential sshd_config hardening settings
+  - Disabling weak algorithms and enabling strong cryptography
+  - Access control and authentication configuration
+  - Common security misconfigurations to avoid
 
-### [13.4 SSH Client Configuration](#134-ssh-client-configuration)
-- Secure SSH client defaults and configuration
-- Host-specific settings and connection management
-- SSH agent usage and security considerations
-- Connection troubleshooting and debugging
+- [13.4 SSH Client Configuration](#134-ssh-client-configuration)
+  - Secure SSH client defaults and configuration
+  - Host-specific settings and connection management
+  - SSH agent usage and security considerations
+  - Connection troubleshooting and debugging
 
-### [13.5 SSH Security Best Practices](#135-ssh-security-best-practices)
-- Defense-in-depth strategies for SSH access
-- Common vulnerabilities and mitigation techniques
-- Monitoring and logging SSH activities
-- Incident response for SSH security issues
+- [13.5 SSH Security Best Practices](#135-ssh-security-best-practices)
+  - Defense-in-depth strategies for SSH access
+  - Common vulnerabilities and mitigation techniques
+  - Monitoring and logging SSH activities
+  - Incident response for SSH security issues
 
-### [13.6 Practical Labs and Troubleshooting](#136-practical-labs-and-troubleshooting)
-- Hands-on key generation and distribution exercises
-- SSH server hardening configuration lab
-- Common SSH problems and solutions
-- Security validation and testing procedures
-- Advanced Persistent Threat (APT) detection and response
-- Insider threat monitoring and prevention
-- Supply chain security and trusted computing base
-- International security standards and regulatory compliance
-- Security architecture documentation and threat modeling
+- [13.6 Practical Labs and Troubleshooting](#136-practical-labs-and-troubleshooting)
+  - Hands-on key generation and distribution exercises
+  - SSH server hardening configuration lab
+  - Common SSH problems and solutions
+  - Security validation and testing procedures
+  - Advanced persistent threat (APT) detection and response
+  - Insider threat monitoring and prevention
+  - Supply chain security and trusted computing base
+  - International security standards and regulatory compliance
+  - Security architecture documentation and threat modeling
+
+
+---
 
 ## Essential SSH Commands Reference
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 ### SSH Key Generation and Management
 
@@ -127,7 +132,12 @@ By completing this module, you will be able to:
 
 ---
 
+
+---
+
 ## 13.1 SSH Key Generation and Management
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 ### Understanding SSH Key Types: Choosing the Right Algorithm
 
@@ -167,7 +177,6 @@ By completing this module, you will be able to:
 
 ### Practical Key Generation Examples
 
-#### Generate ED25519 Key (Recommended)
 ```bash
 # Generate ED25519 key with descriptive comment
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -C "$(whoami)@$(hostname)-$(date +'%Y%m%d')"
@@ -179,7 +188,8 @@ ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -C "admin@webserver-20250803"
 ssh-keygen -t ed25519 -f ~/.ssh/backup_server_key -C "backup-server-access"
 ```
 
-#### Generate RSA Key (For Legacy Compatibility)
+**Related Commands/Topics:** See [SSH Key Generation and Management](#ssh-key-generation-and-management) 🔗
+
 ```bash
 # Generate 4096-bit RSA key (minimum recommended size)
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -C "$(whoami)@$(hostname)-rsa4096"
@@ -188,15 +198,17 @@ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -C "$(whoami)@$(hostname)-rsa4096"
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_secure -C "admin@server-rsa4096"
 ```
 
-#### Generate ECDSA Key (Alternative Option)
+**Related Commands/Topics:** See [SSH Key Generation and Management](#ssh-key-generation-and-management) 🔗
+
 ```bash
 # Generate ECDSA key with 521-bit curve (highest security)
 ssh-keygen -t ecdsa -b 521 -f ~/.ssh/id_ecdsa -C "$(whoami)@$(hostname)-ecdsa521"
 ```
 
+**Related Commands/Topics:** See [SSH Key Generation and Management](#ssh-key-generation-and-management) 🔗
+
 ### Key Security Best Practices
 
-#### Always Use Strong Passphrases
 ```bash
 # Generate key with interactive passphrase prompt
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_secure
@@ -207,7 +219,8 @@ ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_secure
 # - Make it memorable but unpredictable
 ```
 
-#### Secure File Permissions
+**Related Commands/Topics:** See [SSH Key Generation and Management](#ssh-key-generation-and-management) 🔗
+
 ```bash
 # Fix permissions for SSH directory and keys
 chmod 700 ~/.ssh
@@ -220,7 +233,8 @@ chmod 644 ~/.ssh/known_hosts
 ls -la ~/.ssh/
 ```
 
-#### Key Information and Validation
+**Related Commands/Topics:** See [SSH Key Generation and Management](#ssh-key-generation-and-management) 🔗
+
 ```bash
 # Display key fingerprint and details
 ssh-keygen -l -f ~/.ssh/id_ed25519.pub
@@ -234,6 +248,8 @@ cat ~/.ssh/id_ed25519.pub
 # Extract public key from private key (if needed)
 ssh-keygen -y -f ~/.ssh/id_ed25519 > ~/.ssh/id_ed25519.pub
 ```
+
+**Related Commands/Topics:** See [SSH Key Generation and Management](#ssh-key-generation-and-management) 🔗
 
 ### When to Use Each Key Type
 
@@ -258,13 +274,17 @@ ssh-keygen -y -f ~/.ssh/id_ed25519 > ~/.ssh/id_ed25519.pub
 
 ---
 
+
+---
+
 ## 13.2 Secure Key Distribution
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 ### Using ssh-copy-id (Recommended Method)
 
 The `ssh-copy-id` command is the safest and easiest way to install your public key on remote servers.
 
-#### Basic Key Distribution
 ```bash
 # Copy your default public key to remote server
 ssh-copy-id user@server.domain.com
@@ -279,7 +299,8 @@ ssh-copy-id -p 2022 user@server.domain.com
 ssh-copy-id user@server.domain.com && ssh user@server.domain.com
 ```
 
-#### Advanced ssh-copy-id Options
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
 ```bash
 # Force key installation (overwrite existing)
 ssh-copy-id -f -i ~/.ssh/id_ed25519.pub user@server
@@ -292,11 +313,12 @@ ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server
 ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
 ```
 
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
 ### Manual Key Installation
 
 Sometimes you need to manually install keys, especially in environments where ssh-copy-id isn't available or when you need more control.
 
-#### Manual authorized_keys Setup
 ```bash
 # On the remote server, create SSH directory
 mkdir -p ~/.ssh
@@ -313,7 +335,8 @@ chmod 600 ~/.ssh/authorized_keys
 # Remote: echo "copied_key_content" >> ~/.ssh/authorized_keys
 ```
 
-#### Using SCP for Key Distribution
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
 ```bash
 # Copy public key to remote server (password authentication required)
 scp ~/.ssh/id_ed25519.pub user@server:~/
@@ -325,9 +348,10 @@ rm ~/id_ed25519.pub
 chmod 600 ~/.ssh/authorized_keys
 ```
 
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
 ### Testing Key-Based Authentication
 
-#### Verify Key Installation
 ```bash
 # Test connection with specific key
 ssh -i ~/.ssh/id_ed25519 user@server
@@ -339,7 +363,8 @@ ssh -v -i ~/.ssh/id_ed25519 user@server
 ssh -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519 user@server
 ```
 
-#### Common Connection Issues and Solutions
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
 ```bash
 # Problem: Permission denied (publickey)
 # Solutions:
@@ -355,9 +380,10 @@ grep "$(cat ~/.ssh/id_ed25519.pub)" user@server:~/.ssh/authorized_keys
 sudo grep "PubkeyAuthentication yes" /etc/ssh/sshd_config
 ```
 
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
 ### Key Management Best Practices
 
-#### Organizing Multiple Keys
 ```bash
 # Use descriptive key names
 ~/.ssh/id_ed25519_webserver
@@ -378,7 +404,8 @@ Host database
 EOF
 ```
 
-#### Basic Key Rotation
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
 ```bash
 # 1. Generate new key
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_new -C "user@host-$(date +%Y%m%d)"
@@ -398,9 +425,16 @@ mv ~/.ssh/id_ed25519_new ~/.ssh/id_ed25519
 mv ~/.ssh/id_ed25519_new.pub ~/.ssh/id_ed25519.pub
 ```
 
+**Related Commands/Topics:** See [Secure Key Distribution](#secure-key-distribution) 🔗
+
+---
+
+
 ---
 
 ## 13.3 SSH Server Security Configuration
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 ### Essential sshd_config Security Settings
 
@@ -660,7 +694,12 @@ sudo grep "Accepted" /var/log/auth.log
 
 ---
 
+
+---
+
 ### SSH Client Configuration and Best Practices
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 The SSH client configuration file (`~/.ssh/config`) allows you to set defaults and host-specific settings for easier and more secure connections.
 
@@ -788,7 +827,12 @@ ssh-add -c ~/.ssh/id_ed25519_critical
 
 ---
 
+
+---
+
 ## 13.5 SSH Security Best Practices
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 ### Defense-in-Depth Strategies
 
@@ -900,23 +944,17 @@ sudo journalctl -u sshd --since "1 hour ago" | grep -i failed
 
 #### Setting Up Alerts
 ```bash
-# Simple email alert for failed logins (example script)
-#!/bin/bash
-# /usr/local/bin/ssh-alert.sh
 
-FAILED_COUNT=$(grep "Failed password" /var/log/auth.log | grep "$(date '+%b %d')" | wc -l)
+> **Note:** Automated alert scripts and cron-based email notifications are considered advanced/enterprise topics. For beginner and intermediate training, focus on learning basic SSH log monitoring and manual review. Once you are comfortable with shell scripting and cron jobs, you can explore automation as a next step.
 
-if [ $FAILED_COUNT -gt 10 ]; then
-    echo "High number of SSH failures: $FAILED_COUNT" | mail -s "SSH Alert" admin@example.com
-fi
+---
 
-# Add to crontab to run hourly
-# 0 * * * * /usr/local/bin/ssh-alert.sh
-```
 
 ---
 
 ## 13.6 Practical Labs and Troubleshooting
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 ### Lab 1: SSH Key Generation and Distribution
 
@@ -1094,7 +1132,12 @@ ssh -o Ciphers=chacha20-poly1305@openssh.com user@server
 
 ---
 
+
+---
+
 ## Summary
+
+[1a Back to Top](#table-of-contents) | [139 Main Index](../README.md) 1a
 
 This streamlined Module 13 provides essential SSH best practices for beginner to intermediate system administrators. The module emphasizes:
 
