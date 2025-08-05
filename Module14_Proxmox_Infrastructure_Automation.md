@@ -70,6 +70,24 @@ By completing this module, you will be able to:
         * Infrastructure testing basics
         * Security scanning
     * [14.7 Secrets Management](#147-secrets-management)
+        * HashiCorp Vault integration for secrets
+        * Encrypting sensitive variables and files
+        * Secure credential injection in CI/CD
+        * SSH keys, API tokens, and certificate handling
+        * Secret rotation: Automated credential updates and compliance
+    * [14.8 Testing and Validation](#148-testing-and-validation)
+       * Terraform validation
+       * Ansible linting and best practice enforcement
+       * Role and playbook testing with containers
+       * Automated verification and compliance checking
+       * Security scanning Vulnerability assessment and policy enforcement
+    * [14.9 CI/CD Pipeline Integration](#149-cicd-pipeline-integration)
+       * Git workflows: GitOps principles and infrastructure versioning
+       * Automated testing: Validation pipelines and quality gates
+       * Deployment pipelines: GitLab CI, GitHub Actions, and Jenkins integration
+       * Infrastructure rollback: Disaster recovery and state management
+       * Compliance automation: Policy enforcement and audit trails
+    * [14.10 Monitoring and Observability](#1410-monitoring-and-observability)
         * Infrastructure monitoring basics
         * Log aggregation
         * Alerting systems
