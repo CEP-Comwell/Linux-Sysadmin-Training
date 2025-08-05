@@ -1,111 +1,91 @@
 # Module 14: Proxmox Infrastructure Automation
 
-**Transform Your Infrastructure with Enterprise DevOps Automation**
 
-This module delivers comprehensive enterprise Infrastructure as Code (IaC) and Configuration Management (CM) expertise using industry-leading tools including Terraform, Ansible, Cloud-Init, and CI/CD pipelines. Master the art of automated infrastructure provisioning, configuration management, and operational excellence for scalable, resilient, and secure enterprise environments.
+**Automate Your Proxmox Infrastructure with Practical Tools**
 
-**Advanced Enterprise Capabilities:**
-- Enterprise-grade Terraform implementations with remote state management and workspace strategies
-- Advanced Ansible automation with dynamic inventories, custom modules, and enterprise role architectures
-- Cloud-Init integration for rapid, standardized VM provisioning and configuration
-- Comprehensive secrets management with HashiCorp Vault, Ansible Vault, and encrypted state backends
-- Production-ready CI/CD pipelines with GitOps workflows and automated compliance validation
-- Advanced monitoring, observability, and infrastructure drift detection systems
-- Multi-cloud and hybrid infrastructure automation with disaster recovery capabilities
+This module introduces practical Infrastructure as Code (IaC) and Configuration Management (CM) for Proxmox using beginner-friendly tools: Terraform, Ansible, and Cloud-Init. Learn to automate VM provisioning, basic configuration, and essential monitoring for small to medium environments.
+
+**What You'll Learn:**
+- Basic Terraform usage for VM provisioning in Proxmox
+- Simple Ansible playbooks for configuration management
+- Cloud-Init for initial VM setup
+- Essential monitoring and troubleshooting
+
 
 ## Learning Objectives
 
-By completing this module, you will master:
+By completing this module, you will be able to:
 
-1. **Design Enterprise Infrastructure as Code**
-   - Architect scalable Terraform configurations with advanced module patterns
-   - Implement enterprise state management with remote backends and locking mechanisms
-   - Create reusable infrastructure components with versioned module libraries
+1. **Provision Proxmox VMs with Terraform**
+   - Write simple Terraform configuration files for basic VM creation
+   - Understand variables and outputs in Terraform
 
-2. **Implement Advanced Configuration Management**
-   - Build sophisticated Ansible automation with dynamic inventories and custom modules
-   - Design enterprise-grade role architectures with dependency management
-   - Create idempotent, testable configuration management workflows
+2. **Configure VMs with Ansible**
+   - Use Ansible playbooks to install packages and configure users
+   - Apply basic security settings
 
-3. **Master Automated VM Provisioning**
-   - Integrate Cloud-Init for standardized system initialization and configuration
-   - Implement template-based VM deployment with customization frameworks
-   - Automate network configuration, user management, and security hardening
+3. **Automate Initial VM Setup with Cloud-Init**
+   - Use Cloud-Init for user creation and SSH key setup
 
-4. **Deploy Production Secrets Management**
-   - Integrate HashiCorp Vault with Terraform and Ansible workflows
-   - Implement encrypted secrets distribution and rotation automation
-   - Design secure credential management for CI/CD pipelines
+4. **Monitor and Troubleshoot Proxmox VMs**
+   - Use built-in Proxmox tools and simple monitoring scripts
 
-5. **Build Enterprise CI/CD Infrastructure Pipelines**
-   - Create GitOps workflows for infrastructure lifecycle management
-   - Implement automated testing, validation, and compliance checking
-   - Design blue-green and canary deployment strategies for infrastructure
-
-6. **Establish Comprehensive Infrastructure Monitoring**
-   - Deploy infrastructure observability with Prometheus, Grafana, and alerting systems
-   - Implement drift detection and automated remediation workflows
-   - Create comprehensive infrastructure health monitoring and reporting
 
 ## Table of Contents
 
-### [14.1 Enterprise Infrastructure as Code Architecture](#141-enterprise-infrastructure-as-code-architecture)
-- Advanced Terraform architecture patterns and enterprise design principles
-- Remote state management with S3, Azure Storage, and Consul backends
-- Workspace strategies for environment isolation and team collaboration
-- Module development lifecycle and versioning strategies
-- State locking mechanisms and concurrent development workflows
+- [14.1 Infrastructure as Code Fundamentals](#141-infrastructure-as-code-fundamentals)
+  - IaC principles: declarative vs imperative
+  - Version control for infrastructure
+  - State management concepts
+  - Code organization and documentation
+  - Testing strategies
 
-### [14.2 Advanced Terraform Enterprise Implementation](#142-advanced-terraform-enterprise-implementation)
-- Proxmox provider advanced configuration and resource management
-- Complex networking automation with VLANs, bridges, and security groups
-- Storage orchestration with ZFS integration and snapshot automation
-- VM lifecycle management with template automation and scaling policies
-- Resource dependency management and provisioning optimization
+- [14.2 Terraform with Proxmox](#142-terraform-with-proxmox)
+  - Proxmox provider basics
+  - Resource definitions: VMs, storage, networking
+  - Variables and outputs
+  - Data sources
+  - Resource lifecycle management
 
-### [14.3 Ansible Enterprise Automation Framework](#143-ansible-enterprise-automation-framework)
-- Dynamic inventory management with cloud providers and custom sources
-- Advanced playbook design patterns and error handling strategies
-- Custom module development and Ansible Collections management
-- Enterprise role architecture with dependency graphs and testing frameworks
-- Performance optimization and parallel execution strategies
+- [14.3 Ansible Configuration Management](#143-ansible-configuration-management)
+  - Ansible inventory basics
+  - Playbooks and tasks
+  - Modules and collections
+  - Variable management
+  - SSH-based automation
 
-### [14.4 Cloud-Init and VM Template Automation](#144-cloud-init-and-vm-template-automation)
-- Advanced Cloud-Init configuration with multi-stage initialization
-- Template creation automation with Packer and custom image pipelines
-- Network configuration automation with static and dynamic addressing
-- Security hardening integration with CIS benchmarks and compliance frameworks
-- User management and SSH key distribution automation
+- [14.4 Cloud-Init Integration](#144-cloud-init-integration)
+  - Cloud-Init configuration basics
+  - Network automation
+  - Package and service management
+  - SSH key injection
+  - Custom scripts
 
-### [14.5 Enterprise Secrets Management Integration](#145-enterprise-secrets-management-integration)
-- HashiCorp Vault integration with Terraform and Ansible workflows
-- Dynamic secrets generation and automated rotation policies
-- Encrypted state management and secure CI/CD pipeline integration
-- Certificate authority automation and PKI infrastructure management
-- Multi-environment secrets isolation and access control policies
+- [14.5 Secrets Management](#145-secrets-management)
+  - Ansible Vault basics
+  - Environment variables for credentials
+  - Key management
+  - Secret rotation
 
-### [14.6 Production CI/CD Pipeline Architecture](#146-production-cicd-pipeline-architecture)
-- GitOps workflow implementation with infrastructure repositories
-- Automated testing frameworks with Terratest, Molecule, and InSpec
-- Multi-stage deployment pipelines with approval gates and rollback mechanisms
-- Infrastructure compliance automation with policy-as-code frameworks
-- Disaster recovery automation and backup orchestration
+- [14.6 Testing and Validation](#146-testing-and-validation)
+  - Terraform validation and formatting
+  - Ansible linting
+  - Infrastructure testing basics
+  - Security scanning
 
-### [14.7 Infrastructure Monitoring and Observability](#147-infrastructure-monitoring-and-observability)
-- Comprehensive infrastructure metrics collection and analysis
-- Automated alerting systems with escalation policies and incident response
-- Infrastructure drift detection and automated remediation workflows
-- Performance monitoring and capacity planning automation
-- Compliance monitoring and audit trail management
+- [14.7 Monitoring and Observability](#147-monitoring-and-observability)
+  - Infrastructure monitoring basics
+  - Log aggregation
+  - Alerting systems
+  - Performance monitoring
 
-### [14.8 Advanced Enterprise Patterns and Best Practices](#148-advanced-enterprise-patterns-and-best-practices)
-- Multi-cloud and hybrid infrastructure automation strategies
-- Disaster recovery automation with cross-region replication
-- Infrastructure cost optimization and resource lifecycle management
-- Security automation with vulnerability scanning and patch management
-- Enterprise governance with policy enforcement and access controls
+
+
+---
 
 ## Essential Command Reference
+
+[Back to Top](#table-of-contents) | [Main Index](../README.md) ⬆️📚
 
 ### Terraform Core Operations
 
@@ -347,11 +327,18 @@ By completing this module, you will master:
 
 **[⬆️ Back to Top](#module-14-proxmox-infrastructure-automation)** | **[📚 Main Index](README.md)**
 
+
+---
+
 ## Practical Examples
+
+[⬆️ Back to Top](#table-of-contents) | [📚 Main Index](../README.md) ⬆️
+
 
 ### Enterprise Terraform Infrastructure as Code Implementation
 
-#### Advanced Terraform Provider Configuration with State Management
+[⬆️ Back to Top](#table-of-contents) | [📚 Main Index](../README.md) ⬆️
+
 ```hcl
 # terraform/providers.tf
 terraform {
@@ -411,7 +398,8 @@ data "vault_generic_secret" "proxmox_creds" {
 }
 ```
 
-#### Enterprise Variables Configuration with Validation
+**Related Commands/Topics:** See [Terraform Core Operations](#terraform-core-operations) 🔗
+
 ```hcl
 # terraform/variables.tf
 
@@ -634,6 +622,8 @@ variable "common_tags" {
   }
 }
 ```
+
+**Related Commands/Topics:** See [Terraform Core Operations](#terraform-core-operations) 🔗
 
 #### Enterprise VM Resource Configuration with Advanced Features
 ```hcl
@@ -1789,7 +1779,10 @@ resource "proxmox_vm_qemu" "load_balancer" {
 }
 ```
 
+
 ### Cloud-Init Configuration
+
+[⬆️ Back to Top](#table-of-contents) | [📚 Main Index](../README.md) ⬆️
 
 #### Basic Cloud-Init Template
 ```yaml
