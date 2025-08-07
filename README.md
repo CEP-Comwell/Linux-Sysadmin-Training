@@ -3,7 +3,7 @@
 This comprehensive repository guides experienced Windows sysadmins through a structured journey from fundamental Linux administration to advanced DevOps infrastructure automation using enterprise-grade tools including ZFS, Proxmox VE, OpenSSH, Cloud-Init, Terraform, and Ansible.
 
 ---
- 
+# 
 ## Table of Contents
 
 ### 📚 Basic Linux & SysAdmin Foundations
