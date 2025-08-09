@@ -13,10 +13,8 @@
     - [Greeting Script with Arguments (Beginner)](#greeting-script-with-arguments-beginner)
   - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
   - [9.4 Functions and Modular Programming](#94-functions-and-modular-programming)
-    - [Log File Analyzer (Intermediate)](#log-file-analyzer-intermediate)
-    - [Interactive Confirmation (Intermediate)](#interactive-confirmation-intermediate)
-    - [Robust Script Template (Intermediate)](#robust-script-template-intermediate)
   - [9.5 Error Handling and Debugging](#95-error-handling-and-debugging)
+    - [4. File Line Counter (Beginner)](#4-file-line-counter-beginner)
     - [5. Disk Space Warning (Intermediate)](#5-disk-space-warning-intermediate)
     - [6. Batch File Renamer (Intermediate)](#6-batch-file-renamer-intermediate)
     - [7. Service Manager (Intermediate)](#7-service-manager-intermediate)
@@ -183,7 +181,6 @@ nginx is not running
 
 ## 9.4 Functions and Modular Programming
 
-
 Functions help you organize your scripts, avoid repetition, and build reusable code blocks. This section shows how to write functions and structure scripts for maintainability and scalability.
 
 **Learning Objectives:**
@@ -194,15 +191,9 @@ Functions help you organize your scripts, avoid repetition, and build reusable c
 **Why Functions Matter:**
 Functions make scripts easier to read, debug, and extend. Modular programming is key to writing professional, maintainable scripts.
 
----
-
-### Log File Analyzer (Intermediate)
-### Interactive Confirmation (Intermediate)
-### Robust Script Template (Intermediate)
-...existing code...
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## 9.5 Error Handling and Debugging
-
 
 No script is perfect on the first try! This section teaches you how to handle errors, debug scripts, and troubleshoot common problems so your automation is reliable and safe.
 
@@ -216,7 +207,7 @@ Good error handling and debugging save time, prevent mistakes, and make your scr
 
 ---
 
-...existing code...
+```bash
 if systemctl is-active --quiet "$service"; then
     echo "$service is running"
 else
