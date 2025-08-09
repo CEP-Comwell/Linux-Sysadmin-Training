@@ -78,6 +78,7 @@ This module covers essential command-line skills that every Linux system adminis
 
 ## Learning Objectives
 [⬆️ Back to Top](#table-of-contents)
+
 By the end of this module, you will be able to:
 
 1. **Master Shell Environment**: Navigate shell types, command structure, and environment configuration

@@ -7,29 +7,45 @@
 **🎯 Difficulty Level: ⭐⭐ (Beginner to Intermediate)**
 
 ## Table of Contents
-* [Overview](#overview)
-* [Learning Objectives](#learning-objectives)
-* [Topics](#topics)
-  * [2.1 Filesystem Hierarchy Standard (FHS)](#21-filesystem-hierarchy-standard-fhs)
-  * [2.2 Basic File and Directory Permissions](#22-basic-file-and-directory-permissions)
-  * [2.3 Special Permission Modes](#23-special-permission-modes)
-  * [2.4 Access Control Lists (ACLs)](#24-access-control-lists-acls)
-  * [2.5 File Attributes and Extended Attributes](#25-file-attributes-and-extended-attributes)
-* [Essential Command Reference](#essential-command-reference)
-* [Practical Examples](#practical-examples)
-  * [Filesystem Navigation and Understanding](#filesystem-navigation-and-understanding)
-  * [Permission Management](#permission-management)
-  * [Advanced Access Control](#advanced-access-control)
-  * [Security Auditing and Troubleshooting](#security-auditing-and-troubleshooting)
-* [Lab Exercises](#lab-exercises)
-  * [Lab 1: Filesystem Hierarchy Exploration](#lab-1-filesystem-hierarchy-exploration)
-  * [Lab 2: Permission Management Mastery](#lab-2-permission-management-mastery)
-  * [Lab 3: Advanced Access Control Implementation](#lab-3-advanced-access-control-implementation)
-  * [Lab 4: Security Auditing and Remediation](#lab-4-security-auditing-and-remediation)
-* [Best Practices Summary](#best-practices-summary)
-* [Troubleshooting Common Issues](#troubleshooting-common-issues)
-* [Assessment Criteria](#assessment-criteria)
-* [Next Steps](#next-steps)
+- [Module 2: Filesystem Hierarchy \& Permissions](#module-2-filesystem-hierarchy--permissions)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Learning Objectives](#learning-objectives)
+  - [Topics](#topics)
+    - [2.1 Filesystem Hierarchy Standard (FHS)](#21-filesystem-hierarchy-standard-fhs)
+    - [2.2 Basic File and Directory Permissions](#22-basic-file-and-directory-permissions)
+    - [2.3 Special Permission Modes](#23-special-permission-modes)
+    - [2.4 Access Control Lists (ACLs)](#24-access-control-lists-acls)
+    - [2.5 File Attributes and Extended Attributes](#25-file-attributes-and-extended-attributes)
+  - [Essential Command Reference](#essential-command-reference)
+  - [Practical Examples](#practical-examples)
+    - [Filesystem Navigation and Understanding 🟢](#filesystem-navigation-and-understanding-)
+      - [Exploring the Filesystem Hierarchy](#exploring-the-filesystem-hierarchy)
+    - [Permission Management 🟢](#permission-management-)
+      - [Basic Permission Operations](#basic-permission-operations)
+      - [Ownership Management](#ownership-management)
+      - [Advanced Permission Scenarios](#advanced-permission-scenarios)
+    - [Advanced Access Control 🟡](#advanced-access-control-)
+      - [SUID, SGID, and Sticky Bit Implementation](#suid-sgid-and-sticky-bit-implementation)
+      - [Access Control Lists (ACLs)](#access-control-lists-acls)
+      - [Comprehensive ACL Management Script](#comprehensive-acl-management-script)
+    - [Security Auditing and Troubleshooting 🟡](#security-auditing-and-troubleshooting-)
+      - [Permission Audit Script](#permission-audit-script)
+  - [Lab Exercises](#lab-exercises)
+    - [Lab 1: Filesystem Hierarchy Exploration 🟢](#lab-1-filesystem-hierarchy-exploration-)
+    - [Lab 2: Permission Management Mastery 🟢](#lab-2-permission-management-mastery-)
+    - [Lab 3: Advanced Access Control Implementation 🟡](#lab-3-advanced-access-control-implementation-)
+    - [Lab 4: Security Auditing and Remediation 🟡](#lab-4-security-auditing-and-remediation-)
+  - [Best Practices Summary](#best-practices-summary)
+    - [Filesystem Security Guidelines](#filesystem-security-guidelines)
+    - [Permission Management Workflow](#permission-management-workflow)
+    - [Common Permission Patterns](#common-permission-patterns)
+  - [Troubleshooting Common Issues](#troubleshooting-common-issues)
+    - [Permission Denied Errors](#permission-denied-errors)
+    - [ACL Issues](#acl-issues)
+    - [Ownership Issues](#ownership-issues)
+  - [Assessment Criteria](#assessment-criteria)
+  - [Next Steps](#next-steps)
 
 
 ## Overview
@@ -54,8 +70,6 @@ By the end of this module, you will be able to:
 4. **Configure ACLs**: Set up granular access control using POSIX Access Control Lists
 5. **Audit Security**: Identify and remediate permission issues using `find`, `stat`, `getfacl`, and security scanning tools
 6. **Apply Security Principles**: Implement least privilege and defense-in-depth strategies for filesystem security
-
-[⬆️ Back to Top](#table-of-contents)
 
 ## Topics
 [⬆️ Back to Top](#table-of-contents)
@@ -102,7 +116,6 @@ By the end of this module, you will be able to:
 - **Security Applications**: Using attributes for system hardening
 
 ## Essential Command Reference
-[⬆️ Back to Top](#table-of-contents)
 
 [⬆️ Back to Top](#table-of-contents)
 
@@ -651,8 +664,6 @@ echo "Full report saved to: $REPORT_FILE"
 ## Lab Exercises
 [⬆️ Back to Top](#table-of-contents)
 
-[⬆️ Back to Top](#table-of-contents)
-
 ### Lab 1: Filesystem Hierarchy Exploration 🟢
 **Objective:** Navigate and understand the Linux filesystem hierarchy and directory purposes.
 
@@ -824,7 +835,7 @@ rsync -a source/ destination/  # Archive mode preserves ownership
 
 ## Assessment Criteria
 
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 Students will be evaluated based on:
 
