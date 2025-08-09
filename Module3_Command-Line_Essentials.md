@@ -90,8 +90,9 @@ By the end of this module, you will be able to:
 7. **Archive Management**: Work with various archive and compression formats efficiently
 8. **Productivity Optimization**: Implement keyboard shortcuts, history management, and automation techniques
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Topics
-[⬆️ Back to Top](#table-of-contents)
 
 ### 3.1 Shell Basics and Environment
 - **Shell Types and Features**: bash, zsh, dash, and shell compatibility
@@ -161,8 +162,9 @@ By the end of this module, you will be able to:
 - **Archive Management**: Listing, updating, and manipulating archives
 - **Compression Strategy**: Choosing appropriate compression for different scenarios
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Essential Command Reference
-[⬆️ Back to Top](#table-of-contents)
 
 | Command | Description | Common Options | Example |
 |---------|-------------|----------------|---------|
@@ -187,7 +189,8 @@ By the end of this module, you will be able to:
 | `sudo` | Execute as another user | `-u`, `-i`, `-s` | `sudo -u www-data whoami` |
 
 [Related Commands/Topics: ls, cd, pwd, cp, mv, rm, find, grep, awk, sed, sort, uniq, xargs, sudo] 🟢
-[⬆️ Back to Top](#table-of-contents)
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Navigation and File Management
 [Related Commands/Topics: cd, ls, pwd, mkdir, rm, mv, cp, tree] 🟢
@@ -269,6 +272,8 @@ sort -k2 -n | \
 column -t
 # Format user information in columns, sorted by UID
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Shell Customization and Functions
 [Related Commands/Topics: bashrc, profile, alias, function, PS1, history, export] 🟡
@@ -514,6 +519,8 @@ sudo -u postgres createdb newdatabase
 
 [Related Commands/Topics: cd, ls, pwd, mkdir, rm, mv, cp, tree] 🟢
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 #### Advanced File Operations
 ```bash
 # Create complex directory structures
@@ -619,6 +626,7 @@ cd $WEBROOT            # Quick navigation to bookmarked locations
 # Find and navigate to directories
 cd $(find / -name "nginx" -type d 2>/dev/null | head -1)
 ```
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### File Information and Analysis
 ```bash
@@ -658,6 +666,8 @@ analyze_file "$1"
 ```
 
 [Related Commands/Topics: grep, awk, sed, sort, uniq, cut, paste, column, xargs] 🟡
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### Advanced Text Processing Chains
 ```bash
@@ -758,6 +768,8 @@ END {
 
 [Related Commands/Topics: bashrc, profile, alias, function, PS1, history, export] 🟡
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 #### Advanced Shell Configuration
 ```bash
 # ~/.bashrc - Comprehensive configuration
@@ -799,6 +811,7 @@ export PAGER='less -R'
 export LESS='-i -M -R -S -w -z-4'
 export GREP_OPTIONS='--color=auto'
 ```
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### Powerful Shell Functions
 ```bash
@@ -904,6 +917,7 @@ logwatch() {
     tail -f "$logfile" | grep --color=always "$pattern"
 }
 ```
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### Production-Ready Aliases
 ```bash
@@ -1002,6 +1016,8 @@ alias processes='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head'
 ```
 
 [Related Commands/Topics: watch, ps, top, ss, netstat, du, find, locate, awk, grep] 🟡
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### System Monitoring One-Liners
 ```bash
@@ -1118,8 +1134,9 @@ head -5
 # Top 5 busiest disks
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Lab Exercises
-[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: File System Navigation and Management
 **Objective:** Master efficient filesystem navigation and file operations.
@@ -1181,8 +1198,9 @@ head -5
 - Error handling examples
 - Monitoring and alerting implementations
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Best Practices Summary
-[⬆️ Back to Top](#table-of-contents)
 
 ### Command-Line Efficiency Guidelines
 
@@ -1195,6 +1213,8 @@ head -5
 | **Error Handling** | Check exit codes in scripts | `command && echo "success" \|\| echo "failed"` |
 | **History** | Use descriptive commands for searchability | Avoid overly abbreviated commands |
 | **Safety** | Use interactive mode for destructive operations | `rm -i`, `mv -i` |
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Performance Optimization
 
@@ -1213,6 +1233,8 @@ head -5
    - Limit memory usage with `ulimit`
    - Monitor long-running processes with `nohup`
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Security Considerations
 
 1. **Command Safety**
@@ -1224,6 +1246,8 @@ head -5
    - Set appropriate umask for created files
    - Use secure temporary files with `mktemp`
    - Avoid processing untrusted data with shell expansion
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Troubleshooting Common Issues
 [⬆️ Back to Top](#table-of-contents)
@@ -1276,8 +1300,9 @@ command2 < temp1.txt > temp2.txt
 command3 < temp2.txt
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Assessment Criteria
-[⬆️ Back to Top](#table-of-contents)
 
 Students will be evaluated on their ability to:
 
@@ -1288,8 +1313,9 @@ Students will be evaluated on their ability to:
 | **Shell Customization** | Implements comprehensive, well-organized customizations | Good customization with useful features | Basic customization with simple improvements | Minimal or ineffective customization |
 | **Problem Solving** | Efficiently solves complex problems using command-line tools | Good problem-solving with systematic approach | Basic problem-solving with guidance | Struggles to approach problems systematically |
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Next Steps
-[⬆️ Back to Top](#table-of-contents)
 
 After mastering command-line essentials, proceed to:
 
@@ -1298,3 +1324,5 @@ After mastering command-line essentials, proceed to:
 - **Module 9: Shell Scripting Fundamentals** - Build on command-line knowledge to create automation scripts
 
 The command-line proficiency developed in this module is fundamental to all subsequent Linux administration tasks and provides the foundation for efficient system management and automation.
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
