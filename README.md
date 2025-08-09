@@ -89,13 +89,18 @@ This comprehensive repository guides experienced Windows sysadmins through a str
    - [9.8 Enterprise Script Development](Module9_Shell_Scripting_Fundamentals.md#98-enterprise-script-development)
 
 10. **[Module 10: Storage & Filesystem Management](Module10_Storage_and_Filesystem_Management.md)**
-    - [10.1 Storage Fundamentals and Basic Partitioning](Module10_Storage_and_Filesystem_Management.md#101-storage-fundamentals-and-basic-partitioning)
-    - [10.2 Ext4 and Xfs Filesystem Management](Module10_Storage_and_Filesystem_Management.md#102-ext4-and-xfs-filesystem-management)
-    - [10.3 Lvm Fundamentals and Benefits](Module10_Storage_and_Filesystem_Management.md#103-lvm-fundamentals-and-benefits)
-    - [10.4 Storage Security and Backup Basics](Module10_Storage_and_Filesystem_Management.md#104-storage-security-and-backup-basics)
-    - [10.5 Looking Ahead Zfs Overview](Module10_Storage_and_Filesystem_Management.md#105-looking-ahead-zfs-overview)
-    - [10.7 Network Storage and Clustering](Module10_Storage_and_Filesystem_Management.md#107-network-storage-and-clustering)
-    - [10.8 Storage Security and Encryption](Module10_Storage_and_Filesystem_Management.md#108-storage-security-and-encryption)
+
+   - [10.1 Storage Fundamentals and Basic Partitioning](Module10_Storage_and_Filesystem_Management.md#101-storage-fundamentals-and-basic-partitioning)
+   - [10.2 Ext4 and XFS Filesystem Management](Module10_Storage_and_Filesystem_Management.md#102-ext4-and-xfs-filesystem-management)
+   - [10.3 LVM Fundamentals and Benefits](Module10_Storage_and_Filesystem_Management.md#103-lvm-fundamentals-and-benefits)
+   - [10.4 Storage Security and Backup Basics](Module10_Storage_and_Filesystem_Management.md#104-storage-security-and-backup-basics)
+   - [10.5 Looking Ahead: ZFS Overview](Module10_Storage_and_Filesystem_Management.md#105-looking-ahead-zfs-overview)
+   - [Essential Command Reference](Module10_Storage_and_Filesystem_Management.md#essential-command-reference)
+   - [Practical Examples](Module10_Storage_and_Filesystem_Management.md#practical-examples)
+   - [Hands-on Labs](Module10_Storage_and_Filesystem_Management.md#hands-on-labs)
+   - [Best Practices](Module10_Storage_and_Filesystem_Management.md#best-practices)
+   - [Troubleshooting](Module10_Storage_and_Filesystem_Management.md#troubleshooting)
+   - [Next Steps](Module10_Storage_and_Filesystem_Management.md#next-steps)
  
 ### 🚀 Advanced DevOps & Infrastructure Automation
  
