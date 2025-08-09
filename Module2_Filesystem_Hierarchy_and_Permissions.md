@@ -91,6 +91,8 @@ By the end of this module, you will be able to:
 - **Default Permissions**: Understanding umask and permission inheritance
 - **Directory vs File Permissions**: Different behaviors for directories and files
 
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
 ### 2.3 Special Permission Modes
 [Related Commands/Topics: chmod, find, stat] 🟡
 - **Set User ID (SUID)**: Execution with owner privileges
@@ -226,6 +228,8 @@ stat -c "%u %g" file.txt    # Show owner and group IDs
 id username                 # Show user's UID, GID, and groups
 ```
 
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
 #### Advanced Permission Scenarios
 ```bash
 #!/bin/bash
@@ -324,6 +328,7 @@ case "${1:-help}" in
         ;;
 esac
 ```
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 ### Advanced Access Control 🟡
 
@@ -361,6 +366,7 @@ chmod u-s program      # Remove SUID
 chmod g-s directory    # Remove SGID
 chmod -t directory     # Remove sticky bit
 ```
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 #### Access Control Lists (ACLs)
 ```bash
@@ -659,8 +665,9 @@ echo "=== AUDIT COMPLETE ==="
 echo "Full report saved to: $REPORT_FILE"
 ```
 
-## Lab Exercises
 [⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
+## Lab Exercises
 
 ### Lab 1: Filesystem Hierarchy Exploration 🟢
 **Objective:** Navigate and understand the Linux filesystem hierarchy and directory purposes.
@@ -723,9 +730,9 @@ echo "Full report saved to: $REPORT_FILE"
 - Monitoring implementation
 - Security baseline documentation
 
-## Best Practices Summary
-
 [⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
+## Best Practices Summary
 
 ### Filesystem Security Guidelines
 
@@ -780,9 +787,9 @@ chmod 1777 /tmp/shared
 setfacl -m d:g:team:rwx /shared/temp
 ```
 
-## Troubleshooting Common Issues
-
 [⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
+## Troubleshooting Common Issues
 
 ### Permission Denied Errors
 ```bash
@@ -830,10 +837,9 @@ chown -R user:group directory/
 cp -p source destination       # Preserve attributes
 rsync -a source/ destination/  # Archive mode preserves ownership
 ```
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 ## Assessment Criteria
-
-[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 Students will be evaluated based on:
 
@@ -844,9 +850,9 @@ Students will be evaluated based on:
 | **Security Implementation** | Implements comprehensive security policies using ACLs and advanced features | Good security practices with adequate implementation | Basic security awareness with simple implementations | Poor security practices or understanding |
 | **Troubleshooting Skills** | Quickly diagnoses and resolves complex permission issues | Good troubleshooting with systematic approach | Basic problem-solving with assistance | Difficulty identifying or resolving issues |
 
-## Next Steps
-
 [⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
+## Next Steps
 
 After mastering filesystem hierarchy and permissions, proceed to:
 
