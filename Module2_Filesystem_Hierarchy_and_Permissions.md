@@ -71,9 +71,9 @@ By the end of this module, you will be able to:
 5. **Audit Security**: Identify and remediate permission issues using `find`, `stat`, `getfacl`, and security scanning tools
 6. **Apply Security Principles**: Implement least privilege and defense-in-depth strategies for filesystem security
 
-## Topics
 [⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
+## Topics
 ### 2.1 Filesystem Hierarchy Standard (FHS)
 [Related Commands/Topics: ls, cd, pwd, du, df, tree] 🟢
 - **Root Directory Structure**: Understanding `/`, `/bin`, `/sbin`, `/lib`, `/lib64`
@@ -117,9 +117,9 @@ By the end of this module, you will be able to:
 - **Filesystem Support**: ext4, XFS, Btrfs attribute capabilities
 - **Security Applications**: Using attributes for system hardening
 
-## Essential Command Reference
-
 [⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
+## Essential Command Reference
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -137,8 +137,9 @@ By the end of this module, you will be able to:
 | `getfattr` | Get extended attributes | `getfattr -d file` |
 | `setfattr` | Set extended attributes | `setfattr -n user.comment -v "text" file` |
 
-## Practical Examples
 [⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
+
+## Practical Examples
 
 ### Filesystem Navigation and Understanding 🟢
 
