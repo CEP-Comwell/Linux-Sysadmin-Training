@@ -58,7 +58,7 @@ This module breaks down the Filesystem Hierarchy Standard (FHS) and Linux permis
 - Configure Access Control Lists (ACLs) for granular permission management
 - Audit and troubleshoot permission issues using modern tools
 
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 
 ## Learning Objectives
@@ -72,7 +72,7 @@ By the end of this module, you will be able to:
 6. **Apply Security Principles**: Implement least privilege and defense-in-depth strategies for filesystem security
 
 ## Topics
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 ### 2.1 Filesystem Hierarchy Standard (FHS)
 [Related Commands/Topics: ls, cd, pwd, du, df, tree] 🟢
@@ -117,7 +117,7 @@ By the end of this module, you will be able to:
 
 ## Essential Command Reference
 
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -136,9 +136,7 @@ By the end of this module, you will be able to:
 | `setfattr` | Set extended attributes | `setfattr -n user.comment -v "text" file` |
 
 ## Practical Examples
-[⬆️ Back to Top](#table-of-contents)
-
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 ### Filesystem Navigation and Understanding 🟢
 
@@ -662,7 +660,7 @@ echo "Full report saved to: $REPORT_FILE"
 ```
 
 ## Lab Exercises
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 ### Lab 1: Filesystem Hierarchy Exploration 🟢
 **Objective:** Navigate and understand the Linux filesystem hierarchy and directory purposes.
@@ -727,7 +725,7 @@ echo "Full report saved to: $REPORT_FILE"
 
 ## Best Practices Summary
 
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 ### Filesystem Security Guidelines
 
@@ -784,7 +782,7 @@ setfacl -m d:g:team:rwx /shared/temp
 
 ## Troubleshooting Common Issues
 
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 ### Permission Denied Errors
 ```bash
@@ -848,7 +846,7 @@ Students will be evaluated based on:
 
 ## Next Steps
 
-[⬆️ Back to Top](#table-of-contents)
+[⬆️ Back to Top](#table-of-contents) | **[Main Index](README.md)** 📚
 
 After mastering filesystem hierarchy and permissions, proceed to:
 
