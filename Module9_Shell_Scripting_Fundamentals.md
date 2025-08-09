@@ -12,11 +12,6 @@
   - [9.2 Variables and Parameter Management](#92-variables-and-parameter-management)
     - [Greeting Script with Arguments (Beginner)](#greeting-script-with-arguments-beginner)
   - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
-    - [Service Status Checker (Beginner)](#service-status-checker-beginner)
-    - [File Line Counter (Beginner)](#file-line-counter-beginner)
-    - [Disk Space Warning (Intermediate)](#disk-space-warning-intermediate)
-    - [Batch File Renamer (Intermediate)](#batch-file-renamer-intermediate)
-    - [Service Manager (Intermediate)](#service-manager-intermediate)
   - [9.4 Functions and Modular Programming](#94-functions-and-modular-programming)
     - [Log File Analyzer (Intermediate)](#log-file-analyzer-intermediate)
     - [Interactive Confirmation (Intermediate)](#interactive-confirmation-intermediate)
@@ -132,11 +127,6 @@ Control structures let your scripts respond to different situations, automate re
 
 ---
 
-### Service Status Checker (Beginner)
-### File Line Counter (Beginner)
-### Disk Space Warning (Intermediate)
-### Batch File Renamer (Intermediate)
-### Service Manager (Intermediate)
 
 **What does this script do?**
 This script checks if a specific system service (like nginx, ssh, or apache2) is running and prints a message to the user. It’s useful for quickly verifying service status during troubleshooting or automation.
