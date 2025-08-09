@@ -137,8 +137,11 @@ Control structures let your scripts respond to different situations, automate re
 ### Disk Space Warning (Intermediate)
 ### Batch File Renamer (Intermediate)
 ### Service Manager (Intermediate)
-**Example:**
 
+**What does this script do?**
+This script checks if a specific system service (like nginx, ssh, or apache2) is running and prints a message to the user. It’s useful for quickly verifying service status during troubleshooting or automation.
+
+**How does it work?**
 ```bash
 #!/bin/bash
 service="nginx"                                 # Set the service name to check
@@ -148,7 +151,29 @@ else
     echo "$service is not running"               # Print not running message
 fi
 ```
-This example checks if a service is running, using an if/else statement and command substitution.
+- The script sets the service name in the `service` variable.
+- It uses `systemctl is-active --quiet "$service"` to check if the service is running (returns 0 if active).
+- If the service is running, it prints a confirmation; otherwise, it prints a warning.
+
+**How do I use it?**
+1. Save the script as `check_service.sh`.
+2. Make it executable: `chmod +x check_service.sh`
+3. Run it: `./check_service.sh`
+4. To check a different service, change the value of `service` (e.g., `service="ssh"`).
+
+**Sample Output:**
+```
+nginx is running
+```
+or
+```
+nginx is not running
+```
+
+**Tips for customization:**
+- Accept the service name as a command-line argument: `service="${1:-nginx}"`
+- Add more detailed output or logging for troubleshooting.
+- Combine with other scripts to automate service checks across multiple servers.
 
 **Common Pitfalls:**
 - Misspelling the service name (e.g., 'ngnix' instead of 'nginx')
@@ -208,8 +233,11 @@ This example checks if a service is running, using an if/else statement and comm
 
 ### 4. File Line Counter (Beginner)
 
-**Concepts:** Reading files, loops
 
+**What does this script do?**
+This script counts the number of lines in a specified file. It’s useful for quickly checking file size, log file growth, or validating data files.
+
+**How does it work?**
 ```bash
 #!/bin/bash
 file="/etc/passwd"           # File to read
@@ -219,7 +247,26 @@ while IFS= read -r line; do  # Read each line from the file
 done < "$file"               # Redirect file into the loop
 echo "Total lines: $count"    # Print the total number of lines
 ```
-This script reads a file line by line and counts the lines, demonstrating loops and file input.
+- The script sets the file path in the `file` variable.
+- It initializes a counter variable `count` to zero.
+- It reads each line from the file and increments the counter for each line.
+- Finally, it prints the total number of lines.
+
+**How do I use it?**
+1. Save the script as `count_lines.sh`.
+2. Make it executable: `chmod +x count_lines.sh`
+3. Run it: `./count_lines.sh`
+4. To count lines in a different file, change the value of `file` (e.g., `file="mydata.txt"`).
+
+**Sample Output:**
+```
+Total lines: 42
+```
+
+**Tips for customization:**
+- Accept the file name as a command-line argument: `file="${1:-/etc/passwd}"`
+- Add error checking to handle missing or unreadable files.
+- Use `wc -l "$file"` for a simpler alternative (but less flexible for processing each line).
 
 **Common Pitfalls:**
 - Not checking if the file exists before reading
@@ -235,8 +282,11 @@ This script reads a file line by line and counts the lines, demonstrating loops 
 
 ### 5. Disk Space Warning (Intermediate)
 
-**Concepts:** Functions, numeric comparison, error handling
 
+**What does this script do?**
+This script checks the disk usage of your root filesystem and warns you if it exceeds a specified threshold. It’s useful for monitoring disk space and preventing outages due to full disks.
+
+**How does it work?**
 ```bash
 #!/bin/bash
 check_disk_space() {
@@ -252,7 +302,29 @@ check_disk_space() {
 }
 check_disk_space 75                          # Call function with threshold 75%
 ```
-This function checks disk usage and prints a warning if usage exceeds the threshold. It uses numeric comparison and a function for modularity.
+- The function `check_disk_space` takes a threshold value (default 80%).
+- It uses `df /` to get disk usage for the root filesystem and `awk` to extract the percentage.
+- If usage exceeds the threshold, it prints a warning and returns 1; otherwise, it prints an OK message and returns 0.
+
+**How do I use it?**
+1. Save the script as `disk_space_check.sh`.
+2. Make it executable: `chmod +x disk_space_check.sh`
+3. Run it: `./disk_space_check.sh 75` (or any threshold you want)
+4. To check a different mount point, change `/` to another path (e.g., `/home`).
+
+**Sample Output:**
+```
+WARNING: Disk usage is 82% (threshold: 75%)
+```
+or
+```
+Disk usage is acceptable: 42%
+```
+
+**Tips for customization:**
+- Schedule this script with cron to monitor disk space automatically.
+- Send email alerts or log warnings for proactive monitoring.
+- Check multiple mount points in a loop for comprehensive coverage.
 
 **Common Pitfalls:**
 - Not using `int($5)` in `awk` (may cause string comparison issues)
@@ -268,8 +340,11 @@ This function checks disk usage and prints a warning if usage exceeds the thresh
 
 ### 6. Batch File Renamer (Intermediate)
 
-**Concepts:** For loop, string manipulation
 
+**What does this script do?**
+This script renames all `.txt` files in the current directory to `.bak` files. It’s useful for batch processing, archiving, or preparing files for backup.
+
+**How does it work?**
 ```bash
 #!/bin/bash
 for file in *.txt; do                       # Loop through all .txt files in the directory
@@ -278,7 +353,27 @@ for file in *.txt; do                       # Loop through all .txt files in the
     echo "Renamed $file to ${file%.txt}.bak" # Print what was renamed
 done
 ```
-This script renames all `.txt` files to `.bak`, using a for loop and string manipulation.
+- The script loops through all files ending in `.txt`.
+- It checks if each item is a regular file before renaming.
+- It uses string manipulation `${file%.txt}.bak` to change the extension.
+- It prints a message for each file renamed.
+
+**How do I use it?**
+1. Save the script as `rename_txt_to_bak.sh`.
+2. Make it executable: `chmod +x rename_txt_to_bak.sh`
+3. Run it in the directory with your `.txt` files: `./rename_txt_to_bak.sh`
+4. To rename `.log` files, change `*.txt` to `*.log` and `.bak` to your desired extension.
+
+**Sample Output:**
+```
+Renamed notes.txt to notes.bak
+Renamed data.txt to data.bak
+```
+
+**Tips for customization:**
+- Add error checking to avoid overwriting existing files.
+- Use a backup directory for renamed files.
+- Extend the script to handle multiple file types or patterns.
 
 **Common Pitfalls:**
 - Not checking if files exist before renaming
@@ -294,8 +389,11 @@ This script renames all `.txt` files to `.bak`, using a for loop and string mani
 
 ### 7. Service Manager (Intermediate)
 
-**Concepts:** Case statement, functions, command-line arguments
 
+**What does this script do?**
+This script lets you start, stop, or check the status of a system service (like nginx, ssh, etc.) using a single command. It’s useful for automating service management and reducing manual errors.
+
+**How does it work?**
 ```bash
 #!/bin/bash
 service_action() {
@@ -319,7 +417,27 @@ service_action() {
 }
 service_action "$@"                         # Call function with all script arguments
 ```
-This script uses a case statement and function to manage a service, demonstrating modular code and argument parsing.
+- The function `service_action` takes two arguments: the action (start, stop, status) and the service name (default: nginx).
+- It uses a case statement to perform the requested action.
+- It prints feedback for each action and usage info for invalid actions.
+
+**How do I use it?**
+1. Save the script as `service_manager.sh`.
+2. Make it executable: `chmod +x service_manager.sh`
+3. Run it: `./service_manager.sh start nginx` or `./service_manager.sh status ssh`
+4. To add more actions (like restart), add another case to the statement.
+
+**Sample Output:**
+```
+Started nginx
+Stopped ssh
+Usage: ./service_manager.sh {start|stop|status} [service_name]
+```
+
+**Tips for customization:**
+- Add logging for each action performed.
+- Accept multiple services as arguments for batch management.
+- Add error handling for failed service commands.
 
 **Common Pitfalls:**
 - Not providing a default service name
