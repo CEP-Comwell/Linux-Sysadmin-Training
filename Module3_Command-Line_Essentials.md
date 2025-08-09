@@ -63,7 +63,6 @@
   - [Next Steps](#next-steps)
 
 ## Overview
-[⬆️ Back to Top](#table-of-contents)
 
 This module covers essential command-line skills that every Linux system administrator needs. Students will master filesystem navigation, file manipulation, text processing, and shell customization to build a foundation for efficient system administration. The focus is on practical, real-world command-line operations that form the backbone of Linux administration workflows.
 
@@ -76,8 +75,9 @@ This module covers essential command-line skills that every Linux system adminis
 - Debug command sequences and handle errors effectively
 - Automate repetitive tasks with aliases, functions, and scripts
 
+**[Back to Top](#table-of-contents)**⬆️ | **[Main Index](README.md)** 📚
+
 ## Learning Objectives
-[⬆️ Back to Top](#table-of-contents)
 
 By the end of this module, you will be able to:
 
