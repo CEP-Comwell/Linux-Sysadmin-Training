@@ -200,31 +200,31 @@ analyze_log() {
 analyze_log "/var/log/syslog"
 ```
 This function analyzes a log file and counts error and warning lines, using loops and string matching.
+    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ---
 
 ### 9. Interactive Confirmation (Intermediate)
+    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 **Concepts:** Functions, user input
 
 ```bash
 #!/bin/bash
-confirm_action() {
-    read -p "Are you sure? (y/n): " answer
-    [[ "$answer" =~ ^[Yy]$ ]]
-}
-if confirm_action; then
-    echo "Proceeding..."
+    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 else
     echo "Cancelled."
 fi
 ```
+    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 This script asks the user for confirmation before proceeding, using a function and user input.
 
 ---
 
+    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 ### 10. Robust Script Template (Intermediate)
 **Concepts:** Strict mode, error handling, functions, logging
 
+    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
