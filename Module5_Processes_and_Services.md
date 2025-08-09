@@ -5,46 +5,91 @@
 **📋 Prerequisites: Modules 1-4 (Command Line, Permissions, Package Management)**  
 **🎯 Difficulty Level: ⭐⭐⭐ (Intermediate)**
 
-
-
 ## Table of Contents
-* [Overview](#overview)
-* [Learning Objectives](#learning-objectives)
-* [Topics](#topics)
-    * [5.1 Process Basics](#51-process-basics-beginner)
-    * [5.2 Process Monitoring](#52-process-monitoring-intermediate)
-    * [5.3 Process Control](#53-process-control-intermediate)
-    * [5.4 Basic Service Management](#54-basic-service-management-intermediate)
-    * [5.5 Essential Systemd Operations](#55-essential-systemd-operations-advanced)
-* [Essential Command Reference](#essential-command-reference)
-    * [Process Monitoring Commands](#process-monitoring-commands)
-    * [Process Control Commands](#process-control-commands)
-    * [Service Management Commands](#service-management-commands)
-    * [System Monitoring Commands](#system-monitoring-commands)
-* [Quick Start Commands](#quick-start-commands)
-* [Understanding Linux Service Management Evolution](#understanding-linux-service-management-evolution)
-    * [From init.d to systemd: A Brief History](#from-initd-to-systemd-a-brief-history)
-    * [Understanding systemd Service States](#understanding-systemd-service-states)
-* [Practical Examples](#practical-examples)
-    * [Basic Process Monitoring Examples](#basic-process-monitoring-examples)
-    * [Understanding Background Processes and SSH](#understanding-background-processes-and-ssh)
-    * [Service Management Examples](#service-management-examples)
-* [Lab Exercises (~45 minutes total)](#lab-exercises-45-minutes-total)
-    * [Lab 1: Basic Process Monitoring (~15 minutes)](#lab-1-basic-process-monitoring-15-minutes)
-    * [Lab 2: Process Control and SSH Management (~20 minutes)](#lab-2-process-control-and-ssh-management-20-minutes)
-    * [Lab 3: Mastering Systemd Service Management (~10 minutes)](#lab-3-mastering-systemd-service-management-10-minutes)
-* [Best Practices](#best-practices)
-    * [Process Management Best Practices](#process-management-best-practices)
-    * [SSH and Remote Process Management](#ssh-and-remote-process-management)
-    * [Service Management Best Practices](#service-management-best-practices)
-* [Troubleshooting](#troubleshooting)
-    * [Understanding Error Codes and Exit Status](#understanding-error-codes-and-exit-status)
-    * [Common Process Problems](#common-process-problems)
-    * [SSH-Related Process Issues](#ssh-related-process-issues)
-    * [Common Service Problems](#common-service-problems)
-    * [General Troubleshooting Steps](#general-troubleshooting-steps)
-* [Summary](#summary)
-* [Next Steps](#next-steps)
+- [Module 5: Processes \& Services](#module-5-processes--services)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Learning Objectives](#learning-objectives)
+  - [Topics](#topics)
+    - [5.1 Process Basics (Beginner)](#51-process-basics-beginner)
+    - [5.2 Process Monitoring (Intermediate)](#52-process-monitoring-intermediate)
+    - [5.3 Process Control (Intermediate)](#53-process-control-intermediate)
+    - [5.4 Basic Service Management (Intermediate)](#54-basic-service-management-intermediate)
+    - [5.5 Essential Systemd Operations (Advanced)](#55-essential-systemd-operations-advanced)
+  - [Essential Command Reference](#essential-command-reference)
+    - [Process Monitoring Commands](#process-monitoring-commands)
+    - [Process Control Commands](#process-control-commands)
+    - [Service Management Commands](#service-management-commands)
+    - [System Monitoring Commands](#system-monitoring-commands)
+  - [Quick Start Commands](#quick-start-commands)
+  - [Understanding Linux Service Management Evolution](#understanding-linux-service-management-evolution)
+    - [From init.d to systemd: A Brief History](#from-initd-to-systemd-a-brief-history)
+      - [Traditional init.d System (Legacy)](#traditional-initd-system-legacy)
+      - [Modern systemd System (Current Standard)](#modern-systemd-system-current-standard)
+    - [Understanding systemd Service States](#understanding-systemd-service-states)
+      - [Service State vs Boot Configuration](#service-state-vs-boot-configuration)
+      - [Complete Service State Matrix](#complete-service-state-matrix)
+      - [Detailed Service States](#detailed-service-states)
+  - [Practical Examples](#practical-examples)
+    - [Basic Process Monitoring Examples](#basic-process-monitoring-examples)
+      - [Example 1: Finding a Slow Process](#example-1-finding-a-slow-process)
+      - [Example 2: Checking System Resources](#example-2-checking-system-resources)
+      - [Example 3: Background Job Management](#example-3-background-job-management)
+    - [Understanding Background Processes and SSH](#understanding-background-processes-and-ssh)
+      - [Why Background Processes Matter for Remote Systems](#why-background-processes-matter-for-remote-systems)
+      - [Example 4: SSH-Safe Process Management](#example-4-ssh-safe-process-management)
+      - [Example 5: Long-Running Tasks on Remote Servers](#example-5-long-running-tasks-on-remote-servers)
+      - [Example 6: Using Screen/Tmux for Advanced Session Management](#example-6-using-screentmux-for-advanced-session-management)
+      - [Example 7: Process Management Best Practices for SSH](#example-7-process-management-best-practices-for-ssh)
+    - [Service Management Examples](#service-management-examples)
+      - [Example 1: Complete Service Lifecycle Management](#example-1-complete-service-lifecycle-management)
+      - [Example 2: Understanding Service Dependencies](#example-2-understanding-service-dependencies)
+      - [Example 3: Advanced Status Checking](#example-3-advanced-status-checking)
+      - [Example 4: Managing a Web Server](#example-4-managing-a-web-server)
+      - [Example 5: Troubleshooting a Service](#example-5-troubleshooting-a-service)
+      - [Example 6: Comprehensive Service Troubleshooting](#example-6-comprehensive-service-troubleshooting)
+      - [Example 7: Common Service Patterns](#example-7-common-service-patterns)
+      - [Example 8: Regular Maintenance Tasks](#example-8-regular-maintenance-tasks)
+  - [Lab Exercises (~45 minutes total)](#lab-exercises-45-minutes-total)
+    - [Lab 1: Basic Process Monitoring (~15 minutes)](#lab-1-basic-process-monitoring-15-minutes)
+    - [Lab 2: Process Control and SSH Management (~20 minutes)](#lab-2-process-control-and-ssh-management-20-minutes)
+    - [Lab 3: Mastering Systemd Service Management (~10 minutes)](#lab-3-mastering-systemd-service-management-10-minutes)
+  - [Best Practices](#best-practices)
+    - [Process Management Best Practices](#process-management-best-practices)
+    - [SSH and Remote Process Management](#ssh-and-remote-process-management)
+    - [Service Management Best Practices](#service-management-best-practices)
+  - [Troubleshooting](#troubleshooting)
+    - [Understanding Error Codes and Exit Status](#understanding-error-codes-and-exit-status)
+      - [Process Exit Codes](#process-exit-codes)
+      - [Signal Numbers (for kill commands)](#signal-numbers-for-kill-commands)
+      - [SSH-Related Error Patterns](#ssh-related-error-patterns)
+      - [Service Error Categories](#service-error-categories)
+      - [How to Research Error Codes](#how-to-research-error-codes)
+      - [Practice Error Research](#practice-error-research)
+      - [Systematic Error Investigation Method](#systematic-error-investigation-method)
+      - [Error Code Categories and Research Strategies](#error-code-categories-and-research-strategies)
+    - [Common Process Problems](#common-process-problems)
+      - [System Running Slow](#system-running-slow)
+      - [Process Won't Stop](#process-wont-stop)
+      - [Process Using Too Much Memory](#process-using-too-much-memory)
+    - [SSH-Related Process Issues](#ssh-related-process-issues)
+      - [Process Died When SSH Disconnected](#process-died-when-ssh-disconnected)
+      - [Can't Find Background Process After Reconnecting](#cant-find-background-process-after-reconnecting)
+      - [Process Running But Can't Control It](#process-running-but-cant-control-it)
+    - [Common Service Problems](#common-service-problems)
+      - [Service Won't Start - Systematic Troubleshooting](#service-wont-start---systematic-troubleshooting)
+      - [Service Keeps Stopping/Restarting](#service-keeps-stoppingrestarting)
+      - [Service Status Shows "Failed"](#service-status-shows-failed)
+      - [Can't Connect to Service](#cant-connect-to-service)
+      - [Understanding systemctl Status Output](#understanding-systemctl-status-output)
+    - [General Troubleshooting Steps](#general-troubleshooting-steps)
+  - [Summary](#summary)
+  - [✅ Self-Assessment Checklist](#-self-assessment-checklist)
+    - [Key Concepts Covered](#key-concepts-covered)
+    - [Essential Commands Mastered](#essential-commands-mastered)
+    - [Best Practices Applied](#best-practices-applied)
+  - [Next Steps](#next-steps)
+  - [📖 Additional Resources](#-additional-resources)
 
 ## Overview
 Learn the essential skills for managing processes and services in Linux systems. This module covers the fundamental commands and concepts needed to monitor running processes, control system services, and troubleshoot basic performance issues.
@@ -56,7 +101,7 @@ Learn the essential skills for managing processes and services in Linux systems.
 - Common troubleshooting techniques
 - Essential command-line tools for system monitoring
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Learning Objectives
 By the end of this module, you will be able to:
@@ -68,7 +113,7 @@ By the end of this module, you will be able to:
 5. **Use Systemd Basics**: Understand and use basic systemd commands
 6. **Troubleshoot Issues**: Find and fix common process and service problems
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Topics
 
@@ -128,7 +173,7 @@ Related Commands: [Service Management Commands](#service-management-commands) | 
 
 Related Commands: [Service Management Commands](#service-management-commands) | [System Monitoring Commands](#system-monitoring-commands) 🔴
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Essential Command Reference
 
@@ -197,7 +242,7 @@ Related Topics: [5.3 Process Control](#53-process-control-intermediate) | [5.4 B
 | Check logs | `journalctl -u` | `journalctl -u nginx` |
 | Background task | `nohup command &` | `nohup rsync /data/ backup/ &` |
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Understanding Linux Service Management Evolution
 
@@ -306,7 +351,7 @@ systemctl status nginx
 - **Tasks**: Number of processes/threads
 - **Memory**: Current memory usage
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Practical Examples
 
@@ -354,12 +399,11 @@ bg %1
 kill %1
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Understanding Background Processes and SSH
 
 #### Why Background Processes Matter for Remote Systems
-
-
-
 
 When you connect to a remote system via SSH, all processes you start are tied to your SSH session by default. If your SSH connection drops (network issues, laptop sleep, etc.), all running processes will be terminated. This is where background process management becomes critical.
 
@@ -425,6 +469,8 @@ When you connect to a remote system via SSH, all processes you start are tied to
 > ⚠️ **SSH Safety Warning**: Always use `nohup` for long-running processes over SSH connections to prevent termination when your session disconnects.
 
 > 🚨 **Critical**: Never run important long-term tasks in the foreground over SSH - they will be killed if your connection drops.
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### Example 4: SSH-Safe Process Management
 ```bash
@@ -503,6 +549,8 @@ ps -p $(cat /tmp/last_job_pid.txt)
 kill $(cat /tmp/last_job_pid.txt)
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Service Management Examples
 
 #### Example 1: Complete Service Lifecycle Management
@@ -563,7 +611,7 @@ systemctl list-unit-files --type=service --state=enabled
 systemctl show nginx --property=MainPID,ActiveState,LoadState
 ```
 
-#### Example 1: Managing a Web Server
+#### Example 4: Managing a Web Server
 ```bash
 # Check if nginx is running
 systemctl status nginx
@@ -578,7 +626,7 @@ sudo systemctl enable nginx
 journalctl -u nginx -n 20
 ```
 
-#### Example 2: Troubleshooting a Service
+#### Example 5: Troubleshooting a Service
 ```bash
 # Service won't start - let's investigate
 systemctl status apache2
@@ -593,7 +641,7 @@ sudo systemctl start apache2
 ss -tulpn | grep :80
 ```
 
-#### Example 4: Comprehensive Service Troubleshooting
+#### Example 6: Comprehensive Service Troubleshooting
 ```bash
 # Step 1: Check detailed status
 systemctl status problematic-service --no-pager -l
@@ -619,7 +667,7 @@ journalctl -u problematic-service -f  # Follow logs in real-time
 sudo systemctl reset-failed problematic-service
 ```
 
-#### Example 5: Common Service Patterns
+#### Example 7: Common Service Patterns
 ```bash
 # Web server pattern
 sudo systemctl enable --now nginx    # Enable and start in one command
@@ -638,7 +686,7 @@ systemctl status sshd                # Verify it's running
 systemd-analyze blame | head -10     # See slowest services
 ```
 
-#### Example 3: Regular Maintenance Tasks
+#### Example 8: Regular Maintenance Tasks
 ```bash
 # List all failed services
 systemctl --failed
@@ -650,7 +698,7 @@ systemctl list-unit-files --type=service --state=enabled
 sudo systemctl restart ssh
 ```
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Lab Exercises (~45 minutes total)
 
@@ -783,6 +831,8 @@ ping google.com
 
 <details>
 <summary>🔍 <strong>Error Codes to Research</strong></summary>
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 **Common Error Codes:**
 - **SIGHUP (Signal 1)**: Process terminated when SSH connection drops (without nohup)
@@ -962,7 +1012,7 @@ systemctl status nginx
 
 </details>
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Best Practices
 
@@ -1021,6 +1071,8 @@ systemctl status nginx
    - Save important process PIDs: `echo $! > process.pid`
    - Use `ps aux | grep your_command` to verify processes
    - Monitor logs: `tail -f logfile.log`
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Service Management Best Practices
 
@@ -1083,7 +1135,7 @@ systemctl status nginx
    - Monitor service logs for unusual activity
    - Use `systemctl mask` to completely prevent a service from starting
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Troubleshooting
 
@@ -1491,6 +1543,8 @@ systemctl status nginx
 # Memory = current memory usage
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### General Troubleshooting Steps
 
 1. **Identify the Problem**
@@ -1519,7 +1573,7 @@ systemctl status nginx
    - Keep track of common problems
    - Remember solutions for next time
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Summary
 
@@ -1557,6 +1611,8 @@ After completing this module, you should be able to:
 - Use proper commands for service management
 - Document changes and solutions
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Next Steps
 
 Continue building your Linux administration skills with:
@@ -1573,4 +1629,4 @@ Continue building your Linux administration skills with:
 
 > 💡 **Remember**: The process and service management skills from this module are fundamental for maintaining stable Linux systems and will be used throughout your system administration career.
 
-[↑ Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
