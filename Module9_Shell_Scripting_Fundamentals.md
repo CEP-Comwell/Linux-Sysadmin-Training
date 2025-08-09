@@ -77,6 +77,8 @@ This script demonstrates the basics: shebang, echo, and running a script. Try ed
 2. How do you run a script after saving it?
 3. What happens if you forget to make your script executable?
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## 9.2 Variables and Parameter Management
 
 
@@ -111,6 +113,8 @@ This script uses a variable and command-line argument. Run with `./script.sh Ali
 1. What does `${1:-Guest}` mean in this script?
 2. How would you change the script to greet multiple names?
 3. Why is it important to quote variables in bash?
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## 9.3 Control Structures and Flow Control
 
@@ -174,6 +178,8 @@ nginx is not running
 1. What does `systemctl is-active --quiet "$service"` do?
 2. How would you modify the script to check a different service?
 3. What happens if you run this script on a system without systemd?
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## 9.4 Functions and Modular Programming
 
@@ -268,6 +274,8 @@ Total lines: 42
 2. How would you modify the script to count lines in a different file?
 3. What happens if the file does not exist?
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ---
 
 ### 5. Disk Space Warning (Intermediate)
@@ -315,9 +323,6 @@ Disk usage is acceptable: 42%
 - Schedule this script with cron to monitor disk space automatically.
 - Send email alerts or log warnings for proactive monitoring.
 - Check multiple mount points in a loop for comprehensive coverage.
-
-**Common Pitfalls:**
-- Not using `int($5)` in `awk` (may cause string comparison issues)
 - Forgetting to quote variables
 - Not handling cases where `df` output format changes
 
@@ -335,19 +340,14 @@ Disk usage is acceptable: 42%
 This script renames all `.txt` files in the current directory to `.bak` files. It’s useful for batch processing, archiving, or preparing files for backup.
 
 **How does it work?**
-```bash
-#!/bin/bash
-for file in *.txt; do                       # Loop through all .txt files in the directory
     [[ -f "$file" ]] || continue           # Skip if not a regular file
     mv "$file" "${file%.txt}.bak"           # Rename file by changing extension to .bak
-    echo "Renamed $file to ${file%.txt}.bak" # Print what was renamed
-done
-```
 - The script loops through all files ending in `.txt`.
 - It checks if each item is a regular file before renaming.
 - It uses string manipulation `${file%.txt}.bak` to change the extension.
 - It prints a message for each file renamed.
 
+ [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 **How do I use it?**
 1. Save the script as `rename_txt_to_bak.sh`.
 2. Make it executable: `chmod +x rename_txt_to_bak.sh`
@@ -366,16 +366,12 @@ Renamed data.txt to data.bak
 - Extend the script to handle multiple file types or patterns.
 
 **Common Pitfalls:**
-- Not checking if files exist before renaming
-- Accidentally overwriting files with the same name
-- Forgetting to escape special characters in filenames
 
 **Check Your Understanding:**
 1. What does `${file%.txt}.bak` do?
 2. How would you modify the script to rename `.log` files instead?
 3. Why is it important to check if a file exists before renaming?
 
----
 
 ### 7. Service Manager (Intermediate)
 
@@ -439,7 +435,7 @@ Usage: ./service_manager.sh {start|stop|status} [service_name]
 2. How would you add a 'restart' action to the case statement?
 3. Why is it useful to use functions for service management scripts?
 
----
+ [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### 8. Log File Analyzer (Intermediate)
 **Concepts:** Functions, loops, string matching
@@ -470,12 +466,13 @@ This function analyzes a log file and counts error and warning lines, using loop
 1. What does `[[ "$line" == *ERROR* ]]` do?
 2. How would you modify the script to count 'INFO' lines?
 3. Why is it important to check if the log file exists before analyzing?
-    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ---
 
 ### 9. Interactive Confirmation (Intermediate)
-    [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 **Concepts:** Functions, user input
 
 ```bash
@@ -539,7 +536,7 @@ This template demonstrates best practices: strict mode, error handling, function
 2. How does the `trap` command help with error handling?
 3. Why is logging important in scripts?
 
----
+ [Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 These examples reinforce the concepts covered in this module and provide a foundation for building more advanced scripts. Try modifying and combining them to automate your own tasks.
 
