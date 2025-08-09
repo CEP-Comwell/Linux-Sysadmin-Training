@@ -1,17 +1,34 @@
 # Module 9: Shell Scripting Fundamentals
 
+---
+
+## Learning Objectives
+
+- Understand the basics of writing and running Bash scripts
+- Use variables, quoting, and parameter expansion safely
+- Apply basic conditionals and control flow
+- Follow best practices: shebang, `set -euo pipefail`, quoting, safe loops
+- Recognize and avoid common pitfalls
+- Build, debug, and automate tasks with scripts
+- Practice with hands-on labs and real-world examples
+
+---
+
 
 
 
 ## Table of Contents
 
 - [Module 9: Shell Scripting Fundamentals](#module-9-shell-scripting-fundamentals)
+  - [Learning Objectives](#learning-objectives)
   - [Table of Contents](#table-of-contents)
   - [9.1 Shell Scripting Foundations](#91-shell-scripting-foundations)
     - [Hello World Script (Beginner)](#hello-world-script-beginner)
     - [9. Interactive Confirmation (Intermediate)](#9-interactive-confirmation-intermediate)
   - [9.2 Variables and Parameter Management](#92-variables-and-parameter-management)
     - [Greeting Script with Arguments (Beginner)](#greeting-script-with-arguments-beginner)
+- [Run with: ./script.sh Alice](#run-with-scriptsh-alice)
+- [Or: ./script.sh](#or-scriptsh)
   - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
     - [Conditionals: `if`, `elif`, `else`](#conditionals-if-elif-else)
     - [Why Prefer `[[ ... ]]` Over `[ ... ]`](#why-prefer----over---)
@@ -30,6 +47,7 @@
     - [Modular Script Structure](#modular-script-structure)
     - [Argument Parsing with `getopts`](#argument-parsing-with-getopts)
     - [Example: Function Reuse Across Two Tasks](#example-function-reuse-across-two-tasks)
+    - [Lab: Modularize a Script](#lab-modularize-a-script)
   - [9.5 Error Handling and Debugging](#95-error-handling-and-debugging)
     - [Strict Mode: `set -euo pipefail`](#strict-mode-set--euo-pipefail)
     - [Traps for Cleanup](#traps-for-cleanup)
@@ -37,6 +55,8 @@
     - [Debugging Techniques](#debugging-techniques)
     - [ShellCheck: Lint Your Scripts](#shellcheck-lint-your-scripts)
     - [Minimal Example: Temp Dir, Trap, Failure, Cleanup](#minimal-example-temp-dir-trap-failure-cleanup)
+    - [Lab: Add Robust Error Handling](#lab-add-robust-error-handling)
+  - [](#)
     - [4. File Line Counter (Beginner)](#4-file-line-counter-beginner)
     - [5. Disk Space Warning (Intermediate)](#5-disk-space-warning-intermediate)
     - [6. Batch File Renamer (Intermediate)](#6-batch-file-renamer-intermediate)
@@ -72,13 +92,14 @@
     - [4. Log Analysis and Reporting Script](#4-log-analysis-and-reporting-script)
     - [5. Deployment Automation Script](#5-deployment-automation-script)
   - [Next Steps](#next-steps)
+  - [Quick Reference Cheat Sheet](#quick-reference-cheat-sheet)
   - [Resources for Further Study](#resources-for-further-study)
   - [Glossary](#glossary)
 
 ## 9.1 Shell Scripting Foundations
 
 
-Welcome to Shell Scripting Foundations! This section introduces the basics of shell scripting in Linux using bash. You’ll learn how scripts work, how to write and run your first script, and why scripting is a powerful tool for sysadmins.
+Welcome to Shell Scripting Foundations! This section introduces the basics of shell scripting in Linux using Bash. You'll start with a simple Hello World script, then learn about variables, quoting, and basic conditionals. Each example includes a one-line purpose and inline comments. Best practices are emphasized from the start.
 
 **Learning Objectives:**
 - Understand what a shell script is and how it works
@@ -197,8 +218,15 @@ fi
 
 ## 9.2 Variables and Parameter Management
 
+**Beginner Section**
+
 
 Variables and parameters are the building blocks of any shell script. In this section, you’ll learn how to store and use data, pass information to scripts, and manipulate values for automation.
+
+**Best Practices:**
+- Always use a shebang (`#!/usr/bin/env bash`) at the top.
+- Use `set -euo pipefail` for safety.
+- Quote all variable expansions: `"$var"`.
 
 **Learning Objectives:**
 - Understand how to declare and use variables in bash
@@ -211,19 +239,25 @@ Variables let you store information, reuse values, and make your scripts flexibl
 ---
 
 ### Greeting Script with Arguments (Beginner)
-**Example:**
+
+**Purpose:** Print a personalized greeting using a variable and command-line argument.
 
 ```bash
-#!/bin/bash                  # Use bash to run this script
-name="${1:-Guest}"           # Set 'name' to the first argument, or 'Guest' if none provided
+#!/usr/bin/env bash          # Shebang: use bash
+set -euo pipefail            # Best practice: strict mode
+name="${1:-Guest}"           # Set 'name' to first argument, or 'Guest' if none
 echo "Welcome, $name!"        # Print a welcome message
 ```
-This script uses a variable and command-line argument. Run with `./script.sh Alice` or just `./script.sh`.
+# Run with: ./script.sh Alice
+# Or: ./script.sh
 
 **Common Pitfalls:**
-- Forgetting to use quotes around variables (e.g., `$name`)
+
+**Common Pitfalls:**
+- Forgetting to use quotes around variables (e.g., "$name")
 - Not providing a default value for arguments
 - Using `$1` without checking if it exists
+- Using `set -euo pipefail` without understanding its effect (script exits on error/unset variable)
 
 **Check Your Understanding:**
 1. What does `${1:-Guest}` mean in this script?
@@ -242,46 +276,61 @@ Control structures let your scripts make decisions, repeat actions, and handle m
 Use conditionals to test values, files, and strings. Prefer `[[ ... ]]` for Bash scripts—it supports regex, globbing, and avoids many quoting pitfalls.
 
 **Numeric, string, and file tests:**
-```bash
-#!/usr/bin/env bash
-num=5
-str="hello"
-file="/etc/passwd"
 
-if [[ $num -gt 3 ]]; then
+**Beginner Section**
+**Purpose:** Demonstrate numeric, string, and file tests using conditionals.
+
+```bash
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Best practice: strict mode
+num=5                         # Numeric variable
+str="hello"                   # String variable
+file="/etc/passwd"            # File path variable
+
+if [[ $num -gt 3 ]]; then     # Numeric test
     echo "Number is greater than 3"
-elif [[ -z "$str" ]]; then
+elif [[ -z "$str" ]]; then    # String test: empty
     echo "String is empty"
-elif [[ -f "$file" && -r "$file" ]]; then
+elif [[ -f "$file" && -r "$file" ]]; then  # File test: exists and readable
     echo "File exists and is readable"
 else
     echo "No conditions met"
 fi
 ```
+
 - `-f` (file exists), `-d` (directory), `-x` (executable), `-n` (non-empty string), `-z` (empty string).
+
+**Common Pitfalls:**
+- Forgetting to quote variables in tests (e.g., `-z $str`)
+- Using `[ ... ]` instead of `[[ ... ]]` for complex tests
+- Not checking file readability before reading
+- Using `=` for numeric comparison instead of `-eq`, `-gt`, etc.
 
 ### Why Prefer `[[ ... ]]` Over `[ ... ]`
 
-- `[[ ... ]]` is safer: no word-splitting, better quoting, supports regex (`=~`) and glob (`*`).
-- Example: regex and glob matching.
 
-**Regex and glob matching:**
+**Beginner Section**
+**Purpose:** Show why `[[ ... ]]` is safer and more powerful for regex and glob matching.
+
 ```bash
-#!/usr/bin/env bash
-input="error42"
-if [[ $input =~ ^error[0-9]+$ ]]; then
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Best practice: strict mode
+input="error42"               # Example input string
+if [[ $input =~ ^error[0-9]+$ ]]; then  # Regex match
     echo "Input matches error pattern"
 fi
 
-file="notes.txt"
-if [[ $file == *.txt ]]; then
+file="notes.txt"              # Example file name
+if [[ $file == *.txt ]]; then  # Glob match
     echo "It's a text file"
 fi
 ```
 
 ### `case` Statement for Subcommands
 
-Use `case` to handle multiple actions or subcommands cleanly.
+
+**Intermediate Section**
+**Purpose:** Use `case` to handle multiple actions or subcommands cleanly.
 
 **Subcommand handler:**
 ```bash
@@ -297,49 +346,69 @@ esac
 
 ### Safe Loop Patterns
 
-#### Iterate Arrays
+**Beginner Section**
+**Purpose:** Show safe ways to loop over arrays and files in Bash.
 
+#### Iterate Arrays
 Always quote `"${arr[@]}"` to avoid word-splitting.
 
 ```bash
-#!/usr/bin/env bash
-arr=("one" "two" "three")
-for item in "${arr[@]}"; do
-    echo "Item: $item"
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Best practice: strict mode
+arr=("one" "two" "three")      # Array of items
+for item in "${arr[@]}"; do     # Safe array iteration
+    echo "Item: $item"           # Print each item
 done
 ```
 
+**Common Pitfalls:**
+- Forgetting to quote `"${arr[@]}"` (can break on spaces)
+- Using `for item in $arr` instead of `for item in "${arr[@]}"`
+
 #### Read Lines Safely
 
-Use `IFS= read -r` to avoid mangling whitespace and backslashes.
+
+**Purpose:** Safely read lines from a file, handling all edge cases.
 
 ```bash
-#!/usr/bin/env bash
-while IFS= read -r line; do
-    echo "Line: $line"
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Best practice: strict mode
+while IFS= read -r line || [[ -n "$line" ]]; do  # Safe line reading
+    echo "Line: $line"           # Print each line
 done < "/etc/passwd"
 ```
 
+**Common Pitfalls:**
+- Not using `IFS= read -r` (can break on spaces/backslashes)
+- Loop misses last line if file doesn't end with newline
+
 #### File Iteration with `nullglob` or `find`
 
-Avoid errors with empty globs and handle filenames safely.
+
+**Purpose:** Safely iterate over files in a directory.
 
 ```bash
-#!/usr/bin/env bash
-shopt -s nullglob
-for f in /var/log/*.log; do
-    echo "Log file: $f"
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Best practice: strict mode
+shopt -s nullglob             # Avoid errors if no files match
+for f in /var/log/*.log; do   # Loop over .log files
+    echo "Log file: $f"        # Print file name
 done
 ```
 
 Or with `find` and `-print0` for robust handling:
 
 ```bash
-#!/usr/bin/env bash
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Best practice: strict mode
 find /var/log -name "*.log" -print0 | while IFS= read -r -d '' file; do
-    echo "Found: $file"
+    echo "Found: $file"        # Print file name
 done
 ```
+
+**Common Pitfalls:**
+- Not enabling `nullglob` (loop runs with literal '*.log' if no files)
+- Not quoting `$f` if filenames have spaces
 
 ### Real-World Example: Summarize Top 5 Log Messages
 
@@ -366,56 +435,73 @@ done | sort -rn | head -5
 
 ## 9.4 Functions and Modular Programming
 
-Functions are the building blocks of modular, maintainable shell scripts. They let you reuse code, encapsulate logic, and structure scripts for clarity and reliability.
+
+> **Beginner/Intermediate**
+
+**Purpose:** Functions let you reuse code, encapsulate logic, and structure scripts for clarity and reliability. Modular scripts are easier to maintain and debug.
+
+**Best Practices:**
+- Use functions for repeated logic.
+- Use `local` for variables inside functions to avoid polluting global scope.
+- Use clear, descriptive function names.
+- Keep functions short and focused.
+
+**Common Pitfalls:**
+- Forgetting to quote arguments (`"$1"`, `"$@"`).
+- Not using `local` for function variables (can cause bugs).
 
 ### Function Definitions and Calls
 
-Define a function with a name and parentheses. Use `local` for variables that should not leak outside the function.
+
+Define a function with a name and curly braces. Use `local` for variables that should not leak outside the function.
 
 ```bash
-#!/usr/bin/env bash
+#!/usr/bin/env bash           # Shebang: use bash
 greet() {
-    local name="$1"  # Only visible inside greet
-    echo "Hello, $name!"
+    local name="$1"           # Only visible inside greet
+    echo "Hello, $name!"      # Print greeting
 }
-greet "Sysadmin"
+greet "Sysadmin"              # Call function with argument
 ```
 
 ### Handling Arguments: `$1`, `$@`, `"$@"`, Arrays
+
 
 Functions can accept arguments like scripts. Use `$1`, `$2`, or `"$@"` for all arguments. Arrays are useful for lists.
 
 ```bash
 print_args() {
-    for arg in "$@"; do
-        echo "Arg: $arg"
+    for arg in "$@"; do         # Loop over all arguments
+        echo "Arg: $arg"         # Print each argument
     done
 }
-print_args one two three
+print_args one two three         # Call with multiple args
 
 arr=("apple" "banana" "cherry")
-print_args "${arr[@]}"
+print_args "${arr[@]}"           # Call with array
 ```
 
 ### Returning Data: `echo`/`printf` and Capturing Output
+
 
 Use `echo` or `printf` to return data. Capture with command substitution.
 
 ```bash
 add() {
-    echo "$(( $1 + $2 ))"
+    echo "$(( $1 + $2 ))"      # Output result
 }
-result="$(add 2 3)"
-echo "Sum: $result"
+result="$(add 2 3)"             # Capture output
+echo "Sum: $result"              # Print sum
 ```
 
 ### Return Codes vs Data
+
 
 Use `return` for status codes (0=success, nonzero=failure). Use output for data.
 
 ```bash
 is_file() {
-    [[ -f "$1" ]]
+    [[ -f "$1" ]]                # Returns 0 if file exists
 }
 if is_file "/etc/passwd"; then
     echo "File exists"
@@ -448,10 +534,11 @@ die() {
 
 ### Modular Script Structure
 
+
 Organize scripts into sections: constants, globals, functions, main logic.
 
 ```bash
-#!/usr/bin/env bash
+#!/usr/bin/env bash           # Shebang: use bash
 # Constants
 readonly DEFAULT_FILE="/etc/passwd"
 
@@ -473,19 +560,20 @@ main "$@"
 
 ### Argument Parsing with `getopts`
 
+
 Use `getopts` for flags and options. This example parses `-f file -t threshold -v`.
 
 ```bash
-#!/usr/bin/env bash
+#!/usr/bin/env bash           # Shebang: use bash
 file=""
 threshold=80
 VERBOSE=0
 
 while getopts ":f:t:v" opt; do
     case "$opt" in
-        f) file="$OPTARG";;
-        t) threshold="$OPTARG";;
-        v) VERBOSE=1;;
+        f) file="$OPTARG";;        # -f: file argument
+        t) threshold="$OPTARG";;   # -t: threshold argument
+        v) VERBOSE=1;;              # -v: verbose flag
         *) die "Usage: $0 [-f file] [-t threshold] [-v]";;
     esac
 done
@@ -495,6 +583,46 @@ log INFO "File: $file, Threshold: $threshold, Verbose: $VERBOSE"
 ```
 
 ### Example: Function Reuse Across Two Tasks
+
+```bash
+#!/usr/bin/env bash           # Shebang: use bash
+log() { local level="$1"; shift; printf '%s [%s] %s\n' "$(date '+%H:%M:%S')" "$level" "$*"; }
+
+count_lines() {
+    local file="$1"
+    local count=0
+    while IFS= read -r _; do ((count++)); done < "$file"
+    echo "$count"
+}
+
+main() {
+    log INFO "Counting lines in /etc/passwd"
+    lines="$(count_lines /etc/passwd)"
+    log INFO "Line count: $lines"
+
+    log INFO "Counting lines in /etc/group"
+    lines="$(count_lines /etc/group)"
+    log INFO "Line count: $lines"
+}
+
+main "$@"
+```
+
+---
+
+### Lab: Modularize a Script
+
+**Objective:** Refactor a script to use functions for clarity and reuse.
+
+**Steps:**
+1. Write a script that prints the number of lines in two files.
+2. Refactor the logic into a reusable function.
+3. Add logging for each step.
+
+**Hint:** Use a function that takes a filename and returns the line count.
+
+<details>
+<summary>Solution</summary>
 
 ```bash
 #!/usr/bin/env bash
@@ -520,81 +648,103 @@ main() {
 main "$@"
 ```
 
+</details>
+
 ---
 
 ## 9.5 Error Handling and Debugging
 
-Robust error handling and debugging are essential for safe automation. Bash provides strict modes, traps, and tracing tools to help you catch and fix problems early.
+
+> **Beginner/Intermediate**
+
+**Purpose:** Error handling and debugging make scripts reliable and safe for automation. Bash provides strict modes, traps, and tracing tools to help you catch and fix problems early.
+
+**Best Practices:**
+- Always enable strict mode (`set -euo pipefail`) at the top of scripts.
+- Use `trap` to clean up resources on exit or interruption.
+- Check exit codes and handle errors explicitly.
+- Use logging for errors and important events.
+
+**Common Pitfalls:**
+- Forgetting to set strict mode (silent failures, hard-to-find bugs).
+- Not cleaning up temporary files or resources.
+- Not quoting variables (can cause unexpected errors).
 
 ### Strict Mode: `set -euo pipefail`
 
+
 Enable strict mode at the top of your script:
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Strict mode: safer scripts
 # -e: exit on error
 # -u: error on unset variables
 # -o pipefail: fail if any command in a pipeline fails
 ```
-Caveats:
+
+**Caveats:**
 - In `if` statements, use `if command; then ...` (don't rely on `set -e` inside `if`).
 - Use `|| true` to ignore errors intentionally: `command || true`.
 - In subshells, strict mode may not propagate; set it inside subshells if needed.
 
 ### Traps for Cleanup
 
+
 Use `trap` to clean up resources on exit or interruption.
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
-tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"; echo "Cleaned up $tmpdir"' EXIT INT TERM
-echo "Working in $tmpdir"
-false  # Intentional failure
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Strict mode
+tmpdir="$(mktemp -d)"         # Create temp directory
+trap 'rm -rf "$tmpdir"; echo "Cleaned up $tmpdir"' EXIT INT TERM  # Cleanup on exit
+echo "Working in $tmpdir"      # Main logic
+false                         # Intentional failure
 # On exit, trap runs and cleans up temp dir
 ```
 
 ### Inspecting Exit Codes and Pipeline Failures
 
+
 Check the exit code of the last command with `$?`.
 ```bash
-#!/usr/bin/env bash
-ls /notfound
-code=$?
-echo "ls exited with code $code"
+#!/usr/bin/env bash           # Shebang: use bash
+ls /notfound                  # Command that fails
+code=$?                       # Capture exit code
+echo "ls exited with code $code"  # Print exit code
 ```
 With `set -o pipefail`, failures in any part of a pipeline are surfaced:
 ```bash
-#!/usr/bin/env bash
-set -o pipefail
-grep "foo" /notfound | sort
+#!/usr/bin/env bash           # Shebang: use bash
+set -o pipefail               # Fail if any command in pipeline fails
+grep "foo" /notfound | sort   # Will exit nonzero if grep fails
 # Will exit nonzero if grep fails
 ```
 
 ### Debugging Techniques
 
+
 Enable tracing for the whole script or just a function:
 ```bash
-#!/usr/bin/env bash
-set -x  # Trace all commands
-echo "Debugging..."
-set +x  # Stop tracing
+#!/usr/bin/env bash           # Shebang: use bash
+set -x                        # Trace all commands
+echo "Debugging..."           # Debug output
+set +x                        # Stop tracing
 ```
 Or run with tracing:
 ```bash
-bash -x script.sh
+bash -x script.sh             # Run script with tracing
 ```
 Targeted tracing inside a function:
 ```bash
 myfunc() {
-    set -x
-    echo "Inside function"
-    set +x
+    set -x                    # Enable tracing
+    echo "Inside function"     # Debug output
+    set +x                    # Disable tracing
 }
 myfunc
 ```
 
 ### ShellCheck: Lint Your Scripts
+
 
 Install ShellCheck (if not present):
 ```bash
@@ -604,20 +754,57 @@ brew install shellcheck          # macOS
 ```
 Run ShellCheck to find issues:
 ```bash
-shellcheck script.sh
+shellcheck script.sh             # Lint script for errors
 ```
 Address warnings for safer scripts.
 
 ### Minimal Example: Temp Dir, Trap, Failure, Cleanup
 
+
+```bash
+#!/usr/bin/env bash           # Shebang: use bash
+set -euo pipefail             # Strict mode
+tmpdir="$(mktemp -d)"         # Create temp directory
+trap 'rm -rf "$tmpdir"; echo "Cleaned up $tmpdir"' EXIT  # Cleanup on exit
+echo "Created $tmpdir"         # Main logic
+false                         # Simulate failure
+```
+
+---
+
+### Lab: Add Robust Error Handling
+
+**Objective:** Refactor a script to use strict mode, traps, and logging for error handling.
+
+**Steps:**
+1. Write a script that creates a temp file and writes to it.
+2. Add strict mode and a trap to clean up the temp file on exit.
+3. Add logging for each step and error.
+
+**Hint:** Use `set -euo pipefail`, `trap`, and a `log` function.
+
+<details>
+<summary>Solution</summary>
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"; echo "Cleaned up $tmpdir"' EXIT
-echo "Created $tmpdir"
-false  # Simulate failure
+tmpfile="$(mktemp)"
+trap 'rm -f "$tmpfile"; echo "Cleaned up $tmpfile"' EXIT INT TERM
+
+log() { local level="$1"; shift; printf '%s [%s] %s\n' "$(date '+%H:%M:%S')" "$level" "$*"; }
+
+log INFO "Writing to $tmpfile"
+echo "Hello, world!" > "$tmpfile"
+log INFO "Contents: $(cat "$tmpfile")"
+
+# Simulate error
+false || log ERROR "An error occurred"
+
+# On exit, trap runs and cleans up temp file
 ```
+
+</details>
 ---
 
 ### 4. File Line Counter (Beginner)
@@ -1923,6 +2110,97 @@ Try these exercises to apply your knowledge and prepare for real-world Linux adm
 
 ## Next Steps
 
+
+
+---
+
+## Quick Reference Cheat Sheet
+
+**Shebang:**
+```bash
+#!/usr/bin/env bash
+```
+
+**Strict Mode:**
+```bash
+set -euo pipefail
+```
+
+**Variables:**
+```bash
+name="value"
+echo "$name"
+```
+
+**Read Lines Safely:**
+```bash
+while IFS= read -r line || [[ -n "$line" ]]; do
+    echo "$line"
+done < "file.txt"
+```
+
+**For Loop (Files):**
+```bash
+shopt -s nullglob
+for f in *.txt; do
+    echo "$f"
+done
+```
+
+**Functions:**
+```bash
+myfunc() {
+    local arg="$1"
+    echo "Arg: $arg"
+}
+myfunc "hello"
+```
+
+**Argument Parsing:**
+```bash
+while getopts ":f:v" opt; do
+    case "$opt" in
+        f) file="$OPTARG";;
+        v) verbose=1;;
+    esac
+done
+shift $((OPTIND-1))
+```
+
+**Logging Helper:**
+```bash
+log() { local level="$1"; shift; printf '%s [%s] %s\n' "$(date '+%H:%M:%S')" "$level" "$*"; }
+```
+
+**Error Handling:**
+```bash
+die() { log ERROR "$*" >&2; exit 1; }
+```
+
+**Trap for Cleanup:**
+```bash
+trap 'rm -f "$tmpfile"' EXIT
+```
+
+**Check Exit Code:**
+```bash
+command
+code=$?
+echo "Exit code: $code"
+```
+
+**Debugging:**
+```bash
+set -x   # Enable tracing
+set +x   # Disable tracing
+```
+
+**Linting:**
+```bash
+shellcheck script.sh
+```
+
+---
 
 Congratulations on completing the Shell Scripting Fundamentals module! Here are some ways to continue your learning and grow as a Linux sysadmin:
 
