@@ -2,36 +2,56 @@
 
 
 ## Table of Contents
-* [Overview](#overview)
-* [Learning Objectives](#learning-objectives)
-* [Topics](#topics)
-    * [4.1 Package Management Fundamentals](#41-package-management-fundamentals)
-    * [4.2 Debian/Ubuntu Package Management (APT)](#42-debianubuntu-package-management-apt)
-    * [4.3 Red Hat/CentOS Package Management (YUMDNF)](#43-red-hatcentos-package-management-yumdnf)
-    * [4.4 SUSE Package Management (Zypper)](#44-suse-package-management-zypper)
-    * [4.5 Arch Linux Package Management (Pacman)](#45-arch-linux-package-management-pacman)
-    * [4.6 Universal Package Managers](#46-universal-package-managers)
-    * [4.7 Repository Management and Security](#47-repository-management-and-security)
-    * [4.8 Source Compilation and Custom Packages](#48-source-compilation-and-custom-packages)
-    * [4.9 Package Automation and Scripting](#49-package-automation-and-scripting)
-* [Essential Command Reference](#essential-command-reference)
-* [Practical Examples](#practical-examples)
-    * [Distribution-Specific Package Management](#distribution-specific-package-management)
-    * [Repository Configuration and Management](#repository-configuration-and-management)
-    * [Advanced Package Operations](#advanced-package-operations)
-    * [Automation and Maintenance Scripts](#automation-and-maintenance-scripts)
-* [Lab Exercises](#lab-exercises)
-    * [Lab 1: Multi-Distribution Package Management](#lab-1-multi-distribution-package-management)
-    * [Lab 2: Repository Management and Security](#lab-2-repository-management-and-security)
-    * [Lab 3: Source Compilation and Custom Packages](#lab-3-source-compilation-and-custom-packages)
-    * [Lab 4: Package Automation and Maintenance](#lab-4-package-automation-and-maintenance)
-* [Best Practices Summary](#best-practices-summary)
-* [Troubleshooting Common Issues](#troubleshooting-common-issues)
-* [Assessment Criteria](#assessment-criteria)
-* [Next Steps](#next-steps)
+- [Module 4: Package Management](#module-4-package-management)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Learning Objectives](#learning-objectives)
+  - [Topics](#topics)
+    - [4.1 Package Management Fundamentals](#41-package-management-fundamentals)
+    - [4.2 Debian/Ubuntu Package Management (APT)](#42-debianubuntu-package-management-apt)
+    - [4.3 Red Hat/CentOS Package Management (YUMDNF)](#43-red-hatcentos-package-management-yumdnf)
+    - [4.4 SUSE Package Management (Zypper)](#44-suse-package-management-zypper)
+    - [4.5 Arch Linux Package Management (Pacman)](#45-arch-linux-package-management-pacman)
+    - [4.6 Universal Package Managers](#46-universal-package-managers)
+    - [4.7 Repository Management and Security](#47-repository-management-and-security)
+    - [4.8 Source Compilation and Custom Packages](#48-source-compilation-and-custom-packages)
+    - [4.9 Package Automation and Scripting](#49-package-automation-and-scripting)
+  - [Essential Command Reference](#essential-command-reference)
+    - [Advanced Command Reference](#advanced-command-reference)
+  - [Practical Examples](#practical-examples)
+    - [Distribution-Specific Package Management](#distribution-specific-package-management)
+      - [Advanced APT Operations (Debian/Ubuntu)](#advanced-apt-operations-debianubuntu)
+      - [Comprehensive DNF/YUM Operations (Red Hat/CentOS)](#comprehensive-dnfyum-operations-red-hatcentos)
+      - [Zypper Operations (SUSE)](#zypper-operations-suse)
+      - [Pacman Operations (Arch Linux)](#pacman-operations-arch-linux)
+    - [Repository Configuration and Management](#repository-configuration-and-management)
+      - [APT Repository Management](#apt-repository-management)
+      - [YUM/DNF Repository Configuration](#yumdnf-repository-configuration)
+    - [Advanced Package Operations](#advanced-package-operations)
+      - [Package Dependency Analysis](#package-dependency-analysis)
+      - [Source Compilation Management](#source-compilation-management)
+    - [Automation and Maintenance Scripts](#automation-and-maintenance-scripts)
+      - [Comprehensive Package Maintenance](#comprehensive-package-maintenance)
+  - [Lab Exercises](#lab-exercises)
+    - [Lab 1: Multi-Distribution Package Management](#lab-1-multi-distribution-package-management)
+    - [Lab 2: Repository Management and Security](#lab-2-repository-management-and-security)
+    - [Lab 3: Source Compilation and Custom Packages](#lab-3-source-compilation-and-custom-packages)
+    - [Lab 4: Package Automation and Maintenance](#lab-4-package-automation-and-maintenance)
+  - [Best Practices Summary](#best-practices-summary)
+    - [Package Management Security](#package-management-security)
+    - [Performance Optimization](#performance-optimization)
+    - [Enterprise Considerations](#enterprise-considerations)
+  - [Troubleshooting Common Issues](#troubleshooting-common-issues)
+    - [Dependency Conflicts](#dependency-conflicts)
+    - [Repository Problems](#repository-problems)
+    - [Package Database Corruption](#package-database-corruption)
+  - [Assessment Criteria](#assessment-criteria)
+  - [Next Steps](#next-steps)
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Overview
-[⬆️ Back to Top](#table-of-contents)
+
 This module provides comprehensive coverage of package management across different Linux distributions. Students will master the installation, updating, removal, and management of software packages using various package managers including APT, YUM/DNF, Zypper, Pacman, and modern universal package systems. The focus is on practical, enterprise-ready package management strategies that ensure system security, stability, and maintainability.
 
 **Key Learning Outcomes:**
@@ -42,8 +62,10 @@ This module provides comprehensive coverage of package management across differe
 - Compile and package software from source when necessary
 - Integrate modern containerized package solutions into existing workflows
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Learning Objectives
-[⬆️ Back to Top](#table-of-contents)
+
 By the end of this module, you will be able to:
 
 1. **Understand Package Ecosystems**: Navigate different package management systems and their philosophies
@@ -55,8 +77,9 @@ By the end of this module, you will be able to:
 7. **Build Custom Packages**: Compile from source and create distribution packages
 8. **Integrate Modern Solutions**: Use Snap, Flatpak, and AppImage effectively
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Topics
-[⬆️ Back to Top](#table-of-contents)
 
 ### 4.1 Package Management Fundamentals
 - **Package Concepts**: Packages, dependencies, conflicts, and provides relationships
@@ -130,8 +153,9 @@ By the end of this module, you will be able to:
 - **Inventory Management**: Package inventory tracking and compliance reporting
 - **Performance Optimization**: Caching strategies, parallel operations, and efficiency
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Essential Command Reference
-[⬆️ Back to Top](#table-of-contents)
 
 | Distribution | Package Manager | Install | Remove | Update | Search | List Installed |
 |--------------|----------------|---------|---------|---------|---------|----------------|
@@ -151,8 +175,10 @@ By the end of this module, you will be able to:
 | **Clean cache** | `apt autoclean` | `dnf clean all` | `zypper clean` | `pacman -Sc` |
 | **Fix broken** | `apt --fix-broken install` | `dnf distro-sync` | `zypper verify` | `pacman -Dk` |
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Practical Examples
-[⬆️ Back to Top](#table-of-contents)
+
 ### Distribution-Specific Package Management
 [Related Commands/Topics: apt, dnf, yum, zypper, pacman, snap, flatpak, appimage] 🟢
 
@@ -195,6 +221,8 @@ sudo apt update --fix-missing               # Fix missing packages
 sudo apt clean                              # Clear downloaded package cache
 sudo apt autoclean                          # Clear outdated cached packages
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### Comprehensive DNF/YUM Operations (Red Hat/CentOS)
 [Related Commands/Topics: dnf, yum, rpm, dnf-plugins, dnf config-manager] 🟡
@@ -284,6 +312,8 @@ yay -S aur-package                          # Install from AUR
 yay -Sua                                    # Update AUR packages
 yay -Yc                                     # Clean unneeded dependencies
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Repository Configuration and Management
 [Related Commands/Topics: apt-add-repository, add-apt-repository, apt-key, dnf config-manager, zypper addrepo, repo files] 🟡
@@ -462,6 +492,8 @@ case "${1:-help}" in
 esac
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Advanced Package Operations
 [Related Commands/Topics: apt depends, dnf deplist, pacman -Si, rpm -qf, apt-file, dnf provides] 🟡
 
@@ -578,6 +610,8 @@ case "${1:-help}" in
         ;;
 esac
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### Source Compilation Management
 [Related Commands/Topics: make, cmake, meson, checkinstall, build-essential, base-devel] 🟡
@@ -714,6 +748,8 @@ case "${1:-help}" in
         ;;
 esac
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Automation and Maintenance Scripts
 [Related Commands/Topics: cron, unattended-upgrades, dnf-automatic, pacman -Syu, dpkg, rpm, compliance] 🟡
@@ -893,8 +929,9 @@ main() {
 main "$@"
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Lab Exercises
-[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: Multi-Distribution Package Management
 **Objective:** Master package management across different Linux distributions.
@@ -956,8 +993,9 @@ main "$@"
 - Rollback and recovery procedures
 - Compliance monitoring system
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Best Practices Summary
-[⬆️ Back to Top](#table-of-contents)
 
 ### Package Management Security
 
@@ -968,6 +1006,8 @@ main "$@"
 | **Regular Updates** | Automated security patching | Minimize vulnerability exposure |
 | **Repository Audit** | Regular third-party repo review | Maintain trusted sources |
 | **Backup Before Updates** | System snapshots before major updates | Enable quick recovery |
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Performance Optimization
 
@@ -986,6 +1026,8 @@ main "$@"
    - Use unattended upgrades for security patches
    - Implement staged rollouts for major updates
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Enterprise Considerations
 
 1. **Change Management**
@@ -1003,8 +1045,9 @@ main "$@"
    - Standardize repository configurations
    - Implement configuration management integration
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Troubleshooting Common Issues
-[⬆️ Back to Top](#table-of-contents)
 
 ### Dependency Conflicts
 ```bash
@@ -1022,6 +1065,8 @@ sudo dnf autoremove                   # Remove orphaned dependencies
 sudo pacman -Dk                       # Check database consistency
 sudo pacman -Syyu                     # Force refresh and upgrade
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Repository Problems
 ```bash
@@ -1051,8 +1096,9 @@ sudo pacman -Dk                       # Check database
 sudo pacman-db-upgrade                # Upgrade database format
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Assessment Criteria
-[⬆️ Back to Top](#table-of-contents)
 
 Students will be evaluated on their ability to:
 
@@ -1063,8 +1109,9 @@ Students will be evaluated on their ability to:
 | **Automation Skills** | Creates sophisticated automation solutions | Good automation with functional scripts | Basic automation capabilities | Manual operations only |
 | **Troubleshooting Ability** | Efficiently resolves complex package issues | Good problem-solving with systematic approach | Basic troubleshooting with guidance | Struggles with problem resolution |
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Next Steps
-[⬆️ Back to Top](#table-of-contents)
 
 After mastering package management, proceed to:
 
@@ -1073,3 +1120,5 @@ After mastering package management, proceed to:
 - **Module 9: Shell Scripting Fundamentals** - Create advanced package management automation scripts
 
 The package management expertise developed in this module is essential for maintaining secure, up-to-date systems and forms the foundation for advanced system administration and automation tasks.
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
