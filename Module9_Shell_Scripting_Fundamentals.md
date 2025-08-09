@@ -2,166 +2,79 @@
 
 
 ## Table of Contents
-* [Overview](#overview)
-* [Learning Objectives](#learning-objectives)
-* [Topics Covered](#topics-covered)
-    * [9.1 Shell Scripting Foundations](#91-shell-scripting-foundations)
-    * [9.2 Variables and Parameter Management](#92-variables-and-parameter-management)
-    * [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
-    * [9.4 Functions and Modular Programming](#94-functions-and-modular-programming)
-    * [9.5 Advanced InputOutput Operations](#95-advanced-inputoutput-operations)
-    * [9.6 Error Handling and Debugging](#96-error-handling-and-debugging)
-    * [9.7 System Integration and Automation](#97-system-integration-and-automation)
-    * [9.8 Enterprise Script Development](#98-enterprise-script-development)
-* [Essential Command Reference](#essential-command-reference)
-* [Practical Examples](#practical-examples)
-    * [Script Foundation and Best Practices](#script-foundation-and-best-practices)
-    * [Variable and Parameter Techniques](#variable-and-parameter-techniques)
-    * [Control Flow and Logic Implementation](#control-flow-and-logic-implementation)
-    * [Functions for Modular, Readable Code](#functions-for-modular-readable-code)
-    * [Command-Line Option Parsing with getopts](#command-line-option-parsing-with-getopts)
-    * [Error Handling and Debugging](#error-handling-and-debugging)
-* [Lab Exercises](#lab-exercises)
-    * [Lab 1 Advanced Script Development](#lab-1-advanced-script-development)
-    * [Lab 2 System Automation Framework](#lab-2-system-automation-framework)
-    * [Lab 3 Enterprise Monitoring Solutions](#lab-3-enterprise-monitoring-solutions)
-    * [Lab 4 Database Management Automation](#lab-4-database-management-automation)
-    * [Lab 5 Infrastructure Orchestration](#lab-5-infrastructure-orchestration)
-* [Best Practices](#best-practices)
-* [Troubleshooting](#troubleshooting)
-* [Assessment Criteria](#assessment-criteria)
-* [Next Steps](#next-steps)
+
+- [Module 9: Shell Scripting Fundamentals](#module-9-shell-scripting-fundamentals)
+    - [Table of Contents](#table-of-contents)
+    - [Overview](#overview)
+    - [9.1 Shell Scripting Foundations](#91-shell-scripting-foundations)
+    - [9.2 Variables and Parameter Management](#92-variables-and-parameter-management)
+    - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
+    - [9.4 Functions and Modular Programming](#94-functions-and-modular-programming)
+    - [9.5 Error Handling and Debugging](#95-error-handling-and-debugging)
+    - [File and Directory Operations](#file-and-directory-operations)
+    - [Process and Signal Management](#process-and-signal-management)
+    - [Debugging and Testing Commands](#debugging-and-testing-commands)
+    - [Practical Examples](#practical-examples)
+        - [Script Foundation and Best Practices](#script-foundation-and-best-practices)
+            - [Basic Script Template](#basic-script-template)
+    - [Best Practices](#best-practices)
+    - [Troubleshooting](#troubleshooting)
 
 ## Overview
 
-This module provides comprehensive coverage of shell scripting for enterprise Linux environments, from fundamental concepts to advanced automation frameworks. Students will master bash scripting techniques, create robust system administration tools, and develop enterprise-grade automation solutions for production infrastructure management.
+
+This module introduces the fundamentals of shell scripting in Linux using bash. You will learn how to write, execute, and debug basic scripts, use variables, control flow, and functions, and automate common system administration tasks. The focus is on practical, beginner to intermediate skills for everyday Linux scripting.
 
 **Module Focus Areas:**
-- Professional shell script development with security and error handling
-- Advanced parameter processing and configuration management
-- Complex control structures and algorithmic programming
-- Modular function libraries and reusable code frameworks
-- System integration, service orchestration, and infrastructure automation
-- Enterprise monitoring, alerting, and incident response automation
-- Database management, backup automation, and disaster recovery scripts
-- Performance optimization and script security best practices
-
-## Learning Objectives
 
 By the end of this module, you will be able to:
-
-1. **Master Script Foundations**: Create professional shell scripts with proper structure, security, and error handling
-2. **Implement Advanced Logic**: Design complex control structures, algorithms, and data processing workflows
-3. **Develop Modular Code**: Build reusable function libraries and configurable automation frameworks
-4. **Create System Automation**: Automate system administration tasks with enterprise-grade reliability
-5. **Design Monitoring Solutions**: Implement comprehensive monitoring, alerting, and incident response systems
-6. **Build Database Tools**: Create database management, backup, and recovery automation scripts
-7. **Optimize Performance**: Write efficient, secure, and maintainable shell scripts for production environments
-8. **Integrate Systems**: Develop orchestration scripts for complex infrastructure management workflows
-
-## Topics Covered
-
-### 9.1 Shell Scripting Foundations
-- Script structure, shebang lines, and execution environments
-- Variables, arrays, and data types in bash
-- Parameter expansion, substitution, and string manipulation
-- Input/output redirection and pipe programming
-- Script permissions, security considerations, and best practices
-- Environment setup and configuration management
+1. Write and execute basic bash scripts
+2. Use variables, parameters, and simple data manipulation
+3. Implement control flow with if/else, case, and loops
+4. Create and use functions for modular code
+5. Handle basic errors and debug scripts
+6. Automate simple system administration tasks
+### 9.3 Control Structures and Flow Control
 
 ### 9.2 Variables and Parameter Management
-- Advanced variable techniques and scope management
-- Command-line argument processing with getopts and manual parsing
-- Configuration file parsing and environment variable handling
-- Array manipulation and associative arrays
-- Dynamic variable creation and indirect references
-- Parameter validation and sanitization
+- Declaring and using variables
+- Command-line arguments ($1, $2, ...)
+- Environment variables
+- Basic parameter expansion and default values
+### 9.4 Functions and Modular Programming
 
 ### 9.3 Control Structures and Flow Control
-- Conditional statements and complex boolean logic
-- Case statements and pattern matching
-- Loop constructs: for, while, until, and select
-- Break and continue statements for flow control
-- Signal handling and trap mechanisms
-- Parallel processing and background jobs
+- if/else statements
+- case statements
 
-### 9.4 Functions and Modular Programming
-- Function definition, scope, and parameter passing
-- Return values and exit codes
-- Library creation and source management
-- Recursive functions and advanced algorithms
-- Function testing and debugging techniques
-- Code organization and maintainability
-
-### 9.5 Advanced InputOutput Operations
-- File processing and stream manipulation
-- Network operations and API interactions
-- Database connectivity and query execution
-- Log parsing and data extraction
-- Report generation and formatting
-- Binary file handling and encoding
-
-### 9.6 Error Handling and Debugging
-- Comprehensive error detection and handling strategies
-- Debugging techniques and troubleshooting methods
-- Logging and audit trail implementation
-- Exception handling and recovery procedures
-- Script testing and validation frameworks
-- Performance monitoring and optimization
-
-### 9.7 System Integration and Automation
-- Service management and process control
-- System monitoring and health checks
-- Backup and recovery automation
-- Security scanning and compliance checking
-- Package management and software deployment
-- Network configuration and management
-
-### 9.8 Enterprise Script Development
-- Code quality standards and documentation
-- Version control integration and deployment pipelines
-- Security scanning and vulnerability assessment
-- Performance testing and optimization
-- Maintenance and support procedures
-- Enterprise integration patterns
-
-## Essential Command Reference
-
-### Core Shell Scripting Commands
-| Command | Purpose | Common Usage |
-|---------|---------|--------------|
-| `bash` | Execute bash scripts | `bash script.sh` or `bash -x script.sh` |
-| `source` / `.` | Execute script in current shell | `source config.sh` or `. ./functions.sh` |
-| `chmod` | Set script permissions | `chmod +x script.sh` |
-| `which` | Find command location | `which bash` |
-| `type` | Display command type | `type -a function_name` |
-
-### Variable and Parameter Commands
-| Command | Purpose | Common Usage |
-|---------|---------|--------------|
-| `declare` | Declare variables/arrays | `declare -a array_name` |
-| `readonly` | Make variables read-only | `readonly VAR=value` |
-| `unset` | Remove variables | `unset variable_name` |
-| `export` | Export environment variables | `export PATH=$PATH:/new/path` |
-| `env` | Display environment | `env | grep VAR` |
-
-### Control Flow and Testing Commands
-| Command | Purpose | Common Usage |
-|---------|---------|--------------|
-| `test` / `[` | Conditional testing | `test -f file` or `[ -f file ]` |
-| `[[` | Extended test operator | `[[ $var =~ regex ]]` |
-| `expr` | Arithmetic expressions | `expr $a + $b` |
-| `(( ))` | Arithmetic evaluation | `(( var++ ))` |
-| `case` | Pattern matching | `case $var in pattern) ... ;;` |
-
-### String and Array Manipulation
-| Command | Purpose | Common Usage |
-|---------|---------|--------------|
-| `cut` | Extract fields from text | `cut -d: -f1 /etc/passwd` |
-| `awk` | Text processing | `awk '{print $1}' file` |
-| `sed` | Stream editor | `sed 's/old/new/g' file` |
-| `grep` | Pattern searching | `grep -E "pattern" file` |
-| `sort` | Sort lines | `sort -n file` |
+- [Module 9: Shell Scripting Fundamentals](#module-9-shell-scripting-fundamentals)
+    - [Table of Contents](#table-of-contents)
+    - [Overview](#overview)
+    - [9.1 Shell Scripting Foundations](#91-shell-scripting-foundations)
+    - [9.2 Variables and Parameter Management](#92-variables-and-parameter-management)
+    - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
+    - [9.4 Functions and Modular Programming](#94-functions-and-modular-programming)
+    - [9.5 Error Handling and Debugging](#95-error-handling-and-debugging)
+    - [Variable and Parameter Commands](#variable-and-parameter-commands)
+    - [Control Flow and Testing Commands](#control-flow-and-testing-commands)
+    - [String and Array Manipulation](#string-and-array-manipulation)
+    - [File and Directory Operations](#file-and-directory-operations)
+    - [Process and Signal Management](#process-and-signal-management)
+    - [Debugging and Testing Commands](#debugging-and-testing-commands)
+    - [Practical Examples](#practical-examples)
+        - [Script Foundation and Best Practices](#script-foundation-and-best-practices)
+            - [Basic Script Template](#basic-script-template)
+        - [Control Structures: if/else and case](#control-structures-ifelse-and-case)
+        - [Functions for Modular, Readable Code](#functions-for-modular-readable-code)
+        - [Command-Line Option Parsing with getopts](#command-line-option-parsing-with-getopts)
+        - [Error Handling and Debugging](#error-handling-and-debugging)
+    - [Best Practices](#best-practices)
+        - [Script Development Standards](#script-development-standards)
+        - [Performance Optimization](#performance-optimization)
+        - [Security Considerations](#security-considerations)
+    - [Troubleshooting](#troubleshooting)
+        - [Common Scripting Issues](#common-scripting-issues)
+        - [Debugging Techniques](#debugging-techniques)
 | `tr` | Character translation | `tr '[:lower:]' '[:upper:]'` |
 
 ### File and Directory Operations
@@ -169,7 +82,6 @@ By the end of this module, you will be able to:
 |---------|---------|--------------|
 | `find` | Search files/directories | `find /path -name "*.sh"` |
 | `xargs` | Execute commands on input | `find . -name "*.log" | xargs rm` |
-| `basename` | Extract filename | `basename /path/to/file.txt` |
 | `dirname` | Extract directory path | `dirname /path/to/file.txt` |
 | `realpath` | Get absolute path | `realpath relative/path` |
 
@@ -178,7 +90,6 @@ By the end of this module, you will be able to:
 |---------|---------|--------------|
 | `ps` | Show processes | `ps aux | grep script` |
 | `kill` | Send signals | `kill -TERM $PID` |
-| `trap` | Handle signals | `trap 'cleanup' EXIT` |
 | `nohup` | Run without hangup | `nohup long_script.sh &` |
 | `jobs` | List background jobs | `jobs -l` |
 
@@ -187,938 +98,95 @@ By the end of this module, you will be able to:
 |---------|---------|--------------|
 | `set` | Set shell options | `set -euo pipefail` |
 | `bash -x` | Debug mode | `bash -x script.sh` |
-| `shellcheck` | Static analysis | `shellcheck script.sh` |
 | `time` | Measure execution time | `time ./script.sh` |
 | `strace` | System call tracing | `strace -f ./script.sh` |
 
-**[Back to Top](#module-9-shell-scripting-fundamentals)** ⬆️ | **[Main Index](README.md)** 📚
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Practical Examples
 
 ### Script Foundation and Best Practices
 
-#### Professional Script Template
-```bash
-#!/usr/bin/env bash
-# script_template.sh - Professional bash script template
-# Description: Template for enterprise-grade shell scripts
-# Author: System Administrator
-# Version: 1.0
-# Created: $(date +%Y-%m-%d)
 
-# Strict error handling
-set -euo pipefail
-
-# Script configuration
-readonly SCRIPT_NAME="$(basename "$0")"
-readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly SCRIPT_VERSION="1.0"
-
-# Default configuration
-DEFAULT_CONFIG_FILE="/etc/${SCRIPT_NAME%.sh}/config.conf"
-DEFAULT_LOG_LEVEL="INFO"
-DEFAULT_DRY_RUN="false"
-
-# Global variables
-declare -g CONFIG_FILE="${DEFAULT_CONFIG_FILE}"
-declare -g LOG_LEVEL="${DEFAULT_LOG_LEVEL}"
-declare -g DRY_RUN="${DEFAULT_DRY_RUN}"
-declare -g VERBOSE="false"
-
-# Colors for output
-readonly RED='\033[0;31m'
-readonly GREEN='\033[0;32m'
-readonly YELLOW='\033[1;33m'
-readonly BLUE='\033[0;34m'
-readonly NC='\033[0m' # No Color
-
-# Function: Display usage information
-usage() {
-    cat << EOF
-Usage: $SCRIPT_NAME [OPTIONS] [ARGUMENTS]
-
-Description:
-    Professional script template with enterprise features
-
-Options:
-    -c, --config FILE    Configuration file (default: $DEFAULT_CONFIG_FILE)
-    -l, --log-level LVL  Log level: DEBUG, INFO, WARN, ERROR (default: $DEFAULT_LOG_LEVEL)
-    -d, --dry-run        Show what would be done without executing
-    -v, --verbose        Enable verbose output
-    -h, --help           Display this help message
-    -V, --version        Display version information
-
-Examples:
-    $SCRIPT_NAME --config /custom/config.conf
-    $SCRIPT_NAME --dry-run --verbose
-    $SCRIPT_NAME --log-level DEBUG
-
-EOF
-}
-
-# Function: Display version information
-version() {
-    echo "$SCRIPT_NAME version $SCRIPT_VERSION"
-}
-
-# Function: Logging with levels
-log() {
-    local level="$1"
-    shift
-    local message="$*"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    
-    # Check if we should log this level
-    case "$LOG_LEVEL" in
-        "DEBUG") levels="DEBUG INFO WARN ERROR" ;;
-        "INFO")  levels="INFO WARN ERROR" ;;
-        "WARN")  levels="WARN ERROR" ;;
-        "ERROR") levels="ERROR" ;;
-    esac
-    
-    if [[ " $levels " =~ " $level " ]]; then
-        case "$level" in
-            "DEBUG") echo -e "${BLUE}[$timestamp] DEBUG: $message${NC}" >&2 ;;
-            "INFO")  echo -e "${GREEN}[$timestamp] INFO: $message${NC}" >&2 ;;
-            "WARN")  echo -e "${YELLOW}[$timestamp] WARN: $message${NC}" >&2 ;;
-            "ERROR") echo -e "${RED}[$timestamp] ERROR: $message${NC}" >&2 ;;
-        esac
-    fi
-}
-
-# Function: Cleanup on exit
-cleanup() {
-    local exit_code=$?
-    log "INFO" "Script cleanup initiated"
-    
-    # Add cleanup tasks here
-    # Remove temporary files, close connections, etc.
-    
-    if [[ $exit_code -eq 0 ]]; then
-        log "INFO" "Script completed successfully"
-    else
-        log "ERROR" "Script failed with exit code: $exit_code"
-    fi
-    
-    exit $exit_code
-}
-
-# Function: Validate prerequisites
-validate_prerequisites() {
-    log "DEBUG" "Validating prerequisites"
-    
-    # Check required commands
-    local required_commands=("awk" "sed" "grep" "find")
-    for cmd in "${required_commands[@]}"; do
-        if ! command -v "$cmd" &> /dev/null; then
-            log "ERROR" "Required command not found: $cmd"
-            exit 1
-        fi
-    done
-    
-    # Check configuration file
-    if [[ ! -f "$CONFIG_FILE" ]] && [[ "$CONFIG_FILE" != "$DEFAULT_CONFIG_FILE" ]]; then
-        log "ERROR" "Configuration file not found: $CONFIG_FILE"
-        exit 1
-    fi
-    
-    # Validate log level
-    case "$LOG_LEVEL" in
-        "DEBUG"|"INFO"|"WARN"|"ERROR") ;;
-        *) log "ERROR" "Invalid log level: $LOG_LEVEL"; exit 1 ;;
-    esac
-    
-    log "DEBUG" "Prerequisites validation completed"
-}
-
-# Function: Load configuration
-load_configuration() {
-    if [[ -f "$CONFIG_FILE" ]]; then
-        log "DEBUG" "Loading configuration from: $CONFIG_FILE"
-        # Source configuration file safely
-        if source "$CONFIG_FILE"; then
-            log "INFO" "Configuration loaded successfully"
-        else
-            log "ERROR" "Failed to load configuration file"
-            exit 1
-        fi
-    else
-        log "DEBUG" "No configuration file found, using defaults"
-    fi
-}
-
-# Function: Parse command line arguments
-parse_arguments() {
-    while [[ $# -gt 0 ]]; do
-        case $1 in
-            -c|--config)
-                CONFIG_FILE="$2"
-                shift 2
-                ;;
-            -l|--log-level)
-                LOG_LEVEL="$2"
-                shift 2
-                ;;
-            -d|--dry-run)
-                DRY_RUN="true"
-                shift
-                ;;
-            -v|--verbose)
-                VERBOSE="true"
-                shift
-                ;;
-            -h|--help)
-                usage
-                exit 0
-                ;;
-            -V|--version)
-                version
-                exit 0
-                ;;
-            -*)
-                log "ERROR" "Unknown option: $1"
-                usage
-                exit 1
-                ;;
-            *)
-                # Store positional arguments
-                POSITIONAL_ARGS+=("$1")
-                shift
-                ;;
-        esac
-    done
-}
-
-# Function: Main execution logic
-main() {
-    log "INFO" "Starting $SCRIPT_NAME execution"
-    
-    # Your main script logic goes here
-    if [[ "$DRY_RUN" == "true" ]]; then
-        log "INFO" "DRY RUN MODE - No changes will be made"
-    fi
-    
-    if [[ "$VERBOSE" == "true" ]]; then
-        log "DEBUG" "Verbose mode enabled"
-    fi
-    
-    # Example operations
-    log "INFO" "Executing main functionality..."
-    
-    # Add your script logic here
-    
-    log "INFO" "Main execution completed successfully"
-}
-
-# Set up signal handlers
-trap cleanup EXIT
-trap 'log "ERROR" "Script interrupted"; exit 130' INT TERM
-
-# Initialize positional arguments array
-declare -a POSITIONAL_ARGS=()
-
-# Parse command line arguments
-parse_arguments "$@"
-
-# Set remaining positional arguments
-set -- "${POSITIONAL_ARGS[@]}"
-
-# Load configuration and validate
-load_configuration
-validate_prerequisites
-
-# Execute main logic
-main "$@"
-```
-**Related Commands/Topics:** [Debugging and Testing Commands](#debugging-and-testing-commands) 🟥
-
-#### Advanced Error Handling Framework
-```bash
-#!/usr/bin/env bash
-# error_handling_framework.sh - Advanced error handling and recovery
-
-# Strict error handling with custom error function
-set -euo pipefail
-
-# Error handling configuration
-readonly ERROR_LOG="/var/log/script_errors.log"
-readonly MAX_RETRIES=3
-readonly RETRY_DELAY=5
-
-# Error tracking
-declare -g ERROR_COUNT=0
-declare -A ERROR_HISTORY=()
-
-# Function: Advanced error handler
-error_handler() {
-    local exit_code=$?
-    local line_number=$1
-    local bash_lineno=$2
-    local last_command=$3
-    local function_stack=("${FUNCNAME[@]}")
-    
-    ((ERROR_COUNT++))
-    
-    local error_id="ERR_$(date +%Y%m%d_%H%M%S)_$$"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    
-    # Create detailed error report
-    local error_report=$(cat << EOF
-=== ERROR REPORT ===
-Error ID: $error_id
-Timestamp: $timestamp
-Exit Code: $exit_code
-Line Number: $line_number
-Last Command: $last_command
-Function Stack: ${function_stack[*]}
-Script: $0
-PID: $$
-User: $(whoami)
-Working Directory: $(pwd)
-Environment: $(env | grep -E '^(PATH|HOME|USER)=' | tr '\n' ' ')
-EOF
-)
-    
-    # Log error
-    echo "$error_report" >> "$ERROR_LOG"
-    echo "$error_report" >&2
-    
-    # Store error in history
-    ERROR_HISTORY["$error_id"]="$exit_code:$line_number:$last_command"
-    
-    # Attempt recovery based on error type
-    case $exit_code in
-        1)
-            log "WARN" "General error detected, attempting recovery"
-            attempt_recovery "$error_id" "$exit_code"
-            ;;
-        2)
-            log "ERROR" "Syntax error detected, cannot recover"
-            send_alert "CRITICAL" "Syntax error in script $0"
-            ;;
-        126)
-            log "ERROR" "Permission denied, checking file permissions"
-            check_permissions
-            ;;
-        127)
-            log "ERROR" "Command not found, checking dependencies"
-            check_dependencies
-            ;;
-        *)
-            log "ERROR" "Unknown error code: $exit_code"
-            ;;
-    esac
-}
-
-# Function: Retry mechanism with exponential backoff
-retry_with_backoff() {
-    local max_attempts="$1"
-    local delay="$2"
-    local command="$3"
-    shift 3
-    local args=("$@")
-    
-    local attempt=1
-    local current_delay="$delay"
-    
-    while [[ $attempt -le $max_attempts ]]; do
-        log "DEBUG" "Attempt $attempt of $max_attempts: $command ${args[*]}"
-        
-        if "$command" "${args[@]}"; then
-            log "INFO" "Command succeeded on attempt $attempt"
-            return 0
-        else
-            local exit_code=$?
-            log "WARN" "Command failed on attempt $attempt with exit code: $exit_code"
-            
-            if [[ $attempt -lt $max_attempts ]]; then
-                log "INFO" "Waiting ${current_delay}s before retry..."
-                sleep "$current_delay"
-                # Exponential backoff
-                current_delay=$((current_delay * 2))
-            fi
-        fi
-        
-        ((attempt++))
-    done
-    
-    log "ERROR" "Command failed after $max_attempts attempts"
-    return 1
-}
-
-# Function: Safe command execution
-safe_execute() {
-    local description="$1"
-    local command="$2"
-    shift 2
-    local args=("$@")
-    
-    log "INFO" "Executing: $description"
-    log "DEBUG" "Command: $command ${args[*]}"
-    
-    if [[ "$DRY_RUN" == "true" ]]; then
-        log "INFO" "DRY RUN: Would execute: $command ${args[*]}"
-        return 0
-    fi
-    
-    # Execute with timeout and error handling
-    if timeout 300 "$command" "${args[@]}"; then
-        log "INFO" "Successfully completed: $description"
-        return 0
-    else
-        local exit_code=$?
-        log "ERROR" "Failed to execute: $description (exit code: $exit_code)"
-        return $exit_code
-    fi
-}
-
-# Function: Validate critical resources
-validate_resources() {
-    log "DEBUG" "Validating critical resources"
-    
-    # Check disk space
-    local disk_usage=$(df / | awk 'NR==2 {print $5}' | sed 's/%//')
-    if [[ $disk_usage -gt 90 ]]; then
-        log "ERROR" "Disk usage critical: ${disk_usage}%"
-        return 1
-    fi
-    
-    # Check memory
-    local mem_available=$(free | awk 'NR==2{printf "%.2f", $7/$2*100}')
-    if (( $(echo "$mem_available < 10" | bc -l) )); then
-        log "WARN" "Low memory available: ${mem_available}%"
-    fi
-    
-    # Check load average
-    local load_avg=$(uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | sed 's/,//')
-    local cpu_count=$(nproc)
-    if (( $(echo "$load_avg > $cpu_count * 2" | bc -l) )); then
-        log "WARN" "High load average: $load_avg (CPUs: $cpu_count)"
-    fi
-    
-    log "DEBUG" "Resource validation completed"
-    return 0
-}
-
-# Function: Send alerts
-send_alert() {
-    local severity="$1"
-    local message="$2"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    
-    # Log the alert
-    log "$severity" "ALERT: $message"
-    
-    # Send email if configured
-    if [[ -n "${ALERT_EMAIL:-}" ]]; then
-        echo "[$timestamp] $severity: $message" | \
-            mail -s "Script Alert: $SCRIPT_NAME" "$ALERT_EMAIL"
-    fi
-    
-    # Send to syslog
-    logger -p user.err "SCRIPT_ALERT: $SCRIPT_NAME - $severity: $message"
-    
-    # Send to monitoring system (if configured)
-    if [[ -n "${MONITORING_WEBHOOK:-}" ]]; then
-        curl -X POST -H "Content-Type: application/json" \
-             -d "{\"severity\":\"$severity\",\"message\":\"$message\",\"script\":\"$SCRIPT_NAME\"}" \
-             "$MONITORING_WEBHOOK" || true
-    fi
-}
-
-# Set up error handling
-trap 'error_handler $LINENO $BASH_LINENO "$BASH_COMMAND"' ERR
-
-# Export functions for use in subshells
-export -f log safe_execute retry_with_backoff validate_resources send_alert
-
-log "INFO" "Error handling framework initialized"
-```
-
-### Variable and Parameter Techniques
-
-#### Advanced Variable Management
-```bash
-#!/usr/bin/env bash
-# advanced_variables.sh - Comprehensive variable handling techniques
-
-# Different types of variable declarations
-declare -r READONLY_VAR="Cannot be modified"    # Read-only variable
-declare -i INTEGER_VAR=42                       # Integer variable
-declare -a INDEXED_ARRAY=()                     # Indexed array
-declare -A ASSOCIATIVE_ARRAY=()                 # Associative array
-declare -x EXPORTED_VAR="Available to subshells" # Exported variable
-
-# Array manipulation examples
-populate_arrays() {
-    # Indexed array operations
-    INDEXED_ARRAY=("apple" "banana" "cherry" "date")
-    INDEXED_ARRAY+=("elderberry")  # Append element
-    
-    # Associative array operations
-    ASSOCIATIVE_ARRAY[name]="John Doe"
-    ASSOCIATIVE_ARRAY[age]=30
-    ASSOCIATIVE_ARRAY[department]="Engineering"
-    ASSOCIATIVE_ARRAY[location]="Remote"
-    
-    # Dynamic array population
-    local files=($(find /etc -maxdepth 1 -name "*.conf" 2>/dev/null))
-    echo "Found ${#files[@]} configuration files"
-}
-
-# Advanced parameter expansion techniques
-parameter_expansion_demo() {
-    local input_string="  Hello, World!  "
-    local filename="/path/to/document.pdf"
-    local version="1.2.3-beta"
-    
-    # String manipulation
-    echo "=== String Manipulation ==="
-    echo "Original: '$input_string'"
-    echo "Trimmed: '${input_string// /}'"                    # Remove all spaces
-    echo "Left trim: '${input_string#"${input_string%%[![:space:]]*}"}'" # Remove leading whitespace
-    echo "Right trim: '${input_string%"${input_string##*[![:space:]]}"}'" # Remove trailing whitespace
-    echo
-    
-    # Path manipulation
-    echo "=== Path Manipulation ==="
-    echo "Full path: $filename"
-    echo "Directory: ${filename%/*}"           # Extract directory
-    echo "Filename: ${filename##*/}"           # Extract filename
-    echo "Extension: ${filename##*.}"          # Extract extension
-    echo "Basename: ${filename%.*}"            # Remove extension
-    echo
-    
-    # Version manipulation
-    echo "=== Version Parsing ==="
-    echo "Full version: $version"
-    echo "Major: ${version%%.*}"               # Extract major version
-    echo "Minor: ${version#*.}"; echo "Minor: ${version#*.}" | cut -d. -f1
-    echo "Patch: ${version%%-*}"               # Remove pre-release suffix
-    echo
-    
-    # Default value handling
-    local undefined_var
-    echo "=== Default Values ==="
-    echo "Undefined with default: ${undefined_var:-'default_value'}"
-    echo "Undefined with assignment: ${undefined_var:='assigned_default'}"
-    echo "Now defined: $undefined_var"
-    echo "Length check: ${#undefined_var}"
-}
-
-# Configuration file parsing
-parse_config_file() {
-    local config_file="$1"
-    local -A config=()
-    
-    if [[ ! -f "$config_file" ]]; then
-        log "ERROR" "Configuration file not found: $config_file"
-        return 1
-    fi
-    
-    # Parse key=value pairs, ignoring comments and empty lines
-    while IFS='=' read -r key value; do
-        # Skip comments and empty lines
-        [[ $key =~ ^[[:space:]]*# ]] && continue
-        [[ -z $key ]] && continue
-        
-        # Clean up key and value
-        key=$(echo "$key" | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
-        value=$(echo "$value" | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
-        
-        # Remove quotes from value if present
-        value="${value%\"}"
-        value="${value#\"}"
-        value="${value%\'}"
-        value="${value#\'}"
-        
-        config["$key"]="$value"
-        
-    done < "$config_file"
-    
-    # Display parsed configuration
-    echo "=== Parsed Configuration ==="
-    for key in "${!config[@]}"; do
-        echo "$key = ${config[$key]}"
-    done
-}
-
-# Variable validation and sanitization
-validate_and_sanitize() {
-    local input="$1"
-    local type="$2"
-    
-    case "$type" in
-        "email")
-            if [[ $input =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$ ]]; then
-                echo "Valid email: $input"
-                return 0
-            else
-                echo "Invalid email format: $input"
-                return 1
-            fi
-            ;;
-        "ip")
-            if [[ $input =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-                # Validate IP ranges
-                IFS='.' read -ra ADDR <<< "$input"
-                for i in "${ADDR[@]}"; do
-                    if [[ $i -gt 255 ]]; then
-                        echo "Invalid IP address: $input"
-                        return 1
-                    fi
-                done
-                echo "Valid IP address: $input"
-                return 0
-            else
-                echo "Invalid IP format: $input"
-                return 1
-            fi
-            ;;
-        "path")
-            # Sanitize path by removing dangerous characters
-            local sanitized=$(echo "$input" | sed 's/[^a-zA-Z0-9/_.-]//g')
-            echo "Sanitized path: $sanitized"
-            ;;
-        "alphanumeric")
-            # Keep only alphanumeric characters
-            local sanitized=$(echo "$input" | sed 's/[^a-zA-Z0-9]//g')
-            echo "Sanitized string: $sanitized"
-            ;;
-        *)
-            echo "Unknown validation type: $type"
-            return 1
-            ;;
-    esac
-}
-```
-**Related Commands/Topics:** [Control Flow and Testing Commands](#control-flow-and-testing-commands) 🟧
-**Related Commands/Topics:** [Variable and Parameter Commands](#variable-and-parameter-commands) 🟦
-
-### Control Flow and Logic Implementation
-
-#### Advanced Control Structures
-```bash
-#!/usr/bin/env bash
-# advanced_control_flow.sh - Comprehensive control flow examples
-
-# Advanced conditional logic with multiple conditions
-advanced_conditionals() {
-    local age="$1"
-    local status="$2"
-    local department="$3"
-    
-    echo "=== Advanced Conditional Logic ==="
-    
-    # Complex boolean logic
-    if [[ $age -ge 18 && $age -le 65 ]] && \
-       [[ "$status" == "active" || "$status" == "pending" ]] && \
-       [[ "$department" =~ ^(IT|Engineering|DevOps)$ ]]; then
-        echo "✓ Eligible for technical role"
-    elif [[ $age -gt 65 ]] && [[ "$status" == "active" ]]; then
-        echo "✓ Eligible for senior consultant role"
-    elif [[ $age -lt 18 ]]; then
-        echo "✗ Too young for employment"
-    else
-        echo "✗ Does not meet criteria"
-    fi
-    
-    # Pattern matching with case statement
-    case "$department" in
-        "IT"|"Information Technology")
-            echo "Department: Information Technology"
-            ;;
-        "Engineering"|"DevOps"|"SRE")
-            echo "Department: Technical Operations"
-            ;;
-        "HR"|"Human Resources")
-            echo "Department: Human Resources"
-            ;;
-        *)
-            echo "Department: Other ($department)"
-            ;;
-    esac
-}
-
-# Advanced loop constructs and flow control
-advanced_loops() {
-    echo "=== Advanced Loop Constructs ==="
-    
-    # Loop with continue and break
-    echo "Processing numbers 1-20:"
-    for i in {1..20}; do
-        # Skip even numbers
-        if (( i % 2 == 0 )); then
-            continue
-        fi
-        
-        # Stop at 15
-        if (( i > 15 )); then
-            echo "Stopping at $i"
-            break
-        fi
-        
-        echo "Processing odd number: $i"
-    done
-    
-    echo
-    
-    # While loop with multiple conditions
-    local counter=1
-    local max_attempts=5
-    local success=false
-    
-    while [[ $counter -le $max_attempts ]] && [[ $success == false ]]; do
-        echo "Attempt $counter of $max_attempts"
-        
-        # Simulate random success (50% chance)
-        if (( RANDOM % 2 == 0 )); then
-            echo "✓ Operation successful!"
-            success=true
-        else
-            echo "✗ Operation failed, retrying..."
-            sleep 1
-        fi
-        
-        ((counter++))
-    done
-    
-    if [[ $success == false ]]; then
-        echo "Failed after $max_attempts attempts"
-    fi
-}
-
-# Parallel processing with background jobs
-parallel_processing() {
-    echo "=== Parallel Processing Demo ==="
-    
-    # Function to simulate work
-    work_task() {
-        local task_id="$1"
-        local duration="$2"
-        
-        echo "Starting task $task_id (duration: ${duration}s)"
-        sleep "$duration"
-        echo "✓ Task $task_id completed"
-        
-        return 0
-    }
-    
-    # Start multiple background jobs
-    local pids=()
-    local start_time=$(date +%s)
-    
-    for i in {1..5}; do
-        local duration=$((RANDOM % 5 + 1))
-        work_task "$i" "$duration" &
-        pids+=($!)
-    done
-    
-    echo "Started ${#pids[@]} background tasks"
-    echo "PIDs: ${pids[*]}"
-    
-    # Wait for all jobs to complete
-    local completed=0
-    for pid in "${pids[@]}"; do
-        if wait "$pid"; then
-            ((completed++))
-            echo "Job $pid completed successfully ($completed/${#pids[@]})"
-        else
-            echo "Job $pid failed"
-        fi
-    done
-    
-    local end_time=$(date +%s)
-    local total_time=$((end_time - start_time))
-    
-    echo "All jobs completed in ${total_time} seconds"
-}
-```
-- Input validation and error handling
-
-### 9.5 Advanced Parameter Handling
-- Parameter expansion and substitution techniques
-- Default values and conditional assignments
-- Array handling and manipulation
-- Environment variable management
-- Configuration file processing
-
-### 9.6 Error Handling and Debugging
-- Enable error handling and debugging with set -e, set -u, and set -x
-- Exit codes and error checking strategies
-- Logging and debugging techniques
-- Script validation and testing methods
-- Error recovery and graceful failure handling
-- Best practices for robust, production-ready scripts
-
-### 9.7 Advanced Scripting Techniques
-- Arrays and associative arrays
-- Regular expressions in scripts
-- Process substitution and advanced I/O
-- Signal handling and trap mechanisms
-- Background processes and job control
-
-### 9.6 System Administration Scripts
-- Backup and restore scripts
-- User management automation
-- System monitoring scripts
-- Log analysis automation
-- Maintenance and cleanup scripts
-
-## Practical Examples
-
-### Script Basics: Shebang and Permissions
-```bash
-#!/usr/bin/env bash
-# Using env for portability - finds bash in PATH
-# Alternative: #!/bin/bash (direct path)
-
-# Make script executable
-chmod +x myscript.sh
-
-# Execute script
-./myscript.sh
-# or
-bash myscript.sh
-```
-
-### Control Structure Comparison
-
-| Loop Type | Syntax | When to Use |
-|-----------|--------|-------------|
-| for | `for item in list; do … done` | Iterating over a known set of values |
-| while | `while [ condition ]; do … done` | Repeating until a condition changes |
-| until | `until [ condition ]; do … done` | Running until a condition becomes true |
-
-### Basic Script Structure with Best Practices
-```bash
-#!/usr/bin/env bash
-# Script: basic-example.sh
-# Purpose: Demonstrate basic script structure with best practices
-# Author: System Administrator
-# Date: $(date)
-
-# Enable strict error handling
-set -euo pipefail  # Exit on error, undefined vars, pipe failures
-
-# Variables with defaults
-SCRIPT_NAME=$(basename "$0")
-LOG_FILE="${LOG_FILE:-/var/log/${SCRIPT_NAME%.sh}.log}"
-DEBUG="${DEBUG:-false}"
-
-# Enable debugging if requested
-[[ "$DEBUG" == "true" ]] && set -x
-
-# Functions
-log_message() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
-}
-
-usage() {
-    cat << EOF
-Usage: $0 [OPTIONS]
-
-OPTIONS:
-    -h, --help      Show this help message
-    -v, --verbose   Enable verbose output
-    -d, --debug     Enable debug mode
-
-EXAMPLES:
-    $0 --verbose
-    DEBUG=true $0
-EOF
-}
-
-main() {
-    log_message "Script started"
-    
-    # Script logic here
-    echo "Hello, World!"
-    
-    log_message "Script completed successfully"
-}
-
-# Execute main function with all arguments
-main "$@"
-```
-
-### Variables and Parameter Expansion with Defaults
-```bash
-#!/usr/bin/env bash
-# Demonstrate variables and parameter expansion with defaults
-
-# Basic variables with meaningful names
-USER_NAME="John Doe"
-USER_AGE=30
-readonly SCRIPT_VERSION="1.0.0"
-
-# Environment variables
-export PATH="/usr/local/bin:$PATH"
-export EDITOR="${EDITOR:-vim}"
-
-# Command substitution (modern syntax preferred)
-CURRENT_DATE=$(date)
-ACTIVE_USERS=$(who | wc -l)
-SYSTEM_LOAD=$(uptime | awk -F'load average:' '{print $2}')
-
-# Parameter expansion techniques
-FILE_PATH="/path/to/document.txt.bak"
-echo "Full path: $FILE_PATH"
-echo "Filename: ${FILE_PATH##*/}"           # document.txt.bak
-echo "Directory: ${FILE_PATH%/*}"           # /path/to  
-echo "Name without extension: ${FILE_PATH%%.*}"  # document
-echo "Extension: ${FILE_PATH##*.}"          # bak
-echo "Remove first extension: ${FILE_PATH%.*}"   # /path/to/document.txt
-
-# Default values and conditional assignment
-USERNAME="${1:-default_user}"              # Use $1 or default
-CONFIG_FILE="${CONFIG_FILE:-/etc/myapp.conf}"
-DEBUG_MODE="${DEBUG:-false}"
-LOG_LEVEL="${LOG_LEVEL:-INFO}"
-
-# Advanced parameter expansion
-GREETING="Hello World"
-echo "Original: $GREETING"
-echo "Lowercase: ${GREETING,,}"             # hello world
-echo "Uppercase: ${GREETING^^}"             # HELLO WORLD  
-echo "First char upper: ${GREETING^}"       # Hello world
-echo "Replace first 'o': ${GREETING/o/O}"   # HellO World
-echo "Replace all 'o': ${GREETING//o/O}"    # HellO WOrld
-echo "Length: ${#GREETING}"                 # 11
-
-# Conditional assignment
-: ${TEMP_DIR:="/tmp"}                       # Set if unset
-DATABASE_URL="${DATABASE_URL:?Error: DATABASE_URL not set}"  # Required var
-```
-
-### Control Structures: if/else and case
-```bash
-#!/bin/bash
-# Control structure examples
-
-# If statements
-```bash
-#!/usr/bin/env bash
-# Demonstrate control structures with clean logic branching
-
-# If/else statements with proper test conditions
-check_file_type() {
-    local file="$1"
-    
-    if [[ -f "$file" ]]; then
-        echo "$file is a regular file"
-        return 0
-    elif [[ -d "$file" ]]; then
-        echo "$file is a directory" 
-        return 0
-    elif [[ -L "$file" ]]; then
-        echo "$file is a symbolic link"
-        return 0
-    else
-        echo "$file does not exist or is not accessible"
-        return 1
-    fi
-}
+### Script Foundation and Best Practices
+
+#### Basic Script Template
+
+- [Module 9: Shell Scripting Fundamentals](#module-9-shell-scripting-fundamentals)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control)
+    - [9.2 Variables and Parameter Management](#92-variables-and-parameter-management)
+    - [9.4 Functions and Modular Programming](#94-functions-and-modular-programming)
+    - [9.3 Control Structures and Flow Control](#93-control-structures-and-flow-control-1)
+    - [File and Directory Operations](#file-and-directory-operations)
+    - [Process and Signal Management](#process-and-signal-management)
+    - [Debugging and Testing Commands](#debugging-and-testing-commands)
+  - [Practical Examples](#practical-examples)
+    - [Script Foundation and Best Practices](#script-foundation-and-best-practices)
+    - [Script Foundation and Best Practices](#script-foundation-and-best-practices-1)
+      - [Basic Script Template](#basic-script-template)
+- [Numeric comparisons](#numeric-comparisons)
+- [Case statement for clean multi-branch logic](#case-statement-for-clean-multi-branch-logic)
+    - [Loop Constructs: for, while, until](#loop-constructs-for-while-until)
+- [For loop - iterating over known values](#for-loop---iterating-over-known-values)
+- [For loop with range](#for-loop-with-range)
+- [For loop with array](#for-loop-with-array)
+- [While loop - repeating until condition changes](#while-loop---repeating-until-condition-changes)
+- [Until loop - running until condition becomes true](#until-loop---running-until-condition-becomes-true)
+- [Reading file line by line](#reading-file-line-by-line)
+    - [Command-Line Option Parsing with getopts](#command-line-option-parsing-with-getopts)
+    - [Error Handling and Debugging](#error-handling-and-debugging)
+  - [Lab Exercises](#lab-exercises)
+    - [Lab 1: Advanced Script Development](#lab-1-advanced-script-development)
+    - [Lab 2: System Automation Framework](#lab-2-system-automation-framework)
+    - [Lab 3: Enterprise Monitoring Solutions](#lab-3-enterprise-monitoring-solutions)
+    - [Lab 4: Database Management Automation](#lab-4-database-management-automation)
+    - [Lab 5: Infrastructure Orchestration](#lab-5-infrastructure-orchestration)
+  - [Best Practices](#best-practices)
+    - [Script Development Standards](#script-development-standards)
+    - [Performance Optimization](#performance-optimization)
+    - [Security Considerations](#security-considerations)
+  - [Troubleshooting](#troubleshooting)
+    - [Common Scripting Issues](#common-scripting-issues)
+    - [Debugging Techniques](#debugging-techniques)
+    - [Performance Analysis](#performance-analysis)
+  - [Assessment Criteria](#assessment-criteria)
+    - [Technical Proficiency (40%)](#technical-proficiency-40)
+    - [Problem-Solving Skills (30%)](#problem-solving-skills-30)
+    - [Code Quality and Maintainability (20%)](#code-quality-and-maintainability-20)
+    - [Innovation and Automation (10%)](#innovation-and-automation-10)
+  - [Next Steps](#next-steps)
+    - [Advanced Scripting Topics](#advanced-scripting-topics)
+    - [Professional Development](#professional-development)
+    - [Integration with Module 10](#integration-with-module-10)
+    - [Exercise 2: Log File Analyzer](#exercise-2-log-file-analyzer)
+    - [Exercise 3: Backup Automation Script](#exercise-3-backup-automation-script)
+    - [Exercise 4: PostgreSQL Database Backup Script](#exercise-4-postgresql-database-backup-script)
+    - [Project: Server Monitoring Dashboard](#project-server-monitoring-dashboard)
+  - [Best Practices and Common Pitfalls](#best-practices-and-common-pitfalls)
+    - [Shell Scripting Best Practices](#shell-scripting-best-practices)
+    - [Common Pitfalls to Avoid](#common-pitfalls-to-avoid)
+  - [Advanced Topics](#advanced-topics)
+    - [Process Management and Job Control](#process-management-and-job-control)
+    - [Signal Handling](#signal-handling)
+    - [Advanced Text Processing](#advanced-text-processing)
+  - [Summary](#summary)
+    - [Key Takeaways:](#key-takeaways)
+    - [Next Steps:](#next-steps-1)
+- [While loop](#while-loop)
+- [Until loop](#until-loop)
+    - [Command-Line Arguments and Input](#command-line-arguments-and-input)
+    - [Error Handling and Logging](#error-handling-and-logging)
+  - [System Administration Scripts](#system-administration-scripts)
+    - [Backup Script](#backup-script)
+    - [System Maintenance Script](#system-maintenance-script)
+  - [Script Best Practices](#script-best-practices)
+  - [Debugging Techniques](#debugging-techniques-1)
+    - [Debug Options](#debug-options)
+    - [Testing Scripts](#testing-scripts)
+  - [Lab Exercises](#lab-exercises-1)
+  - [Next Steps](#next-steps-2)
 
 # Numeric comparisons
 check_disk_space() {
@@ -1503,6 +571,8 @@ fi
 ```
 **Related Commands/Topics:** [Variable and Parameter Commands](#variable-and-parameter-commands), [Core Shell Scripting Commands](#core-shell-scripting-commands) 🟦🟩
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Error Handling and Debugging
 ```bash
 #!/usr/bin/env bash
@@ -1602,37 +672,6 @@ safe_write_file() {
     fi
     
     # Write content
-    echo "$content" > "$file" || {
-        log_error "Failed to write to file: $file"
-        return 1
-    }
-    
-    log_info "Successfully wrote to file: $file"
-}
-
-# Network operations with retry logic
-check_connectivity() {
-    local host="$1"
-    local port="${2:-80}"
-    local timeout="${3:-5}"
-    local max_retries="${4:-3}"
-    
-    local retry=0
-    while [[ $retry -lt $max_retries ]]; do
-        if timeout "$timeout" nc -z "$host" "$port" 2>/dev/null; then
-            log_info "Successfully connected to $host:$port"
-            return 0
-        fi
-        
-        ((retry++))
-        log_warn "Connection attempt $retry failed for $host:$port"
-        [[ $retry -lt $max_retries ]] && sleep 2
-    done
-    
-    log_error "Failed to connect to $host:$port after $max_retries attempts"
-    return 1
-}
-
 # Example usage of error handling
 main() {
     local temp_dir
@@ -1657,7 +696,7 @@ main() {
 main "$@"
 ```
 
-**[⬆️ Back to Top](#module9-shell-scripting-fundamentals)** | **[�� Main Index](README.md)**
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Lab Exercises
 
@@ -1776,6 +815,8 @@ main "$@"
 - Network and security automation (25%)
 - Testing and validation coverage (20%)
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Best Practices
 
 ### Script Development Standards
@@ -1801,6 +842,8 @@ main "$@"
 - **Audit Trails**: Maintain comprehensive logs for security auditing
 - **Access Control**: Implement proper file permissions and access controls
 - **Vulnerability Management**: Regular security reviews and dependency updates
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Troubleshooting
 
@@ -1854,7 +897,7 @@ time {
 strace -c ./script.sh
 ```
 
-**[⬆️ Back to Top](#module9-shell-scripting-fundamentals)** | **[📚 Main Index](README.md)**
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Assessment Criteria
 
@@ -1881,6 +924,8 @@ strace -c ./script.sh
 - **Process Improvement**: Demonstrating efficiency gains through automation
 - **Advanced Techniques**: Use of advanced shell scripting features and techniques
 - **Continuous Improvement**: Ongoing optimization and enhancement of automation solutions
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Next Steps
 
@@ -2786,6 +1831,8 @@ while IFS= read -r line; do
 done < <(grep "ERROR\|WARN" /var/log/application.log)
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Summary
 
 This module covered the essential aspects of shell scripting for Linux system administration:
@@ -2804,6 +1851,8 @@ This module covered the essential aspects of shell scripting for Linux system ad
 3. Implement proper error handling and cleanup procedures
 4. Use functions to create modular, maintainable code
 5. Follow established naming conventions and documentation practices
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Next Steps:
 - Practice with the provided exercises and projects
@@ -3101,6 +2150,8 @@ main() {
 main "$@"
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## System Administration Scripts
 
 ### Backup Script
@@ -3301,6 +2352,8 @@ fi
 ./script.sh --version
 ./script.sh invalid_option
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Lab Exercises
 1. Create a comprehensive backup script with rotation

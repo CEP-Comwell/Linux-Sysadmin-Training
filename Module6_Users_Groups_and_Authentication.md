@@ -19,7 +19,7 @@
 * [Next Steps](#next-steps)
 
 ## Overview
-[⬆️ Back to Top](#table-of-contents)
+
 Master essential user and group management, and sudo configuration for Linux systems. This module focuses on fundamental user administration tasks that every Linux administrator needs to know, providing practical hands-on experience with user accounts, groups, and privilege escalation.
 
 **Key Learning Outcomes:**
@@ -30,7 +30,7 @@ Master essential user and group management, and sudo configuration for Linux sys
 - Perform routine user administration tasks safely and efficiently
 
 ## Learning Objectives
-[⬆️ Back to Top](#table-of-contents)
+
 By the end of this module, you will be able to:
 
 1. **Master Basic User Administration**: Create, modify, and manage user accounts with appropriate settings
@@ -40,8 +40,9 @@ By the end of this module, you will be able to:
 5. **Perform Daily Tasks**: Handle routine user administration tasks confidently and safely
 6. **Troubleshoot Common Issues**: Identify and resolve typical user and authentication problems
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Topics
-[⬆️ Back to Top](#table-of-contents)
 
 ### 6.1 User Account Fundamentals
 - User account types: regular users, system users, and service accounts
@@ -83,8 +84,9 @@ By the end of this module, you will be able to:
 - User session monitoring and login tracking
 - Basic security best practices for user management
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Essential Command Reference
-[⬆️ Back to Top](#table-of-contents)
 
 ### User Management Commands
 
@@ -126,8 +128,9 @@ By the end of this module, you will be able to:
 | `last` | Show login history | `-n`, `-F`, `-i` | `last -n 10 john` |
 | `lastb` | Show failed logins | `-n`, `-F` | `lastb -n 20` |
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Practical Examples
-[⬆️ Back to Top](#table-of-contents)
 
 ### Basic User and Group Management
 [Related Commands/Topics: User Management Commands](#user-management-commands) 🟢
@@ -213,8 +216,9 @@ john    ALL=(www-data) /usr/bin/php
 %webadmins ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart apache2, /usr/bin/systemctl reload nginx
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Lab Exercises
-[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: Basic User Management
 **Objective:** Practice fundamental user account operations and group management.
@@ -343,10 +347,9 @@ sudo grep "authentication" /var/log/auth.log
 - User activity monitoring reports
 - Documentation of security measures implemented
 
-
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Best Practices Summary
-[⬆️ Back to Top](#table-of-contents)
 
 ### User Management Best Practices
 
@@ -417,8 +420,9 @@ sudo grep "authentication" /var/log/auth.log
 - **Privilege Escalation Detection**: Monitor for unauthorized privilege changes
 - **Compliance Monitoring**: Continuously monitor compliance with security policies
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Troubleshooting Common Issues
-[⬆️ Back to Top](#table-of-contents)
 
 ### User Account Problems
 
@@ -574,6 +578,8 @@ sudo cp -r /etc/skel/. /home/username/
 sudo chown -R username:username /home/username
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Quick Reference Commands
 
 #### Essential Troubleshooting Commands
@@ -624,6 +630,8 @@ This module covered the essential skills for managing users, groups, and basic a
 - Maintaining good documentation
 - Regular monitoring and maintenance
 - Safe configuration file editing
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Next Steps
 

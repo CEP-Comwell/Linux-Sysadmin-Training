@@ -19,7 +19,6 @@
 
 
 ## Overview
-[⬆️ Back to Top](#table-of-contents)
 
 This module covers practical Linux networking fundamentals for daily system administration. You'll learn to configure network interfaces, manage IP addressing, troubleshoot connectivity issues, and implement basic security measures using modern tools and best practices.
 
@@ -32,9 +31,9 @@ This module covers practical Linux networking fundamentals for daily system admi
 - SSH server configuration and security
 - WireGuard VPN basics
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Learning Objectives
-[⬆️ Back to Top](#table-of-contents)
 
 By the end of this module, you will be able to:
 
@@ -46,9 +45,9 @@ By the end of this module, you will be able to:
 6. **Secure SSH**: Configure SSH server for secure remote access
 7. **Set Up Basic VPNs**: Configure WireGuard for secure connections
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Topics Covered
-[⬆️ Back to Top](#table-of-contents)
 
 ### 7.1 Network Interface Management
 - Modern interface naming conventions (eth0, enp0s3, etc.)
@@ -96,9 +95,9 @@ By the end of this module, you will be able to:
 - WireGuard installation and basic configuration
 - Creating WireGuard peer connections
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Essential Commands
-[⬆️ Back to Top](#table-of-contents)
 
 ### Network Interface Management
 | Command | Description | Example |
@@ -151,9 +150,9 @@ By the end of this module, you will be able to:
 | `iotop` | I/O monitor | `iotop -o` |
 | `lsof` | List open files/network connections | `lsof -i :80` |
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Practical Examples
-[⬆️ Back to Top](#table-of-contents)
 
 [Related Commands/Topics: Network Interface Management](#network-interface-management) 🟢
 ```bash
@@ -357,6 +356,8 @@ sudo nano /etc/hosts
 
 [Related Commands/Topics: Network Diagnostics](#network-diagnostics) 🟡
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 #### Connectivity Testing
 ```bash
 # Basic ping test
@@ -406,6 +407,8 @@ sudo tcpdump -i eth0 -w capture.pcap
 # Read from file
 tcpdump -r capture.pcap
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 [Related Commands/Topics: Firewall Management](#firewall-management) 🟡
 
@@ -476,6 +479,8 @@ sudo iptables-save > /etc/iptables/rules.v4
 
 [Related Commands/Topics: SSH](#ssh) 🟡
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 #### Basic SSH Server Setup
 ```bash
 # Edit SSH configuration
@@ -531,6 +536,8 @@ sudo systemctl restart sshd
 
 [Related Commands/Topics: SSH](#ssh) 🟡
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 #### WireGuard Setup
 ```bash
 # Install WireGuard
@@ -568,9 +575,9 @@ Endpoint = server.example.com:51820
 AllowedIPs = 0.0.0.0/0
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Lab Exercises
-[⬆️ Back to Top](#table-of-contents)
 
 ### Lab 1: Basic Network Configuration
 
@@ -698,9 +705,9 @@ AllowedIPs = 0.0.0.0/0
 - Configure basic WireGuard VPN connectivity
 - Test secure tunneled connections
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Next Steps
-[⬆️ Back to Top](#table-of-contents)
 
 **Continue Learning**:
 - **Advanced Networking**: Explore VLAN, bonding, and advanced routing
@@ -726,3 +733,5 @@ AllowedIPs = 0.0.0.0/0
 - Firewall best practices guides
 
 Master these networking fundamentals to build a solid foundation for Linux system administration and network management.
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚

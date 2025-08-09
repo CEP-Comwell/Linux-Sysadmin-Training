@@ -2,43 +2,86 @@
 
 
 ## Table of Contents
-* [Overview](#overview)
-* [Learning Objectives](#learning-objectives)
-* [Topics Covered](#topics-covered)
-    * [8.1 System Logging Architecture](#81-system-logging-architecture)
-    * [8.2 Log Management and Rotation](#82-log-management-and-rotation)
-    * [8.3 System Resource Monitoring](#83-system-resource-monitoring)
-    * [8.4 Performance Metrics and Analysis](#84-performance-metrics-and-analysis)
-    * [8.5 Centralized Logging Solutions](#85-centralized-logging-solutions)
-    * [8.6 Monitoring Infrastructure and Alerting](#86-monitoring-infrastructure-and-alerting)
-    * [8.7 Security and Audit Logging](#87-security-and-audit-logging)
-    * [8.8 Enterprise Monitoring and Observability](#88-enterprise-monitoring-and-observability)
-* [Essential Command Reference](#essential-command-reference)
-* [Practical Examples](#practical-examples)
-    * [System Logging Configuration](#system-logging-configuration)
-    * [Log Analysis and Processing](#log-analysis-and-processing)
-    * [Performance Monitoring Tools](#performance-monitoring-tools)
-    * [Centralized Logging Implementation](#centralized-logging-implementation)
-    * [Monitoring Infrastructure Deployment](#monitoring-infrastructure-deployment)
-    * [Alerting and Notification Systems](#alerting-and-notification-systems)
-    * [Security Monitoring and SIEM](#security-monitoring-and-siem)
-    * [Custom Monitoring Solutions](#custom-monitoring-solutions)
-* [Lab Exercises](#lab-exercises)
-    * [Lab 1: Log Management and Analysis](#lab-1-log-management-and-analysis)
-    * [Lab 2: Performance Monitoring Implementation](#lab-2-performance-monitoring-implementation)
-    * [Lab 3: Centralized Logging Infrastructure](#lab-3-centralized-logging-infrastructure)
-    * [Lab 4: Monitoring and Alerting Systems](#lab-4-monitoring-and-alerting-systems)
-    * [Lab 5: Security Monitoring and Incident Response](#lab-5-security-monitoring-and-incident-response)
-* [Best Practices](#best-practices)
-* [Troubleshooting](#troubleshooting)
-* [Assessment Criteria](#assessment-criteria)
-* [Next Steps](#next-steps)
+- [Module 8: Logging and Monitoring](#module-8-logging-and-monitoring)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Learning Objectives](#learning-objectives)
+  - [Topics Covered](#topics-covered)
+    - [8.1 System Logging Architecture](#81-system-logging-architecture)
+    - [8.2 Log Management and Rotation](#82-log-management-and-rotation)
+    - [8.3 System Resource Monitoring](#83-system-resource-monitoring)
+    - [8.4 Performance Metrics and Analysis](#84-performance-metrics-and-analysis)
+    - [8.5 Centralized Logging Solutions](#85-centralized-logging-solutions)
+    - [8.6 Monitoring Infrastructure and Alerting](#86-monitoring-infrastructure-and-alerting)
+    - [8.7 Security and Audit Logging](#87-security-and-audit-logging)
+    - [8.8 Enterprise Monitoring and Observability](#88-enterprise-monitoring-and-observability)
+    - [8.2 rsyslog Configuration](#82-rsyslog-configuration)
+    - [8.3 systemd Journal (journald)](#83-systemd-journal-journald)
+    - [8.4 Log Rotation and Management](#84-log-rotation-and-management)
+    - [8.5 Resource Monitoring Fundamentals](#85-resource-monitoring-fundamentals)
+    - [8.6 Prometheus and Node Exporter](#86-prometheus-and-node-exporter)
+    - [8.7 Grafana Visualization](#87-grafana-visualization)
+    - [8.8 Centralized Logging Solutions](#88-centralized-logging-solutions)
+  - [Essential Command Reference](#essential-command-reference)
+    - [Log Management Commands](#log-management-commands)
+    - [System Monitoring Commands](#system-monitoring-commands)
+    - [Performance Analysis Commands](#performance-analysis-commands)
+    - [Log Analysis Commands](#log-analysis-commands)
+    - [Monitoring Infrastructure Commands](#monitoring-infrastructure-commands)
+  - [Practical Examples](#practical-examples)
+    - [System Logging Configuration](#system-logging-configuration)
+      - [Advanced rsyslog Configuration](#advanced-rsyslog-configuration)
+      - [systemd Journal Configuration and Optimization](#systemd-journal-configuration-and-optimization)
+    - [Log Analysis and Processing](#log-analysis-and-processing)
+      - [Advanced Log Analysis Toolkit](#advanced-log-analysis-toolkit)
+    - [Performance Monitoring Tools](#performance-monitoring-tools)
+      - [Comprehensive System Performance Monitor](#comprehensive-system-performance-monitor)
+    - [Centralized Logging Implementation](#centralized-logging-implementation)
+      - [ELK Stack Deployment](#elk-stack-deployment)
+    - [Monitoring Infrastructure Deployment](#monitoring-infrastructure-deployment)
+      - [Complete Prometheus and Grafana Setup](#complete-prometheus-and-grafana-setup)
+    - [Alerting and Notification Systems](#alerting-and-notification-systems)
+      - [Setting up Grafana Alerts](#setting-up-grafana-alerts)
+    - [Security Monitoring and SIEM](#security-monitoring-and-siem)
+      - [Elasticsearch Setup](#elasticsearch-setup)
+      - [Logstash Configuration](#logstash-configuration)
+      - [TLS Configuration for rsyslog](#tls-configuration-for-rsyslog)
+  - [Custom Monitoring Scripts](#custom-monitoring-scripts)
+    - [Disk Space Alert Script](#disk-space-alert-script)
+    - [Process Monitoring Script](#process-monitoring-script)
+    - [Centralized Logging Implementation](#centralized-logging-implementation-1)
+      - [ELK Stack Deployment](#elk-stack-deployment-1)
+    - [Monitoring Infrastructure Deployment](#monitoring-infrastructure-deployment-1)
+      - [Complete Prometheus and Grafana Setup](#complete-prometheus-and-grafana-setup-1)
+    - [Alerting and Notification Systems](#alerting-and-notification-systems-1)
+      - [Advanced Alerting Configuration](#advanced-alerting-configuration)
+  - [Lab Exercises](#lab-exercises)
+    - [Lab 1: Log Management and Analysis](#lab-1-log-management-and-analysis)
+    - [Lab 2: Performance Monitoring Implementation](#lab-2-performance-monitoring-implementation)
+    - [Lab 3: Centralized Logging Infrastructure](#lab-3-centralized-logging-infrastructure)
+    - [Lab 4: Monitoring and Alerting Systems](#lab-4-monitoring-and-alerting-systems)
+    - [Lab 5: Security Monitoring and Incident Response](#lab-5-security-monitoring-and-incident-response)
+  - [Best Practices](#best-practices)
+    - [Logging Best Practices](#logging-best-practices)
+    - [Monitoring Best Practices](#monitoring-best-practices)
+    - [Performance Optimization](#performance-optimization)
+  - [Troubleshooting](#troubleshooting)
+    - [Common Logging Issues](#common-logging-issues)
+    - [Common Monitoring Issues](#common-monitoring-issues)
+    - [Diagnostic Commands](#diagnostic-commands)
+  - [Assessment Criteria](#assessment-criteria)
+    - [Technical Proficiency (40%)](#technical-proficiency-40)
+    - [Problem-Solving Skills (30%)](#problem-solving-skills-30)
+    - [Documentation and Communication (20%)](#documentation-and-communication-20)
+    - [Automation and Innovation (10%)](#automation-and-innovation-10)
+  - [Next Steps](#next-steps)
 
 
 ## Overview
-[⬆️ Back to Top](#table-of-contents)
 
 This module provides comprehensive coverage of Linux logging and monitoring systems, from basic log management to enterprise-grade observability platforms. Students will master log analysis, implement performance monitoring, deploy centralized logging solutions, and create comprehensive monitoring infrastructure for production environments.
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 **Module Focus Areas:**
 - Advanced system logging with rsyslog, journald, and syslog-ng
@@ -52,7 +95,6 @@ This module provides comprehensive coverage of Linux logging and monitoring syst
 
 
 ## Learning Objectives
-[⬆️ Back to Top](#table-of-contents)
 
 By the end of this module, you will be able to:
 
@@ -65,9 +107,9 @@ By the end of this module, you will be able to:
 7. **Implement Security Monitoring**: Deploy security event monitoring, audit logging, and SIEM integration
 8. **Automate Monitoring Tasks**: Create custom monitoring solutions and automated incident response workflows
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Topics Covered
-[⬆️ Back to Top](#table-of-contents)
 
 ### 8.1 System Logging Architecture
 - Modern logging architectures and design patterns
@@ -135,6 +177,8 @@ By the end of this module, you will be able to:
 - Log file locations and naming conventions
 - Security and audit logging considerations
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 **🔗 Practical Examples**: [Basic rsyslog Configuration](#system-logging-configuration) | [Log File Analysis](#log-analysis-and-processing) 🟢
 
 ### 8.2 rsyslog Configuration
@@ -200,9 +244,9 @@ By the end of this module, you will be able to:
 
 **🔗 Practical Examples**: [ELK Stack Setup](#centralized-logging-implementation) | [Secure Log Forwarding](#centralized-logging-implementation) 🟡
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Essential Command Reference
-[⬆️ Back to Top](#table-of-contents)
 
 ### Log Management Commands
 | Command | Purpose | Common Usage |
@@ -252,9 +296,9 @@ By the end of this module, you will be able to:
 | `grafana-server` | Visualization platform | `systemctl start grafana-server` |
 | `alertmanager` | Alert handling | `./alertmanager --config.file=alertmanager.yml` |
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Practical Examples
-[⬆️ Back to Top](#table-of-contents)
 
 ### System Logging Configuration
 [Related Commands/Topics: ](#log-management-commands)Log Management Commands 🟢
@@ -391,6 +435,8 @@ configure_log_shipping
 
 echo "Advanced rsyslog configuration completed successfully"
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### systemd Journal Configuration and Optimization
 ```bash
@@ -550,6 +596,9 @@ create_journal_analysis
 
 echo "systemd journal configuration completed"
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Log Analysis and Processing
 [Related Commands/Topics: ](#log-analysis-commands)Log Analysis Commands 🟢
 
@@ -742,6 +791,8 @@ case "${1:-help}" in
         ;;
 esac
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Performance Monitoring Tools
 [Related Commands/Topics: ](#system-monitoring-commands)System Monitoring Commands 🟢
@@ -1014,6 +1065,8 @@ case "${1:-help}" in
 esac
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Centralized Logging Implementation
 [Related Commands/Topics: ](#monitoring-infrastructure-commands)Monitoring Infrastructure Commands 🟡
 
@@ -1215,6 +1268,8 @@ echo "ELK Stack installation completed!"
 echo "Access Kibana at: http://localhost:5601"
 echo "Elasticsearch API: http://localhost:9200"
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Monitoring Infrastructure Deployment
 [Related Commands/Topics: ](#monitoring-infrastructure-commands)Monitoring Infrastructure Commands 🟡
@@ -1473,6 +1528,8 @@ echo "Alertmanager: http://localhost:9093"
 echo "Grafana: http://localhost:3000 (admin/admin123)"
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Alerting and Notification Systems
 [Related Commands/Topics: ](#monitoring-infrastructure-commands)Monitoring Infrastructure Commands 🟡
 
@@ -1496,6 +1553,8 @@ sudo systemctl restart grafana-server
 # Grafana notification channels configuration
 # Access Grafana at http://localhost:3000 (admin/admin)
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Security Monitoring and SIEM
 [Related Commands/Topics: ](#log-management-commands)Log Management Commands 🟡
@@ -1556,6 +1615,8 @@ output {
   stdout { codec => rubydebug }
 }
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 #### TLS Configuration for rsyslog
 ```bash
@@ -1841,6 +1902,8 @@ echo "Access Kibana at: http://localhost:5601"
 echo "Elasticsearch API: http://localhost:9200"
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ### Monitoring Infrastructure Deployment
 [Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
 
@@ -2097,6 +2160,8 @@ echo "Prometheus: http://localhost:9090"
 echo "Alertmanager: http://localhost:9093"
 echo "Grafana: http://localhost:3000 (admin/admin123)"
 ```
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ### Alerting and Notification Systems
 [Related Commands/Topics: Monitoring Infrastructure Commands](#monitoring-infrastructure-commands) 🟡
@@ -2377,6 +2442,8 @@ create_alert_router
 echo "Advanced alerting system configured successfully"
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Lab Exercises
 
 ### Lab 1: Log Management and Analysis
@@ -2494,6 +2561,8 @@ echo "Advanced alerting system configured successfully"
 - Threat detection accuracy (25%)
 - Automation and integration (20%)
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Best Practices
 
 ### Logging Best Practices
@@ -2520,6 +2589,8 @@ echo "Advanced alerting system configured successfully"
 - **Query Optimization**: Optimize dashboard queries and alert expressions
 - **High Availability**: Design monitoring systems for high availability and redundancy
 - **Automation**: Automate routine monitoring tasks and response procedures
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
 
 ## Troubleshooting
 
@@ -2569,6 +2640,8 @@ nc -zv logserver.example.com 514
 telnet prometheus-server 9090
 ```
 
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
+
 ## Assessment Criteria
 
 ### Technical Proficiency (40%)
@@ -2597,3 +2670,5 @@ telnet prometheus-server 9090
 
 ## Next Steps
 With comprehensive logging and monitoring mastered, you're ready to explore Shell Scripting Fundamentals in Module 9, where you'll automate system administration tasks with powerful shell scripts that integrate with the monitoring and logging infrastructure you've built.
+
+[Back to Top](#table-of-contents)⬆️ | [Main Index](README.md)📚
