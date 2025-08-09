@@ -1,26 +1,37 @@
 # Module 1: Linux Distributions & Philosophy
 
 ## Table of Contents
-* [Overview](#overview)
-* [Learning Objectives](#learning-objectives)
-* [Topics](#topics)
-  * [1.1 Linux History and Philosophy](#11-linux-history-and-philosophy)
-  * [1.2 Distribution Families and Package Management](#12-distribution-families-and-package-management)
-  * [1.3 Release Models and Support Cycles](#13-release-models-and-support-cycles)
-  * [1.4 Open Source Licensing and Governance](#14-open-source-licensing-and-governance)
-  * [1.5 Distribution Selection Criteria](#15-distribution-selection-criteria)
-* [Essential Command Reference](#essential-command-reference)
-* [Practical Examples](#practical-examples)
-  * [Distribution Information Commands](#distribution-information-commands)
-  * [Package Manager Comparison](#package-manager-comparison)
-  * [System Information Gathering](#system-information-gathering)
-* [Lab Exercises](#lab-exercises)
-  * [Lab 1: Distribution Analysis and Comparison](#lab-1-distribution-analysis-and-comparison)
-  * [Lab 2: Package Management Systems](#lab-2-package-management-systems)
-  * [Lab 3: Enterprise Distribution Selection](#lab-3-enterprise-distribution-selection)
-* [Best Practices Summary](#best-practices-summary)
-* [Assessment Criteria](#assessment-criteria)
-* [Next Steps](#next-steps)
+- [Module 1: Linux Distributions \& Philosophy](#module-1-linux-distributions--philosophy)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Learning Objectives](#learning-objectives)
+  - [Topics](#topics)
+    - [1.1 Linux History and Philosophy](#11-linux-history-and-philosophy)
+    - [1.2 Distribution Families and Package Management](#12-distribution-families-and-package-management)
+    - [1.3 Release Models and Support Cycles](#13-release-models-and-support-cycles)
+    - [1.4 Open Source Licensing and Governance](#14-open-source-licensing-and-governance)
+    - [1.5 Distribution Selection Criteria](#15-distribution-selection-criteria)
+  - [Essential Command Reference](#essential-command-reference)
+  - [Practical Examples](#practical-examples)
+    - [Distribution Information Commands](#distribution-information-commands)
+      - [Identifying Your Distribution](#identifying-your-distribution)
+      - [Distribution Family Detection Script](#distribution-family-detection-script)
+    - [Package Manager Comparison](#package-manager-comparison)
+      - [APT (Debian/Ubuntu Family)](#apt-debianubuntu-family)
+      - [DNF/YUM (Red Hat Family)](#dnfyum-red-hat-family)
+      - [Zypper (SUSE Family)](#zypper-suse-family)
+    - [System Information Gathering](#system-information-gathering)
+      - [Comprehensive System Survey Script](#comprehensive-system-survey-script)
+  - [Lab Exercises](#lab-exercises)
+    - [Lab 1: Distribution Analysis and Comparison](#lab-1-distribution-analysis-and-comparison)
+    - [Lab 2: Package Management Systems](#lab-2-package-management-systems)
+    - [Lab 3: Enterprise Distribution Selection](#lab-3-enterprise-distribution-selection)
+  - [Best Practices Summary](#best-practices-summary)
+    - [Distribution Selection Guidelines](#distribution-selection-guidelines)
+    - [Package Management Best Practices](#package-management-best-practices)
+    - [Licensing Compliance](#licensing-compliance)
+  - [Assessment Criteria](#assessment-criteria)
+  - [Next Steps](#next-steps)
 
 ## Overview
 This module explores why Linux exists, how its culture shapes development, and provides the foundation for choosing the right distribution for your organization. Students will understand the philosophical differences between distributions, their technical architectures, and how these choices impact long-term infrastructure decisions.
@@ -41,6 +52,8 @@ By the end of this module, you will be able to:
 4. **Navigate Licensing**: Interpret open-source licenses and their business implications
 5. **Make Strategic Decisions**: Select appropriate distributions based on organizational requirements
 6. **Plan Migration Paths**: Design transition strategies between different Linux distributions
+
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
 
 ## Topics
 
@@ -135,6 +148,7 @@ hostnamectl
 #              Kernel: Linux 5.15.0-72-generic
 #        Architecture: x86-64
 ```
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
 
 #### Distribution Family Detection Script
 ```bash
@@ -224,6 +238,7 @@ detect_distribution() {
 # Run detection
 detect_distribution
 ```
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
 
 ### Package Manager Comparison
 
@@ -276,6 +291,8 @@ zypper search keyword       # Search for packages
 zypper info package-name    # Show package information
 zypper pa --installed-only  # List installed packages
 ```
+
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
 
 ### System Information Gathering
 
@@ -433,6 +450,8 @@ echo "=== Survey Complete ==="
 - Cost-benefit analysis of different options
 - Migration planning template
 
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
+
 ## Best Practices Summary
 
 ### Distribution Selection Guidelines
@@ -480,6 +499,8 @@ echo "=== Survey Complete ==="
    - Implement security scanning for dependencies
    - Maintain compliance documentation
 
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
+
 ## Assessment Criteria
 
 Students will be evaluated on their ability to:
@@ -501,4 +522,6 @@ After mastering Linux distributions and philosophy, proceed to:
 
 
 The foundation established in this module directly influences decisions throughout your Linux administration journey, from filesystem choices to security implementations and automation strategies.
+
+**[Back to Top](#module-1-linux-distributions--philosophy)** ⬆️ | **[Main Index](README.md)** 📚
 
