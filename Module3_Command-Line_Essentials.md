@@ -75,7 +75,7 @@ This module covers essential command-line skills that every Linux system adminis
 - Debug command sequences and handle errors effectively
 - Automate repetitive tasks with aliases, functions, and scripts
 
-**[Back to Top](#table-of-contents)**⬆️ | **[Main Index](README.md)** 📚
+**[ Back to Top]**(#table-of-contents)⬆️ | **[Main Index](README.md)** 📚
 
 ## Learning Objectives
 
