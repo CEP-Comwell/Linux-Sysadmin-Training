@@ -1,6 +1,6 @@
 <img src="blob/images/edgesec.png" alt="edgesec logo" width="240" align="right"/>  
 
-# Linux Sysadmin & DevOps Training Program
+## Linux Sysadmin & DevOps Training Program
  
 This comprehensive repository guides experienced Windows sysadmins through a structured journey from fundamental Linux administration to advanced DevOps infrastructure automation using enterprise-grade tools including ZFS, Proxmox VE, OpenSSH, Cloud-Init, Terraform, and Ansible.
 
